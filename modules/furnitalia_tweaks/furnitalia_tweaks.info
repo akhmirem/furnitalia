@@ -1,0 +1,5 @@
+name = Furnitalia Tweaks
+description = Furnitalia Tweaks module
+core = 7.x
+package = Furnitalia
+;dependencies[] = ctools

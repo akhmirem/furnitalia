@@ -1,0 +1,7 @@
+<?php
+/**
+ * @file
+ * Code for the Furnitalia Frontpage feature.
+ */
+
+include_once 'furnitalia_frontpage.features.inc';
