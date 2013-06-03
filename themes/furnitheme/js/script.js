@@ -21,6 +21,8 @@ if (response.data) {
 		  }
 */
 		  
+		  	console.log("here");
+		  	
 		  	// Get information from the response. If it is not there, default to
 		    // our presets.
 		    var wrapper = response.selector ? $(response.selector) : $(ajax.wrapper);

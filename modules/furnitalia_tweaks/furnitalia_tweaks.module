@@ -15,8 +15,15 @@ function furnitalia_tweaks_menu() {
 		'page callback' => 'furnitalia_tweaks_contact_js',
 		'access callback' => TRUE, 
 		'type' => MENU_CALLBACK,
-		'delivery callback' => 'ajax_deliver',
-	);	
+		#'delivery callback' => 'ajax_deliver',
+	);
+	$items['user/%user/favorites'] = array(
+		'title' => 'My Favorites',
+	    'page callback' => 'furnitalia_tweaks_favorites_list',
+	    'access callback' => 'user_is_logged_in',
+	    'type' => MENU_LOCAL_TASK,
+    );
+
 	
 	return $items;
 }
@@ -27,6 +34,15 @@ function furnitalia_tweaks_menu() {
 function furnitalia_tweaks_menu_alter(&$items) {
 	$items['taxonomy/term/%taxonomy_term']['page callback'] = 'furnitalia_tweaks_taxonomy_term_page';
 	unset($items['taxonomy/term/%taxonomy_term']['file']);
+	
+	if(isset($items['user/%user/shortcuts'])) {
+		unset($items['user/%user/shortcuts']);
+	}
+	
+	if(isset($items['user/%user/imce'])) {
+		unset($items['user/%user/imce']);	
+	}
+	
 }
 
 /**
@@ -69,68 +85,8 @@ function furnitalia_tweaks_taxonomy_term_page($term) {
     $nodes = node_load_multiple($nids);
     //dsm($nodes);
     
-    //prepare sort options
-    //-----------------------------    
-    $build['options'] = array(
-    	'#prefix' => '<section id="options" class="clearfix">',
-    	'#suffix' => '</section>',
-    );
-    $build['options']['sort'] = array(
-		'#attributes' => array('id' => 'sort-by','class' => array('clearfix', 'option-set', 'dk', 'sortBy'), 'data-option-key' => 'sortBy', 'name' => 'sortBy', 'tabindex' => '1'),
-		'#type' => 'select',
-		'#title' => t('Sort'),
-		'#options' => array(
-			'sortBy=original-order' => 'Default',
-			'sortBy=price'	=> 'Price',
-			'sortBy=index' => 'Index',
-			'sortBy=clearance' => 'Clearance',
-		),
-		'#extra_option_attributes' => array (
-			'data-option-value="original-order"',
-			'data-option-value="price"',
-			'data-option-value="index"',
-			'data-option-value="clearance"',
-		),
-		'#default_value' => 'sortBy=original-order',
-    );
+    $build += furnitalia_tweaks_prepare_node_attributes($nodes);
     
-    //prepare Filter options
-    //-----------------------------
-    //determine all taxonomy terms
-    $brands = array("*" => 'show all');
-    foreach($nodes as $node) {
-    	$tid = $node->field_brand['und'][0]['tid'];
-	    if (!isset($brands [$tid])) {
-	    	$term = taxonomy_term_load($tid);
-		 	$brands[$tid] = $term->name;
-	    }
-    }
-    
-    $extra_options = array();
-    foreach($brands as $tid => $category) {
-    	if ($tid == "*") {
-		     $extra_options []= 'data-filter="*"';
-	    } else {
-		 	$extra_options []= 'data-filter=".brand'. $tid .'"';  
-	    }
-    }
-    
-    $build['options']['filter'] = array(
-		'#attributes' => array('id' => 'filters','class' => array('clearfix', 'option-set', 'dk', 'sortBy'), 'data-option-key' => 'filterBy', 'name' => 'filterBy', 'tabindex' => '2'),
-		'#type' => 'select',
-		'#title' => t('Filter'),
-		'#options' => $brands,
-		'#extra_option_attributes' => $extra_options,
-		'#default_value' => '*',
-    );
-    
-    $build += furnitalia_tweaks_node_view_multiple($nodes);
-    $build['pager'] = array(
-      //'#theme' => 'pager',
-      //'#weight' => 5,
-      '#prefix' => '<div id="pagination">',
-      '#suffix' => '</div>',
-    );
   }
   else {
     $build['no_content'] = array(
@@ -174,21 +130,8 @@ function furnitalia_tweaks_node_view_multiple($nodes, $view_mode = 'teaser', $we
   return $build;
 }
 
-
 /**
- * Implements hook_block_info().
- */
-function furnitalia_tweaks_block_info() {
-  $blocks = array();
-  /*$blocks['my_block'] = array(
-    'info' => t('My Custom Block'),
-  );*/
- 
-  return $blocks;
-}
-
-/**
- * Implements hook_block_info().
+ * Implements hook_page_alter().
  */
 function furnitalia_tweaks_page_alter(&$page) {
 	
@@ -297,6 +240,40 @@ function furnitalia_tweaks_form_alter(&$form, &$form_state, $form_id){
     }
 }
 
+/**
+ * Display the list of items that are in current user's favorites list
+ */
+function furnitalia_tweaks_favorites_list() {
+	global $user;
+	
+	$favorites = flag_get_user_flags('node', NULL, $user->uid);
+	
+	if(!isset($favorites['favorites']) || empty($favorites['favorites'])) {
+		return "Your favorites list is empty. You can add items to favorites by clicking on 'Add to favorites' button on item info page";
+	}
+	
+	$nids = array();
+	
+	foreach($favorites['favorites'] as $nid => $flag_obj) {
+		$nids []= $nid;
+	}
+	
+	dsm($favorites);
+	
+	$nodes = node_load_multiple($nids);    
+    $build = furnitalia_tweaks_prepare_node_attributes($nodes);
+    
+    unset($build['options']);
+
+	
+	//print flag_create_link('favorites', $node->nid); 
+	
+	return $build;
+}
+
+/**
+  * Display contact form in pop-up dialog box.
+ */
 function furnitalia_tweaks_contact_js($nid=NULL){
 
 	$nid = 32;
@@ -306,9 +283,9 @@ function furnitalia_tweaks_contact_js($nid=NULL){
 	$output .= theme('node', node_view($node));
 	
 	//return drupal_json_output(array('status' => TRUE, 'data' => $output, 'wrapperID' => drupal_html_id('webform-ajax-wrapper-' . $nid)));
-	//ajax_command_replace('#dialog-form', $output), 
-	
+	//ajax_command_replace('#dialog-form', $output), 	
 	//$output = array('#type' => 'ajax', '#commands' => array(array('command' => 'openPopup', 'data' => $output)));
+	
 	ajax_deliver(array('#type' => 'ajax', '#commands' => array(
 		array(
 			'command' => 'openPopup', 
@@ -316,8 +293,85 @@ function furnitalia_tweaks_contact_js($nid=NULL){
 			'method' => 'html',
 		    'selector' => "#dialog-form",
 		    'settings' => NULL,
-		)
+		),
+		//ajax_command_replace('#pagination', $output), 
 	)));
+	
+	//return array('#type' => 'ajax', '#commands' => array(
+	//	ajax_command_replace('#pagination', $output), 
+	//));
     
-    //return $output;
+}
+
+function  furnitalia_tweaks_prepare_node_attributes($nodes) {
+	
+	if (!is_array($nodes)) {
+		return array();
+	}
+	
+	//prepare sort options
+    //-----------------------------    
+    $build['options'] = array(
+    	'#prefix' => '<section id="options" class="clearfix">',
+    	'#suffix' => '</section>',
+    );
+    $build['options']['sort'] = array(
+		'#attributes' => array('id' => 'sort-by','class' => array('clearfix', 'option-set', 'dk', 'sortBy'), 'data-option-key' => 'sortBy', 'name' => 'sortBy', 'tabindex' => '1'),
+		'#type' => 'select',
+		'#title' => t('Sort'),
+		'#options' => array(
+			'sortBy=original-order' => 'Default',
+			'sortBy=price'	=> 'Price',
+			'sortBy=index' => 'Index',
+			'sortBy=clearance' => 'Clearance',
+		),
+		'#extra_option_attributes' => array (
+			'data-option-value="original-order"',
+			'data-option-value="price"',
+			'data-option-value="index"',
+			'data-option-value="clearance"',
+		),
+		'#default_value' => 'sortBy=original-order',
+    );
+    
+    //prepare Filter options
+    //-----------------------------
+    //determine all taxonomy terms
+    $brands = array("*" => 'show all');
+    foreach($nodes as $node) {
+    	$tid = $node->field_brand['und'][0]['tid'];
+	    if (!isset($brands [$tid])) {
+	    	$term = taxonomy_term_load($tid);
+		 	$brands[$tid] = $term->name;
+	    }
+    }
+    
+    $extra_options = array();
+    foreach($brands as $tid => $category) {
+    	if ($tid == "*") {
+		     $extra_options []= 'data-filter="*"';
+	    } else {
+		 	$extra_options []= 'data-filter=".brand'. $tid .'"';  
+	    }
+    }
+    
+    $build['options']['filter'] = array(
+		'#attributes' => array('id' => 'filters','class' => array('clearfix', 'option-set', 'dk', 'sortBy'), 'data-option-key' => 'filterBy', 'name' => 'filterBy', 'tabindex' => '2'),
+		'#type' => 'select',
+		'#title' => t('Filter'),
+		'#options' => $brands,
+		'#extra_option_attributes' => $extra_options,
+		'#default_value' => '*',
+    );
+    
+    $build += furnitalia_tweaks_node_view_multiple($nodes);
+    $build['pager'] = array(
+      //'#theme' => 'pager',
+      //'#weight' => 5,
+      '#prefix' => '<div id="pagination">',
+      '#suffix' => '</div>',
+    );
+
+	return $build;
+	
 }

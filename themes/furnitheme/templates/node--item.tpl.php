@@ -84,7 +84,7 @@ if ($teaser) { //item teaser view
     </header>
   <?php endif; ?>
 
-  <?php krumo($content); ?>
+  <?php //krumo($content); ?>
   
   <div id="item-images">
 	  <?php //print render($content['field_image']);?>
@@ -109,9 +109,9 @@ if ($teaser) { //item teaser view
 	  <p class="item-info-p">Brand:<br/><?php print render($content['field_brand']);?></p>
 	  <p class="item-info-p"><?php print render($content['add_to_cart']);?></p>	  
 	  
+	  <?php print render($content['links']['flag']); ?>
+	  
   </div>
-  
-  <?php //print render($content); ?>
 
 
 </article><!-- /.node -->
