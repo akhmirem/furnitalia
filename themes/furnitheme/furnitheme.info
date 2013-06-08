@@ -61,9 +61,7 @@ stylesheets[all][] = css/print.css
 
 
 
-; Optionally add some JavaScripts to your theme.
-
-;scripts[] = js/jquery-ui/js/jquery-ui-1.10.3.custom.min.js
+; Optionally add some JavaScripts to your theme
 scripts[] = js/jquery.isotope.min.js
 scripts[] = js/jquery.jui_pagination.min.js
 scripts[] = js/jquery.jui_pagination.en.js

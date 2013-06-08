@@ -375,3 +375,66 @@ function  furnitalia_tweaks_prepare_node_attributes($nodes) {
 	return $build;
 	
 }
+
+function furnitalia_tweaks_webform_submission_presave($node, &$submission) {	
+	
+	if ($node->nid == 32) {
+		
+		$first_name = $submission->data[1]['value'][0];
+		$last_name = $submission->data[2]['value'][0];		
+		$email = $submission->data[3]['value'][0];
+		$text = $submission->data[4]['value'][0];
+		
+	}
+
+	/*$submission_array = array();
+
+	$submission_array['oid'] = '00D80000000Jw8P';
+	$submission_array['sfga'] = '00D80000000Jw8P';
+
+	if ($submission->nid == 52) { // Request info page
+		$submission_array['first_name'] = $submission->data[1]['value'][0];
+		$submission_array['last_name'] = $submission->data[6]['value'][0];
+		$submission_array['email'] = $submission->data[2]['value'][0];
+		$submission_array['phone'] = $submission->data[3]['value'][0];	   
+		$submission_array['00N80000002Z2Pz'] = $submission->data[5]['value'][0]; //item
+		$description = str_replace("\r\n", " ", $submission->data[4]['value'][0]); //question
+		$description = str_replace("''", "in", $description);
+		$description = str_replace("'", "", $description);
+		$description = str_replace("\"", "", $description);
+		$description = strip_tags($description);
+		$submission_array['description'] = $description;
+	}
+	else if ($submission->nid == 157) { // contact us page
+		$submission_array['first_name'] = $submission->data[1]['value'][0];
+		$submission_array['last_name'] = $submission->data[5]['value'][0];
+		$submission_array['email'] = $submission->data[2]['value'][0];
+		$submission_array['00N80000002Z2Pz'] = $submission->data[3]['value'][0]; //subject
+		$description = str_replace("\r\n", " ", check_plain($submission->data[4]['value'][0])); //body
+		$description = str_replace("''", "in", $description);
+		$description = str_replace("'", "", $description);
+		$description = str_replace("\"", "", $description);
+		$description = strip_tags($description);
+		$submission_array['description'] = $description;
+	}
+
+	$querystring = "";
+	foreach($submission_array as $key => $val) {
+		$querystring .= "$key=". decode_entities(strip_tags($val));
+		$querystring .= "&";
+	}
+
+	$URL="www.salesforce.com/servlet/servlet.WebToLead?encoding=UTF-8";
+	$ch = curl_init();   
+	curl_setopt($ch, CURLOPT_URL,"https://$URL"); 
+	curl_setopt($ch, CURLOPT_POST, 1);
+	curl_setopt($ch, CURLOPT_POSTFIELDS, "$querystring");
+	curl_exec ($ch);    
+	curl_close ($ch);
+  
+  if ($submission->nid == 157) {
+    watchdog("Furnitalia", "Contact Us submission saved: " . $submission->data[3]['value'][0], array(), WATCHDOG_INFO, null);
+  } else if ($submission->nid == 52) {
+    watchdog("Furnitalia", "Request submission saved: " . $submission->data[5]['value'][0], array(), WATCHDOG_INFO, null);
+  }*/
+}

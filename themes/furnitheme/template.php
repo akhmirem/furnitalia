@@ -34,18 +34,6 @@
  */
 function furnitheme_js_alter(&$javascript) {
 
-	if (isset($javascript['misc/jquery.js'])) {
-		$jquery_path = drupal_get_path('theme','furnitheme') . '/js/jquery-1.8.0.min.js';
-		
-		//We duplicate the important information from the Drupal one
-		$javascript[$jquery_path] = $javascript['misc/jquery.js'];
-		//..and we update the information that we care about
-		$javascript[$jquery_path]['version'] = '1.8.0';
-		$javascript[$jquery_path]['data'] = $jquery_path;
-		
-		unset($javascript['misc/jquery.js']);
-	}
-	
 	if (isset($javascript['misc/jquery.form.js'])) {
 		$jquery_path = drupal_get_path('theme','furnitheme') . '/js/jquery.form.min.js';
 		
@@ -57,20 +45,6 @@ function furnitheme_js_alter(&$javascript) {
 		
 		unset($javascript['misc/jquery.form.js']);
 	}
-	//jquery.form.js
-	
-	if (isset($javascript['misc/ui/jquery.ui.core.min.js'])) {
-		//We define the path of our new jquery core file
-		$jquery_path = drupal_get_path('theme','furnitheme') . '/js/jquery-ui/js/jquery-ui-1.10.3.custom.min.js';
-		
-		//We duplicate the important information from the Drupal one
-		$javascript[$jquery_path] = $javascript['misc/ui/jquery.ui.core.min.js'];
-		//..and we update the information that we care about
-		$javascript[$jquery_path]['version'] = '1.10.3';
-		$javascript[$jquery_path]['data'] = $jquery_path;
-		
-		unset($javascript['misc/ui/jquery.ui.core.min.js']);
-	}
 }
 
 /**
@@ -78,25 +52,6 @@ function furnitheme_js_alter(&$javascript) {
  */
 function furnitheme_css_alter(&$css) {
 
-	$jquery_ui_theme_path = drupal_get_path('theme','furnitheme') . '/css/ui/base/'; //base-1.8.0.min.js';
-	
-	if (isset($css['misc/ui/jquery.ui.core.css'])) {
-		$new_path = $jquery_ui_theme_path . "jquery.ui.core.min.css";
-		$css[$new_path] = $css['misc/ui/jquery.ui.core.css'];
-		$css[$new_path]['version'] = '1.10.3';
-		$css[$new_path]['data'] = $jquery_ui_theme_path . "jquery-ui.core.min.css";
-		
-		unset($css['misc/ui/jquery.ui.core.css']);
-	}
-	
-	if (isset($css['misc/ui/jquery.ui.theme.css'])) {
-		$new_path = $jquery_ui_theme_path . "jquery.ui.theme.min.css";
-		$css[$new_path] = $css['misc/ui/jquery.ui.theme.css'];
-		$css[$new_path]['version'] = '1.10.3';
-		$css[$new_path]['data'] = $jquery_ui_theme_path . "jquery.ui.theme.min.css";
-		
-		unset($css['misc/ui/jquery.ui.theme.css']);
-	}
 }
 
 /**

@@ -272,9 +272,6 @@ span.field-label { /* The inline field label used by the Fences module */
 .region-bottom { /* Wrapper for any blocks placed in the page bottom region */
 }
 
-
-.ui-state-default .ui-icon {background-image:none;}
-
 #gallery-container {
 	width:10000px;
 	position:relative;
