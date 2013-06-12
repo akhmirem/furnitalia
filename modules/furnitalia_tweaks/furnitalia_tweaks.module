@@ -15,7 +15,6 @@ function furnitalia_tweaks_menu() {
 		'page callback' => 'furnitalia_tweaks_contact_js',
 		'access callback' => TRUE, 
 		'type' => MENU_CALLBACK,
-		#'delivery callback' => 'ajax_deliver',
 	);
 	$items['user/%user/favorites'] = array(
 		'title' => 'My Favorites',
@@ -23,7 +22,16 @@ function furnitalia_tweaks_menu() {
 	    'access callback' => 'user_is_logged_in',
 	    'type' => MENU_LOCAL_TASK,
     );
-
+    $items['front'] = array (
+		'page callback' => 'furnitalia_tweaks_front_page',
+		'access callback' => TRUE, 
+		'type' => MENU_CALLBACK,
+	);
+	$items['products/ajax'] = array (
+		'page callback' => 'furnitalia_tweaks_products_ajax',
+		'access callback' => TRUE, 
+		'type' => MENU_CALLBACK,
+	);
 	
 	return $items;
 }
@@ -437,4 +445,50 @@ function furnitalia_tweaks_webform_submission_presave($node, &$submission) {
   } else if ($submission->nid == 52) {
     watchdog("Furnitalia", "Request submission saved: " . $submission->data[5]['value'][0], array(), WATCHDOG_INFO, null);
   }*/
+}
+
+/**
+  * Displays front page content for Furntialia website
+ */
+function furnitalia_tweaks_front_page() {
+	drupal_add_js(drupal_get_path('theme', 'furnitheme') . "/js/jquery.bgpos.js");
+	drupal_add_js(drupal_get_path('theme', 'furnitheme') . "/js/frontpage.js");
+	drupal_add_library('system', 'drupal.ajax');
+	
+	$sofas_term = taxonomy_term_load(2);
+	
+	$build = array();
+	
+	$build += furnitalia_tweaks_taxonomy_term_page($sofas_term);
+	
+	$build['front-anim'] = array (
+		'#markup' => '<div id="front-overlay">
+						<div id="front-left">&nbsp;</div>
+						<div id="front-right"><a href="#" id="enterFurnitalia">ENTER FURNITALIA</a></div>						
+						<div id="menu-pic-wrapper">
+					  		<div id="menu-pic" class="menu-hover loading">&nbsp;</div>
+					  	</div>
+ 				  	 </div>',
+	);
+	
+	drupal_set_title("Modern Furniture Store Sacramento/Roseville");
+	
+	return $build;
+}
+
+/**
+  * AJAX callback for products (gallery) page
+ */
+function furnitalia_tweaks_products_ajax () {
+	
+	ajax_deliver(array('#type' => 'ajax', '#commands' => array(
+		array(
+			'command' => 'openPopup', 
+			'data' => $output,
+			'method' => 'html',
+		    'selector' => "#dialog-form",
+		    'settings' => NULL,
+		),
+		//ajax_command_replace('#pagination', $output), 
+	)));
 }

@@ -90,7 +90,16 @@ if (response.data) {
 		      Drupal.attachBehaviors(new_content, settings);
 		    }
 		    
-		    $('#dialog-form').dialog( "open" ).parents(".ui-dialog").css("z-index", "1000");  
+		    if ($('#dialog-form').lenth) {
+			    $( "#dialog-form" ).dialog({
+					autoOpen: false,
+					height: 600,
+					width: 800,
+					modal: true
+			    });
+			    
+			    $('#dialog-form').dialog( "open" ).parents(".ui-dialog").css("z-index", "1000");  
+		    }
 		  
 		  
 		};
@@ -244,13 +253,6 @@ if (response.data) {
 				 }
 			});
 			
-			$( "#dialog-form" ).dialog({
-				autoOpen: false,
-				height: 600,
-				width: 800,
-				modal: true
-		    });
-
 			
 			if ($('#contact-us').length && !$('#contact-us').hasClass('.ajax-processed')) {
 				$('#contact-us').addClass('.ajax-processed');

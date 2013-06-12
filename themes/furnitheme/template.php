@@ -70,8 +70,7 @@ function furnitheme_preprocess_page(&$vars) {
 	drupal_add_library('system', 'drupal.ajax');
 
 	//jquery ui
-	drupal_add_library('system', 'ui');
-	drupal_add_library('system', 'ui.dialog');
+	drupal_add_library('system', 'ui.dialog', array('evert_page' => TRUE));
 	drupal_add_library('system', 'ui.slider');
 	drupal_add_js(drupal_get_path('module', 'webform_ajax') . '/js/webform_ajax.js', 'file');
 	
