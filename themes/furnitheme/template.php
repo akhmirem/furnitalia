@@ -78,6 +78,11 @@ function furnitheme_preprocess_page(&$vars) {
 	drupal_add_js(drupal_get_path('theme', 'furnitheme') . '/js/jquery.pikachoose.min.js');
 	drupal_add_css(drupal_get_path('theme', 'furnitheme') . '/css/pikachoose.css');
 
+
+	if (arg(0) == 'taxonomy') {
+		drupal_add_js(drupal_get_path('theme', 'furnitheme') . '/js/jquery.dropkick-1.0.0.js');
+		drupal_add_css(drupal_get_path('theme', 'furnitheme') . '/css/dropkick.css');
+	}
 	
 }
 
@@ -169,7 +174,8 @@ function furnitheme_form_select_options($element, $choices = NULL) {
       else {
         $selected = '';
       }
-      $options .= '<option value="' . check_plain($key) . '"' . $selected . ' ' . $element['#extra_option_attributes'][$i] . '>' . check_plain($choice) . '</option>';
+      $extra_attrs = isset($element['#extra_option_attributes']) && isset($element['#extra_option_attributes'][$i]) ? $element['#extra_option_attributes'][$i] : '';
+      $options .= '<option value="' . check_plain($key) . '"' . $selected . ' ' . $extra_attrs . '>' . check_plain($choice) . '</option>';
     }
     
     ++$i;

@@ -12,16 +12,8 @@
 		 * Ajax delivery command to switch among tabs by ID.
 		 */
 		Drupal.ajax.prototype.commands.openPopup = function (ajax, response, status) {
-		  // response.data is a value setted in 'data' key of command on PHP side.
-		  /*
-if (response.data) {
-		  		//$('#dialog-form').html(response.data).dialog( "open" ).parents(".ui-dialog").css("z-index", "1000");
-		  		$("#pagination").html(response.data);
-		  		Drupal.attachBehaviors($(document), Drupal.settings);
-		  }
-*/
+		 	// response.data is a value setted in 'data' key of command on PHP side.
 		  
-		  	console.log("here");
 		  	
 		  	// Get information from the response. If it is not there, default to
 		    // our presets.
@@ -90,6 +82,7 @@ if (response.data) {
 		      Drupal.attachBehaviors(new_content, settings);
 		    }
 		    
+		    //open pop-up dialog
 		    if ($('#dialog-form').lenth) {
 			    $( "#dialog-form" ).dialog({
 					autoOpen: false,
