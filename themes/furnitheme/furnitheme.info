@@ -38,7 +38,7 @@ stylesheets[all][] = css/jquery.sbscroller.css
 ;stylesheets[all][] = css/layouts/responsive-sidebars.css
 stylesheets[all][] = css/page-backgrounds.css
 stylesheets[all][] = css/tabs.css
-;stylesheets[all][] = css/dropkick.css
+stylesheets[all][] = lib/fancybox/jquery.fancybox.css
 stylesheets[all][] = css/pages.css
 stylesheets[all][] = css/blocks.css
 ;stylesheets[all][] = css/navigation.css
@@ -65,7 +65,8 @@ stylesheets[all][] = css/print.css
 scripts[] = js/jquery.isotope.min.js
 scripts[] = js/jquery.jui_pagination.min.js
 scripts[] = js/jquery.jui_pagination.en.js
-;scripts[] = js/jquery.dropkick-1.0.0.js
+scripts[] = lib/fancybox/jquery.fancybox.pack.js
+scripts[] = lib/fancybox/jquery.mousewheel-3.0.6.pack.js
 scripts[] = js/script.js
 
 

@@ -78,7 +78,7 @@ body {
 
 #logo { /* Wrapping link for logo */
   float: left; /* LTR */
-  margin: 0;
+  margin: 0 0 0 39px;
   padding: 0;
 }
 #logo img {
@@ -112,6 +112,13 @@ body {
 .region-header { /* Wrapper for any blocks placed in the header region */
   /*clear: both; /* Clear the logo */
 }
+.region-header ul.menu {
+	margin: 19px 0 0 0;
+	padding:0;
+}
+.region-header ul.menu li.leaf {
+	padding-right:15px;
+}
 
 #block-system-user-menu li {
 	display:inline;
@@ -129,11 +136,16 @@ body {
  * Content
  */
 
-#content {
-	width:70%;
+#content, .region-header {
+	width:680px;
 	float:right;
 	margin-top:2em;
 	overflow:hidden;
+	padding-left:50px;
+	padding-right:55px;
+}
+.region-header {
+	margin-top:0;
 }
 
 .region-content-top {
@@ -152,10 +164,41 @@ body {
   padding: 0;
 }
 aside.sidebars {
-	float:left;
-	width:30%;
+	float: left;
+	width: 196px;
+	margin-left: 39px;
+	border: 1px dashed red;
 }
-
+aside.menu-left {
+	margin-top:20px;
+}
+.ui-widget-content {
+	border:none;
+	background:transparent;
+	color:inherit;
+}
+.ui-state-active, .ui-widget-content .ui-state-active, .ui-widget-header .ui-state-active {
+	background: none;
+	
+}
+.ui-accordion .ui-accordion-header {
+	margin:0;
+	background:none;
+	border-top:none;
+}
+.ui-accordion .ui-accordion-content {
+	padding: 0;
+}
+aside.menu-left ul.links li {
+	list-style-image:none;
+	list-style-type:none;
+}
+aside.menu-left ul.links li.active {
+	list-style-image:url(../images/list-image.gif);
+}
+a.active {
+	color:#981b1e;
+}
 h1.title, /* The title of the page */
 h2.node-title, /* Title of a piece of content when it is given in a list of content */
 h2.block-title, /* Block title */
@@ -250,6 +293,7 @@ span.field-label { /* The inline field label used by the Fences module */
 .region-left {
 }
 
+
 /*
  * Second sidebar (on right in LTR languages, on left in RTL)
  *
@@ -338,7 +382,37 @@ span.field-label { /* The inline field label used by the Fences module */
 	background-position: 250px 480px;
 }
 
-
+div.view-taxonomy-term table.views-view-grid td {
+	padding:4px 7.5px;
+}
+div.view-taxonomy-term table.views-view-grid td.col-first {
+	padding-left: 0;
+}
+div.view-taxonomy-term table.views-view-grid td.col-last {
+	padding-right: 0;
+}
+div.view-taxonomy-term .item-details {
+	background:transparent url(../images/gallery-thumb-overlay.png) no-repeat center center;
+	display: none;
+	width: 220px;
+	height: 165px;
+	position: absolute;
+	top: 0;
+	text-align: center;
+}
+div.view-taxonomy-term .item-details h2 {
+	font-size:.9em;
+	line-height: 1em;	
+	margin:0 auto;
+}
+div.view-taxonomy-term .item-details h2 a {
+	color:white;
+	text-transform: uppercase;
+}
+div.view-taxonomy-term .item-details header {
+	padding-top:50px;
+}
+/*
 #gallery-container {
 	width:10000px;
 	position:relative;
@@ -347,19 +421,16 @@ span.field-label { /* The inline field label used by the Fences module */
 #gallery-container .gallery-item {
 	float: left;
 	margin: .1em 0 0 .3em;
-	width: 100px;
-	height: 120px;
+	width: 220px;
+	height: 165px;
 	position: relative;
-}
-#gallery-container .raised {
-	top:-35px;
 }
 #gallery-container .item-details {
 	display: none;
-	width: 90px;
-	height: 114px;
+	width: 220px;
+	height: 165px;
 	position: relative;
-	bottom: 120px;
+	bottom: 220px;
 	background: #444;
 }
 #gallery-container .item-details h2 {
@@ -370,6 +441,7 @@ span.field-label { /* The inline field label used by the Fences module */
 	color:#fff;
 	
 }
+*/
 div.keyhole {
 	background:transparent url(../images/keyhole.png) no-repeat center center;
 	width: 292px;
@@ -377,7 +449,7 @@ div.keyhole {
 	position:absolute;
 	top:0;
 	right:0;
-	z-index: 100;
+	z-index: -1;
 }
 
 #options .form-item {
@@ -398,19 +470,31 @@ aside.contact a {
 #contact-us {
 	background-position: center bottom;	
 }
-
+article.node-item {
+	position: relative;
+}
 article.view-mode-full {
 	width:716px;
 }
 #item-images {
-	width:305px;
+	width:460px;
 	border:1px dashed blue;
 	float:left;
 }
 #item-info {
 	float:left;
-	width:405px;
+	width:211px;
 	border:1px dashed red;
+	margin-left:10px;
+}
+#pikawrapper {
+	height:auto;
+    width:100%;
+    max-width: 2000px;
+    white-space:nowrap;
+}
+#pikawrapper li {
+	 display:inline-block;
 }
 
 
@@ -478,5 +562,9 @@ article.view-mode-full {
 
 .dropdown ul li.hover { 
 
+}
+
+#fancybox-close {
+    display:inline !important;
 }
 

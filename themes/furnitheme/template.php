@@ -64,14 +64,17 @@ function furnitheme_css_alter(&$css) {
  */
 function furnitheme_preprocess_page(&$vars) {
 	drupal_add_css(drupal_get_path('theme', 'furnitheme') . '/css/ui/base/jquery.ui.all.css', array('group' => -100, 'every_page' => TRUE));
-	drupal_add_css(drupal_get_path('theme', 'furnitheme') . '/css/ui/base/jquery.ui.slider.min.css', array('group' => -100, 'every_page' => TRUE));
+	//drupal_add_css(drupal_get_path('theme', 'furnitheme') . '/css/ui/base/jquery.ui.slider.min.css', array('group' => -100, 'every_page' => TRUE));
 	
+	//drupal_add_library('system', 'ui');
 	drupal_add_js('misc/jquery.form.js');
 	drupal_add_library('system', 'drupal.ajax');
+	
+	drupal_add_library('system', 'ui.accordion');
 
 	//jquery ui
-	drupal_add_library('system', 'ui.dialog', array('evert_page' => TRUE));
-	drupal_add_library('system', 'ui.slider');
+	//drupal_add_library('system', 'ui.dialog');//, array('every_page' => TRUE));
+	//drupal_add_library('system', 'ui.slider');
 	drupal_add_js(drupal_get_path('module', 'webform_ajax') . '/js/webform_ajax.js', 'file');
 	
 	//item description page thumbnail gallery
@@ -82,6 +85,17 @@ function furnitheme_preprocess_page(&$vars) {
 	if (arg(0) == 'taxonomy') {
 		drupal_add_js(drupal_get_path('theme', 'furnitheme') . '/js/jquery.dropkick-1.0.0.js');
 		drupal_add_css(drupal_get_path('theme', 'furnitheme') . '/css/dropkick.css');
+	}
+	
+	$vars['show_keyhole'] = FALSE;
+	if (arg(0) == 'front') {
+		$vars['show_keyhole'] = TRUE;
+	}
+	
+	if (arg(0) == 'node' && is_numeric(arg(1))) {
+		drupal_add_js(drupal_get_path('theme', 'furnitheme') . '/lib/jscrollpane/jquery.jscrollpane.min.js');
+		drupal_add_js(drupal_get_path('theme', 'furnitheme') . '/lib/jscrollpane/mwheelIntent.js');
+		drupal_add_css(drupal_get_path('theme', 'furnitheme') . '/lib/jscrollpane/jquery.jscrollpane.css');
 	}
 	
 }
@@ -108,7 +122,7 @@ function furnitheme_preprocess_node(&$variables, $hook) {
  *   The name of the template being rendered ("html" in this case.)
  */
 function furnitheme_preprocess_html(&$variables, $hook) {
-	drupal_add_library('system', 'ui');
+	
 }
 
 /**
@@ -182,6 +196,58 @@ function furnitheme_form_select_options($element, $choices = NULL) {
   }
   return $options;
 }
+
+/**
+ * Implements hook_form_alter().
+ *
+ * Alter exposed filter form in views
+ */
+/*function furnitheme_form_views_exposed_form_alter(&$form, &$form_state, $form_id) {
+
+	
+  if (isset($form['sort_by'])) {
+    // Combine sort drop-downs into one.
+    $form['sorting'] = array(
+      '#type' => 'select',
+      '#id'   => 'sort',
+      '#title' => $form['sort_by']['#title'],
+      '#attributes' => array('class' => array('clearfix', 'option-set', 'dk', 'sortBy'), 'tabindex' => '1'),
+    );
+    foreach ($form['sort_by']['#options'] as $sort_by_key => $sort_by_title) {
+      foreach ($form['sort_order']['#options'] as $sort_order_key => $sort_order_title) {
+        $form['sorting']['#options'][$sort_by_key . '|' . $sort_order_key] = $sort_by_title . ' ' . $sort_order_title;
+      }
+    }
+
+    // Get default value for combined sort.
+    $sort_by_keys = array_keys($form['sort_by']['#options']);
+    $form['sorting']['#default_value'] = $sort_by_keys[0] . '|' . $form['sort_order']['#default_value'];
+  }
+
+  // Explode combined sort field into two values that are appropriate for views.
+  if (isset($form_state['input']['sorting'])) {
+    $sorting = explode('|', $form_state['input']['sorting']);
+    $form_state['input']['sort_by'] = $sorting[0];
+    $form_state['input']['sort_order'] = $sorting[1];
+  }
+}*/
+
+/**
+ * Default preprocess function for all filter forms.
+ */
+/*function furnitheme_preprocess_views_exposed_form(&$vars) {
+  /*$form = &$vars['form'];
+
+  // Render new created sort field.
+  if (isset($form['sorting'])) {
+    $form['sorting']['#printed'] = FALSE;
+    $vars['sorting'] = drupal_render($form['sorting']);
+
+    // Need to rebuild the submit button.
+    $form['submit']['#printed'] = FALSE;
+    $vars['button'] = drupal_render_children($form);
+  }
+}*/
 
 
 /**

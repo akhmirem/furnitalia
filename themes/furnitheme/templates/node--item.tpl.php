@@ -13,49 +13,31 @@
 <?php
 if ($teaser) { //item teaser view
 
-	$item_raised = isset($node->index) && ($node->index % 4 == 1 || $node->index % 4 == 0);
-
 	$classes .= " gallery-item";
-	$classes .= ' brand' . $node->field_brand['und'][0]['tid'];
-	
-	if($item_raised) {
-		$classes .= ' raised';
-	}
+	$classes .= ' brand' . ((isset($node->field_brand['und'])) ? $node->field_brand['und'][0]['tid'] : '');
 
 		
 	$additional_attribs = '';
-	if ($node->nid % 2 == 0) $additional_attribs .= " data-clearance=\"true\"";
+	//if ($node->nid % 2 == 0) $additional_attribs .= " data-clearance=\"true\"";
 ?>
 
 <article class="node-<?php print $node->nid; ?> <?php print $classes; ?> clearfix"<?php print $attributes; ?>>
 
 
 	<?php
-	//krumo($node);
-	//krumo($content);
+
 	hide($content['list_price']);
 	hide($content['sell_price']);
 
-	/*$first_image = $node->field_image['und'][0];	
+	$image = $node->field_image['und'][0];
+
 	$image_html = theme('image_style', array(
-		'style_name' => 'thumbnail',
-		'path' => file_build_uri($first_image['filename']),
-		'alt' => $first_image['alt'],
+		'style_name' => 'medium',
+		'path' => $image['uri'], //file_build_uri($image['filename']),
+		'alt' => $image['alt'],
 	));
-	//print render($image_html);*/
-	if (isset($node->index) && ($node->index % 4 == 1 || $node->index % 4 == 0)) {
-		//print theme('image', $node->field_thumb_91x114['und'][0]);
-		//print render(field_view_field('node', $node, 'field_thumb_91x114'));
-		
-		$thumb = $node->field_thumb_91x114['und'][0];	
-	}
-	else{
-		//print theme('image',$node->field_thumb_94x78['und'][0]);
-		//print render(field_view_field('node', $node, 'field_thumb_94x78'));		
-		$thumb = $node->field_thumb_94x78['und'][0];			
-	}
-	$thumb_path = file_build_uri($thumb['uri']);
-	print theme("image", array("path" => $thumb['uri']));
+	print render($image_html);
+
 	?>
 
 	<div class="item-details">
@@ -84,13 +66,38 @@ if ($teaser) { //item teaser view
     </header>
   <?php endif; ?>
 
-  <?php //krumo($content); ?>
+  <?php //krumo($content['field_image']['#items']); ?>
+  
   
   <div id="item-images">
-	  <?php //print render($content['field_image']);?>
+
 	  <ul id="pikame" >
 	  	<?php foreach($content['field_image']['#items'] as $i => $image) :?>
-		  	<li><a href="#"><?php print theme("image", array("path" => $image['uri'])); ?></a></li>
+
+	  		<?php 
+	  			$style = "large";
+	  			$derivative_uri = image_style_path($style, $image['uri']);
+	  			if (!file_exists($derivative_uri)) {
+	  				$display_style = image_style_load($style);
+	  				image_style_create_derivative($display_style, $image['uri'], $derivative_uri);
+	  			}
+	  			$img_url  = file_create_url($derivative_uri);
+	  			
+	  			$style = "thumbnail";
+	  			$derivative_uri = image_style_path($style, $image['uri']);
+	  			if (!file_exists($derivative_uri)) {
+	  				$display_style = image_style_load($style);
+	  				image_style_create_derivative($display_style, $image['uri'], $derivative_uri);
+	  			}
+	  			$thumb_url  = file_create_url($derivative_uri);
+	  			
+	  			$full_img_url = file_create_url($image['uri']);
+
+	  		?>
+	  		
+		  	<li><a href="<?php print $full_img_url; ?>"><?php print theme("image", array("path" => $thumb_url, "attributes" => array("ref" => $img_url))); ?></a></li>
+		  	
+
 	  	<?php endforeach;?>
 	  </ul>
   </div>

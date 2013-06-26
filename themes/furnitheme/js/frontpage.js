@@ -54,10 +54,25 @@ var timer;
 					//$('#menu-pic').hide().delay(1000).css({width:ANIM_FRAME_WIDTH, left:920, "background-image":"url(\"images/bg-gallery.png\")"}).show();
 					
 					$("#front-overlay").addClass("loading").delay(1000).hide(1);
+					
+					window.setTimeout(AnimateKeyholeBackgroundCategoryPage, 1000);
+					
 				});
 
           	
         }
+	}
+	
+	function AnimateKeyholeBackgroundCategoryPage() {
+		$('#menu-pic-wrapper').css({
+			'position':'absolute',
+			'width':253,
+			'left':'auto',
+			'right':19,
+			'z-index':'-2'
+		}).insertBefore($('.keyhole'));
+		$('#menu-pic').css({'width':253, 'left':0}).show();
+		timer = window.setTimeout(AnimateBackground, 500)
 	}
 	
 	function AnimateBackground() {

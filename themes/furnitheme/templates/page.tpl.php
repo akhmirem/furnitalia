@@ -166,37 +166,28 @@
     ?>
 
     <?php if ($left): ?>
-      <aside class="sidebars">
+      <aside class="sidebars menu-left">
         <?php print $left; ?>
 		<?php print render($page['left']); ?>
       </aside><!-- /.sidebars -->
     <?php endif; ?>
     
-    <aside class="contact">
+    <aside class="contact sidebars">
 		<a href="#chat" title="Chat online" id="chat-online">Chat online</a>
 		<a href="#contact" title="Contact" id="contact-us">Contact us</a>
     </aside>
     
-    <div id="dialog-form" title="Create new user" style="display:none">
-	  <p class="validateTips">All form fields are required.</p>
-	 
-	  <form>
-	  <fieldset>
-	    <label for="name">Name</label>
-	    <input type="text" name="name" id="name" class="text ui-widget-content ui-corner-all" />
-	    <label for="email">Email</label>
-	    <input type="text" name="email" id="email" value="" class="text ui-widget-content ui-corner-all" />
-	    <label for="password">Password</label>
-	    <input type="password" name="password" id="password" value="" class="text ui-widget-content ui-corner-all" />
-	  </fieldset>
-	  </form>
+    <div id="dialog-form" title="Request product info" style="display:none">
+	  <p>Javascript must be enabled in your browser to submit a request.</p>
 	</div>	
 
   </div><!-- /#main -->
 
   <?php print render($page['footer']); ?>
   
-  <div class="keyhole">&nbsp;</div>
+  <?php if ($show_keyhole) : ?>
+  	<div class="keyhole">&nbsp;</div>
+  <?php endif; ?>
 
 </div><!-- /#page -->
 

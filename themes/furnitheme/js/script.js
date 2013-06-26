@@ -83,23 +83,23 @@
 		    }
 		    
 		    //open pop-up dialog
-		    if ($('#dialog-form').lenth) {
-			    $( "#dialog-form" ).dialog({
-					autoOpen: false,
-					height: 600,
-					width: 800,
-					modal: true
-			    });
-			    
-			    $('#dialog-form').dialog( "open" ).parents(".ui-dialog").css("z-index", "1000");  
-		    }
+		    console.log("attempting to display popup");
+			$.fancybox.open($('#dialog-form'), {
+				width:800,
+				height:600,
+				closeBtn:true,
+				closeClick:false,
+				mouseWheel:true,
+				openEffect	: 'none',
+				closeEffect	: 'none'
+			});
 		  
 		  
 		};
 
         Drupal.behaviors.furnitalia = {
           attach: function(context, settings) {
-			$("#gallery-container .gallery-item").each(function() {
+			$(".view-taxonomy-term .gallery-item").each(function() {
 				var $galleryItem = $(this);
 				$galleryItem.mouseenter(
 					function() {
@@ -112,7 +112,10 @@
 				);
 			});
 			
-			$("#gallery-container").isotope({
+			//mark li active if link inside has class 'active'
+			$('a.active').closest('li').addClass('active');
+			
+			/*$("#gallery-container").isotope({
 				itemSelector : '.gallery-item',
 				//layoutMode : 'fitColumns',
 				layoutMode : 'masonryHorizontal',
@@ -146,106 +149,42 @@
 						}	
 					});
 				}
-			});
-		
+			});*/
 
-		
-			$('#sort-by').change(function () {
-				var $selSortOption = $("#sort-by option:selected").eq(0);
-				//console.log($selSortOption.attr('data-option-value'));
-		  
-				// make option object dynamically, i.e. { filter: '.my-filter-class' }
-				var options = {},
-				key = 'sortBy',
-				value = $selSortOption.attr('data-option-value');
-				
-				// parse 'false' as false boolean
-				value = value === 'false' ? false : value;
-				options[ key ] = value;
 			
-				// apply new options
-				$("#gallery-container").isotope( options );
-			 
-				 return false;
-			});
-
-		
-			// filter items when filter link is clicked
-			$('#filters').change(function(){
-				var $selOption = $("#filters option:selected").eq(0);
-				var selector = $selOption.attr('data-filter');
-				console.log(selector);
-				$("#gallery-container").isotope({ filter: selector });
 			
-				return false;
-			});
-
-			if ($("#pagination").length) {
-				$("#pagination").once('pagination').jui_pagination({
-					currentPage: 1,
-					visiblePageLinks: 1,
-					totalPages: Math.ceil($("#gallery-container").find("article").length / 6),
-					showNavButtons: true,
-					showNavPages: false,
-					showPreferences: true,
-					navPagesMode: 'continuous',
-					containerClass: 'container1',		 
-					useSlider: true,
-					sliderInsidePane: true,
-					sliderClass: 'slider1',		 
-					disableSelectionNavPane: false,
-					navRowsPerPageClass: 'rows-per-page1  ui-state-default ui-corner-all',
-					navGoToPageClass: 'goto-page1 ui-state-default ui-corner-all',
-				 
-					onChangePage: function(event, page_num) {
-						console.log("attempt to change page");
-					  if(isNaN(page_num) || page_num <= 0) {
-						alert('Invalid page' + ' (' + page_num + ')');
-					  } else {
-						$("#result").html('Page changed to: ' + page_num);
-						$("#gallery-container").animate({left: -610 * (page_num - 1) + "px"}, "slow");
-					  }
-					},
-					onSetRowsPerPage: function(event, rpp) {
-					  if(isNaN(rpp) || rpp <= 0) {
-						alert('Invalid rows per page' + ' (' + rpp + ')');
-					  } else {
-						alert('rows per page successfully changed' + ' (' + rpp + ')');
-						$(this).jui_pagination({
-						  rowsPerPage: rpp
-						})
-					  }
-					},
-					onDisplay: function() {
-					  var showRowsInfo = $(this).jui_pagination('getOption', 'showRowsInfo');
-					  if(showRowsInfo) {
-						var prefix = $(this).jui_pagination('getOption', 'nav_rows_info_id_prefix');
-						$("#" + prefix + $(this).attr("id")).text('Total rows: XXX');
-					  }
-					}
-				});
-			 
-				$("#result").html('Current page is: ' + $("#pagination").jui_pagination('getOption', 'currentPage'));
-			}
-			
-			$('#sort-by').dropkick({
+			/*$('#sort-by').dropkick({
 				 change: function (value, label) {
 				 	$("#sort-by option").filter(function() {
 					    return $(this).text() == label; 
 					}).attr('selected', true);
 					$('#sort-by').trigger('change');
 				 }
-			});
-				 
-			$('#filters').dropkick({
+			});*/
+			
+			/*$('#filters').dropkick({
 				 change: function (value, label) {
 				  	$("#filters option").filter(function() {
 					    return $(this).text() == label; 
 					}).attr('selected', true);
 					$('#filters').trigger('change');
 				 }
-			});
+			});*/
 			
+			if(jQuery().dropkick) {
+				$('#edit-sort-by').dropkick({
+					 change: function (value, label) {
+					 	$('#edit-sort-by').trigger('change');
+					 }
+				});
+				
+				$('#edit-brand').dropkick({
+					 change: function (value, label) {
+						$('#edit-brand').trigger('change');
+					 }
+				});
+			}
+					
 			
 			if ($('#contact-us').length && !$('#contact-us').hasClass('.ajax-processed')) {
 				$('#contact-us').addClass('.ajax-processed');
@@ -257,13 +196,71 @@
 				var ajax = new Drupal.ajax("#contact-us", $('#contact-us')[0], element_settings);
 			}
 			
-			//item description page thumbnail gallery
-			$("#pikame").PikaChoose({
-				showCaption:false,
-				carousel:false
+			//main navigation menu accordeon
+			$("#main-nav").accordion({icons:false,collapsible: true })
+			
+			//item description page thumbnail gallery			
+			// build fancybox group
+			$("#pikame").once(function() {
+				fancyGallery = [];
+				$(this).find("a").each(function(i){
+					// build fancybox gallery
+				    fancyGallery[i] = {"href" : this.href, "title" : this.title};
+				}).end().PikaChoose({
+				    autoPlay : false, // optional
+				    showCaption:false,
+				    // bind fancybox to big images element after pikachoose is built
+				    buildFinished: fancy
+				}); // PikaChoose
 			});
+			
+			/*
+$("#pikame").once(function(){
+				$(this).PikaChoose({
+					showCaption:false,
+					buildFinished:fb_pop
+				});
+			});
+*/
 			
         }
 	}
+	
+	var fancyGallery = []; // fancybox gallery group
+	var fancy = function (self) {
+	    // bind click event to big image
+	    self.anchor.on("click", function(e){
+	      // find index of corresponding thumbnail
+	      var pikaindex = $("#pikame").find("li.active").index();
+	      // open fancybox gallery starting from corresponding index
+	      $.fancybox(fancyGallery,{
+	        // fancybox options
+	        "cyclic": true, // optional for fancybox v1.3.4 ONLY, use "loop" for v2.x
+	        "index": pikaindex // start with the corresponding thumb index
+	      });
+	      return false; // prevent default and stop propagation
+	     }); // on click
+	     
+	     $("#pikame").wrap($('<div id="pikawrapper"></div>'));
+	     $("#pikawrapper").jScrollPane();
+	 }
+
+	
+
+	var fb_pop = function(self) {
+		$("#pikame a").attr('rel', 'gallery').fancybox();
+		
+		$("#pikame").jScrollPane();
+		/*
+self.anchor.click(function(event) {
+			event.preventDefault();
+			var href = $(this).attr("href");
+			var title = $(this).attr("title");
+			$(".pika-stage a").attr('rel', 'gallery');
+			$.fancybox.open({"href":href, "title":title}, {"type":'iframe'});
+		});
+*/
+	}
+
 })(jQuery);
 
