@@ -23,7 +23,7 @@ var timer2;
 					
 					//$("#menu-pic-wrapper").css({"background-image":"url(images/bg.jpg)", "background-position":"300px 0"});
 					
-					timer = window.setTimeout(AnimateBackground(true), 500);
+					timer = window.setTimeout(AnimateBackground, 500);
 			
 			    })
 			    
@@ -75,18 +75,15 @@ var timer2;
 		timer = window.setTimeout(AnimateBackground, 500);
 	}
 	
-	function AnimateBackground(loop) {
+	function AnimateBackground() {
 
-		if (loop === undefined) {
-			loop = false;
-		}
 
 		$('#menu-pic').animate({backgroundPosition:"(" + backgroundXShift + "px 0)"}, {
 			duration:1500,
 			easing:'linear',
 			complete:function() {				
 				if (loop) {
-					timer = window.setTimeout(AnimateBackground(true), 50);
+					timer = window.setTimeout(AnimateBackground, 50);
 				} else {
 					window.clearTimeout(timer);
 				}
