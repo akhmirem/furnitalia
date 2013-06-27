@@ -82,11 +82,7 @@ var timer2;
 			duration:1500,
 			easing:'linear',
 			complete:function() {				
-				if (loop) {
-					timer = window.setTimeout(AnimateBackground, 50);
-				} else {
-					window.clearTimeout(timer);
-				}
+				timer = window.setTimeout(AnimateBackground, 50);
 			}
 		});
 		backgroundXShift -= 100;
