@@ -16,13 +16,10 @@ if ($teaser) { //item teaser view
 	$classes .= " gallery-item";
 	$classes .= ' brand' . ((isset($node->field_brand['und'])) ? $node->field_brand['und'][0]['tid'] : '');
 
-		
 	$additional_attribs = '';
-	//if ($node->nid % 2 == 0) $additional_attribs .= " data-clearance=\"true\"";
 ?>
 
 <article class="node-<?php print $node->nid; ?> <?php print $classes; ?> clearfix"<?php print $attributes; ?>>
-
 
 	<?php
 
@@ -33,7 +30,7 @@ if ($teaser) { //item teaser view
 
 	$image_html = theme('image_style', array(
 		'style_name' => 'medium',
-		'path' => $image['uri'], //file_build_uri($image['filename']),
+		'path' => $image['uri'],
 		'alt' => $image['alt'],
 	));
 	print render($image_html);

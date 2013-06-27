@@ -115,61 +115,6 @@
 			//mark li active if link inside has class 'active'
 			$('a.active').closest('li').addClass('active');
 			
-			/*$("#gallery-container").isotope({
-				itemSelector : '.gallery-item',
-				//layoutMode : 'fitColumns',
-				layoutMode : 'masonryHorizontal',
-				//masonry : {
-				//	columnWidth:200
-				//},
-				resizesContainer : false,
-				resizable :	false,
-				getSortData : {
-					clearance : function( $elem ) {
-						return $elem.attr('data-clearance') == "true" ? 1 : 2;
-					},
-					name : function ($item) {
-						return $item.find('.title').text();
-					},
-					index : function($item) {
-						return $item.index();
-					},
-					price: function($item) {
-						var price = $item.find('.sell-price span.uc-price').text();
-						return Number(price.replace(/[^0-9\.]+/g,""))
-					}
-				},
-				//sortBy: 'name',
-				onLayout: function( $elems, instance ) {
-					$elems.each(function(index, value) {
-						console.log($(this).find('title').text());
-						if ((index + 1) % 4 ==  0) {
-							$(this).css("top", "-35px");	
-							//console.log($(this).text());
-						}	
-					});
-				}
-			});*/
-
-			
-			
-			/*$('#sort-by').dropkick({
-				 change: function (value, label) {
-				 	$("#sort-by option").filter(function() {
-					    return $(this).text() == label; 
-					}).attr('selected', true);
-					$('#sort-by').trigger('change');
-				 }
-			});*/
-			
-			/*$('#filters').dropkick({
-				 change: function (value, label) {
-				  	$("#filters option").filter(function() {
-					    return $(this).text() == label; 
-					}).attr('selected', true);
-					$('#filters').trigger('change');
-				 }
-			});*/
 			
 			if(jQuery().dropkick) {
 				$('#edit-sort-by').dropkick({
@@ -213,15 +158,6 @@
 				    buildFinished: fancy
 				}); // PikaChoose
 			});
-			
-			/*
-$("#pikame").once(function(){
-				$(this).PikaChoose({
-					showCaption:false,
-					buildFinished:fb_pop
-				});
-			});
-*/
 			
         }
 	}

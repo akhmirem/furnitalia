@@ -1,6 +1,7 @@
 ANIM_FRAME_WIDTH = 542;
 backgroundXShift = 0;
 var timer;
+var timer2;
 
 
 (function($) {
@@ -22,7 +23,7 @@ var timer;
 					
 					//$("#menu-pic-wrapper").css({"background-image":"url(images/bg.jpg)", "background-position":"300px 0"});
 					
-					timer = window.setTimeout(AnimateBackground, 500);
+					timer = window.setTimeout(AnimateBackground(true), 500);
 			
 			    })
 			    
@@ -55,11 +56,9 @@ var timer;
 					
 					$("#front-overlay").addClass("loading").delay(1000).hide(1);
 					
-					window.setTimeout(AnimateKeyholeBackgroundCategoryPage, 1000);
+					timer = window.setTimeout(AnimateKeyholeBackgroundCategoryPage, 3500);
 					
-				});
-
-          	
+				});          	
         }
 	}
 	
@@ -71,18 +70,33 @@ var timer;
 			'right':19,
 			'z-index':'-2'
 		}).insertBefore($('.keyhole'));
-		$('#menu-pic').css({'width':253, 'left':0}).show();
-		timer = window.setTimeout(AnimateBackground, 500)
+		$('#menu-pic').css({'width':253, 'left':0}).show();		
+		
+		timer = window.setTimeout(AnimateBackground, 500);
 	}
 	
-	function AnimateBackground() {
+	function AnimateBackground(loop) {
 
-		$('#menu-pic').animate({backgroundPosition:"(" + backgroundXShift + "px 0)"}, 1000);
+		if (loop === undefined) {
+			loop = false;
+		}
+
+		$('#menu-pic').animate({backgroundPosition:"(" + backgroundXShift + "px 0)"}, {
+			duration:1500,
+			easing:'linear',
+			complete:function() {				
+				if (loop) {
+					timer = window.setTimeout(AnimateBackground(true), 50);
+				} else {
+					window.clearTimeout(timer);
+				}
+			}
+		});
 		backgroundXShift -= 100;
 		if (backgroundXShift < -2710) {
 			backgroundXShift = ANIM_FRAME_WIDTH - 100;
 			$('#menu-pic').stop().css({"background-position": backgroundXShift + "px 0"});
 		}
-		timer = window.setTimeout(AnimateBackground, 1100);
+
 	}
 })(jQuery);
