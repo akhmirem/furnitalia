@@ -142,7 +142,12 @@
 			}
 			
 			//main navigation menu accordeon
-			$("#main-nav").accordion({icons:false,collapsible: true })
+			$("#main-nav").accordion({
+				icons:false,
+				collapsible: true,
+				active: false,
+				heightStyle:'content'
+			});
 			
 			//item description page thumbnail gallery			
 			// build fancybox group

@@ -1,4 +1,5 @@
 ANIM_FRAME_WIDTH = 542;
+ANIM_BG_TOTAL_WIDTH = 2710;
 backgroundXShift = 0;
 var timer;
 var timer2;
@@ -23,7 +24,7 @@ var timer2;
 					
 					//$("#menu-pic-wrapper").css({"background-image":"url(images/bg.jpg)", "background-position":"300px 0"});
 					
-					timer = window.setTimeout(AnimateBackground, 500);
+					timer = window.setTimeout(AnimateFrontPageBackground, 500);
 			
 			    })
 			    
@@ -38,55 +39,112 @@ var timer2;
 			    
 				//enter furnitalia link animation
 				$("#enterFurnitalia").click(function(){
-					//var ajax = new Drupal.ajax("#contact-us", $('#contact-us')[0], element_settings);
-					//ANIM_FRAME_WIDTH = 200;
-					window.clearTimeout(timer);
 					
-					$('#menu-pic').hide();
+					//stop front page slider animation
+					$('#menu-pic').stop().hide();
+					clearTimeout(timer);
 					
-					$("#front-left").animate({width:'0px'}, 1000, function() {
-						//$(this).css({width:900}).find("#main-nav").removeClass("hidden").accordion({icons:false,collapsible: true });
-						//$("#top-menu").removeClass("front");
-					});
-					$("#front-right").animate({left:'900px', right:'5px', width:'0px'}, 1000, function() {
-						//$(this).removeClass("front");
-					});
+					//move away left and right keyhole parts
+					$("#front-left").animate({width:'0px'}, 1000);
+					$("#front-right").animate({left:'880px', right:'5px'}, 1000);
 					
-					//$('#menu-pic').hide().delay(1000).css({width:ANIM_FRAME_WIDTH, left:920, "background-image":"url(\"images/bg-gallery.png\")"}).show();
 					
+					//hide top overlay
 					$("#front-overlay").addClass("loading").delay(1000).hide(1);
 					
-					timer = window.setTimeout(AnimateKeyholeBackgroundCategoryPage, 3500);
+					
+					//set up keyhole animation for categories
+					SetUpCategoryAnimKeyHole();					
+					
+					//hover events for category links
+					$('#bg1').hover(function(e){
+						$("#category-image-pane .category-image").stop().css('display', 'none');						
+						$(".category1").fadeIn({duration:500});
+						KeyHoleScroll(1);
+					}, function(){});
+						
+					$('#bg2').hover(function(e){
+						$("#category-image-pane .category-image").stop().css('display', 'none');							
+						$(".category2").fadeIn({duration:500});
+						KeyHoleScroll(2);
+					}, function(){});
+					
+					$('#bg3').hover(function(e){
+						$("#category-image-pane .category-image").stop().css('display', 'none');						
+						$(".category3").fadeIn({duration:500});
+						KeyHoleScroll(3);
+					}, function(){});
+					
+					$('#bg4').hover(function(e){
+						$("#category-image-pane .category-image").stop().css('display', 'none');						
+						$(".category4").fadeIn({duration:500});
+						KeyHoleScroll(4);
+					}, function(){});
+					
+					
 					
 				});          	
         }
 	}
 	
-	function AnimateKeyholeBackgroundCategoryPage() {
-		$('#menu-pic-wrapper').css({
-			'position':'absolute',
-			'width':253,
-			'left':'auto',
-			'right':19,
-			'z-index':'-2'
-		}).insertBefore($('.keyhole'));
-		$('#menu-pic').css({'width':253, 'left':0}).show();		
+	function SetUpCategoryAnimKeyHole() {
+	
+		ANIM_FRAME_WIDTH = 253;
+		ANIM_BG_TOTAL_WIDTH = 253 * 4;
+
+	
+		var keyHoleImg = Drupal.settings.basePath + 'sites/all/themes/furnitheme/images/bg-categores-keyhole.jpg';
+		var img = new Image();
 		
-		timer = window.setTimeout(AnimateBackground, 500);
+		$('#menu-pic').addClass('loading');
+		
+		$(img)
+	    .load(function () {
+	    
+	    	$('#menu-pic-wrapper').css({
+				'position':'absolute',
+				'width':253,
+				'left':'auto',
+				'right':19,
+				'z-index':'-2'
+			}).insertBefore($('.keyhole'));
+			
+			// insert loaded image into the div 
+			$('#menu-pic')
+				// remove the loading class (so no background spinner), 
+				.removeClass('loading')
+				.css("background-image", "url(" +  keyHoleImg + ")")
+				.css({'width':253, 'left':0}).show()
+				.addClass("ready");
+	
+	    })
+	    .attr('src', keyHoleImg);
+				
 	}
 	
-	function AnimateBackground() {
-
+	function KeyHoleScroll(index) {
+		if (!$('#menu-pic').hasClass("ready")) {
+			return;
+		}
+		
+		var backgroundXShift = -ANIM_FRAME_WIDTH * (index - 1);
+		$('#menu-pic').stop().animate({backgroundPosition:"(" + backgroundXShift + "px 0)"}, {
+			duration:500,
+			easing:'linear',
+		});
+	}
+	
+	function AnimateFrontPageBackground() {
 
 		$('#menu-pic').animate({backgroundPosition:"(" + backgroundXShift + "px 0)"}, {
 			duration:1500,
 			easing:'linear',
 			complete:function() {				
-				timer = window.setTimeout(AnimateBackground, 50);
+				timer = setTimeout(AnimateFrontPageBackground, 50);
 			}
 		});
 		backgroundXShift -= 100;
-		if (backgroundXShift < -2710) {
+		if (backgroundXShift < -ANIM_BG_TOTAL_WIDTH) {
 			backgroundXShift = ANIM_FRAME_WIDTH - 100;
 			$('#menu-pic').stop().css({"background-position": backgroundXShift + "px 0"});
 		}

@@ -148,21 +148,6 @@ function furnitalia_tweaks_page_alter(&$page) {
 		'#prefix' => '<nav id="main-nav">',
 		'#suffix' => '</nav>',
 	);
-	
-	/*$result = db_query("
-	  SELECT DISTINCT td.tid, td.name FROM {taxonomy_term_data} td
-	  INNER JOIN {taxonomy_term_hierarchy} h on td.tid=h.tid and h.parent=0
-	  LEFT JOIN {taxonomy_index} tn on tn.tid = td.tid
-	  LEFT JOIN {node} n on n.nid=tn.nid and n.status=1
-	  INNER JOIN {field_data_field_brand} b on b.entity_id=n.nid and b.field_brand_tid=:brand
-	  WHERE td.vid = :vid", array(":brand" => 21, ":vid" => 2));*/
-	  
-	/*$result = db_query("
-	  SELECT DISTINCT td.tid, td.name FROM {taxonomy_term_data} td
-	  INNER JOIN {taxonomy_term_hierarchy} h on td.tid=h.tid and h.parent=0
-	  LEFT JOIN {taxonomy_index} tn on tn.tid = td.tid
-	  LEFT JOIN {node} n on n.nid=tn.nid and n.status=1
-	  WHERE td.vid = :vid", array( ":vid" => 2));*/
 	  
 	$result = db_query("
 	  SELECT DISTINCT td.tid, td.name, h.parent as parent_term FROM {taxonomy_term_data} td
@@ -170,8 +155,6 @@ function furnitalia_tweaks_page_alter(&$page) {
 	  LEFT JOIN {node} n on n.nid=tn.nid and n.status=1
 	  INNER JOIN {taxonomy_term_hierarchy} h on td.tid=h.tid
 	  WHERE td.vid = :vid", array(":vid" => 2));
-
-
 
 	$items = array();
 	foreach($result as $term) {
@@ -431,69 +414,8 @@ function  furnitalia_tweaks_prepare_node_attributes($nodes) {
 	if (!is_array($nodes)) {
 		return array();
 	}
-	
-	//prepare sort options
-    //-----------------------------    
-    $build['options'] = array(
-    	'#prefix' => '<section id="options" class="clearfix">',
-    	'#suffix' => '</section>',
-    );
-    $build['options']['sort'] = array(
-		'#attributes' => array('id' => 'sort-by','class' => array('clearfix', 'option-set', 'dk', 'sortBy'), 'data-option-key' => 'sortBy', 'name' => 'sortBy', 'tabindex' => '1'),
-		'#type' => 'select',
-		'#title' => t('Sort'),
-		'#options' => array(
-			'sortBy=original-order' => 'Default',
-			'sortBy=price'	=> 'Price',
-			'sortBy=index' => 'Index',
-			'sortBy=clearance' => 'Clearance',
-		),
-		'#extra_option_attributes' => array (
-			'data-option-value="original-order"',
-			'data-option-value="price"',
-			'data-option-value="index"',
-			'data-option-value="clearance"',
-		),
-		'#default_value' => 'sortBy=original-order',
-    );
-    
-    //prepare Filter options
-    //-----------------------------
-    //determine all taxonomy terms
-    $brands = array("*" => 'show all');
-    foreach($nodes as $node) {
-    	$tid = $node->field_brand['und'][0]['tid'];
-	    if (!isset($brands [$tid])) {
-	    	$term = taxonomy_term_load($tid);
-		 	$brands[$tid] = $term->name;
-	    }
-    }
-    
-    $extra_options = array();
-    foreach($brands as $tid => $category) {
-    	if ($tid == "*") {
-		     $extra_options []= 'data-filter="*"';
-	    } else {
-		 	$extra_options []= 'data-filter=".brand'. $tid .'"';  
-	    }
-    }
-    
-    $build['options']['filter'] = array(
-		'#attributes' => array('id' => 'filters','class' => array('clearfix', 'option-set', 'dk', 'sortBy'), 'data-option-key' => 'filterBy', 'name' => 'filterBy', 'tabindex' => '2'),
-		'#type' => 'select',
-		'#title' => t('Filter'),
-		'#options' => $brands,
-		'#extra_option_attributes' => $extra_options,
-		'#default_value' => '*',
-    );
-    
+
     $build += furnitalia_tweaks_node_view_multiple($nodes);
-    $build['pager'] = array(
-      //'#theme' => 'pager',
-      //'#weight' => 5,
-      '#prefix' => '<div id="pagination">',
-      '#suffix' => '</div>',
-    );
 
 	return $build;
 	
@@ -579,7 +501,10 @@ function furnitalia_tweaks_front_page() {
 	$build['category-preview'] = array(
 		'#markup' => '<div id="cat-preview">					
 						<div id="category-image-pane">
-					  		<a href="#"><img src="' .drupal_get_path('theme', 'furnitheme') . "/images/category-image-1.jpg" . '" title="Furnitalia collections"/></a>
+					  		<a href="#" class="category1 category-image" style="display:block"><img src="' .drupal_get_path('theme', 'furnitheme') . "/images/category-image-1.jpg" . '" title="Furnitalia collections"  /></a>
+					  		<a href="#" class="category2 category-image" ><img src="' .drupal_get_path('theme', 'furnitheme') . "/images/category-image-2.jpg" . '" title="Furnitalia collections" /></a>
+					  		<a href="#" class="category3 category-image"><img src="' .drupal_get_path('theme', 'furnitheme') . "/images/category-image-3.jpg" . '" title="Furnitalia collections"  /></a>
+					  		<a href="#" class="category4 category-image"><img src="' .drupal_get_path('theme', 'furnitheme') . "/images/category-image-4.jpg" . '" title="Furnitalia collections"  /></a>
 					  	</div>
  				  	 </div>',
 	);

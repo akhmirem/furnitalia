@@ -327,7 +327,7 @@ span.field-label { /* The inline field label used by the Fences module */
 	top:0;
 	left: 0;
 	width:100%;
-	height:100%;
+	height:660px;
 	z-index: 101;
 	background-color: #ffffff;
 }
@@ -343,15 +343,13 @@ span.field-label { /* The inline field label used by the Fences module */
 #front-left {
 	z-index: 10;
 	background:white;
-	border:1px dashed red;
 	width:480px;
 	background:url(../images/front-left.png) no-repeat;					
 }
 #front-right {
-	border:1px dashed green;
 	background:transparent url(../images/front-right.png) no-repeat;
 	width: 720px;
-	left: 340px;
+	left: 330px;
 	z-index:5;
 }
 
@@ -470,6 +468,14 @@ aside.contact a {
 #contact-us {
 	background-position: center bottom;	
 }
+
+.category-image {
+	display:none;
+}
+.active-category {
+	display:block;
+}
+
 article.node-item {
 	position: relative;
 }
