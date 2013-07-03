@@ -98,6 +98,11 @@ function furnitheme_preprocess_page(&$vars) {
 		drupal_add_css(drupal_get_path('theme', 'furnitheme') . '/lib/jscrollpane/jquery.jscrollpane.css');
 	}
 	
+	//disable taxonomy tabs
+	if (arg(0) == 'taxonomy' && arg(1) == 'term' && is_numeric(arg(2)) && arg(3) == "") {
+		unset($vars['tabs']);
+	}
+	
 }
 
 
@@ -142,6 +147,7 @@ function furnitheme_preprocess_html(&$variables, $hook) {
  */
 function furnitheme_select($variables) {
   $element = $variables['element'];
+
   element_set_attributes($element, array('id', 'name', 'size'));
   _form_set_class($element, array('form-select'));
 
@@ -195,6 +201,13 @@ function furnitheme_form_select_options($element, $choices = NULL) {
     ++$i;
   }
   return $options;
+}
+
+/**
+ * Preprocess function for search results
+ *
+ */
+function furnitheme_preprocess_search_result(&$vars) {
 }
 
 /**

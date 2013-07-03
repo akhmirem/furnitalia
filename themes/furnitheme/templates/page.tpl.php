@@ -133,6 +133,7 @@
       <?php print $feed_icons; ?>
     </div><!-- /#content -->
 
+	<!--
     <div id="navigation">
 
       <?php if ($main_menu): ?>
@@ -158,28 +159,31 @@
 
       <?php print render($page['navigation']); ?>
 
-    </div><!-- /#navigation -->
-
-    <?php
-      // Render the sidebars to see if there's anything in them.
-      $left  = render($page['left']['furn_menu']);
-    ?>
-
-    <?php if ($left): ?>
-      <aside class="sidebars menu-left">
-        <?php print $left; ?>
-		<?php print render($page['left']); ?>
-      </aside><!-- /.sidebars -->
-    <?php endif; ?>
-    
-    <aside class="contact sidebars">
-		<a href="#chat" title="Chat online" id="chat-online">Chat online</a>
-		<a href="#contact" title="Contact" id="contact-us">Contact us</a>
-    </aside>
-    
-    <div id="dialog-form" title="Request product info" style="display:none">
-	  <p>Javascript must be enabled in your browser to submit a request.</p>
-	</div>	
+    </div>--><!-- /#navigation -->
+	
+	<section id="left-section">
+	    <?php
+	      // Render the sidebars to see if there's anything in them.
+	      $left  = render($page['left']['furn_menu']);
+	    ?>
+	
+	    <?php if ($left): ?>
+	      <aside class="sidebars menu-left">
+	        <?php print $left; ?>
+			<?php print render($page['left']); ?>
+	      </aside><!-- /.sidebars -->
+	    <?php endif; ?>
+	    
+	    <aside class="contact sidebars">
+			<a href="#chat" title="Chat online" id="chat-online">Chat online</a>
+			<a href="#contact" title="Contact" id="contact-us">Contact us</a>
+	    </aside>
+	    
+	    <div id="dialog-form" title="Request product info" style="display:none">
+		  <p>Javascript must be enabled in your browser to submit a request.</p>
+	</div>
+	
+	</section>	
 
   </div><!-- /#main -->
 

@@ -163,14 +163,16 @@ body {
   margin: 0;
   padding: 0;
 }
-aside.sidebars {
-	float: left;
+#left-section {
+	float:left;
 	width: 196px;
 	margin-left: 39px;
+	margin-top:20px;
 	border: 1px dashed red;
 }
-aside.menu-left {
-	margin-top:20px;
+aside.sidebars {
+}
+aside.menu-left {	
 }
 .ui-widget-content {
 	border:none;
@@ -193,10 +195,10 @@ aside.menu-left ul.links li {
 	list-style-image:none;
 	list-style-type:none;
 }
-aside.menu-left ul.links li.active {
+aside.menu-left ul.links li.active-menu, aside.menu-left ul.links li:hover {
 	list-style-image:url(../images/list-image.gif);
 }
-a.active {
+a.active-menu {
 	color:#981b1e;
 }
 h1.title, /* The title of the page */
@@ -397,9 +399,11 @@ div.view-taxonomy-term .item-details {
 	position: absolute;
 	top: 0;
 	text-align: center;
+	color:white;
+	text-transform: uppercase;
 }
 div.view-taxonomy-term .item-details h2 {
-	font-size:.9em;
+	font-size:1.2em;
 	line-height: 1em;	
 	margin:0 auto;
 }
@@ -408,7 +412,14 @@ div.view-taxonomy-term .item-details h2 a {
 	text-transform: uppercase;
 }
 div.view-taxonomy-term .item-details header {
-	padding-top:50px;
+	padding-top:30px;
+	padding-bottom:8px;
+}
+div.view-taxonomy-term .item-details .product-info {
+	font-size:1em;
+}
+div.view-taxonomy-term .item-details .sell-price, div.view-taxonomy-term .item-details .field-name-field-availability {
+	color:#981b1e;
 }
 /*
 #gallery-container {

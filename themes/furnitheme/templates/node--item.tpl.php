@@ -21,10 +21,11 @@ if ($teaser) { //item teaser view
 
 <article class="node-<?php print $node->nid; ?> <?php print $classes; ?> clearfix"<?php print $attributes; ?>>
 
-	<?php
+	<?php	
 
 	hide($content['list_price']);
 	hide($content['sell_price']);
+	unset($content['field_availability']['#title']);
 
 	$image = $node->field_image['und'][0];
 
@@ -42,8 +43,12 @@ if ($teaser) { //item teaser view
 			<h2<?php print $title_attributes; ?>><a href="<?php print $node_url; ?>" class="title"><?php print $title; ?></a></h2>
 		</header>
 		
+		<?php $content['list_price']['#title'] = "MSRP:";?>
+		<?php $content['sell_price']['#title'] = "Special:";?>
+		
 		<?php print render($content['list_price']); ?>
 		<?php print render($content['sell_price']); ?>
+		<?php print render($content['field_availability']); ?>
 
 	</div>
 	

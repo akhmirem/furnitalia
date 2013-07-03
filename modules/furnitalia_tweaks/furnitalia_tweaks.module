@@ -64,7 +64,7 @@ function furnitalia_tweaks_menu_alter(&$items) {
 function furnitalia_tweaks_taxonomy_term_page($term) {
   // If there is a menu link to this term, the link becomes the last part of
   // the active trail, and the link name becomes the page title. Thus, we must
-  // explicitly set the page title to be the term title.
+  // explicitly set the page title to be the term title.  
   drupal_set_title($term->name);
 
   // Build breadcrumb based on the hierarchy of the term.
@@ -142,13 +142,20 @@ function furnitalia_tweaks_node_view_multiple($nodes, $view_mode = 'teaser', $we
  * Implements hook_page_alter().
  */
 function furnitalia_tweaks_page_alter(&$page) {
+	
+	$active_attribute = array('class' => array('active-menu'));
+	$editions = 22;
+	$italia = 21;
 
-
+	//wrapper around main navigation menu
 	$page['left']['furn_menu'] = array(
 		'#prefix' => '<nav id="main-nav">',
 		'#suffix' => '</nav>',
 	);
-	  
+	
+	//-------------------------------------	
+	// all collections query
+	//-------------------------------------	
 	$result = db_query("
 	  SELECT DISTINCT td.tid, td.name, h.parent as parent_term FROM {taxonomy_term_data} td
 	  LEFT JOIN {taxonomy_index} tn on tn.tid = td.tid
@@ -160,9 +167,9 @@ function furnitalia_tweaks_page_alter(&$page) {
 	foreach($result as $term) {
 	
 		$attributes = array();
-		$active_attribute = array('class' => array('active'));
 		
 		if ($term->parent_term != 0 && !isset($items[$term->parent_term])) {
+			//this term has a parent term, so take it's parent instead
 			
 			if (furnitalia_tweaks_is_link_active($term->parent_term)) {
 				$attributes = $active_attribute;
@@ -172,6 +179,7 @@ function furnitalia_tweaks_page_alter(&$page) {
 			$tems[$term->parent_term] = l($parent_term->name, 'taxonomy/term/' . $term->parent_term, array('attributes' => $attributes));
 			
 		} else if($term->parent_term == 0 && !isset($items[$term->tid])) {
+			//this is already parent term
 		
 			if (furnitalia_tweaks_is_link_active($term->tid)) {
 				$attributes = $active_attribute;
@@ -182,7 +190,7 @@ function furnitalia_tweaks_page_alter(&$page) {
 		
 	}
 
-
+	//markup structure for all collections
 	$page['left']['furn_menu']['all'] = array(
 		'#prefix' => '<h3><a id="bg1" href="#">All Collections</a></h3><div>',
 		'#suffix' => '</div>',
@@ -193,8 +201,14 @@ function furnitalia_tweaks_page_alter(&$page) {
 	);
 	
 	
-	$editions = 22;
-	$italia = 21;
+	//-------------------------------------
+	// italia/editions collections query  
+	//--------------------------------------
+	$italia_items = array();
+	$editions_items = array();
+	$italia_query_string = array('brand' => $italia);
+	$editions_query_string = array('brand' => $editions);
+	
 	$result = db_query("
 	  SELECT DISTINCT td.tid, td.name, b.field_brand_tid as brand, h.parent as parent_term FROM {taxonomy_term_data} td
 	  LEFT JOIN {taxonomy_index} tn on tn.tid = td.tid
@@ -203,26 +217,58 @@ function furnitalia_tweaks_page_alter(&$page) {
 	  INNER JOIN {field_data_field_brand} b on b.entity_id=n.nid and b.field_brand_tid IN(:brand1, :brand2)
 	  WHERE td.vid = :vid", array(":brand1" => $italia, ":brand2" => $editions,":vid" => 2));
 	  
-	$italia_items = array();
-	$editions_items = array();
 	foreach($result as $term) {
+		$attributes = array();
+		
 		if	($term->brand == $italia) {
+			//if natuzzi italia brand
+			
 			if ($term->parent_term != 0 && !isset($italia_items[$term->parent_term])) {
+				//if term has parent term, then take it's parent
+				
+				if (furnitalia_tweaks_is_link_active($term->parent_term, $italia_query_string)) {
+					$attributes = $active_attribute;
+				}
+			
 				$parent_term = taxonomy_term_load($term->parent_term);
-				$italia_items[$term->parent_term] = l($parent_term->name, 'taxonomy/term/' . $term->parent_term, array('query' => array('brand' => $italia)));
+				$italia_items[$term->parent_term] = l($parent_term->name, 'taxonomy/term/' . $term->parent_term, array('query' => $italia_query_string, 'attributes' => $attributes));
+				
 			} else if($term->parent_term == 0 && !isset($italia_items[$term->tid])) {
-				$italia_items[$term->tid] = l($term->name, 'taxonomy/term/' . $term->tid, array('query' => array('brand' => $italia)));;				
+				
+				if (furnitalia_tweaks_is_link_active($term->tid, $italia_query_string)) {
+					$attributes = $active_attribute;
+				}
+				
+				$italia_items[$term->tid] = l($term->name, 'taxonomy/term/' . $term->tid, array('query' => $italia_query_string, 'attributes' => $attributes));				
 			}
+			
 		} else {
+			//natuzzi editions brand term
+					
 			if ($term->parent_term != 0 && !isset($editions_items[$term->parent_term])) {
+				//term has parent term, so take parent
+				
+				if (furnitalia_tweaks_is_link_active($term->parent_term, $editions_query_string)) {
+					$attributes = $active_attribute;
+				}
+				
 				$parent_term = taxonomy_term_load($term->parent_term);
-				$editions_items[$term->parent_term] = l($parent_term->name, 'taxonomy/term/' . $term->parent_term, array('query' => array('brand' => $editions)));
+				$editions_items[$term->parent_term] = l($parent_term->name, 'taxonomy/term/' . $term->parent_term, array('query' => $editions_query_string, 'attributes' => $attributes));
+				
 			} else if($term->parent_term == 0 && !isset($editions_items[$term->tid])) {
-				$editions_items[$term->tid] = l($term->name, 'taxonomy/term/' . $term->tid, array('query' => array('brand' => $editions)));				
+				//it is parent term
+				
+				if (furnitalia_tweaks_is_link_active($term->tid, $editions_query_string)) {
+					$attributes = $active_attribute;
+				}
+				
+				$editions_items[$term->tid] = l($term->name, 'taxonomy/term/' . $term->tid, array('query' => $editions_query_string, 'attributes' => $attributes));				
+				
 			}
 		}
 	}
 
+	//mark up structure for natuzzi italia items
 	$page['left']['furn_menu']['italia'] = array(
 		'#prefix' => '<h3><a id="bg2" href="#">Natuzzi Italia</a></h3><div>',
 		'#suffix' => '</div>',
@@ -232,6 +278,7 @@ function furnitalia_tweaks_page_alter(&$page) {
 		'#attributes' => array('class' => 'links'),
 	);
 	
+	//mark up structure for natuzzi editions items
 	$page['left']['furn_menu']['editions'] = array(
 		'#prefix' => '<h3><a id="bg3" href="#">Natuzzi Editions</a></h3><div>',
 		'#suffix' => '</div>',
@@ -241,51 +288,82 @@ function furnitalia_tweaks_page_alter(&$page) {
 		'#attributes' => array('class' => 'links'),
 	);
 	
+	//mark up structure for interior design link
 	$page['left']['furn_menu']['interior_design'] = array(
 		'#prefix' => '<h3><a id="bg4" href="#">Interior Design</a></h3><div>',
 		'#suffix' => '</div>',
 	);
 
+	//if it is gallery page, retrieve top menu items
+	if (arg(0) == 'taxonomy' && arg(1) == 'term' && is_numeric(arg(2))) {
+		
+		$parent_category = furnitalia_tweaks_get_parent_category();
+		$selected_brand = furnitalia_tweaks_get_selected_brand();
+		$params = array(":parent_cat" => $parent_category, ":vid" => 2);
+		$brand_join = '';
+		
+		if (!empty($selected_brand)) {
+			$params[':brand'] = $selected_brand;
+			$brand_join = " INNER JOIN {field_data_field_brand} b on b.entity_id=n.nid and b.field_brand_tid=:brand ";
+		}
+		  
+		$result = db_query("
+		  SELECT DISTINCT td.tid, td.name FROM {taxonomy_term_data} td
+		  INNER JOIN {taxonomy_term_hierarchy} h on td.tid=h.tid and h.parent=:parent_cat
+		  LEFT JOIN {taxonomy_index} tn on tn.tid = td.tid
+		  LEFT JOIN {node} n on n.nid=tn.nid and n.status=1 " . $brand_join . " 
+		  WHERE td.vid = :vid", $params);
+		
 	
-	/*$result = db_query("
-	  SELECT DISTINCT td.tid, td.name FROM {taxonomy_term_data} td
-	  INNER JOIN {taxonomy_term_hierarchy} h on td.tid=h.tid and h.parent=:parent_cat
-	  LEFT JOIN {taxonomy_index} tn on tn.tid = td.tid
-	  LEFT JOIN {node} n on n.nid=tn.nid and n.status=1
-	  INNER JOIN {field_data_field_brand} b on b.entity_id=n.nid and b.field_brand_tid=:brand
-	  WHERE td.vid = :vid", array(":parent_cat" => 1, ":brand" => 21, ":vid" => 2));	*/
-	  
-	$result = db_query("
-	  SELECT DISTINCT td.tid, td.name FROM {taxonomy_term_data} td
-	  INNER JOIN {taxonomy_term_hierarchy} h on td.tid=h.tid and h.parent=:parent_cat
-	  LEFT JOIN {taxonomy_index} tn on tn.tid = td.tid
-	  LEFT JOIN {node} n on n.nid=tn.nid and n.status=1
-	  WHERE td.vid = :vid", array(":parent_cat" => 1, ":vid" => 2));
+		$items = array();
+		foreach($result as $term) {
+			
+			$attributes = array();
+			
+			if (furnitalia_tweaks_is_link_active($term->tid, null, TRUE)) {
+					$attributes = $active_attribute;
+			}
+			
+			if (!empty($selected_brand)) {
+				$items[] = l($term->name, 'taxonomy/term/' . $term->tid, array('attributes' => $attributes, 'query' => array('brand' => $selected_brand)));
+			} else {
+				$items[] = l($term->name, 'taxonomy/term/' . $term->tid, array('attributes' => $attributes));
+			}
+		}
 	
-
-	$items = array();
-	foreach($result as $term) {
-	  $items[] = l($term->name, 'taxonomy/term/' . $term->tid);
+		$page['content_top']['furn_top_menu'] = array(
+			'#theme' => 'item_list',
+			'#items' => $items,
+			'#type' => 'ul',
+			'#attributes' => array('class' => 'links inline'),
+		);
 	}
 
-	$page['content_top']['furn_top_menu'] = array(
-		'#theme' => 'item_list',
-		'#items' => $items,
-		'#type' => 'ul',
-		'#attributes' => array('class' => 'links inline'),
-	);
-	
-	//dsm($page);
-	if (isset($page['content']['system_main']['options'])) {
-		$page['left']['options'] = $page['content']['system_main']['options'];
-		unset($page['content']['system_main']['options']);		
-	}
 }
 
-function furnitalia_tweaks_is_link_active($tid, $query = NULL) {
+function furnitalia_tweaks_is_link_active($tid, $query = NULL, $ignore_query=false) {
 	if ( arg(0) == 'taxonomy' && arg(1) == 'term') {
 		if (is_numeric(arg(2)) && (arg(2) == $tid || furnitalia_tweaks_is_child(arg(2), $tid))) {
-			return TRUE;
+			if (is_array($query) && isset($query['brand'])) {
+				if (isset($_GET['brand'])) {
+					//dsm('$_GET[brand]= ' . $_GET['brand']);
+					return $query['brand'] == $_GET['brand'];
+				}
+				
+				return false;
+				
+			} else {
+				
+				if ($ignore_query) { 
+					return true; 
+				}
+				
+				if (isset($_GET['brand'])) {
+					return false;
+				} else {
+					return true;
+				}
+			}
 		}
 	}
 	
@@ -303,6 +381,28 @@ function furnitalia_tweaks_is_child($first_tid, $second_tid) {
 	}
 	
 	return false;
+}
+
+function furnitalia_tweaks_get_parent_category() {
+	if (arg(0) == 'taxonomy' && arg(1) == 'term' && is_numeric(arg(2))) {
+		$parents = taxonomy_get_parents(arg(2));
+		$parents = array_values($parents);
+		
+		if (empty($parents)) {
+			return arg(2);
+		} else {
+			return $parents[0]->tid;
+		}
+		
+	} else {
+		return 1;
+	}
+}
+
+function furnitalia_tweaks_get_selected_brand() {
+	if (isset($_GET['brand']) && is_numeric($_GET['brand'])) {
+		return $_GET['brand'];
+	}
 }
 
 function furnitalia_tweaks_form_alter(&$form, &$form_state, $form_id){

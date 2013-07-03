@@ -113,17 +113,17 @@
 			});
 			
 			//mark li active if link inside has class 'active'
-			$('a.active').closest('li').addClass('active');
+			$('a.active-menu').closest('li').addClass('active-menu');
 			
 			
 			if(jQuery().dropkick) {
-				$('#edit-sort-by').dropkick({
+				$('#edit-sort-by').attr('tabindex', '1').dropkick({
 					 change: function (value, label) {
 					 	$('#edit-sort-by').trigger('change');
 					 }
 				});
 				
-				$('#edit-brand').dropkick({
+				$('#edit-brand').attr('tabindex', '2').dropkick({
 					 change: function (value, label) {
 						$('#edit-brand').trigger('change');
 					 }
@@ -147,6 +147,13 @@
 				collapsible: true,
 				active: false,
 				heightStyle:'content'
+			});
+			
+			//set active menu link in accordion
+			$("div.ui-accordion-content").each(function(index, val) {
+				if ($(this).find('a.active-menu').length) {
+					$("#main-nav").accordion("option", "active", index);
+				}
 			});
 			
 			//item description page thumbnail gallery			
