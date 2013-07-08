@@ -99,7 +99,7 @@
 
         Drupal.behaviors.furnitalia = {
           attach: function(context, settings) {
-			$(".view-taxonomy-term .gallery-item").each(function() {
+			$(".furn-gallery .gallery-item").each(function() {
 				var $galleryItem = $(this);
 				$galleryItem.mouseenter(
 					function() {

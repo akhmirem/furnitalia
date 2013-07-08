@@ -63,6 +63,9 @@ function furnitheme_css_alter(&$css) {
  *   The name of the template being rendered ("page" in this case.)
  */
 function furnitheme_preprocess_page(&$vars) {
+
+	dsm(menu_tree_all_data('user-menu'));
+
 	drupal_add_css(drupal_get_path('theme', 'furnitheme') . '/css/ui/base/jquery.ui.all.css', array('group' => -100, 'every_page' => TRUE));
 	//drupal_add_css(drupal_get_path('theme', 'furnitheme') . '/css/ui/base/jquery.ui.slider.min.css', array('group' => -100, 'every_page' => TRUE));
 	
@@ -208,6 +211,44 @@ function furnitheme_form_select_options($element, $choices = NULL) {
  *
  */
 function furnitheme_preprocess_search_result(&$vars) {
+}
+
+/**
+ * Implements hook_form_alter().
+ *
+ * Alter search form
+ */
+function furnitheme_form_search_block_form_alter(&$form, &$form_state, $form_id) {
+	
+	global $base_path;
+	global $theme_path;
+	
+	$path = $base_path . $theme_path;//drupal_get_path('theme', 'furnitheme');
+	
+	$form['actions']['submit']['#theme_wrappers'] = array("image_button");
+	$form['actions']['submit']['#button_type'] = "image";
+	$form['actions']['submit']['#src'] = $path . "/images/search.gif";
+
+}
+
+/**
+ * Implements hook_form_alter().
+ *
+ * Alter search form
+ */
+function furnitheme_form_search_form_alter(&$form, &$form_state, $form_id) {
+
+	global $base_path;
+	global $theme_path;
+	
+	$path = $base_path . $theme_path;//drupal_get_path('theme', 'furnitheme');
+	
+	unset($form['advanced']);
+	
+	$form['basic']['submit']['#theme_wrappers'] = array("image_button");
+	$form['basic']['submit']['#button_type'] = "image";
+	$form['basic']['submit']['#src'] = $path . "/images/search.gif";
+
 }
 
 /**

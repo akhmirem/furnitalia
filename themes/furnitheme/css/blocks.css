@@ -66,6 +66,9 @@ h2.block-title { /* Block title */
 }
 
 #block-search-form { /* "Search form" block */
+	display: inline;
+	float: right;
+	margin: 1em 0 0 0;
 }
 
 #block-shortcut-shortcuts { /* "Shortcuts" block */
@@ -84,6 +87,8 @@ h2.block-title { /* Block title */
 }
 
 #block-system-user-menu { /* "User menu" block for Drupal user menu */
+	display: inline;
+	float: left;
 }
 
 #block-system-help { /* "System help" block */
