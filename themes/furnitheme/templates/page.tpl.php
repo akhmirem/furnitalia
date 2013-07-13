@@ -112,7 +112,7 @@
 
   </header>
 
-  <div id="main">
+  <div id="main" class="clearfix">
 
     <div id="content" class="column" role="main">
       <?php print render($page['content_top']); ?>
@@ -187,7 +187,13 @@
 
   </div><!-- /#main -->
 
-  <?php print render($page['footer']); ?>
+  <footer>
+	  <nav id="footer-info-menu"><?php print render($footer_info_menu); ?></nav>
+	  <nav id="footer-user-menu"><?php print render($footer_user_menu); ?></nav>
+	  <nav id="footer-policy-menu"><?php print render($footer_policy_menu); ?></nav>	
+	  <?php print  l("Catalogs", "catalogs"); ?>  
+	  <?php print render($page['footer']); ?>	  
+  </footer>
   
   <?php if ($show_keyhole) : ?>
   	<div class="keyhole">&nbsp;</div>

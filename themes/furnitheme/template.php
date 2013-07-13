@@ -64,7 +64,7 @@ function furnitheme_css_alter(&$css) {
  */
 function furnitheme_preprocess_page(&$vars) {
 
-	dsm(menu_tree_all_data('user-menu'));
+	global $user;
 
 	drupal_add_css(drupal_get_path('theme', 'furnitheme') . '/css/ui/base/jquery.ui.all.css', array('group' => -100, 'every_page' => TRUE));
 	//drupal_add_css(drupal_get_path('theme', 'furnitheme') . '/css/ui/base/jquery.ui.slider.min.css', array('group' => -100, 'every_page' => TRUE));
@@ -105,6 +105,45 @@ function furnitheme_preprocess_page(&$vars) {
 	if (arg(0) == 'taxonomy' && arg(1) == 'term' && is_numeric(arg(2)) && arg(3) == "") {
 		unset($vars['tabs']);
 	}
+	
+	//set footer menu links	
+	$info_menu = array(
+		l("About us", 'about'),
+		l("Contact us", "contact"), 
+	);
+	$vars['footer_info_menu'] = array(
+		'#theme' => 'item_list',
+		'#items' => array_values($info_menu),
+		'#type' => 'ul',
+		'#attributes' => array('class' => 'links'),
+	);
+	
+	$user_menu = array();	
+	$user_menu []= l("Account Details", 'user');
+	$user_menu []= l("Favorites", 'my-favorites');		
+	$user_menu []= l("Order status", 'my-orders');		
+	$user_menu []= l("My Cart", 'cart');
+	
+	$vars['footer_user_menu'] = array(
+		'#theme' => 'item_list',
+		'#items' => array_values($user_menu),
+		'#type' => 'ul',
+		'#attributes' => array('class' => 'links'),
+	);
+	
+	$policies_menu = array(
+		l("FAQ", 'faq'),
+		l("Shipping and Delivery", "shipping-deliveries"), 
+		l("Terms of Service", "service-terms"),
+		l("Privacy Policy", "privacy-policy"),	
+	);
+	$vars['footer_policy_menu'] = array(
+		'#theme' => 'item_list',
+		'#items' => array_values($policies_menu),
+		'#type' => 'ul',
+		'#attributes' => array('class' => 'links'),
+	);
+
 	
 }
 

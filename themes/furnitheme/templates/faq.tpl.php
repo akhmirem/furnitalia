@@ -1,0 +1,1 @@
+CONTENT for Frequently Asked Questions

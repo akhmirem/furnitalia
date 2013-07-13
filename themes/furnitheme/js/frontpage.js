@@ -1,5 +1,6 @@
 ANIM_FRAME_WIDTH = 542;
 ANIM_BG_TOTAL_WIDTH = 2710;
+FRONTPAGE_TRANSITION_DURATION = 500;
 backgroundXShift = 0;
 var timer;
 var timer2;
@@ -45,12 +46,12 @@ var timer2;
 					clearTimeout(timer);
 					
 					//move away left and right keyhole parts
-					$("#front-left").animate({width:'0px'}, 1000);
-					$("#front-right").animate({left:'880px', right:'5px'}, 1000);
+					$("#front-left").animate({width:'0px'}, FRONTPAGE_TRANSITION_DURATION);
+					$("#front-right").animate({left:'880px', right:'5px'}, FRONTPAGE_TRANSITION_DURATION);
 					
 					
 					//hide top overlay
-					$("#front-overlay").addClass("loading").delay(1000).hide(1);
+					$("#front-overlay").addClass("loading").delay(FRONTPAGE_TRANSITION_DURATION).hide(1);
 					
 					
 					//set up keyhole animation for categories

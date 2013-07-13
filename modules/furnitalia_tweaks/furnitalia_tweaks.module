@@ -16,11 +16,17 @@ function furnitalia_tweaks_menu() {
 		'access callback' => TRUE, 
 		'type' => MENU_CALLBACK,
 	);
-	$items['user/%user/favorites'] = array(
+	$items['my-favorites'] = array(
 		'title' => 'My Favorites',
 	    'page callback' => 'furnitalia_tweaks_favorites_list',
-	    'access callback' => 'user_is_logged_in',
-	    'type' => MENU_LOCAL_TASK,
+	    'access callback' => TRUE,
+	    'type' => MENU_NORMAL_ITEM,
+    );
+    $items['my-orders'] = array(
+		'title' => 'My Orders',
+	    'page callback' => 'furnitalia_tweaks_orders',
+	    'access callback' => TRUE,
+	    'type' => MENU_NORMAL_ITEM,
     );
     $items['front'] = array (
 		'page callback' => 'furnitalia_tweaks_front_page',
@@ -32,6 +38,47 @@ function furnitalia_tweaks_menu() {
 		'access callback' => TRUE, 
 		'type' => MENU_CALLBACK,
 	);
+	$items['about'] = array(
+		'title' => 'About Furnitalia',
+	    'page callback' => 'furnitalia_tweaks_about',
+	    'access callback' => TRUE,
+	    'type' => MENU_NORMAL_ITEM,
+    );
+    $items['shipping-deliveries'] = array(
+		'title' => 'Shipping and Deliveries',
+	    'page callback' => 'theme',
+	    'page arguments' => array('shipping-deliveries'),
+	    'access callback' => TRUE,
+	    'type' => MENU_NORMAL_ITEM,
+    );
+    $items['service-terms'] = array(
+		'title' => 'Terms of Service',
+	    'page callback' => 'theme',
+	    'page arguments' => array('service-terms'),
+	    'access callback' => TRUE,
+	    'type' => MENU_NORMAL_ITEM,
+    );
+    $items['privacy-policy'] = array(
+		'title' => 'Privacy Policy',
+	    'page callback' => 'theme',
+	    'page arguments' => array('privacy-policy'),
+	    'access callback' => TRUE,
+	    'type' => MENU_NORMAL_ITEM,
+    );
+    $items['faq'] = array(
+		'title' => 'Frequently Asked Questions',
+	    'page callback' => 'theme',
+	    'page arguments' => array('faq'),
+	    'access callback' => TRUE,
+	    'type' => MENU_NORMAL_ITEM,
+    );
+	$items['catalogs'] = array(
+		'title' => 'Catalogs',
+	    'page callback' => 'theme',
+	    'page arguments' => array('catalogs'),
+	    'access callback' => TRUE,
+	    'type' => MENU_NORMAL_ITEM,
+    );
 	
 	return $items;
 }
@@ -52,6 +99,60 @@ function furnitalia_tweaks_menu_alter(&$items) {
 	}
 	
 }
+
+/**
+ * Implements hook_theme().
+ */
+function furnitalia_tweaks_theme($existing, $type, $theme, $path) {
+	
+	$path = drupal_get_path('theme', 'furnitheme');
+	
+	$themes = array (
+        'furnitalia_about' => array(
+            'arguments' => array(),
+            'template' => 'about',
+            'path' => drupal_get_path('theme', 'furnitheme') . '/templates',
+        ),
+        'shipping-deliveries' => array(
+            'arguments' => array(),
+            'template' => 'shipping-deliveries',
+            'path' => drupal_get_path('theme', 'furnitheme') . '/templates',
+        ),
+        'service-terms' => array(
+            'arguments' => array(),
+            'template' => 'service-terms',
+            'path' => drupal_get_path('theme', 'furnitheme') . '/templates',
+        ),
+		'privacy-policy' => array(
+            'arguments' => array(),
+            'template' => 'privacy-policy',
+            'path' => drupal_get_path('theme', 'furnitheme') . '/templates',
+        ),
+        'faq' => array(
+            'arguments' => array(),
+            'template' => 'faq',
+            'path' => drupal_get_path('theme', 'furnitheme') . '/templates',
+        ),
+		'catalogs' => array(
+            'arguments' => array(),
+            'template' => 'catalogs',
+            'path' => drupal_get_path('theme', 'furnitheme') . '/templates',
+        ),
+        
+    );
+    return $themes;
+}
+
+/**
+ * Display about us page.
+ */
+function furnitalia_tweaks_about() {
+	
+	$build =  theme('furnitalia_about');
+
+	return $build;
+}
+
 
 /**
  * Menu callback; displays all nodes associated with a term.
@@ -452,6 +553,13 @@ function furnitalia_tweaks_form_alter(&$form, &$form_state, $form_id){
 function furnitalia_tweaks_favorites_list() {
 	global $user;
 	
+	if ($user->uid == 0) {
+		//not authenticated user
+		drupal_set_message('Please log in to access your favorites list');
+		drupal_goto('user/login');
+		return;
+	}
+	
 	$favorites = flag_get_user_flags('node', NULL, $user->uid);
 	
 	if(!isset($favorites['favorites']) || empty($favorites['favorites'])) {
@@ -464,8 +572,6 @@ function furnitalia_tweaks_favorites_list() {
 		$nids []= $nid;
 	}
 	
-	dsm($favorites);
-	
 	$nodes = node_load_multiple($nids);    
     $build = furnitalia_tweaks_prepare_node_attributes($nodes);
     
@@ -476,6 +582,23 @@ function furnitalia_tweaks_favorites_list() {
 	
 	return $build;
 }
+
+/**
+ * Display current user's orders
+ */
+function furnitalia_tweaks_orders() {
+	global $user;
+	$dest = drupal_get_destination();
+	
+	if ($user->uid == 0) {
+		//not authenticated user
+		drupal_set_message('Please log in to view your orders');
+		drupal_goto('user/login', $dest);
+	} else {
+		drupal_goto('user/' . $user->uid . '/orders', $dest);
+	}
+}
+
 
 /**
   * Display contact form in pop-up dialog box.

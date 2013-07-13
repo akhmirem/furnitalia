@@ -1,0 +1,1 @@
+here goes content for privacy policy
