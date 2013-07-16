@@ -135,7 +135,7 @@ body {
  */
 
 #content, .region-header {
-	width:640px;
+	width:670px;
 	float:right;
 	margin-top:2em;
 	overflow:hidden;
@@ -320,6 +320,15 @@ span.field-label { /* The inline field label used by the Fences module */
  */
 
 .region-bottom { /* Wrapper for any blocks placed in the page bottom region */
+}
+
+/*
+ * Promo
+ */
+#promo {
+	height: 160px;
+	clear: both;
+	padding-top: 40px;
 }
 
 /*

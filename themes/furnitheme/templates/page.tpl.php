@@ -186,6 +186,10 @@
 	</div>
 	
 	</section>	
+	
+	<section id="promo">
+		<img src="<?php print $base_path . path_to_theme(); ?>/images/dummy-promo.gif"/>
+	</section>
 
   </div><!-- /#main -->
 
