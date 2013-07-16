@@ -1,0 +1,59 @@
+html, body, .ui-widget {
+	font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif; 
+	font-size:12pt;
+	font-weight: 300;
+}
+
+#main-nav a {
+	font-size:20pt;
+	border-bottom:1.5px solid #6d6e71;
+	display:block;
+	text-transform:uppercase;
+	color:#6d6e71;
+}
+
+#main-nav .ui-accordion-content a {
+	font-weight:light;
+	font-size:14pt;
+	text-decoration:none;
+	border-bottom:none;
+}
+
+.region-content-top a {
+	border-bottom: 1px dashed #6d6e71;
+	text-decoration: none;
+	color: #6d6e71;
+	font-size: 14pt;
+	position: relative;
+	top: .2em;
+}
+.region-content-top a:hover {
+	color:#981b1e;
+}
+ul.inline li {
+	
+}
+
+.item-info-p, .field-label {
+	font-size:12pt;
+	font-weight:100;
+	text-transform: uppercase;
+}
+.field .field-label {
+	font-weight: 100;
+}
+#item-info .field-name-field-availability div.field-item {
+	text-transform: uppercase;
+	font-size: 10pt;
+	color:#981b1e;
+	margin: .3em 0 0 0em;
+}
+
+article ul.inline li {
+	list-style-type:none;
+	list-style-image: none;
+}
+article ul.inline li a, #request-quote {
+	text-transform: uppercase;
+	font-size: 10pt;
+}

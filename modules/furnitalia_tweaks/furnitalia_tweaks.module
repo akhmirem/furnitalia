@@ -16,6 +16,20 @@ function furnitalia_tweaks_menu() {
 		'access callback' => TRUE, 
 		'type' => MENU_CALLBACK,
 	);
+	$items['request/ajax'] = array (
+		'page callback' => 'furnitalia_tweaks_contact_js',
+		'page arguments' => array('34'),
+		'access callback' => TRUE, 
+		'type' => MENU_CALLBACK,
+	);
+	$items['interior-design'] = array(
+		'title' => 'Interior Design Services',
+	    'page callback' => 'theme',
+	    'page arguments' => array('interior-design'),
+	    'access callback' => TRUE,
+	    'type' => MENU_NORMAL_ITEM,
+    );
+
 	$items['my-favorites'] = array(
 		'title' => 'My Favorites',
 	    'page callback' => 'furnitalia_tweaks_favorites_list',
@@ -136,6 +150,11 @@ function furnitalia_tweaks_theme($existing, $type, $theme, $path) {
 		'catalogs' => array(
             'arguments' => array(),
             'template' => 'catalogs',
+            'path' => drupal_get_path('theme', 'furnitheme') . '/templates',
+        ),
+		'interior-design' => array(
+            'arguments' => array(),
+            'template' => 'interior-design',
             'path' => drupal_get_path('theme', 'furnitheme') . '/templates',
         ),
         
@@ -391,8 +410,7 @@ function furnitalia_tweaks_page_alter(&$page) {
 	
 	//mark up structure for interior design link
 	$page['left']['furn_menu']['interior_design'] = array(
-		'#prefix' => '<h3><a id="bg4" href="#">Interior Design</a></h3><div>',
-		'#suffix' => '</div>',
+		'#prefix' => '<h3><a id="bg4" href="/interior-design">Furnitalia Interior Design</a></h3>',
 	);
 
 	//if it is gallery page, retrieve top menu items
@@ -605,7 +623,9 @@ function furnitalia_tweaks_orders() {
  */
 function furnitalia_tweaks_contact_js($nid=NULL){
 
-	$nid = 32;
+	if (!is_numeric($nid)) {
+		$nid = 32; //contact us node id
+	}
 
 	$output = "";
 	$node = node_load($nid);
@@ -637,6 +657,8 @@ function  furnitalia_tweaks_prepare_node_attributes($nodes) {
 	if (!is_array($nodes)) {
 		return array();
 	}
+	
+	$build = array();
 
     $build += furnitalia_tweaks_node_view_multiple($nodes);
 

@@ -93,13 +93,6 @@
       <?php endif; ?>
       <?php print render($title_suffix); ?>
 
-      <?php if ($display_submitted): ?>
-        <p class="submitted">
-          <?php print $user_picture; ?>
-          <?php print $submitted; ?>
-        </p>
-      <?php endif; ?>
-
       <?php if ($unpublished): ?>
         <p class="unpublished"><?php print t('Unpublished'); ?></p>
       <?php endif; ?>

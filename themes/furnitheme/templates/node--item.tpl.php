@@ -58,6 +58,7 @@ if ($teaser) { //item teaser view
 } else { //full page view
 ?>
 
+<?php dsm($content); ?>
 <article class="node-<?php print $node->nid; ?> <?php print $classes; ?> clearfix"<?php print $attributes; ?>>
 
   <?php if ($unpublished): ?>
@@ -105,18 +106,47 @@ if ($teaser) { //item teaser view
   </div>
   <div id="item-info">
 	  <?php print render($content['model']); ?>
-	  <?php print render($content['body']); ?>
+	  <?php print render($content['body']); ?>  
 	  
-	  <p class="item-info-p">Dimensions:<br/><?php print render($content['dimensions']);?></p>
-	  <p class="item-info-p">Details:<br/><?php print render($content['field_details']);?></p>
 	  <p class="item-info-p">
-	  	Price:<br/>
-	  	MSRP:<?php print render($content['list_price']);?><br/>
-	  	SPECIAL:<?php print render($content['sell_price']);?><br/>
+	  	<?php print render($content['dimensions']);?>
 	  </p>
 	  
-	  <p class="item-info-p">Brand:<br/><?php print render($content['field_brand']);?></p>
+	  <?php if (is_array($content['field_details'])):?>
+	  <p class="item-info-p">
+		<?php $content['field_details'][0]['#markup'] =  nl2br($content['field_details']['#items'][0]['value']); ?>
+	  	<?php print render($content['field_details']);?>
+	  </p>
+	  <?php endif; ?>
+	  
+	  <p class="item-info-p">
+	  	
+	  	Price:<br/>
+	  	<?php 
+	  	$content['list_price']['#title'] = 'MSRP:';
+	  	$content['sell_price']['#title'] = 'Special:';
+	  	print render($content['list_price']);
+	  	print render($content['sell_price']);
+	  	?>
+	  </p>
+	  
+	  <?php if (is_array($content['field_brand']['#object']->field_brand['und'][0]['taxonomy_term']->field_brand_image)) : ?>
+	  <?php $brand_image = $content['field_brand']['#object']->field_brand['und'][0]['taxonomy_term']->field_brand_image['und'][0]; ?>
+	  <?php print theme("image", array("path" => $brand_image['uri'])); ?>
+	  <?php endif; ?>
+	  
+	  
+	  <?php if(is_array($content['field_availability'])) {
+	  		$availability_icon = '<img src="' . base_path() . path_to_theme() . '/images/availability-icon.png"/>';
+			$content['field_availability'][0]['#markup'] = $availability_icon . $content['field_availability'][0]['#markup'];
+	  }
+	  ?>
+	  
+	  <?php print render($content['field_availability']); ?>
+	  
 	  <p class="item-info-p"><?php print render($content['add_to_cart']);?></p>	  
+	  
+	  <a href="/request" id="request-quote" title="Request quote/info">Request quote/info</a>
 	  
 	  <?php print render($content['links']['flag']); ?>
 	  

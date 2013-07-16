@@ -141,6 +141,17 @@
 				var ajax = new Drupal.ajax("#contact-us", $('#contact-us')[0], element_settings);
 			}
 			
+			if ($('#request-quote').once(function() {
+				var element_settings = {};
+				element_settings.url = Drupal.settings.basePath + 'request/ajax/';
+				element_settings.event = "click";
+				element_settings.progress = {type: false};
+				
+				var ajax = new Drupal.ajax("#request-quote", $('#request-quote')[0], element_settings);
+				
+			}));
+
+			
 			//main navigation menu accordeon
 			$("#main-nav").accordion({
 				icons:false,
@@ -154,6 +165,10 @@
 				if ($(this).find('a.active-menu').length) {
 					$("#main-nav").accordion("option", "active", index);
 				}
+			});
+			
+			$("#bg4").click(function() {
+			    window.location.href = Drupal.settings.basePath + "interior-design";
 			});
 			
 			//item description page thumbnail gallery			

@@ -115,7 +115,9 @@
   <div id="main" class="clearfix">
 
     <div id="content" class="column" role="main">
+    
       <?php print render($page['content_top']); ?>
+      
       <?php print $breadcrumb; ?>
       <a id="main-content"></a>
       <?php print render($title_prefix); ?>

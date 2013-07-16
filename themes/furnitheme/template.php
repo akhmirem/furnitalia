@@ -291,6 +291,56 @@ function furnitheme_form_search_form_alter(&$form, &$form_state, $form_id) {
 }
 
 /**
+ * Implements hook_preprocess_region().
+ *
+ * Alter search form
+ */
+function furnitheme_preprocess_region(&$variables, $hook) {
+    if($variables['region'] == "content_top"){
+        $variables['classes_array'][] = 'clearfix';
+    }
+}
+
+
+/**
+ * Formats a product's length, width, and height.
+ *
+ * @param $variables
+ *   An associative array containing:
+ *   - length: A numerical length value.
+ *   - width: A numerical width value.
+ *   - height: A numerical height value.
+ *   - units: String abbreviation representing the units of measure.
+ *   - attributes: (optional) Array of attributes to apply to enclosing DIV.
+ *
+ * @see uc_length_format()
+ * @ingroup themeable
+ */
+function furnitheme_uc_product_dimensions($variables) {
+  $length = $variables['length'];
+  $width = $variables['width'];
+  $height = $variables['height'];
+  $units = $variables['units'];
+  $attributes = $variables['attributes'];
+  $attributes['class'][] = "product-info";
+  $attributes['class'][] = "dimensions";
+  $attributes['class'][] = "field";
+
+  $output = '';
+  if ($length || $width || $height) {
+    $output = '<div ' . drupal_attributes($attributes) . '>';
+    $output .= '<div class="field-label product-info-label">' . t('Dimensions') . ':</div> ';
+    $output .= '<span class="product-info-value">' ;
+    $output .= uc_length_format($length, $units) . ' × ';
+    $output .= uc_length_format($width, $units) . ' × ';
+    $output .= uc_length_format($height, $units) . '</span>';
+    $output .= '</div>';
+  }
+
+  return $output;
+}
+
+/**
  * Implements hook_form_alter().
  *
  * Alter exposed filter form in views
