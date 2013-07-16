@@ -94,11 +94,15 @@ function furnitheme_preprocess_page(&$vars) {
 	if (arg(0) == 'front') {
 		$vars['show_keyhole'] = TRUE;
 	}
-	
+
+	$vars['show_title'] = TRUE;	
 	if (arg(0) == 'node' && is_numeric(arg(1))) {
 		drupal_add_js(drupal_get_path('theme', 'furnitheme') . '/lib/jscrollpane/jquery.jscrollpane.min.js');
 		drupal_add_js(drupal_get_path('theme', 'furnitheme') . '/lib/jscrollpane/mwheelIntent.js');
 		drupal_add_css(drupal_get_path('theme', 'furnitheme') . '/lib/jscrollpane/jquery.jscrollpane.css');
+
+		//don't display title
+		$vars['show_title'] = FALSE;		
 	}
 	
 	//disable taxonomy tabs
@@ -143,7 +147,6 @@ function furnitheme_preprocess_page(&$vars) {
 		'#type' => 'ul',
 		'#attributes' => array('class' => 'links'),
 	);
-
 	
 }
 

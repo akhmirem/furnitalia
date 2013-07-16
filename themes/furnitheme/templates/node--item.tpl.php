@@ -105,6 +105,10 @@ if ($teaser) { //item teaser view
 	  </ul>
   </div>
   <div id="item-info">
+	  
+	  
+	   <h1 class="title" id="page-title"><?php print $node->title; ?></h1>
+  		
 	  <?php print render($content['model']); ?>
 	  <?php print render($content['body']); ?>  
 	  

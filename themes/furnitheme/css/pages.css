@@ -39,6 +39,7 @@ body {
 	padding: 0;
 	text-align:center;
 	background-color:#e6e7e8;
+	color:#6d6e71;
 }
 
 #page {
@@ -198,6 +199,13 @@ aside.menu-left ul.links li {
 }
 aside.menu-left ul.links li.active-menu, aside.menu-left ul.links li:hover {
 	list-style-image:url(../images/list-image.gif);
+}
+.region-content-top a.active-menu {
+	color: #981b1e;
+	text-transform: uppercase;
+	font-size: 1em;
+	font-weight: bold;
+	line-height:100%;
 }
 a.active-menu {
 	color:#981b1e;
@@ -524,7 +532,19 @@ aside.contact a {
 .active-category {
 	display:block;
 }
-
+article {
+	font-size: .9em;
+	line-height: 130%;
+}
+article #page-title {
+	font-size: 1.25em;
+	font-weight: 100;
+	text-transform: uppercase;
+	color: #981b1e;
+}
+.model {
+	font-weight:100
+}
 article.node-item {
 	position: relative;
 }
@@ -543,13 +563,32 @@ article.view-mode-full {
 	margin-left:10px;
 }
 #pikawrapper {
-	height:auto;
+	height:150px;
     width:100%;
     max-width: 2000px;
     white-space:nowrap;
 }
 #pikawrapper li {
 	 display:inline-block;
+}
+.jspDrag {
+	position: relative;
+	top: -1em;
+	left: 0;
+	cursor: pointer;
+	background: transparent url(../images/furniscroll.png) no-repeat center center;
+	width:25px;
+	height:25px;
+}
+.jspTrack {
+	position: relative;
+	background: transparent;
+}
+.jspHorizontalBar {
+	border-top: 1px solid #981b1e;
+	background: none;
+	bottom: 0;
+	height:25px;
 }
 .item-info-p, .field-label {
 	color:#981b1e;

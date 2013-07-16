@@ -36,11 +36,11 @@ ul.inline li {
 
 .item-info-p, .field-label {
 	font-size:1em;
-	font-weight:100;
+	font-weight:600;
 	text-transform: uppercase;
 }
 .field .field-label {
-	font-weight: 100;
+	font-weight: 600;
 }
 #item-info .field-name-field-availability div.field-item {
 	text-transform: uppercase;

@@ -205,7 +205,12 @@
 	     }); // on click
 	     
 	     $("#pikame").wrap($('<div id="pikawrapper"></div>'));
-	     $("#pikawrapper").jScrollPane();
+	     $("#pikawrapper").jScrollPane({
+		     verticalDragMinHeight: 25,
+			 verticalDragMaxHeight: 25,
+			 horizontalDragMinWidth: 25,
+			 horizontalDragMaxWidth: 25
+	     });
 	 }
 
 	
