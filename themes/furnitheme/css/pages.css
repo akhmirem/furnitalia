@@ -50,6 +50,12 @@ body {
 	position: relative;
 }
 
+html, body, .ui-widget {
+	font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif; 
+	font-size:12pt;
+	font-weight: 300;
+}
+
 /*
  * The skip-link link will be completely hidden until a user tabs to the link.
  * See the element-focusable rule in system.base.css.
@@ -169,6 +175,19 @@ body {
 	margin-top:20px;
 	border: 1px dashed red;
 }
+#main-nav a {
+	font-size:1.4em;
+	border-bottom:1.5px solid #6d6e71;
+	display:block;
+	text-transform:uppercase;
+	color:#6d6e71;
+}
+#main-nav .ui-accordion-content a {
+	font-weight:light;
+	font-size:1.1em;
+	text-decoration:none;
+	border-bottom:none;
+}
 aside.sidebars {
 }
 aside.menu-left {	
@@ -208,6 +227,17 @@ aside.menu-left ul.links li.active-menu, aside.menu-left ul.links li:hover {
 	line-height:100%;
 }
 a.active-menu {
+	color:#981b1e;
+}
+.region-content-top a {
+	border-bottom: 1px dashed #6d6e71;
+	text-decoration: none;
+	color: #6d6e71;
+	font-size: 1.1em;
+	position: relative;
+	top: .2em;
+}
+.region-content-top a:hover {
 	color:#981b1e;
 }
 h1.title, /* The title of the page */
@@ -364,20 +394,30 @@ span.field-label { /* The inline field label used by the Fences module */
 #front-left {
 	z-index: 10;
 	background:white;
-	width:480px;
+	width:560px;
 	background:url(../images/front-left.png) no-repeat;					
 }
 #front-right {
 	background:transparent url(../images/front-right.png) no-repeat;
-	width: 720px;
-	left: 330px;
+	width: 460px;
+	left: 560px;
 	z-index:5;
 }
 
 #enterFurnitalia {
-	position:relative;
-	left:300px;
-	top:280px;
+	position: absolute;
+	left: 440px;
+	top: 300px;
+	font-size: 2.2em;
+	font-weight: 100;
+	text-decoration: none;
+	border-bottom: 2px solid #6d6e71;
+	width: 9.5em;
+	display: block;
+	padding-left: 7em;
+	padding-bottom: .3em;
+	color: #6d6e71;
+	z-index: 200;
 }	
 	
 #menu-pic-wrapper {
@@ -467,36 +507,7 @@ ul.furn-gallery li.col-last {
 .furn-gallery .item-details .sell-price, .furn-gallery .item-details .field-name-field-availability {
 	color:#981b1e;
 }
-/*
-#gallery-container {
-	width:10000px;
-	position:relative;
-	height:250px;
-}
-#gallery-container .gallery-item {
-	float: left;
-	margin: .1em 0 0 .3em;
-	width: 220px;
-	height: 165px;
-	position: relative;
-}
-#gallery-container .item-details {
-	display: none;
-	width: 220px;
-	height: 165px;
-	position: relative;
-	bottom: 220px;
-	background: #444;
-}
-#gallery-container .item-details h2 {
-	font-size:.9em;
-	line-height: 1em;
-}
-#gallery-container .item-details a{
-	color:#fff;
-	
-}
-*/
+
 div.keyhole {
 	background:transparent url(../images/keyhole.png) no-repeat center center;
 	width: 292px;
@@ -525,6 +536,9 @@ aside.contact a {
 #contact-us {
 	background-position: center bottom;	
 }
+#dialog-form {
+	text-align: left;
+}
 
 .category-image {
 	display:none;
@@ -541,6 +555,41 @@ article #page-title {
 	font-weight: 100;
 	text-transform: uppercase;
 	color: #981b1e;
+}
+
+.item-info-p, .field-label, article .sell-price {
+	font-size:1em;
+	font-weight:600;
+	text-transform: uppercase;
+}
+.field .field-label {
+	font-weight: 600;
+}
+article .sell-price {
+	color:#981b1e;
+}
+#item-info .field-name-field-availability div.field-item {
+	text-transform: uppercase;
+	font-size: .8em;
+	color:#981b1e;
+	margin: .3em 0 0 0em;
+}
+
+article .favorites {
+	float:right;
+	clear: right;
+	margin: .2em 1em .2em 0;
+}
+article .favorites a, #request-quote, #zoom-in {
+	text-transform: uppercase;
+	font-size: .8em;
+}
+article .favorites a, #zoom-in {
+	color:#6d6e71;
+	font-size:1em;
+}
+img.sublink-arrow {
+	margin-left:.3em;
 }
 .model {
 	font-weight:100
@@ -573,7 +622,7 @@ article.view-mode-full {
 }
 .jspDrag {
 	position: relative;
-	top: -1em;
+	top: -1.25em;
 	left: 0;
 	cursor: pointer;
 	background: transparent url(../images/furniscroll.png) no-repeat center center;
@@ -598,7 +647,7 @@ article ul.inline li {
 	margin:0;
 	padding: 0;
 }
-article ul.inline li a, #request-quote {
+#request-quote {
 	display:block;
 	width:200px;
 	background:#981b1e;
@@ -606,7 +655,9 @@ article ul.inline li a, #request-quote {
 	color:white;
 	text-decoration: none;
 	margin: .5em 0;
+	padding: .5em 0;
 }
+
 
 /*
  * Custom dropdown

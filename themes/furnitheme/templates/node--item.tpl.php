@@ -103,6 +103,16 @@ if ($teaser) { //item teaser view
 
 	  	<?php endforeach;?>
 	  </ul>
+	  
+	  <span><a href="#" id="zoom-in"><img src="<?php print base_path() . path_to_theme(); ?>/images/Zoom_In_18x20.png"/>Zoom in</a></span>
+	  
+	  <span class="favorites"><img src="<?php print base_path() . path_to_theme(); ?>/images/Favorites_Star_Icon_14x14.png"/>
+	  <?php print $content['links']['flag']['#links']['flag-favorites']['title']; //render($content['links']['flag']); ?>
+	  </span>
+	  
+	  <span class="favorites"><a href="#">schematics pdf<img src="<?php print base_path() . path_to_theme(); ?>/images/SubLink_Arrow_Red_6x9.png" class="sublink-arrow"/></a></span>
+  	  <span class="favorites"><a href="#">related products<img src="<?php print base_path() . path_to_theme(); ?>/images/SubLink_Arrow_Red_6x9.png" class="sublink-arrow"/></a></span>
+	  
   </div>
   <div id="item-info">
 	  
@@ -151,8 +161,6 @@ if ($teaser) { //item teaser view
 	  <p class="item-info-p"><?php print render($content['add_to_cart']);?></p>	  
 	  
 	  <a href="/request" id="request-quote" title="Request quote/info">Request quote/info</a>
-	  
-	  <?php print render($content['links']['flag']); ?>
 	  
   </div>
 

@@ -757,10 +757,11 @@ function furnitalia_tweaks_front_page() {
 	$build['front-anim'] = array (
 		'#markup' => '<div id="front-overlay">
 						<div id="front-left">&nbsp;</div>
-						<div id="front-right"><a href="#" id="enterFurnitalia">ENTER FURNITALIA</a></div>						
+						<div id="front-right">&nbsp;</div>						
 						<div id="menu-pic-wrapper">
 					  		<div id="menu-pic" class="menu-hover loading">&nbsp;</div>
 					  	</div>
+					  	<a href="#" id="enterFurnitalia">ENTER FURNITALIA</a>
  				  	 </div>',
 	);
 	

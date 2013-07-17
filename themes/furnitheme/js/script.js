@@ -186,6 +186,11 @@
 				}); // PikaChoose
 			});
 			
+			$("#zoom-in").click(function(e){
+				$("div.pika-stage a").trigger('click');
+				return false;
+			});
+			
         }
 	}
 	
@@ -212,23 +217,6 @@
 			 horizontalDragMaxWidth: 25
 	     });
 	 }
-
-	
-
-	var fb_pop = function(self) {
-		$("#pikame a").attr('rel', 'gallery').fancybox();
-		
-		$("#pikame").jScrollPane();
-		/*
-self.anchor.click(function(event) {
-			event.preventDefault();
-			var href = $(this).attr("href");
-			var title = $(this).attr("title");
-			$(".pika-stage a").attr('rel', 'gallery');
-			$.fancybox.open({"href":href, "title":title}, {"type":'iframe'});
-		});
-*/
-	}
 
 })(jQuery);
 
