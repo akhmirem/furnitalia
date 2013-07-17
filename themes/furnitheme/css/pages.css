@@ -395,10 +395,10 @@ span.field-label { /* The inline field label used by the Fences module */
 	z-index: 10;
 	background:white;
 	width:560px;
-	background:url(../images/front-left.png) no-repeat;					
+	background:url(../images/keyhole-left.png) no-repeat;					
 }
 #front-right {
-	background:transparent url(../images/front-right.png) no-repeat;
+	background:transparent url(../images/keyhole-right.png) no-repeat;
 	width: 460px;
 	left: 560px;
 	z-index:5;
