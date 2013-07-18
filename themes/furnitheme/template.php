@@ -84,7 +84,6 @@ function furnitheme_preprocess_page(&$vars) {
 	drupal_add_js(drupal_get_path('theme', 'furnitheme') . '/js/jquery.pikachoose.min.js');
 	drupal_add_css(drupal_get_path('theme', 'furnitheme') . '/css/pikachoose.css');
 
-
 	if (arg(0) == 'taxonomy') {
 		drupal_add_js(drupal_get_path('theme', 'furnitheme') . '/js/jquery.dropkick-1.0.0.js');
 		drupal_add_css(drupal_get_path('theme', 'furnitheme') . '/css/dropkick.css');
@@ -112,6 +111,7 @@ function furnitheme_preprocess_page(&$vars) {
 	
 	//set footer menu links	
 	$info_menu = array(
+		'<span class="menu-label">About Furnitalia</span>',
 		l("About us", 'about'),
 		l("Contact us", "contact"), 
 	);
@@ -123,6 +123,7 @@ function furnitheme_preprocess_page(&$vars) {
 	);
 	
 	$user_menu = array();	
+	$user_menu []= '<span class="menu-label">Account information</span>';
 	$user_menu []= l("Account Details", 'user');
 	$user_menu []= l("Favorites", 'my-favorites');		
 	$user_menu []= l("Order status", 'my-orders');		
@@ -136,6 +137,7 @@ function furnitheme_preprocess_page(&$vars) {
 	);
 	
 	$policies_menu = array(
+		'<span class="menu-label">Policies and information</span>',
 		l("FAQ", 'faq'),
 		l("Shipping and Delivery", "shipping-deliveries"), 
 		l("Terms of Service", "service-terms"),
@@ -147,6 +149,30 @@ function furnitheme_preprocess_page(&$vars) {
 		'#type' => 'ul',
 		'#attributes' => array('class' => 'links'),
 	);
+	
+	//top menu
+	$top_menu = array();
+	
+	if ($user->uid == 0) {	
+		$top_menu []= l("Sign in", 'user/login');
+		$top_menu []= l("Register", 'user/register');
+	} else {
+		$user_fields = user_load($user->uid);
+		$welcome_msg = 'Welcome, ' . $user_fields->field_first_name['und'][0]['value'];
+		$top_menu [] = $welcome_msg;
+		$top_menu []= l("Sign out", 'user/logout');	
+	}
+
+	$top_menu []= l("May Cart", 'cart');
+	$top_menu []= l("Favorites", 'my-favorites');
+	
+	$vars['page']['header']['top_menu'] = array(
+		'#theme' => 'item_list',
+		'#items' => array_values($top_menu),
+		'#type' => 'ul',
+		'#attributes' => array('class' => 'menu'),
+	);
+	
 	
 }
 

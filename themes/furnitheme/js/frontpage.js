@@ -43,6 +43,7 @@ var timer2;
 					
 					//stop front page slider animation
 					$('#menu-pic').stop().hide();
+					$(this).hide();
 					clearTimeout(timer);
 					
 					//move away left and right keyhole parts
@@ -90,8 +91,8 @@ var timer2;
 	
 	function SetUpCategoryAnimKeyHole() {
 	
-		ANIM_FRAME_WIDTH = 253;
-		ANIM_BG_TOTAL_WIDTH = 253 * 4;
+		ANIM_FRAME_WIDTH = 250;
+		ANIM_BG_TOTAL_WIDTH = 250 * 4;
 
 	
 		var keyHoleImg = Drupal.settings.basePath + 'sites/all/themes/furnitheme/images/bg-categores-keyhole.jpg';
@@ -104,9 +105,9 @@ var timer2;
 	    
 	    	$('#menu-pic-wrapper').css({
 				'position':'absolute',
-				'width':253,
+				'width':ANIM_FRAME_WIDTH,
 				'left':'auto',
-				'right':19,
+				'right':0,
 				'z-index':'-2'
 			}).insertBefore($('.keyhole'));
 			
@@ -115,7 +116,7 @@ var timer2;
 				// remove the loading class (so no background spinner), 
 				.removeClass('loading')
 				.css("background-image", "url(" +  keyHoleImg + ")")
-				.css({'width':253, 'left':0}).show()
+				.css({'width':ANIM_FRAME_WIDTH, 'left':0}).show()
 				.addClass("ready");
 	
 	    })

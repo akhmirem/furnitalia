@@ -121,13 +121,9 @@ html, body, .ui-widget {
 	margin: 19px 0 0 0;
 	padding:0;
 }
-.region-header ul.menu li.leaf {
+.region-header ul.menu li {
 	padding-right:15px;
-}
-
-#block-system-user-menu li {
 	display:inline;
-	
 }
 
 /*
@@ -366,7 +362,7 @@ span.field-label { /* The inline field label used by the Fences module */
 #promo {
 	height: 160px;
 	clear: both;
-	padding-top: 40px;
+	padding-top: 67px;
 }
 
 /*
@@ -395,10 +391,10 @@ span.field-label { /* The inline field label used by the Fences module */
 	z-index: 10;
 	background:white;
 	width:560px;
-	background:url(../images/frontpage-left.png) no-repeat;					
+	background:url(../images/frontpage-left.png) no-repeat center center;					
 }
 #front-right {
-	background:transparent url(../images/frontpage-right.png) no-repeat;
+	background:transparent url(../images/frontpage-right.png) no-repeat center center;
 	width: 460px;
 	left: 560px;
 	z-index:5;
@@ -509,9 +505,9 @@ ul.furn-gallery li.col-last {
 }
 
 div.keyhole {
-	background:transparent url(../images/keyhole.png) no-repeat center center;
-	width: 292px;
-	height: 671px;
+	background:transparent url(../images/keyhole-categories.png) no-repeat center center;
+	width: 250px;
+	height: 673px;
 	position:absolute;
 	top:0;
 	right:0;
@@ -732,9 +728,20 @@ article ul.inline li {
 footer {
 	width:100%;
 	height:140px;
-	background:black;
+	background:transparent url(../images/footer-bg.jpg) no-repeat;
+	font-size: .85em;
+	text-transform: capitalize;
 }
-
+footer a {
+	text-decoration: none;
+	color:#FFFFFF;
+}
+footer a:hover {
+	color:#981b1e;
+}
+footer .item-list ul li {
+	line-height: 130%;
+}
 
 footer nav {
 	float:left;
@@ -752,14 +759,16 @@ footer li a {
 footer li a:hover {
 	color:#981b1e;
 }
-
+span.menu-label {
+	color:#FFFFFF;
+	text-transform: uppercase;
+}
 
 /* NEWSLETTER */
 #block-webform-client-block-33 {
 	float:left;
-	width:420px;
-	border: 1px dashed blue;
 	height:80px;
+	margin-left: 6em;
 }
 #block-webform-client-block-33 .webform-component-markup, #block-webform-client-block-33 .webform-component-email, #block-webform-client-block-33 .form-item, #block-webform-client-block-33 .form-actions {
 	margin:.3em 0 .2em 0;	
@@ -768,14 +777,22 @@ footer li a:hover {
 	float:left;
 	color:white;
 }
-#block-webform-client-block-33 .webform-component-markup p {
+#block-webform-client-block-33 .webform-component-markup p, #catalogs {
 	margin:0;
+	text-transform: uppercase;
+}
+#catalogs {
+	margin-left: 5.3em;
+	margin-top: 1.3em;
+	display: block;
+	float: left;
 }
 #block-webform-client-block-33 .webform-component-email {
+	clear:both;
 	float:left;
 }
 #block-webform-client-block-33 .webform-component-email label {
-	display:inline;
+	display:none;
 	margin-right:.2em;
 }
 #block-webform-client-block-33 .form-actions {

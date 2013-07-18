@@ -93,7 +93,8 @@
     <?php endif; ?>
 
     <?php if ($secondary_menu): ?>
-      <nav id="secondary-menu" role="navigation">
+     <!--
+ <nav id="secondary-menu" role="navigation">
         <?php print theme('links__system_secondary_menu', array(
           'links' => $secondary_menu,
           'attributes' => array(
@@ -106,6 +107,7 @@
           ),
         )); ?>
       </nav>
+-->
     <?php endif; ?>
 
     <?php print render($page['header']); ?>
@@ -197,7 +199,7 @@
 	  <nav id="footer-info-menu"><?php print render($footer_info_menu); ?></nav>
 	  <nav id="footer-user-menu"><?php print render($footer_user_menu); ?></nav>
 	  <nav id="footer-policy-menu"><?php print render($footer_policy_menu); ?></nav>	
-	  <?php print  l("Catalogs", "catalogs"); ?>  
+	  <?php print  l("Catalogs", "catalogs", array('attributes' => array('id' => 'catalogs'))); ?>  
 	  <?php print render($page['footer']); ?>	  
   </footer>
   
