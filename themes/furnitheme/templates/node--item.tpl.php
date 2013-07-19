@@ -107,7 +107,16 @@ if ($teaser) { //item teaser view
 	  <span><a href="#" id="zoom-in"><img src="<?php print base_path() . path_to_theme(); ?>/images/Zoom_In_18x20.png"/>Zoom in</a></span>
 	  
 	  <span class="favorites"><img src="<?php print base_path() . path_to_theme(); ?>/images/Favorites_Star_Icon_14x14.png"/>
-	  <?php print $content['links']['flag']['#links']['flag-favorites']['title']; //render($content['links']['flag']); ?>
+	  
+	  <?php
+	  	global $user;
+		if(!$user->uid) {
+		    print l(t('Add to favorites'), 'user/login' , array('query'=> array('destination' => 'node/' . $node->nid)));
+		} else {
+			print $content['links']['flag']['#links']['flag-favorites']['title']; //render($content['links']['flag']); 
+		}
+	  ?>
+	  
 	  </span>
 	  
 	  <span class="favorites"><a href="#">schematics pdf<img src="<?php print base_path() . path_to_theme(); ?>/images/SubLink_Arrow_Red_6x9.png" class="sublink-arrow"/></a></span>

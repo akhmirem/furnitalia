@@ -143,7 +143,6 @@ html, body, .ui-widget {
 	margin-top:2em;
 	overflow:hidden;
 	padding-right:55px;
-	border:1px dashed red;
 }
 .region-header {
 	margin-top:0;
@@ -232,6 +231,29 @@ a.active-menu {
 	font-size: 1.1em;
 	position: relative;
 	top: .2em;
+}
+div.region-header li a {
+	color: #6d6e71;
+	text-decoration: none;
+	font-weight: 100;
+	text-transform: uppercase;
+	font-size: .9em;
+	border-bottom: 1px dotted #6d6e71;
+	padding: 0 .2em .2em;
+	margin: 0 1.5em 0 0;
+}
+#edit-search-block-form--2 {
+	text-transform: uppercase;
+	font-size: .8em;
+	padding: .2em;
+	text-align: center;
+	color: #6d6e71;
+	border: .1em solid #6d6e71;
+	background: #FFFFFF url(../images/Search_icon_Red_14x15.png) no-repeat 3% center;
+}
+#edit-actions {
+	top: .25em;
+	position: relative;
 }
 .region-content-top a:hover {
 	color:#981b1e;
@@ -777,12 +799,16 @@ span.menu-label {
 	float:left;
 	color:white;
 }
-#block-webform-client-block-33 .webform-component-markup p, #catalogs {
+#block-webform-client-block-33 .webform-component-markup p, #catalogs, span.menu-label {
 	margin:0;
 	text-transform: uppercase;
+	font-weight: 700;
+}
+#block-webform-client-block-33 .webform-component-markup p {
+	font-size:1.2em;
 }
 #catalogs {
-	margin-left: 5.3em;
+	margin-left: 5.2em;
 	margin-top: 1.3em;
 	display: block;
 	float: left;
@@ -798,4 +824,11 @@ span.menu-label {
 #block-webform-client-block-33 .form-actions {
 	float:left;
 	margin-left:1em;
+}
+#edit-submitted-email {
+	text-align: center;
+	color: #6d6e71;
+	font-weight: bold;
+	padding: .2em 0;
+	border: 1px solid #6d6e71;
 }

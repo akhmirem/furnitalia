@@ -163,7 +163,7 @@ function furnitheme_preprocess_page(&$vars) {
 		$top_menu []= l("Sign out", 'user/logout');	
 	}
 
-	$top_menu []= l("May Cart", 'cart');
+	$top_menu []= l("My Cart", 'cart');
 	$top_menu []= l("Favorites", 'my-favorites');
 	
 	$vars['page']['header']['top_menu'] = array(
@@ -295,9 +295,27 @@ function furnitheme_form_search_block_form_alter(&$form, &$form_state, $form_id)
 	
 	$form['actions']['submit']['#theme_wrappers'] = array("image_button");
 	$form['actions']['submit']['#button_type'] = "image";
-	$form['actions']['submit']['#src'] = $path . "/images/search.gif";
+	$form['actions']['submit']['#src'] = $path . "/images/Go_Button_Active.png";
 
 }
+
+/**
+ * Implements hook_form_alter().
+ *
+ * Alter search form
+ */
+function furnitheme_form_webform_client_form_33_alter(&$form, &$form_state, $form_id) {
+	
+	global $base_path;
+	global $theme_path;
+	
+	$path = $base_path . $theme_path;//drupal_get_path('theme', 'furnitheme');
+	
+	$form['actions']['submit']['#theme_wrappers'] = array("image_button");
+	$form['actions']['submit']['#button_type'] = "image";
+	$form['actions']['submit']['#src'] = $path . "/images/Join_Button_Active.png";
+}
+
 
 /**
  * Implements hook_form_alter().
@@ -315,7 +333,7 @@ function furnitheme_form_search_form_alter(&$form, &$form_state, $form_id) {
 	
 	$form['basic']['submit']['#theme_wrappers'] = array("image_button");
 	$form['basic']['submit']['#button_type'] = "image";
-	$form['basic']['submit']['#src'] = $path . "/images/search.gif";
+	$form['basic']['submit']['#src'] = $path . "/images/Go_Button_Active.png";
 
 }
 
