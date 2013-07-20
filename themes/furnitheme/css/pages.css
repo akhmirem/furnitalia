@@ -170,6 +170,15 @@ html, body, .ui-widget {
 	margin-top:20px;
 	border: 1px dashed red;
 }
+
+.views-exposed-form label, div.region-left .form-item label {
+	font-weight: 300;
+	text-transform: uppercase;
+	font-size: .9em;
+}
+div.region-left{
+	padding-left: .75em;
+}
 #main-nav a {
 	font-size:1.4em;
 	border-bottom:1.5px solid #6d6e71;
@@ -601,10 +610,16 @@ article .favorites {
 article .favorites a, #request-quote, #zoom-in {
 	text-transform: uppercase;
 	font-size: .8em;
+	text-decoration:none;
 }
 article .favorites a, #zoom-in {
 	color:#6d6e71;
-	font-size:1em;
+	font-size:.9em;
+}
+#zoom-in img {
+	position: relative;
+	top: .55em;
+	padding-right: .2em;
 }
 img.sublink-arrow {
 	margin-left:.3em;
