@@ -58,7 +58,7 @@ if ($teaser) { //item teaser view
 } else { //full page view
 ?>
 
-<?php dsm($content); ?>
+<?php //dsm($content); ?>
 <article class="node-<?php print $node->nid; ?> <?php print $classes; ?> clearfix"<?php print $attributes; ?>>
 
   <?php if ($unpublished): ?>
