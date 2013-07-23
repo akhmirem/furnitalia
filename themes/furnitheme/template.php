@@ -451,8 +451,13 @@ function furnitheme_pager($variables) {
     $i = 1;
   }
   // End of generation loop preparation.
-
-  $li_first = theme('pager_first', array('text' =>  '1', 'element' => $element, 'parameters' => $parameters));
+  
+  $first_item_text = '1';
+  if ($i < 2) {
+	  $first_item_text = '1' . ' | ';
+  }
+  
+  $li_first = theme('pager_first', array('text' =>  $first_item_text, 'element' => $element, 'parameters' => $parameters));
   $li_previous = theme('pager_previous', array('text' => (isset($tags[1]) ? $tags[1] : t('‹ previous')), 'element' => $element, 'interval' => 1, 'parameters' => $parameters));
   $li_next = theme('pager_next', array('text' => (isset($tags[3]) ? $tags[3] : t('next ›')), 'element' => $element, 'interval' => 1, 'parameters' => $parameters));
   $li_last = theme('pager_last', array('text' =>  $pager_max, 'element' => $element, 'parameters' => $parameters));
@@ -483,30 +488,35 @@ function furnitheme_pager($variables) {
       }
       // Now generate the actual pager piece.
       for (; $i <= $pager_last && $i <= $pager_max; $i++) {
-        if ($i < $pager_current && $i > 1) {
-        	
-          $items[] = array(
-            'class' => array('pager-item'),
-            'data' => theme('pager_previous', array('text' => $i, 'element' => $element, 'interval' => ($pager_current - $i), 'parameters' => $parameters)),
-          );
-        }
-        if ($i == $pager_current) {
-          $items[] = array(
-            'class' => array('pager-current'),
-            'data' => $i,
-          );
-        }
-        if ($i > $pager_current) {
-        	
-          $items[] = array(
-            'class' => array('pager-item'),
-            'data' => theme('pager_next', array('text' => $i, 'element' => $element, 'interval' => ($i - $pager_current), 'parameters' => $parameters)),
-          );
+      	$cur_text = $i . ' | ';      	
+      	if ($i == $pager_last && $pager_last + 1 != $pager_max || $i == $pager_max) {
+    		//unset separator if ... follows current  		
+			$cur_text = $i;
         }
         
+        //if last item in the range, unset the explicit 'last' pager
         if ($i == $pager_max) {
         	$li_last = "";
     	}
+          
+        if ($i < $pager_current && $i > 1) {
+          $items[] = array(
+            'class' => array('pager-item'),
+            'data' => theme('pager_previous', array('text' => $cur_text, 'element' => $element, 'interval' => ($pager_current - $i), 'parameters' => $parameters)),
+          );
+        }
+        if ($i == $pager_current) {         
+          $items[] = array(
+            'class' => array('pager-current'),
+            'data' => $cur_text,
+          );
+        }
+        if ($i > $pager_current) {
+          $items[] = array(
+            'class' => array('pager-item'),
+            'data' => theme('pager_next', array('text' => $cur_text, 'element' => $element, 'interval' => ($i - $pager_current), 'parameters' => $parameters)),
+          );
+        }
     	
       }
       if ($i < $pager_max) {

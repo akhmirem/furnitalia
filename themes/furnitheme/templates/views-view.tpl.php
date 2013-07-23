@@ -50,13 +50,16 @@
       <?php print $attachment_before; ?>
     </div>
   <?php endif; ?>
+  
+  <hr/>
+  <span class="gallery-instructions">Rollover an image for a preview. | Click on an image for full details</span>
 
   <?php if ($pager): ?>
     <?php print $pager; ?>
   <?php endif; ?>
 
   <?php if ($rows): ?>
-    <div class="view-content">
+    <div class="view-content clearfix">
       <?php print $rows; ?>
     </div>
   <?php elseif ($empty): ?>
@@ -64,6 +67,8 @@
       <?php print $empty; ?>
     </div>
   <?php endif; ?>
+  
+  <hr/>
 
   <?php if ($pager): ?>
     <?php print $pager; ?>
@@ -82,12 +87,6 @@
   <?php if ($footer): ?>
     <div class="view-footer">
       <?php print $footer; ?>
-    </div>
-  <?php endif; ?>
-
-  <?php if ($feed_icon): ?>
-    <div class="feed-icon">
-      <?php print $feed_icon; ?>
     </div>
   <?php endif; ?>
 
