@@ -188,9 +188,12 @@
 	
 	</section>	
 	
-	<section id="promo">
-		<img src="<?php print $base_path . path_to_theme(); ?>/images/dummy-promo.gif"/>
+	<?php if ($show_promo) : ?>
+	<section id="promo" class="clearfix">
+		<!-- <img src="<?php print $base_path . path_to_theme(); ?>/images/dummy-promo.gif"/> -->
+		<?php include_once("promo.tpl.php"); ?>
 	</section>
+	<?php endif; ?>
 
   </div><!-- /#main -->
 

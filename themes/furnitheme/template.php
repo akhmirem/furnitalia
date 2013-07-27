@@ -90,8 +90,10 @@ function furnitheme_preprocess_page(&$vars) {
 	}
 	
 	$vars['show_keyhole'] = FALSE;
+	$vars['show_promo'] = FALSE;
 	if (arg(0) == 'front') {
 		$vars['show_keyhole'] = TRUE;
+		$vars['show_promo'] = TRUE;
 	}
 
 	$vars['show_title'] = TRUE;	
@@ -108,7 +110,8 @@ function furnitheme_preprocess_page(&$vars) {
 	if (arg(0) == 'taxonomy' && arg(1) == 'term' && is_numeric(arg(2)) && arg(3) == "") {
 		unset($vars['tabs']);
 		//don't display title
-		$vars['show_title'] = FALSE;	
+		$vars['show_title'] = FALSE;
+		$vars['show_promo'] = TRUE;
 	}
 	
 	//set footer menu links	
@@ -176,6 +179,52 @@ function furnitheme_preprocess_page(&$vars) {
 	);
 	
 	
+	
+	if (isset($vars['node']) && arg(2) != 'edit') {
+		$node = $vars['node'];
+		if ($node->type == 'item') {
+			$content = $vars['page']['content']['system_main']['nodes'][$node->nid];
+
+			preprocess_node_common_fields($content, 'page');
+						
+			$vars['page']['content']['system_main']['nodes'][$node->nid] = $content;			
+			
+				
+		}
+	}
+	
+}
+
+function preprocess_node_common_fields(&$content, $hook) {
+	
+
+	if (!empty($content['field_show_add_to_cart']) && $content['field_show_add_to_cart']['#items'][0]['value'] == '0') {
+		unset($content['add_to_cart']);
+	}
+
+
+	$content['list_price']['#title'] = "MSRP:";
+	$content['sell_price']['#title'] = "Furnitalia:";
+
+	
+	$sale_price_set = !empty($content['field_sale_price']) && isset($content['field_sale_price']['#items']) && $content['field_sale_price']['#items'][0]['value'];
+		
+	if($sale_price_set) {
+		$new_sale_price = array();
+		
+		$new_sale_price['#title'] = "Special:";
+		$new_sale_price['#theme'] = "uc_product_price";
+		$new_sale_price['#value'] = $content['field_sale_price']['#items'][0]['value'];
+		$new_sale_price['#attributes'] = array('class' => array('sell-price'));
+		
+		$content['sale_price'] = $new_sale_price;
+		$content['sell_price']['#attributes']['class'] = array('old-price');
+	  	
+	} else {
+		
+		
+	}	
+	
 }
 
 
@@ -187,8 +236,11 @@ function furnitheme_preprocess_page(&$vars) {
  * @param $hook
  *   The name of the template being rendered ("node" in this case.)
  */
-function furnitheme_preprocess_node(&$variables, $hook) {
-	//dsm($variables);
+function furnitheme_preprocess_node(&$vars, $hook) {
+	//dsm($vars);
+	
+	preprocess_node_common_fields($vars['content'], 'page');
+	
 }
 
 /**
@@ -453,8 +505,10 @@ function furnitheme_pager($variables) {
   // End of generation loop preparation.
   
   $first_item_text = '1';
+  $first_item_class = "";
   if ($i < 2) {
-	  $first_item_text = '1' . ' | ';
+	  //$first_item_text = '1' . ' | ';
+	  $first_item_class = "with-separator";
   }
   
   $li_first = theme('pager_first', array('text' =>  $first_item_text, 'element' => $element, 'parameters' => $parameters));
@@ -473,7 +527,7 @@ function furnitheme_pager($variables) {
     
     if ($li_first) {
       $items[] = array(
-        'class' => array('pager-first'),
+        'class' => array('pager-first', $first_item_class),
         'data' => $li_first,
       );
     }
@@ -488,10 +542,13 @@ function furnitheme_pager($variables) {
       }
       // Now generate the actual pager piece.
       for (; $i <= $pager_last && $i <= $pager_max; $i++) {
-      	$cur_text = $i . ' | ';      	
+      	//$cur_text = $i . ' | ';
+      	$cur_text = $i;
+      	$sep_class = 'with-separator';  	
       	if ($i == $pager_last && $pager_last + 1 != $pager_max || $i == $pager_max) {
     		//unset separator if ... follows current  		
 			$cur_text = $i;
+			$sep_class = '';
         }
         
         //if last item in the range, unset the explicit 'last' pager
@@ -501,19 +558,19 @@ function furnitheme_pager($variables) {
           
         if ($i < $pager_current && $i > 1) {
           $items[] = array(
-            'class' => array('pager-item'),
+            'class' => array('pager-item', $sep_class),
             'data' => theme('pager_previous', array('text' => $cur_text, 'element' => $element, 'interval' => ($pager_current - $i), 'parameters' => $parameters)),
           );
         }
         if ($i == $pager_current) {         
           $items[] = array(
-            'class' => array('pager-current'),
+            'class' => array('pager-current', $sep_class),
             'data' => $cur_text,
           );
         }
         if ($i > $pager_current) {
           $items[] = array(
-            'class' => array('pager-item'),
+            'class' => array('pager-item', $sep_class),
             'data' => theme('pager_next', array('text' => $cur_text, 'element' => $element, 'interval' => ($i - $pager_current), 'parameters' => $parameters)),
           );
         }
@@ -547,6 +604,7 @@ function furnitheme_pager($variables) {
     ));
   }
 }
+
 
 /**
  * Implements hook_form_alter().

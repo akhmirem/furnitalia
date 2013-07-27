@@ -41,6 +41,9 @@ body {
 	background-color:#e6e7e8;
 	color:#6d6e71;
 }
+html, button, input, select, textarea {
+    font-family: "HelveticaNeue-Light","Helvetica Neue Light","Helvetica Neue",Helvetica,Arial,"Lucida Grande",sans-serif;
+}
 
 #page {
 	width:1024px;
@@ -126,8 +129,8 @@ color: #6d6e71;
 	padding:0;
 }
 .region-header ul.menu li {
-	padding-right:15px;
-	display:inline;
+	display: inline;
+    margin-right: 1em;
 }
 
 /*
@@ -172,7 +175,6 @@ color: #6d6e71;
 	width: 260px;
 	padding-left: 15px;
 	margin-top:20px;
-	border: 1px dashed red;
 }
 
 .views-exposed-form label, div.region-left .form-item label {
@@ -246,29 +248,31 @@ a.active-menu {
 	font-weight: normal;
 }
 div.region-header li a {
-	color: #6d6e71;
-	text-decoration: none;
-	font-weight: 100;
-	text-transform: uppercase;
-	font-size: .9em;
-	border-bottom: 1px dotted #6d6e71;
-	padding: 0 .2em .2em;
-	margin: 0 1.5em 0 0;
+	border-bottom: 1px dotted #6D6E71;
+    color: #6D6E71;
+    font-size: 0.9em;
+    font-weight: 100;
+    margin: 0 1.5em 0 0;
+    text-decoration: none;
+    text-transform: uppercase;
 }
 #edit-search-block-form--2 {
-	text-transform: uppercase;
-	font-size: .8em;
-	padding: .2em;
-	text-align: center;
-	color: #6d6e71;
-	border: .1em solid #6d6e71;
-	background: #FFFFFF url(../images/Search_icon_Red_14x15.png) no-repeat 3% center;
+	background: url("../images/Search_icon_Red_14x15.png") no-repeat scroll 3% center #FFFFFF;
+    border: 0.1em solid #6D6E71;
+    color: #6D6E71;
+    font-size: 0.8em;
+    padding: 0.2em 0.2em 0.2em 1.7em;
+    text-transform: uppercase;
 }
 #edit-actions {
 	top: .25em;
 	position: relative;
 }
-.region-content-top a:hover {
+#edit-submit {
+    position: relative;
+    top: 0.3em;
+}
+.region-content-top a:hover, div.region-header li a:hover, #main-nav a:hover {
 	color:#981b1e;
 }
 h1.title, /* The title of the page */
@@ -352,14 +356,17 @@ span.field-label { /* The inline field label used by the Fences module */
 .item-list .pager li { /* Each page number in the pager list */
   padding: 0 0.5em;
   font-weight: 100;
+  font-size: .8em;
 }
 .item-list .pager li.pager-current {
 	color:#981b1e;
 } 
+.item-list .pager li.with-separator {
+	border-right: 1px solid #6d6e71;
+}
 ul.pager a li, ul.pager li a {
 	text-transform: uppercase;
-	text-decoration: none;
-	font-size: .9em;
+	text-decoration: none;	
 }
 
 .feed-icon { /* The link to the RSS or Atom feed for the current list of content */
@@ -403,14 +410,7 @@ ul.pager a li, ul.pager li a {
 .region-bottom { /* Wrapper for any blocks placed in the page bottom region */
 }
 
-/*
- * Promo
- */
-#promo {
-	height: 160px;
-	clear: both;
-	padding-top: 67px;
-}
+
 
 /*
  *	Frontpage animation
@@ -610,14 +610,17 @@ article #page-title {
 
 .item-info-p, .field-label, article .sell-price {
 	font-size:1em;
-	font-weight:600;
+	font-weight:300;
 	text-transform: uppercase;
 }
 .field .field-label {
-	font-weight: 600;
+	font-weight: 300;
 }
 article .sell-price {
 	color:#981b1e;
+}
+article .old-price {
+	text-decoration:line-through;
 }
 #item-info .field-name-field-availability div.field-item {
 	text-transform: uppercase;
@@ -704,7 +707,7 @@ article ul.inline li {
 	margin:0;
 	padding: 0;
 }
-#request-quote {
+#request-quote, #promo a.more-info {
 	display:block;
 	width:200px;
 	background:#981b1e;
@@ -881,4 +884,52 @@ hr {
 	margin: 1.5em 0 0 0;
 	border: none;
 	background-color: #981b1e;
+}
+
+
+/*
+ * PROMO
+*/
+#promo {
+	height: 160px;
+	clear: both;
+	padding: 67px 0 0 2em;
+}
+#promo h3 {
+	font-size: .9em;
+	text-transform: uppercase;
+	line-height: 130%;
+	margin: .2em 0;
+	font-weight: 100;
+}
+#promo h4 {
+	font-size: .8em;
+	font-weight: 100;
+	margin: 0;
+	padding: 0;
+	text-transform: uppercase;
+	color: #981b1e;
+}
+#promo hr {
+	margin: .5em 0;
+	background-color: #6d6e71;
+	height: 1px;
+}
+#promo p {
+	font-size: .8em;
+	line-height: 130%;
+	margin: .2em 0;
+	width:50em;
+}
+#promo img{
+	float:left;
+	padding-right: .5em;
+}
+#promo a.more-info {
+	float: left;
+	margin: .1em 0 0 0;
+	padding: .1em;
+	width: 10em;
+	text-transform: uppercase;
+	font-size: .7em;
 }
