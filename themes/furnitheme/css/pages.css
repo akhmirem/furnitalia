@@ -595,11 +595,12 @@ aside.contact a {
 	text-align: left;
 }
 
-.cat-preview {
-	display:none;
+#cat-preview .pika-stage {
+	width:500px;
+	height:345px;
 }
-.active-category {
-	display:block;
+#cat-preview .pika-thumbs {
+	display:none;
 }
 article {
 	font-size: .9em;

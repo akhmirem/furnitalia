@@ -765,21 +765,24 @@ function furnitalia_tweaks_front_page() {
 	$build['category-preview'] = array(
 		'#markup' => '<div id="cat-preview">					
 						<div id="category-image-pane">
-							<span class="category1 cat-preview" style="display:block">
-					  			<a href="#" class="category-image"><img src="' .drupal_get_path('theme', 'furnitheme') . "/images/category-image-1.png" . '" title="Furnitalia collections"  /></a>
-					  		</span>
-					  		<span class="category2 cat-preview">
-					  			<a href="#" class="category-image"><img src="' .drupal_get_path('theme', 'furnitheme') . "/images/category-image-2.png" . '" title="Furnitalia collections" /></a>
-					  		</span>
-					  		<span class="category3 cat-preview">
-					  			<a href="#" class="category-image"><img src="' .drupal_get_path('theme', 'furnitheme') . "/images/category-image-3.png" . '" title="Furnitalia collections"  /></a>
-					  		</span>
-					  		<span class="category4 cat-preview">
-					  			<a href="#" class="category-image"><img src="' .drupal_get_path('theme', 'furnitheme') . "/images/category-image-4.png" . '" title="Furnitalia collections"  /></a>
-					  		</span>
+							<ul class="cat-slider category1 cat-preview" style="display:block">
+					  			<li><a href="#" class="category-image"><img src="' .drupal_get_path('theme', 'furnitheme') . "/images/category-image-1.png" . '" title="Furnitalia collections"  /></a></li>
+					  		</ul>
 					  	</div>
  				  	 </div>',
 	);
+	
+	/*
+<ul class="cat-slider-2 category2 cat-preview">
+					  			<li><a href="#" class="category-image"><img src="' .drupal_get_path('theme', 'furnitheme') . "/images/category-image-2.png" . '" title="Furnitalia collections" /></a></li>
+					  		</ul>
+					  		<ul class="cat-slider-3 category3 cat-preview">
+					  			<li><a href="#" class="category-image"><img src="' .drupal_get_path('theme', 'furnitheme') . "/images/category-image-3.png" . '" title="Furnitalia collections"  /></a></li>
+					  		</ul>
+					  		<ul class="cat-slider-4 category4 cat-preview">
+					  			<li><a href="#" class="category-image"><img src="' .drupal_get_path('theme', 'furnitheme') . "/images/category-image-4.png" . '" title="Furnitalia collections"  /></a></li>
+					  		</ul>
+*/
 	
 	$build['front-anim'] = array (
 		'#markup' => '<div id="front-overlay">

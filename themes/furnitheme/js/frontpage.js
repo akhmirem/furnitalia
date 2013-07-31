@@ -58,45 +58,41 @@ var timer2;
 					//set up keyhole animation for categories
 					SetUpCategoryAnimKeyHole();					
 					
+
 					//hover events for category links
 					$('#bg1').hover(function(e){
-						$("#category-image-pane .cat-preview").stop().css('display', 'none');						
-						$(".category1").fadeIn({duration:500}, function() {
-							StartCategorySlideshow($(this), "all");
-						});
+						SetUpCategorySlider("bg1");
 						KeyHoleScroll(1);
-					}, function(){});
 						
+					}, function(){});
+					
 					$('#bg2').hover(function(e){
-						$("#category-image-pane .cat-preview").stop().css('display', 'none');							
-						$(".category2").fadeIn({duration:500});
+						SetUpCategorySlider("bg2");
 						KeyHoleScroll(2);
-					}, function(){});
-					
+						
+					}, function(){});		
+								
 					$('#bg3').hover(function(e){
-						$("#category-image-pane .cat-preview").stop().css('display', 'none');						
-						$(".category3").fadeIn({duration:500});
+						SetUpCategorySlider("bg3");
 						KeyHoleScroll(3);
-					}, function(){});
-					
-					$('#bg4').hover(function(e){
-						$("#category-image-pane .cat-preview").stop().css('display', 'none');						
-						$(".category4").fadeIn({duration:500});
-						KeyHoleScroll(4);
-					}, function(){});
-					
+						
+					}, function(){});					
 					
 					
 				});          	
         }
 	}
 	
-	var catPreviewInfo = {
-		'all':['category-image-2.png']
-	}
-	
-	function StartCategorySlideshow ($categoryContainer, catClass) {
+	function SetUpCategorySlider(category) {
+		//Category Slide Show images list
+		var imgPathPrefix = Drupal.settings.basePath + "sites/all/themes/furnitheme/images/cat-images/";
+		var catPreviewInfo = {
+			'bg1':[{'image':imgPathPrefix + 'all/gilda_lounge.png'}, {'image':imgPathPrefix + 'all/victor_dining_table.png'}, {'image':imgPathPrefix + 'all/vivian_chair.png'}, {'image':imgPathPrefix + 'all/zina_bed.png'}],
+			'bg2':[{'image':imgPathPrefix + 'italia/surround_sectional.png'}, {'image':imgPathPrefix + 'italia/sound_chair.png'},  {'image':imgPathPrefix + 'italia/samuel_table.png'}, {'image':imgPathPrefix + 'italia/tribeca_dining_table.png'}],
+			'bg3':[{'image':imgPathPrefix + 'editions/B520_valeria_sofa.png'}, {'image':imgPathPrefix + 'editions/B537_sophia_recliner.png'},  {'image':imgPathPrefix + 'editions/A399_nina_sofa.png'}, {'image':imgPathPrefix + 'editions/B815_pascal_chair.png'}]
+		}
 		
+		$('#category-image-pane').html('').PikaChoose({showCaption:false, showTooltips:false, data:catPreviewInfo[category], autoPlay:true, speed:1000});
 	}
 	
 	function SetUpCategoryAnimKeyHole() {
