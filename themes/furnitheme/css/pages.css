@@ -47,7 +47,7 @@ html, button, input, select, textarea {
 
 #page {
 	width:1024px;
-	border:1px dashed black;
+	/* border:1px dashed black; */
 	text-align:left;
 	margin:0 auto;
 	position: relative;
@@ -442,9 +442,9 @@ ul.pager a li, ul.pager li a {
 }
 #front-right {
 	background:transparent url(../images/frontpage-right.png) no-repeat center center;
-	width: 460px;
-	left: 560px;
 	z-index:5;
+	width: 472px;
+	left: 556px;
 }
 
 #enterFurnitalia {
@@ -488,8 +488,8 @@ span.gallery-instructions {
 	font-size: .85em;
 	margin-top: 1em;
 }
-div.view-taxonomy-term div.view-content {
-	clear:both
+div.view-content {
+	clear:both;
 }
 ul.furn-gallery {
 	width:690px;
@@ -555,6 +555,10 @@ ul.furn-gallery li.col-last {
 .furn-gallery .item-details .product-info {
 	font-size:1em;
 }
+div.item-details .field-name-field-availability {
+	width: 11em;
+	margin: .5em auto 0 auto;
+}
 .furn-gallery .item-details .sell-price, .furn-gallery .item-details .field-name-field-availability {
 	color:#981b1e;
 }
@@ -591,7 +595,7 @@ aside.contact a {
 	text-align: left;
 }
 
-.category-image {
+.cat-preview {
 	display:none;
 }
 .active-category {
@@ -607,6 +611,7 @@ article #page-title {
 	text-transform: uppercase;
 	color: #981b1e;
 }
+article.about-us
 
 .item-info-p, .field-label, article .sell-price {
 	font-size:1em;
@@ -662,13 +667,13 @@ article.view-mode-full {
 }
 #item-images {
 	width:460px;
-	border:1px dashed blue;
+	/* border:1px dashed blue; */
 	float:left;
 }
 #item-info {
 	float:left;
 	width:211px;
-	border:1px dashed red;
+	/* border:1px dashed red; */
 	margin-left:10px;
 }
 #pikawrapper {
@@ -676,6 +681,7 @@ article.view-mode-full {
     width:100%;
     max-width: 2000px;
     white-space:nowrap;
+    outline: none;
 }
 #pikawrapper li {
 	 display:inline-block;
@@ -914,6 +920,7 @@ hr {
 	margin: .5em 0;
 	background-color: #6d6e71;
 	height: 1px;
+	width: 84.7%;
 }
 #promo p {
 	font-size: .8em;

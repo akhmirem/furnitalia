@@ -765,10 +765,18 @@ function furnitalia_tweaks_front_page() {
 	$build['category-preview'] = array(
 		'#markup' => '<div id="cat-preview">					
 						<div id="category-image-pane">
-					  		<a href="#" class="category1 category-image" style="display:block"><img src="' .drupal_get_path('theme', 'furnitheme') . "/images/category-image-1.png" . '" title="Furnitalia collections"  /></a>
-					  		<a href="#" class="category2 category-image" ><img src="' .drupal_get_path('theme', 'furnitheme') . "/images/category-image-2.png" . '" title="Furnitalia collections" /></a>
-					  		<a href="#" class="category3 category-image"><img src="' .drupal_get_path('theme', 'furnitheme') . "/images/category-image-3.png" . '" title="Furnitalia collections"  /></a>
-					  		<a href="#" class="category4 category-image"><img src="' .drupal_get_path('theme', 'furnitheme') . "/images/category-image-4.png" . '" title="Furnitalia collections"  /></a>
+							<span class="category1 cat-preview" style="display:block">
+					  			<a href="#" class="category-image"><img src="' .drupal_get_path('theme', 'furnitheme') . "/images/category-image-1.png" . '" title="Furnitalia collections"  /></a>
+					  		</span>
+					  		<span class="category2 cat-preview">
+					  			<a href="#" class="category-image"><img src="' .drupal_get_path('theme', 'furnitheme') . "/images/category-image-2.png" . '" title="Furnitalia collections" /></a>
+					  		</span>
+					  		<span class="category3 cat-preview">
+					  			<a href="#" class="category-image"><img src="' .drupal_get_path('theme', 'furnitheme') . "/images/category-image-3.png" . '" title="Furnitalia collections"  /></a>
+					  		</span>
+					  		<span class="category4 cat-preview">
+					  			<a href="#" class="category-image"><img src="' .drupal_get_path('theme', 'furnitheme') . "/images/category-image-4.png" . '" title="Furnitalia collections"  /></a>
+					  		</span>
 					  	</div>
  				  	 </div>',
 	);

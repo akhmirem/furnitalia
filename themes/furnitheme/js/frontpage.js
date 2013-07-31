@@ -60,25 +60,27 @@ var timer2;
 					
 					//hover events for category links
 					$('#bg1').hover(function(e){
-						$("#category-image-pane .category-image").stop().css('display', 'none');						
-						$(".category1").fadeIn({duration:500});
+						$("#category-image-pane .cat-preview").stop().css('display', 'none');						
+						$(".category1").fadeIn({duration:500}, function() {
+							StartCategorySlideshow($(this), "all");
+						});
 						KeyHoleScroll(1);
 					}, function(){});
 						
 					$('#bg2').hover(function(e){
-						$("#category-image-pane .category-image").stop().css('display', 'none');							
+						$("#category-image-pane .cat-preview").stop().css('display', 'none');							
 						$(".category2").fadeIn({duration:500});
 						KeyHoleScroll(2);
 					}, function(){});
 					
 					$('#bg3').hover(function(e){
-						$("#category-image-pane .category-image").stop().css('display', 'none');						
+						$("#category-image-pane .cat-preview").stop().css('display', 'none');						
 						$(".category3").fadeIn({duration:500});
 						KeyHoleScroll(3);
 					}, function(){});
 					
 					$('#bg4').hover(function(e){
-						$("#category-image-pane .category-image").stop().css('display', 'none');						
+						$("#category-image-pane .cat-preview").stop().css('display', 'none');						
 						$(".category4").fadeIn({duration:500});
 						KeyHoleScroll(4);
 					}, function(){});
@@ -87,6 +89,14 @@ var timer2;
 					
 				});          	
         }
+	}
+	
+	var catPreviewInfo = {
+		'all':['category-image-2.png']
+	}
+	
+	function StartCategorySlideshow ($categoryContainer, catClass) {
+		
 	}
 	
 	function SetUpCategoryAnimKeyHole() {
