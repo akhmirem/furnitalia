@@ -161,11 +161,17 @@
 			});
 			
 			//set active menu link in accordion
+			var foundActiveCat = false;
 			$("div.ui-accordion-content").each(function(index, val) {
 				if ($(this).find('a.active-menu').length) {
+					foundActiveCat = true;
 					$("#main-nav").accordion("option", "active", index);
 				}
 			});
+
+			if (!foundActiveCat) {
+				$("#main-nav").accordion("option", "active", 0); //make All categories active by default
+			}
 			
 			$("#bg4").click(function() {
 			    window.location.href = Drupal.settings.basePath + "interior-design";

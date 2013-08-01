@@ -76,7 +76,12 @@ var timer2;
 						SetUpCategorySlider("bg3");
 						KeyHoleScroll(3);
 						
-					}, function(){});					
+					}, function(){});		
+					
+					$("#main-nav").accordion("option", "active", 0); //make All categories active by defaultChecked
+									
+					//start first category slideshow
+					SetUpCategorySlider("bg1");			
 					
 					
 				});          	

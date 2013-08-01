@@ -163,7 +163,7 @@ function furnitheme_preprocess_page(&$vars) {
 		$top_menu []= l("Register", 'user/register');
 	} else {
 		$user_fields = user_load($user->uid);
-		$welcome_msg = 'Welcome, ' . $user_fields->field_first_name['und'][0]['value'];
+		$welcome_msg = '<span class="welcome">Welcome, <span class="welcome-user">' . $user_fields->field_first_name['und'][0]['value'] . '</span></span>';
 		$top_menu [] = $welcome_msg;
 		$top_menu []= l("Sign out", 'user/logout');	
 	}
