@@ -1,5 +1,5 @@
-ANIM_FRAME_WIDTH = 542;
-ANIM_BG_TOTAL_WIDTH = 2710;
+ANIM_FRAME_WIDTH = 540;
+ANIM_BG_TOTAL_WIDTH = ANIM_FRAME_WIDTH * 3;
 FRONTPAGE_TRANSITION_DURATION = 500;
 backgroundXShift = 0;
 var timer;
@@ -21,9 +21,7 @@ var timer2;
 					$('#menu-pic')
 						// remove the loading class (so no background spinner), 
 						.removeClass('loading')
-						.css("background-image", "url(" +  Drupal.settings.basePath + "sites/all/themes/furnitheme/images/bg.jpg)");
-					
-					//$("#menu-pic-wrapper").css({"background-image":"url(images/bg.jpg)", "background-position":"300px 0"});
+						.css("background-image", "url(" +  Drupal.settings.basePath + "sites/all/themes/furnitheme/images/front-keyhole-bg.png)");
 					
 					timer = window.setTimeout(AnimateFrontPageBackground, 500);
 			
@@ -35,7 +33,7 @@ var timer2;
 			    })
 			    
 			    // *finally*, set the src attribute of the new image to our image
-			    .attr('src', Drupal.settings.basePath + 'sites/all/themes/furnitheme/images/bg.jpg');
+			    .attr('src', Drupal.settings.basePath + 'sites/all/themes/furnitheme/images/front-keyhole-bg.png');
 			    
 			    
 				//enter furnitalia link animation
