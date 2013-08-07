@@ -143,7 +143,7 @@
 			
 			if ($('#request-quote').once(function() {
 				var element_settings = {};
-				element_settings.url = Drupal.settings.basePath + 'request/ajax/';
+				element_settings.url = $(this).attr('href');
 				element_settings.event = "click";
 				element_settings.progress = {type: false};
 				

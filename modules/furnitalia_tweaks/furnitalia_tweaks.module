@@ -16,9 +16,9 @@ function furnitalia_tweaks_menu() {
 		'access callback' => TRUE, 
 		'type' => MENU_CALLBACK,
 	);
-	$items['request/ajax'] = array (
+	$items['request/%node/ajax'] = array (
 		'page callback' => 'furnitalia_tweaks_contact_js',
-		'page arguments' => array('34'),
+		'page arguments' => array(1, '34'),
 		'access callback' => TRUE, 
 		'type' => MENU_CALLBACK,
 	);
@@ -485,18 +485,22 @@ function furnitalia_tweaks_is_link_active($tid, $vars, $query = NULL, $ignore_qu
 	} else {
         if (arg(0) == 'node' && is_numeric(arg(1)) && arg(2) != 'edit') {
 
-        	
-            $node = array_values($vars['content']['system_main']['nodes']);
-            $node = $node[0];
-           
-            foreach($node['field_category']['#items'] as $term) {
-            	
-            	if (isset($query) && $query['brand'] == $node['field_brand']['#items'][0]['tid']) {
-	            	if ($term['tid'] == $tid || furnitalia_tweaks_is_child($term['tid'], $tid)) {
-		            	return true;
-	            	}
-            	}
-            }   
+        	if (isset($vars['content']['system_main']['nodes'])) {
+	            $node = array_values($vars['content']['system_main']['nodes']);
+	            $node = $node[0];
+	            
+	            if ($node['#bundle'] == 'item') {
+	           
+		            foreach($node['field_category']['#items'] as $term) {
+		            	
+		            	if (isset($query) && $query['brand'] == $node['field_brand']['#items'][0]['tid']) {
+			            	if ($term['tid'] == $tid || furnitalia_tweaks_is_child($term['tid'], $tid)) {
+				            	return true;
+			            	}
+		            	}
+		            }  
+	            } 
+            }
         }   
     }   
 	
@@ -640,7 +644,7 @@ function furnitalia_tweaks_orders() {
 /**
   * Display contact form in pop-up dialog box.
  */
-function furnitalia_tweaks_contact_js($nid=NULL){
+function furnitalia_tweaks_contact_js($item, $nid=NULL){
 
 	if (!is_numeric($nid)) {
 		$nid = 32; //contact us node id
@@ -648,11 +652,15 @@ function furnitalia_tweaks_contact_js($nid=NULL){
 
 	$output = "";
 	$node = node_load($nid);
-	$output .= theme('node', node_view($node));
+
+	if ($nid == 34) { //request form
 	
-	//return drupal_json_output(array('status' => TRUE, 'data' => $output, 'wrapperID' => drupal_html_id('webform-ajax-wrapper-' . $nid)));
-	//ajax_command_replace('#dialog-form', $output), 	
-	//$output = array('#type' => 'ajax', '#commands' => array(array('command' => 'openPopup', 'data' => $output)));
+		#for request form, prepopulate item's name
+		$node->webform['components'][5]['value'] = $item->title;
+		$node->webform['components'][7]['value'] = $item->nid;
+	}
+
+	$output .= theme('node', node_view($node));
 	
 	ajax_deliver(array('#type' => 'ajax', '#commands' => array (
 		array(
@@ -662,12 +670,7 @@ function furnitalia_tweaks_contact_js($nid=NULL){
 		    'selector' => "#dialog-form",
 		    'settings' => NULL,
 		),
-		//ajax_command_replace('#pagination', $output), 
 	)));
-	
-	//return array('#type' => 'ajax', '#commands' => array(
-	//	ajax_command_replace('#pagination', $output), 
-	//));
     
 }
 

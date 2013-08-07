@@ -75,8 +75,6 @@ if ($teaser) { //item teaser view
       <?php endif; ?>
     </header>
   <?php endif; ?>
-
-  <?php //krumo($content['field_image']['#items']); ?>
   
   
   <div id="item-images">
@@ -176,7 +174,7 @@ if ($teaser) { //item teaser view
 		  <p class="item-info-p"><?php print render($content['add_to_cart']);?></p>	  
 	  <?php endif;?>
 	  
-	  <a href="/request" id="request-quote" title="Request quote/info">Request quote/info</a>
+	  <?php print l("Request quote/info", "request/$node->nid/ajax", array('attributes' => array('id' => 'request-quote'))); ?>
 	  
   </div>
 
