@@ -544,7 +544,7 @@ function furnitalia_tweaks_get_selected_brand() {
 
 function furnitalia_tweaks_form_alter(&$form, &$form_state, $form_id){
 	if ($form['#id'] == 'item-node-form') {
-		//dsm($form);
+		dsm($form);
 		
 		//place video field in tabs
 	    $form['item_video'] = array(
@@ -561,7 +561,7 @@ function furnitalia_tweaks_form_alter(&$form, &$form_state, $form_id){
 	    $form['buttons']['#weight'] = 100;
 	    
 	    //put field ALU in product info
-	    $form['base']['field_alu'] = $form['field_alu']['und'][0];
+	    $form['base']['field_alu'] = $form['field_alu'];
 		$form['base']['field_alu']['#weight'] = 1;
 		
 		//put checkbox 'show add-to-cart button

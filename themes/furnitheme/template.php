@@ -605,6 +605,14 @@ function furnitheme_pager($variables) {
   }
 }
 
+function furnitheme_webform_mail_headers($variables) {
+  $headers = array(
+    'Content-Type'  => 'text/html; charset=UTF-8; format=flowed; delsp=yes',
+    'X-Mailer'      => 'Drupal Webform (PHP/'. phpversion() .')',
+  );
+  return $headers;
+}
+
 
 /**
  * Implements hook_form_alter().

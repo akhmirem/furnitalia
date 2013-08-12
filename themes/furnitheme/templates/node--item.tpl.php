@@ -160,7 +160,7 @@ if ($teaser) { //item teaser view
 	  	
 	  	?>
 	  </p>
-	  
+
 	  <?php if (is_array($content['field_brand']['#object']->field_brand['und'][0]['taxonomy_term']->field_brand_image)) : ?>
 		  <?php $brand_image = $content['field_brand']['#object']->field_brand['und'][0]['taxonomy_term']->field_brand_image['und'][0]; ?>
 		  <?php print theme("image", array("path" => $brand_image['uri'])); ?>
@@ -174,7 +174,7 @@ if ($teaser) { //item teaser view
 		  <p class="item-info-p"><?php print render($content['add_to_cart']);?></p>	  
 	  <?php endif;?>
 	  
-	  <?php print l("Request quote/info", "request/$node->nid/ajax", array('attributes' => array('id' => 'request-quote'))); ?>
+	  <?php print l("Request info", "request/$node->nid/ajax", array('attributes' => array('id' => 'request-quote'))); ?>
 	  
   </div>
 
