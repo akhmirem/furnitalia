@@ -955,3 +955,13 @@ hr {
 	text-transform: uppercase;
 	font-size: .7em;
 }
+#warning {
+	color:red;
+	width: 30em;
+	border: 1px solid red;
+	padding: .3em 1em;
+	margin:1em 0;
+}
+#warning a {
+	color:blue;
+}
