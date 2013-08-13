@@ -117,6 +117,10 @@
   <div id="main" class="clearfix">
 
     <div id="content" class="column" role="main">
+
+		<div id="warning">
+		Please refer to <a href="http://www.furnitalia.com">http://www.furnitalia.com</a>. This is a demo site which is under development. Product information may not be accurate.
+		</div>
     
       <?php print render($page['content_top']); ?>
       
