@@ -507,8 +507,7 @@ function furnitheme_pager($variables) {
   $first_item_text = '1';
   $first_item_class = "";
   if ($i < 2) {
-	  //$first_item_text = '1' . ' | ';
-	  $first_item_class = "with-separator";
+	  $first_item_class = "with-separator";	//show border separator if current page is 1
   }
   
   $li_first = theme('pager_first', array('text' =>  $first_item_text, 'element' => $element, 'parameters' => $parameters));
@@ -542,7 +541,7 @@ function furnitheme_pager($variables) {
       }
       // Now generate the actual pager piece.
       for (; $i <= $pager_last && $i <= $pager_max; $i++) {
-      	//$cur_text = $i . ' | ';
+
       	$cur_text = $i;
       	$sep_class = 'with-separator';  	
       	if ($i == $pager_last && $pager_last + 1 != $pager_max || $i == $pager_max) {
@@ -664,7 +663,8 @@ function furnitheme_webform_mail_headers($variables) {
     $form['submit']['#printed'] = FALSE;
     $vars['button'] = drupal_render_children($form);
   }
-}*/
+}
+// */
 
 
 /**
@@ -694,11 +694,6 @@ function STARTERKIT_preprocess_maintenance_page(&$variables, $hook) {
  * @param $hook
  *   The name of the template being rendered ("comment" in this case.)
  */
-/* -- Delete this line if you want to use this function
-function STARTERKIT_preprocess_comment(&$variables, $hook) {
-  $variables['sample_variable'] = t('Lorem ipsum.');
-}
-// */
 
 /**
  * Override or insert variables into the region templates.
