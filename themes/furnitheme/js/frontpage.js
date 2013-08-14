@@ -35,6 +35,9 @@ var timer2;
 			    // *finally*, set the src attribute of the new image to our image
 			    .attr('src', Drupal.settings.basePath + 'sites/all/themes/furnitheme/images/front-keyhole-bg.png');
 			    
+
+				$("#warning").css('display', 'none');
+			    
 			    
 				//enter furnitalia link animation
 				$("#enterFurnitalia").click(function(){
@@ -48,6 +51,8 @@ var timer2;
 					$("#front-left").animate({width:'0px'}, FRONTPAGE_TRANSITION_DURATION);
 					$("#front-right").animate({left:'880px', right:'5px'}, FRONTPAGE_TRANSITION_DURATION);
 					
+					
+					$("#warning").css('display', 'block');
 					
 					//hide top overlay
 					$("#front-overlay").addClass("loading").delay(FRONTPAGE_TRANSITION_DURATION).hide(1);
@@ -79,7 +84,8 @@ var timer2;
 					$("#main-nav").accordion("option", "active", 0); //make All categories active by defaultChecked
 									
 					//start first category slideshow
-					SetUpCategorySlider("bg1");			
+					SetUpCategorySlider("bg1");
+					KeyHoleScroll(1);	
 					
 					
 				});          	
