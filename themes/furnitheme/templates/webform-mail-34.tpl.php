@@ -22,10 +22,10 @@
 ?>
 
 <?php
-	$user = $email['email'] == 3; 
+	$is_user = $email['email'] == 3; 
 	
-	$data = '<pre>' . print_r($submission, TRUE) .'</pre>';	
-	$data .= '<br/><br/><pre>Email var:<br/>' . print_r($email, TRUE) .'</pre>';	
+	//$data = '<pre>' . print_r($submission, TRUE) .'</pre>';	
+	//$data .= '<br/><br/><pre>Email var:<br/>' . print_r($email, TRUE) .'</pre>';	
 	
 	
 	$nid = (int)$submission->data[7]['value'][0];
@@ -44,13 +44,13 @@
 	$image_html_rendered = render($image_html);	
 	$img = l($image_html_rendered, "node/" . $n->nid, array('html' => true));
 	
-	global $base_url, $theme_path;
+	global $base_path, $theme_path;
 	
-	$theme = "http://www.furnitalia.com/sites/all/themes/new_furn"; //$base_url . '/' . $theme_path; //drupal_get_path('theme', 'new_furn');
+	$theme = $base_path . $theme_path;
 
 ?>
 
-<?php if ($user) :?>
+<?php if ($is_user) :?>
 	<div>
 
 
@@ -115,7 +115,7 @@
 										Thanks for your interest...</span>
 										<br/>                 
 										<p>Hello <span style="font-style:italic;">%value[first_name]</span>, we have 
-										received your request for the &quot;<span style="font-weight:bold; font-style:italic;"><?php print $url; ?></span>&quot;	collection. One of Furnitalia&acute;s design consultants will be in contact with you shortly to help you choose a product that will transform your space and showcase your distinct style and taste.
+										received your request for the &quot;<span style="font-weight:bold; font-style:italic;"><?php print $url; ?></span>&quot;. One of Furnitalia&acute;s design consultants will be in contact with you shortly to help you choose a product that will transform your space and showcase your distinct style and taste.
 										</p>      
 										<p>Due to our pricing structure and our company policy we don&quot;t email or fax price quotes/proposals that reflect our discounts or percentages off. Speaking to you directly helps us maintain our personal customer service standard and protects our low price guarantee.</p>
 										<p>We look forward to connecting with you and to the opportunity to earn your business.</p>

@@ -67,30 +67,23 @@ function furnitheme_preprocess_page(&$vars) {
 	global $user;
 
 	drupal_add_css(drupal_get_path('theme', 'furnitheme') . '/css/ui/base/jquery.ui.all.css', array('group' => -100, 'every_page' => TRUE));
-	//drupal_add_css(drupal_get_path('theme', 'furnitheme') . '/css/ui/base/jquery.ui.slider.min.css', array('group' => -100, 'every_page' => TRUE));
 	
-	//drupal_add_library('system', 'ui');
 	drupal_add_js('misc/jquery.form.js');
-	drupal_add_library('system', 'drupal.ajax');
-	
-	drupal_add_library('system', 'ui.accordion');
+	drupal_add_library('system', 'drupal.ajax');	
+	drupal_add_library('system', 'ui.accordion');	
+	drupal_add_library('system', 'jquery.bbq'); //for processing url in javacsript
 
 	//jquery ui
-	//drupal_add_library('system', 'ui.dialog');//, array('every_page' => TRUE));
-	//drupal_add_library('system', 'ui.slider');
 	drupal_add_js(drupal_get_path('module', 'webform_ajax') . '/js/webform_ajax.js', 'file');
 	
 	//item description page thumbnail gallery
 	drupal_add_js(drupal_get_path('theme', 'furnitheme') . '/js/jquery.pikachoose.min.js');
 	drupal_add_css(drupal_get_path('theme', 'furnitheme') . '/css/pikachoose.css');
 
-	if (arg(0) == 'taxonomy') {
-		drupal_add_js(drupal_get_path('theme', 'furnitheme') . '/js/jquery.dropkick-1.0.0.js');
-		drupal_add_css(drupal_get_path('theme', 'furnitheme') . '/css/dropkick.css');
-	}
 	
 	$vars['show_keyhole'] = FALSE;
 	$vars['show_promo'] = FALSE;
+	
 	if (arg(0) == 'front') {
 		$vars['show_keyhole'] = TRUE;
 		$vars['show_promo'] = TRUE;
@@ -109,75 +102,21 @@ function furnitheme_preprocess_page(&$vars) {
 	//disable taxonomy tabs
 	if (arg(0) == 'taxonomy' && arg(1) == 'term' && is_numeric(arg(2)) && arg(3) == "") {
 		unset($vars['tabs']);
+		
 		//don't display title
 		$vars['show_title'] = FALSE;
 		$vars['show_promo'] = TRUE;
+
+		//dropdown custom controls		
+		drupal_add_js(drupal_get_path('theme', 'furnitheme') . '/js/jquery.dropkick-1.0.0.js');
+		drupal_add_css(drupal_get_path('theme', 'furnitheme') . '/css/dropkick.css');
 	}
 	
 	//set footer menu links	
-	$info_menu = array(
-		'<span class="menu-label">About Furnitalia</span>',
-		l("About us", 'about'),
-		l("Contact us", "contact"), 
-	);
-	$vars['footer_info_menu'] = array(
-		'#theme' => 'item_list',
-		'#items' => array_values($info_menu),
-		'#type' => 'ul',
-		'#attributes' => array('class' => 'links'),
-	);
+	furnitheme_set_up_footer_menu($vars);
 	
-	$user_menu = array();	
-	$user_menu []= '<span class="menu-label">Account information</span>';
-	$user_menu []= l("Account Details", 'user');
-	$user_menu []= l("Favorites", 'my-favorites');		
-	$user_menu []= l("Order status", 'my-orders');		
-	$user_menu []= l("My Cart", 'cart');
-	
-	$vars['footer_user_menu'] = array(
-		'#theme' => 'item_list',
-		'#items' => array_values($user_menu),
-		'#type' => 'ul',
-		'#attributes' => array('class' => 'links'),
-	);
-	
-	$policies_menu = array(
-		'<span class="menu-label">Policies and information</span>',
-		l("FAQ", 'faq'),
-		l("Shipping and Delivery", "shipping-deliveries"), 
-		l("Terms of Service", "service-terms"),
-		l("Privacy Policy", "privacy-policy"),	
-	);
-	$vars['footer_policy_menu'] = array(
-		'#theme' => 'item_list',
-		'#items' => array_values($policies_menu),
-		'#type' => 'ul',
-		'#attributes' => array('class' => 'links'),
-	);
-	
-	//top menu
-	$top_menu = array();
-	
-	if ($user->uid == 0) {	
-		$top_menu []= l("Sign in", 'user/login');
-		$top_menu []= l("Register", 'user/register');
-	} else {
-		$user_fields = user_load($user->uid);
-		$welcome_msg = '<span class="welcome">Welcome, <span class="welcome-user">' . $user_fields->field_first_name['und'][0]['value'] . '</span></span>';
-		$top_menu [] = $welcome_msg;
-		$top_menu []= l("Sign out", 'user/logout');	
-	}
-
-	$top_menu []= l("My Cart", 'cart');
-	$top_menu []= l("Favorites", 'my-favorites');
-	
-	$vars['page']['header']['top_menu'] = array(
-		'#theme' => 'item_list',
-		'#items' => array_values($top_menu),
-		'#type' => 'ul',
-		'#attributes' => array('class' => 'menu'),
-	);
-	
+	//set up top menu
+	furnitheme_set_up_top_menu($vars);	
 	
 	
 	if (isset($vars['node']) && arg(2) != 'edit') {
@@ -191,6 +130,12 @@ function furnitheme_preprocess_page(&$vars) {
 			
 				
 		}
+	}
+	
+	$vars['contact_page'] = FALSE;
+	if (arg(0) == 'contact') {
+		//contact us page
+		$vars['contact_page'] = TRUE;
 	}
 	
 }
@@ -610,6 +555,74 @@ function furnitheme_webform_mail_headers($variables) {
     'X-Mailer'      => 'Drupal Webform (PHP/'. phpversion() .')',
   );
   return $headers;
+}
+
+function furnitheme_set_up_footer_menu (&$vars) {
+	$info_menu = array(
+		'<span class="menu-label">About Furnitalia</span>',
+		l("About us", 'about'),
+		l("Contact us", "contact"), 
+	);
+	$vars['footer_info_menu'] = array(
+		'#theme' => 'item_list',
+		'#items' => array_values($info_menu),
+		'#type' => 'ul',
+		'#attributes' => array('class' => 'links'),
+	);
+	
+	$user_menu = array();	
+	$user_menu []= '<span class="menu-label">Account information</span>';
+	$user_menu []= l("Account Details", 'user');
+	$user_menu []= l("Favorites", 'my-favorites');		
+	$user_menu []= l("Order status", 'my-orders');		
+	$user_menu []= l("My Cart", 'cart');
+	
+	$vars['footer_user_menu'] = array(
+		'#theme' => 'item_list',
+		'#items' => array_values($user_menu),
+		'#type' => 'ul',
+		'#attributes' => array('class' => 'links'),
+	);
+	
+	$policies_menu = array(
+		'<span class="menu-label">Policies and information</span>',
+		l("FAQ", 'faq'),
+		l("Shipping and Delivery", "shipping-deliveries"), 
+		l("Terms of Service", "service-terms"),
+		l("Privacy Policy", "privacy-policy"),	
+	);
+	$vars['footer_policy_menu'] = array(
+		'#theme' => 'item_list',
+		'#items' => array_values($policies_menu),
+		'#type' => 'ul',
+		'#attributes' => array('class' => 'links'),
+	);
+}
+
+function furnitheme_set_up_top_menu (&$vars) {
+	global $user;
+	
+	$top_menu = array();
+	
+	if ($user->uid == 0) {	
+		$top_menu []= l("Sign in", 'user/login');
+		$top_menu []= l("Register", 'user/register');
+	} else {
+		$user_fields = user_load($user->uid);
+		$welcome_msg = '<span class="welcome">Welcome, <span class="welcome-user">' . $user_fields->field_first_name['und'][0]['value'] . '</span></span>';
+		$top_menu [] = $welcome_msg;
+		$top_menu []= l("Sign out", 'user/logout');	
+	}
+
+	$top_menu []= l("My Cart", 'cart');
+	$top_menu []= l("Favorites", 'my-favorites');
+	
+	$vars['page']['header']['top_menu'] = array(
+		'#theme' => 'item_list',
+		'#items' => array_values($top_menu),
+		'#type' => 'ul',
+		'#attributes' => array('class' => 'menu'),
+	);
 }
 
 
