@@ -22,15 +22,15 @@
 ?>
 
 <?php
-	$user = $email['email'] == 3; 
+	$is_user = $email['email'] == 3; 
 	
-	global $base_url, $theme_path;
+	global $base_path, $theme_path;
 	
-	$theme = "http://www.furnitalia.com/sites/all/themes/new_furn"; //$base_url . '/' . $theme_path; //drupal_get_path('theme', 'new_furn');
+	$theme = $base_path . $theme_path;
 
 ?>
 
-<?php if ($user) :?>
+<?php if ($is_user) :?>
 	<div>
 
 <html>

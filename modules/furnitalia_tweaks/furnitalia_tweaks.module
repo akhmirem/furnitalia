@@ -93,6 +93,13 @@ function furnitalia_tweaks_menu() {
 	    'access callback' => TRUE,
 	    'type' => MENU_NORMAL_ITEM,
     );
+    $items['contact'] = array(
+		'title' => 'Contact Us',
+	    'page callback' => 'theme',
+	    'page arguments' => array('contact'),
+	    'access callback' => TRUE,
+	    'type' => MENU_NORMAL_ITEM,
+    );
 	
 	return $items;
 }
@@ -122,6 +129,11 @@ function furnitalia_tweaks_theme($existing, $type, $theme, $path) {
 	$path = drupal_get_path('theme', 'furnitheme');
 	
 	$themes = array (
+		'contact' => array(
+            'arguments' => array(),
+            'template' => 'contact',
+            'path' => drupal_get_path('theme', 'furnitheme') . '/templates',
+        ),
         'furnitalia_about' => array(
             'arguments' => array(),
             'template' => 'about',
@@ -756,7 +768,6 @@ function furnitalia_tweaks_webform_submission_presave($node, &$submission) {
  */
 function furnitalia_tweaks_front_page() {
 	drupal_add_js(drupal_get_path('theme', 'furnitheme') . "/js/jquery.bgpos.js");
-	drupal_add_js(drupal_get_path('theme', 'furnitheme') . "/js/frontpage.js");
 	drupal_add_library('system', 'drupal.ajax');
 	
 	//$sofas_term = taxonomy_term_load(2);
@@ -769,7 +780,7 @@ function furnitalia_tweaks_front_page() {
 		'#markup' => '<div id="cat-preview">					
 						<div id="category-image-pane">
 							<ul class="cat-slider category1 cat-preview" style="display:block">
-					  			<li><a href="#" class="category-image"><img src="' .drupal_get_path('theme', 'furnitheme') . "/images/category-image-1.png" . '" title="Furnitalia collections"  /></a></li>
+					  			<li><a href="#" class="category-image"><img src="' .drupal_get_path('theme', 'furnitheme') . "/images/cat-images/all/gilda_lounge.png" . '" title="Furnitalia collections"  /></a></li>
 					  		</ul>
 					  	</div>
  				  	 </div>',

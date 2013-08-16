@@ -4,41 +4,56 @@ FRONTPAGE_TRANSITION_DURATION = 500;
 backgroundXShift = 0;
 var timer;
 var timer2;
-
+var skipAnimation = false;
 
 (function($) {
 	Drupal.behaviors.frontpage = {
           attach: function(context, settings) {
           	
-			  var img = new Image();
-  
-			  // wrap our new image in jQuery, then:
-			  $(img)
-			    // once the image has loaded, execute this code
-			    .load(function () {
-			    
-					// insert loaded image into the div 
-					$('#menu-pic')
-						// remove the loading class (so no background spinner), 
-						.removeClass('loading')
-						.css("background-image", "url(" +  Drupal.settings.basePath + "sites/all/themes/furnitheme/images/front-keyhole-bg.png)");
-					
-					timer = window.setTimeout(AnimateFrontPageBackground, 500);
-			
-			    })
-			    
-			    // if there was an error loading the image, react accordingly
-			    .error(function () {
-			      // notify the user that the image could not be loaded
-			    })
-			    
-			    // *finally*, set the src attribute of the new image to our image
-			    .attr('src', Drupal.settings.basePath + 'sites/all/themes/furnitheme/images/front-keyhole-bg.png');
-			    
-
-				$("#warning").css('display', 'none');
-			    
-			    
+			  var params = $.deparam.querystring( true );
+			  console.log(JSON.stringify( params, null, 2 ));
+			  
+			  if ("noanim" in params) {
+				  if (params["noanim"] === true) {
+					  //skip animation
+					  skipAnimation = true;
+					  console.log("animation on front page is skipped");
+				  }
+			  }
+			  
+			  if (!skipAnimation && $("#front-overlay").length) {
+			     console.log("start front animation");
+				  var img = new Image();
+	  
+				  // wrap our new image in jQuery, then:
+				  $(img)
+				    // once the image has loaded, execute this code
+				    .load(function () {
+				    
+						// insert loaded image into the div 
+						$('#menu-pic')
+							// remove the loading class (so no background spinner), 
+							.removeClass('loading')
+							.css("background-image", "url(" +  Drupal.settings.basePath + "sites/all/themes/furnitheme/images/front-keyhole-bg.png)");
+						
+						timer = window.setTimeout(AnimateFrontPageBackground, 500);
+				
+				    })
+				    
+				    // if there was an error loading the image, react accordingly
+				    .error(function () {
+				      // notify the user that the image could not be loaded
+				    })
+				    
+				    // *finally*, set the src attribute of the new image to our image
+				    .attr('src', Drupal.settings.basePath + 'sites/all/themes/furnitheme/images/front-keyhole-bg.png');
+				    
+				    
+				    $("#warning").css('display', 'none');
+				    
+				}			
+				    
+				    
 				//enter furnitalia link animation
 				$("#enterFurnitalia").click(function(){
 					
@@ -58,38 +73,49 @@ var timer2;
 					$("#front-overlay").addClass("loading").delay(FRONTPAGE_TRANSITION_DURATION).hide(1);
 					
 					
-					//set up keyhole animation for categories
-					SetUpCategoryAnimKeyHole();					
-					
-
-					//hover events for category links
-					$('#bg1').hover(function(e){
-						SetUpCategorySlider("bg1");
-						KeyHoleScroll(1);
+					InitCategoryPageAnimation();
 						
-					}, function(){});
-					
-					$('#bg2').hover(function(e){
-						SetUpCategorySlider("bg2");
-						KeyHoleScroll(2);
 						
-					}, function(){});		
-								
-					$('#bg3').hover(function(e){
-						SetUpCategorySlider("bg3");
-						KeyHoleScroll(3);
-						
-					}, function(){});		
-					
-					$("#main-nav").accordion("option", "active", 0); //make All categories active by defaultChecked
-									
-					//start first category slideshow
-					SetUpCategorySlider("bg1");
-					KeyHoleScroll(1);	
-					
-					
-				});          	
+				});  
+				
+				if (skipAnimation) {
+					//hide top overlay
+					$("#front-overlay").hide();     	
+				}
+				
+				InitCategoryPageAnimation();   
         }
+	}
+	
+	
+	function InitCategoryPageAnimation() {
+		//set up keyhole animation for categories
+		SetUpCategoryAnimKeyHole();		
+
+		//hover events for category links
+		$('#bg1').hover(function(e){
+			SetUpCategorySlider("bg1");
+			KeyHoleScroll(1);
+			
+		}, function(){});
+		
+		$('#bg2').hover(function(e){
+			SetUpCategorySlider("bg2");
+			KeyHoleScroll(2);
+			
+		}, function(){});		
+					
+		$('#bg3').hover(function(e){
+			SetUpCategorySlider("bg3");
+			KeyHoleScroll(3);
+			
+		}, function(){});		
+		
+		$("#main-nav").accordion("option", "active", 0); //make All categories active by defaultChecked
+						
+		//start first category slideshow
+		SetUpCategorySlider("bg1");
+		KeyHoleScroll(1);
 	}
 	
 	function SetUpCategorySlider(category) {
