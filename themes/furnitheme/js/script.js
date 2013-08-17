@@ -65,11 +65,12 @@ var skipAnimation = false;
 			//enter furnitalia link animation
 			$("#enterFurnitalia").click(function(){
 				
+				clearTimeout(timer);
+
 				//stop front page slider animation
 				$('#menu-pic').stop().hide();
 				$(this).hide();
-				clearTimeout(timer);
-				
+								
 				//move away left and right keyhole parts
 				$("#front-left").animate({width:'0px'}, FRONTPAGE_TRANSITION_DURATION);
 				$("#front-right").animate({left:'880px', right:'5px'}, FRONTPAGE_TRANSITION_DURATION);
@@ -86,8 +87,11 @@ var skipAnimation = false;
 
 				//start first category slideshow
 				SetUpCategorySlider("bg1");
-				KeyHoleScroll(1);
+				
+				$('#menu-pic').stop().css("background-position" , "0 0");				
+
 					
+				return false;
 					
 			});  
 			
@@ -103,7 +107,7 @@ var skipAnimation = false;
 				
 				//start first category slideshow
 				SetUpCategorySlider("bg1");
-				KeyHoleScroll(1);
+				$('#menu-pic').stop().css("background-position" , "0 0");
 				
 			}          
           
@@ -176,6 +180,19 @@ var skipAnimation = false;
 			
 			$("#zoom-in").click(function(e){
 				$("div.pika-stage a").trigger('click');
+				return false;
+			});
+			
+			//------------ SHARE ON SOCIAL NETWORKS --------------
+			$("#share-this").change(function() {
+				$("#share-form").submit();
+			});
+			$("#share-form").submit(function() {
+				var $form = $(this);
+				
+				console.log($form.find($('select')).val());
+				console.log($form.find($('input[name=data-title]')).val());
+				
 				return false;
 			});
 			
@@ -315,7 +332,6 @@ var skipAnimation = false;
 	}
 	
 	function AnimateFrontPageBackground() {
-		console.log("animating front page");
 		
 		$('#menu-pic').animate({backgroundPosition:"(" + backgroundXShift + "px 0)"}, {
 			duration:1500,

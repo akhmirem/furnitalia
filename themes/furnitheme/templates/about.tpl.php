@@ -2,8 +2,6 @@
 	$theme_path = base_path() . drupal_get_path('theme', 'furnitheme');
 ?>
 <article class="about-us">
-<h1>About us</h1>
-<hr class="content-page"/>
 <img src="<?php print $theme_path; ?>/images/about-us-top-left.jpg"/>
 <p>Furnitalia came about from one couple’s deep appreciation of Italian contemporary furniture. Dmitriy Aks, an engineer, admired the beauty, craftsmanship and precision with which Italians build their furniture, especially leather furniture. Ella Aks, an interior designer, delighted in the artistry of the lines and materials.</p>
 						

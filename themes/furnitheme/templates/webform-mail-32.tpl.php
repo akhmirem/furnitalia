@@ -24,9 +24,9 @@
 <?php
 	$is_user = $email['email'] == 3; 
 	
-	global $base_path, $theme_path;
+	global $base_url, $theme_path;
 	
-	$theme = $base_path . $theme_path;
+	$theme = $base_url . '/' . $theme_path;
 
 ?>
 

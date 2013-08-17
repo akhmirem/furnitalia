@@ -44,9 +44,9 @@
 	$image_html_rendered = render($image_html);	
 	$img = l($image_html_rendered, "node/" . $n->nid, array('html' => true));
 	
-	global $base_path, $theme_path;
+	global $base_url, $theme_path;
 	
-	$theme = $base_path . $theme_path;
+	$theme = $base_url . '/' . $theme_path;
 
 ?>
 

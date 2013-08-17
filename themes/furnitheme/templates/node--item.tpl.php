@@ -12,6 +12,8 @@
 
 <?php
 
+global $base_path, $base_url, $theme_path;
+
 if (isset($content['field_availability']) && is_array($content['field_availability'])) {
 	$availability_icon = '<img src="' . base_path() . path_to_theme() . '/images/availability-icon.png"/>';
 	$content['field_availability'][0]['#markup'] = $availability_icon . $content['field_availability'][0]['#markup'];
@@ -127,6 +129,21 @@ if ($teaser) { //item teaser view
 	  <?php endif; ?>
 	  
   	  <!--<span class="favorites"><a href="#">related products<img src="<?php print base_path() . path_to_theme(); ?>/images/SubLink_Arrow_Red_6x9.png" class="sublink-arrow"/></a></span>-->
+  	  
+  	  <!--
+<div class="share42init" data-url="<?php print $node_url ?>" data-title="Check out &quot;<?php print $title ?>&quot; at Furnitalia"></div>
+  	  <script type="text/javascript" src="<?php print $base_path . $theme_path ?>/lib/share42/share42.js"></script>
+-->
+
+  	  <form action="" id="share-form">
+	  	  <select id="share-this" name ="share">
+	  	  	<option value="default">Select an option</option>
+	  	  	<option value="FB">Facebook</option>
+	  	  	<option value="TW">Twitter</option>  	  	
+	  	  </select>
+	  	  <input type="hidden" name="data-url" value="<?php print $base_url . "/" . $node_url ?>" />
+ 	  	  <input type="hidden" name="data-title" value="Check out &quot;<?php print $title ?>&quot; at Furnitalia" />
+  	  </form>
 	  
   </div>
   <div id="item-info">
@@ -177,8 +194,12 @@ if ($teaser) { //item teaser view
 	  <?php print l("Request info", "request/$node->nid/ajax", array('attributes' => array('id' => 'request-quote'))); ?>
 	  
   </div>
-
+  
+ 
 
 </article><!-- /.node -->
+
+ <hr /><br />
+
 
 <?php } ?>
