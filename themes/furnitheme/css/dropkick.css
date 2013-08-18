@@ -53,7 +53,7 @@
 * Help: Dropdown menu is covered by something
 * Try setting this value higher
 */
-z-index: 10;
+z-index: 50;
 }
 .dk_open .dk_toggle {
 	background-color: #ececec;
@@ -132,7 +132,7 @@ z-index: 10;
 	display: block;
 }
 .dk_options_inner {
-	overflow: auto;
+	overflow: visible;
 	position: relative;
 }
 .dk_touch .dk_options {

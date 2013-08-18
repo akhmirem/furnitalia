@@ -79,6 +79,10 @@ function furnitheme_preprocess_page(&$vars) {
 	//item description page thumbnail gallery
 	drupal_add_js(drupal_get_path('theme', 'furnitheme') . '/js/jquery.pikachoose.min.js');
 	drupal_add_css(drupal_get_path('theme', 'furnitheme') . '/css/pikachoose.css');
+	
+	//dropdown custom controls		
+	drupal_add_js(drupal_get_path('theme', 'furnitheme') . '/js/jquery.dropkick-1.0.0.js');
+	drupal_add_css(drupal_get_path('theme', 'furnitheme') . '/css/dropkick.css');
 
 	
 	$vars['show_keyhole'] = FALSE;
@@ -106,10 +110,6 @@ function furnitheme_preprocess_page(&$vars) {
 		//don't display title
 		$vars['show_title'] = FALSE;
 		$vars['show_promo'] = TRUE;
-
-		//dropdown custom controls		
-		drupal_add_js(drupal_get_path('theme', 'furnitheme') . '/js/jquery.dropkick-1.0.0.js');
-		drupal_add_css(drupal_get_path('theme', 'furnitheme') . '/css/dropkick.css');
 	}
 	
 	//set footer menu links	

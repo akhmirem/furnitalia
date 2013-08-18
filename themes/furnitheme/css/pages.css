@@ -168,6 +168,9 @@ p {
 	overflow:hidden;
 	padding-right:55px;
 }
+#content {
+	overflow: visible;
+}
 .region-header {
 	margin-top:0;
 }
@@ -371,10 +374,14 @@ ul.inline li {
 span.field-label { /* The inline field label used by the Fences module */
   padding: 0 1em 0 0; /* LTR */
 }
-
+span.gallery-instructions {
+	float: left;
+	font-size: .85em;
+	margin-top: .6em;
+}
 .item-list .pager { /* A list of page numbers when more than 1 page of content is available */
 	padding: 0;
-	margin: .8em 0;
+	margin: .5em 0;
 	clear: right;
 	float: right;
 }
@@ -392,6 +399,11 @@ span.field-label { /* The inline field label used by the Fences module */
 ul.pager a li, ul.pager li a {
 	text-transform: uppercase;
 	text-decoration: none;	
+}
+#scroll-top {
+	font-size: .8em;
+	float: left;
+	margin-top: .5em;
 }
 
 .feed-icon { /* The link to the RSS or Atom feed for the current list of content */
@@ -507,11 +519,6 @@ ul.pager a li, ul.pager li a {
 }
 #menu-pic.loading {
 	background-position: 250px 480px;
-}
-span.gallery-instructions {
-	float: left;
-	font-size: .85em;
-	margin-top: 1em;
 }
 div.view-content {
 	clear:both;
@@ -683,9 +690,10 @@ article .favorites a, #request-quote, #zoom-in, a.directions-link {
 	font-size: .8em;
 	text-decoration:none;
 }
-article .favorites a, #zoom-in {
+article .favorites a, #zoom-in, label {
 	color:#6d6e71;
 	font-size:.9em;
+	font-weight: 300;
 }
 #zoom-in img {
 	position: relative;
@@ -761,6 +769,12 @@ article ul.inline li {
 	text-decoration: none;
 	margin: .5em 0;
 	padding: .5em 0;
+}
+#share-form {
+	margin-top:1em;
+}
+#share-form .dk_container {
+	width:13em;
 }
 
 

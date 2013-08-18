@@ -140,6 +140,12 @@ var skipAnimation = false;
 						$('#edit-brand').trigger('change');
 					 }
 				});
+				
+				$("#share-this").attr('tabindex', '3').dropkick({
+				 change: function (value, label) {
+						$('#share-this').trigger('change');
+					 }
+				});
 			}
 					
 			
@@ -185,15 +191,32 @@ var skipAnimation = false;
 			
 			//------------ SHARE ON SOCIAL NETWORKS --------------
 			$("#share-this").change(function() {
-				$("#share-form").submit();
+				if ($(this).val != "default") {
+					$("#share-form").submit();
+				}
 			});
 			$("#share-form").submit(function() {
-				var $form = $(this);
-				
-				console.log($form.find($('select')).val());
-				console.log($form.find($('input[name=data-title]')).val());
+				ShareItem($(this));	//opens share pop up dialog
 				
 				return false;
+			});
+			
+			
+			// ----------- SCROLL TO TOP LINK --------------------
+			$("#scroll-top a").click(function() {
+				
+				var offset = $("#main-content").offset();
+				var scrollTarget = $("#main-content");
+				while ($(scrollTarget).scrollTop() == 0 && $(scrollTarget).parent()) {
+					scrollTarget = $(scrollTarget).parent();
+				}
+				// Only scroll upward
+				if (offset.top - 10 < $(scrollTarget).scrollTop()) {
+					$(scrollTarget).animate({scrollTop: (offset.top - 10)}, 500);
+				}
+				
+				return false;
+
 			});
 			
         }
@@ -347,6 +370,50 @@ var skipAnimation = false;
 			timer = setTimeout(AnimateFrontPageBackground, 50);
 		}
 
+	}
+	
+	function ShareItem($form) {
+		var type = $form.find($('select')).val();
+		if (type != "default") {
+			var $title = $form.find($('input[name=data-title]'));
+			var $url = $form.find($('input[name=data-url]'));
+			
+			var width=600,
+            height=500,
+            sHeight=screen.height, 
+            sWidth=screen.width, 
+            left=Math.round((sWidth/2)-(width/2)), 
+            top=100, 
+            socialURL = $url.val(), //encodeURIComponent($url.val()),
+            socialText = $title.val(),
+            url="";
+        
+	        switch(type){
+	            case 'facebook':
+	                url = 'http://www.facebook.com/sharer.php?u='+ socialURL + '&t=' + socialText;
+	                break;
+	            case 'twitter':
+	                url = 'http://twitter.com/share?url='+ socialURL + '&text=' + socialText;
+	                break;
+	            case 'plusone':
+	                url = 'https://plusone.google.com/_/+1/confirm?hl=en&url=' + socialURL;
+	                break;
+	            case 'email':
+	            	url = 'mailto:?Subject=';
+	            	url += encodeURIComponent(socialText);
+	            	url += '&Body=';
+	            	url += encodeURIComponent(socialText);
+	            	url += encodeURIComponent("\n" + socialURL);
+	            	break;
+	        }
+	   
+			if (type != 'email') {
+	        	/*Finally fire the Pop-up*/    
+	        	window.open(url, '', 'left='+left+' , top='+top+', width='+width+', height='+height+', personalbar=0, toolbar=0, scrollbars=1, resizable=1'); 
+	        } else {
+		        window.location.href = url;
+	        }
+		}
 	}
 	
 	

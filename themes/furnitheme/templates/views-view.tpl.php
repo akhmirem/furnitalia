@@ -26,6 +26,9 @@
  *
  * @ingroup views_templates
  */
+ 
+ global $base_path, $theme_path;
+ 
 ?>
 <div class="<?php print $classes; ?>">
   <?php print render($title_prefix); ?>
@@ -69,7 +72,9 @@
   <?php endif; ?>
   
   <hr/>
-
+  
+  <span id="scroll-top"><a href="#">BACK TO TOP</a>&nbsp;<img src="<?php print $base_path . $theme_path?>/images/SubLink_Arrow_Red_6x9.png"/></span>
+  
   <?php if ($pager): ?>
     <?php print $pager; ?>
   <?php endif; ?>
