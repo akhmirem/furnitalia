@@ -121,6 +121,10 @@ var skipAnimation = false;
 					function() {
 						$galleryItem.find(".item-details").css("display","none");	
 					}
+				).click(
+					function() {
+						window.location = $galleryItem.find('a.title').attr('href');
+					}
 				);
 			});
 			
@@ -166,7 +170,6 @@ var skipAnimation = false;
 				var ajax = new Drupal.ajax("#request-quote", $('#request-quote')[0], element_settings);
 				
 			});
-
 			
 						
 			//item description page thumbnail gallery			

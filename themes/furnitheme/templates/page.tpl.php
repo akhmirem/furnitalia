@@ -139,8 +139,8 @@
       
 	  <?php if ($contact_page) : ?>
 	    <aside class="contact sidebars clearfix contact-page">
-			<a href="#chat" title="Chat online" id="chat-online">Chat online</a>
 			<a href="#contact" title="Contact" id="contact-us">Contact us</a>
+			<a href="#chat" title="Chat online" id="chat-online">Chat online</a>
 	    </aside>
 	  <?php endif; ?>
       
