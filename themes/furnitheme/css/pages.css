@@ -893,6 +893,27 @@ span.menu-label {
 	text-transform: uppercase;
 }
 
+/* 
+ * REQUESTS/CONTACT FORM
+ */
+#webform-component-first-name, #webform-component-last-name {
+	float:left;
+}
+#webform-component-last-name {
+    clear: right;
+    margin-left: 2em;
+}
+#webform-component-email {
+	clear:both;
+}
+.form-item {
+    margin: 1em 0;
+}
+.webform-confirmation {
+    font-size: 1.5em;
+    color: green;
+}
+
 /* NEWSLETTER */
 #block-webform-client-block-33 {
 	float:left;
