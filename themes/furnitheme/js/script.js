@@ -252,6 +252,10 @@ var skipAnimation = false;
 	 
 	 function InitCategoryPageAnimation() {
 	 
+		 if (!jQuery().accordion) {
+		 	return;
+		 }
+
 	 	//main navigation menu accordeon
 		$("#main-nav").accordion({
 			icons:false,
@@ -424,6 +428,7 @@ var skipAnimation = false;
 	/**
 	 * Ajax delivery command to switch among tabs by ID.
 	 */
+	if (Drupal.ajax) {
 	Drupal.ajax.prototype.commands.openPopup = function (ajax, response, status) {
 	 	// response.data is a value setted in 'data' key of command on PHP side.
 	  
@@ -509,6 +514,7 @@ var skipAnimation = false;
 	  
 	  
 	};
+	}
 
 })(jQuery);
 
