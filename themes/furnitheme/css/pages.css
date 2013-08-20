@@ -712,6 +712,12 @@ img.sublink-arrow {
 .model {
 	font-weight:100
 }
+.field-name-field-alu .field-label {
+	margin: 0;
+	color: #6d6e71;
+	float: left;
+	text-transform:none;
+}
 article.node-item {
 	position: relative;
 }

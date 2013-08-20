@@ -144,11 +144,10 @@ if ($teaser) { //item teaser view
   </div>
   <div id="item-info">
 	  
-	  
-	   <h1 class="title" id="page-title"><?php print $node->title; ?></h1>
-  		
-	  <?php print render($content['model']); ?>
-	  <?php print render($content['body']); ?>  
+		<h1 class="title" id="page-title"><?php print $node->title; ?></h1>
+		<?php $content['field_alu']['#title'] = 'Model'; ?>
+		<?php print render($content['field_alu']); ?>
+		<?php print render($content['body']); ?>  
 	  
 	  <p class="item-info-p">
 	  	<?php print render($content['dimensions']);?>
