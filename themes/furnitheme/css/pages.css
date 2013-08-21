@@ -391,6 +391,7 @@ span.gallery-instructions {
   padding: 0 0.5em;
   font-weight: 100;
   font-size: .8em;
+  display:inline;
 }
 .item-list .pager li.pager-current {
 	color:#981b1e;

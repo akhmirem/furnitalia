@@ -766,3 +766,117 @@ function uc_shipping_address_form($form, &$form_state, $addresses, $order) {
   );
   return $form;
 }
+
+/**
+ * Implements hook_views_api().
+ */
+function uc_shipping_views_api() {
+  return array(
+    'api' => '2.0',
+    'path' => drupal_get_path('module', 'uc_shipping') . '/views',
+  );
+}
+
+/**
+ * Implements hook_date_views_tables().
+ */
+function uc_shipping_date_views_tables() {
+  return array('uc_shipments');
+}
+
+/**
+ * Implements hook_date_views_fields().
+ *
+ * All modules that create custom fields that use the
+ * 'views_handler_field_date' handler can provide
+ * additional information here about the type of
+ * date they create so the date can be used by
+ * the Date API views date argument and date filter.
+ */
+function uc_shipping_date_views_fields($field) {
+  $values = array(
+    // The type of date: DATE_UNIX, DATE_ISO, DATE_DATETIME.
+    'sql_type' => DATE_UNIX,
+    // Timezone handling options: 'none', 'site', 'date', 'utc' .
+    'tz_handling' => 'site',
+    // Needed only for dates that use 'date' tz_handling.
+    'timezone_field' => '',
+    // Needed only for dates that use 'date' tz_handling.
+    'offset_field' => '',
+    // Array of "table.field" values for related fields that should be
+    // loaded automatically in the Views SQL.
+    'related_fields' => array(),
+    // Granularity of this date field's db data.
+    'granularity' => array('year', 'month', 'day', 'hour', 'minute', 'second'),
+  );
+
+  switch ($field) {
+    case 'uc_shipments.ship_date':
+    case 'uc_shipments.expected_delivery':
+    case 'uc_shipments.changed':
+      return $values;
+  }
+}
+
+/**
+ * Implements hook_uc_order().
+ *
+ * Prevent users from deleting orders with a shipment or package that has
+ * a tracking number, unless the user has administrative privileges or the
+ * "Unconditionally delete orders" permission.
+ *
+ * Delete packages and shipments attached to orders being deleted.
+ */
+function uc_shipping_uc_order($op, $order, $arg2) {
+  switch ($op) {
+    case 'can_delete':
+      // Find and check the shipments for tracking numbers.
+      // {uc_shipments}.tracking_number is NOT NULL.
+      $shipment_count = db_select('uc_shipments')
+        ->condition('order_id', $order->order_id)
+        ->condition('tracking_number', '', '<>')
+        ->countQuery()
+        ->execute()
+        ->fetchField();
+      if ($shipment_count > 0) {
+        return FALSE;
+      }
+
+      // Find and check the packages.
+      $package_count = db_select('uc_packages')
+        ->condition('order_id', $order->order_id)
+        ->isNotNull('tracking_number')
+        ->condition('tracking_number', '', '<>')
+        ->countQuery()
+        ->execute()
+        ->fetchField();
+      if ($package_count > 0) {
+        return FALSE;
+      }
+
+      return TRUE;
+      break;
+
+    case 'delete':
+      // Find and delete the shipments.
+      $shipment_ids = db_select('uc_shipments')
+        ->fields(NULL, array('sid'))
+        ->condition('order_id', $order->order_id)
+        ->execute()
+        ->fetchCol();
+      foreach ($shipment_ids as $sid) {
+        uc_shipping_shipment_delete($sid);
+      }
+
+      // Find and delete the packages.
+      $package_ids = db_select('uc_packages')
+        ->fields(NULL, array('package_id'))
+        ->condition('order_id', $order->order_id)
+        ->execute()
+        ->fetchCol();
+      foreach ($package_ids as $pid) {
+        uc_shipping_package_delete($pid);
+      }
+      break;
+  }
+}

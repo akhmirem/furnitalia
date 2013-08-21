@@ -279,9 +279,11 @@ function uc_product_kit_update(&$node) {
       }
 
       $product->qty = $node->items[$nid]['qty'];
+      $product->ordering = isset($node->items[$nid]['ordering']) ? $node->items[$nid]['ordering'] : 0;
     }
     else {
       $product->qty = $node->products[$nid]->qty;
+      $product->ordering = $node->products[$nid]->ordering;
     }
     // Discounts are always saved, but they are only applied if the kit can't
     // be changed by the customer.
@@ -306,7 +308,7 @@ function uc_product_kit_update(&$node) {
         'mutable' => $node->mutable,
         'qty' => $product->qty,
         'discount' => $discount,
-        'ordering' => isset($node->items[$nid]['ordering']) ? $node->items[$nid]['ordering'] : 0,
+        'ordering' => $product->ordering,
         'synchronized' => $override_discounts ? 0 : 1,
       ))
       ->execute();
@@ -339,6 +341,14 @@ function uc_product_kit_update(&$node) {
       ->insertFields(array(
         'unique_hash' => md5($obj->vid . $obj->nid . $obj->model . $obj->list_price . $obj->cost . $obj->sell_price . $obj->weight . $obj->weight_units . $obj->default_qty . $obj->ordering . $obj->shippable . REQUEST_TIME),
       ))
+      ->execute();
+  }
+
+  // When a kit is updated, remove matching kits from the cart, as there is no
+  // simple way to handle product addition or removal at this point.
+  if (module_exists('uc_cart')) {
+    db_delete('uc_cart_products')
+      ->condition('data', '%' . db_like('s:6:"kit_id";s:' . strlen($node->nid) . ':"' . $node->nid . '";') . '%', 'LIKE')
       ->execute();
   }
 }
@@ -629,6 +639,9 @@ function uc_product_kit_form(&$node, $form_state) {
     '#default_value' => $node->ordering,
     '#weight' => 30,
   );
+
+  // Disable all shipping related functionality.
+  $form['shipping']['#access'] = FALSE;
 
   return $form;
 }
@@ -1104,11 +1117,13 @@ function uc_product_kit_uc_cart_display($item) {
       );
     }
 
+    // Build the kit item product variant.
     if (!isset($item->type)) {
       $node = node_load($item->nid);
       $item->type = $node->type;
     }
     $build = node_view($item);
+
     $elements[$unique_id]['#total'] += $build['display_price']['#value'] * $item->qty;
     $elements[$unique_id]['#suffixes'] += $build['display_price']['#suffixes'];
     $elements[$unique_id]['data'][$item->nid] = $item;

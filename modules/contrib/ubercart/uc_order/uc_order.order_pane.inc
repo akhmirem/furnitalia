@@ -11,6 +11,27 @@
  */
 
 /**
+ * Handles the "Print button" order pane.
+ */
+function uc_order_pane_print_button($op, $order, &$form = NULL, &$form_state = NULL) {
+  switch ($op) {
+    case 'customer':
+      if (user_access('view own invoices')) {
+        $link = t('Click to open a window with a printable invoice.');
+        $build = array(
+          '#markup' => l($link, 'user/' . $order->uid . '/orders/' . $order->order_id . '/print', array(
+            'html' => TRUE,
+            'attributes' => array(
+              'onclick' => "window.open(this.href, '" . t('Invoice') . "', 'toolbar=0,scrollbars=1,location=0,statusbar=0,menubar=0,resizable=1,width=600,height=480,left=50,top=50'); return false;",
+            ),
+          )),
+        );
+        return $build;
+      }
+  }
+}
+
+/**
  * Handles the "Ship to" order pane.
  */
 function uc_order_pane_ship_to($op, $order, &$form = NULL, &$form_state = NULL) {
@@ -533,7 +554,7 @@ function uc_order_edit_products_add_blank($form, &$form_state) {
   $product = new stdClass();
   $product->qty = 1;
   $product->order_id = $order->order_id;
-  drupal_write_record('uc_order_products', $product);
+  uc_order_product_save($order->order_id, $product);
 
   $order->products[] = $product;
 
@@ -575,6 +596,12 @@ function uc_order_edit_products_remove($form, &$form_state) {
   $form_state['refresh_products'] = TRUE;
 
   $order_product_id = intval($form_state['triggering_element']['#return_value']);
+
+  if (module_exists('uc_stock')) {
+    // Replace stock immediately.
+    $product = uc_order_product_load($order_product_id);
+    uc_stock_adjust($product->model, $product->qty);
+  }
 
   uc_order_product_delete($order_product_id);
 
@@ -1026,8 +1053,6 @@ function uc_order_view_update_form_submit($form, &$form_state) {
 
 /**
  * Builds the order view products table.
- *
- * !FIXME Refactor to use uc_order_product_view.
  */
 function uc_op_products_view_table($order) {
   $table = array(
@@ -1081,7 +1106,7 @@ function uc_op_products_view_table($order) {
   );
 
   if (!empty($order->products)) {
-    $build = entity_view('uc_order_product', $order->products);
+    $build = uc_order_product_view_multiple($order->products);
     $table['#rows'] = $build['uc_order_product'];
   }
   else {
@@ -1096,8 +1121,6 @@ function uc_op_products_view_table($order) {
 
 /**
  * Builds the order customer's view products table.
- *
- * !FIXME Refactor to use uc_order_product_view.
  */
 function uc_op_products_customer_table($order) {
   $table = array(
@@ -1151,7 +1174,7 @@ function uc_op_products_customer_table($order) {
   );
 
   if (!empty($order->products)) {
-    $build = entity_view('uc_order_product', $order->products);
+    $build = uc_order_product_view_multiple($order->products);
     $table['#rows'] = $build['uc_order_product'];
   }
   else {
@@ -1351,9 +1374,6 @@ function _uc_order_pane_list($view = 'view') {
       'enabled' => TRUE,
       'weight' => 0,
     );
-
-    $pane['enabled'] = variable_get('uc_order_pane_' . $id . '_enabled', $pane['enabled']);
-    $pane['weight'] = variable_get('uc_order_pane_' . $id . '_weight_' . $view, $pane['weight']);
 
     $panes[$id] = $pane;
   }

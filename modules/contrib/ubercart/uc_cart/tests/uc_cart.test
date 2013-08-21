@@ -189,6 +189,21 @@ class UbercartCartCheckoutTestCase extends UbercartTestHelper {
     $this->assertEqual(uc_cart_get_total_qty(), 0, 'There are no items in the cart.');
   }
 
+  function testMaximumQuantityRule() {
+    // Enable the example maximum quantity rule.
+    $rule = rules_config_load('uc_cart_maximum_product_qty');
+    $rule->active = TRUE;
+    $rule->save();
+
+    // Try to add more items than allowed to the cart.
+    $this->drupalPost('node/' . $this->product->nid, array(), t('Add to cart'));
+    $this->drupalPost('cart', array('items[0][qty]' => 11), t('Update cart'));
+
+    // Test the restriction was applied.
+    $this->assertText('You are only allowed to order a maximum of 10 of ' . $this->product->title . '.');
+    $this->assertFieldByName('items[0][qty]', 10);
+  }
+
   function testCheckout() {
     // Allow customer to specify username and password, but don't log in after checkout.
     $settings = array(
@@ -276,6 +291,60 @@ class UbercartCartCheckoutTestCase extends UbercartTestHelper {
     $this->checkout(array('panes[customer][primary_email]' => $this->customer->mail));
     $this->assertRaw('Your order is complete!');
     $this->assertRaw('order has been attached to the account we found');
+  }
+
+  function testCheckoutNewUsername() {
+    // Configure the checkout for this test.
+    $this->drupalLogin($this->adminUser);
+    $settings = array(
+      // Allow customer to specify username.
+      'uc_cart_new_account_name' => TRUE,
+      // Disable address panes.
+      'uc_pane_delivery_enabled' => FALSE,
+      'uc_pane_billing_enabled' => FALSE,
+    );
+    $this->drupalPost('admin/store/settings/checkout/panes', $settings, t('Save configuration'));
+    $this->drupalLogout();
+
+    // Test with an account that already exists.
+    $this->drupalPost('node/' . $this->product->nid, array(), t('Add to cart'));
+    $edit = array(
+      'panes[customer][primary_email]' => $this->randomName(8) . '@example.com',
+      'panes[customer][new_account][name]' => $this->adminUser->name,
+    );
+    $this->drupalPost('cart/checkout', $edit, 'Review order');
+    $this->assertText('The username ' . $this->adminUser->name . ' is already taken.');
+
+    // Let the account be automatically created instead.
+    $edit = array(
+      'panes[customer][primary_email]' => $this->randomName(8) . '@example.com',
+      'panes[customer][new_account][name]' => '',
+    );
+    $this->drupalPost('cart/checkout', $edit, 'Review order');
+    $this->drupalPost(NULL, array(), 'Submit order');
+    $this->assertText('Your order is complete!');
+    $this->assertText('A new account has been created');
+  }
+
+  function testCheckoutBlockedUser() {
+    // Block user after checkout.
+    $settings = array(
+      'uc_new_customer_status_active' => FALSE,
+    );
+    $this->drupalLogin($this->adminUser);
+    $this->drupalPost('admin/store/settings/checkout', $settings, t('Save configuration'));
+    $this->drupalLogout();
+
+    // Test as anonymous user.
+    $this->drupalPost('node/' . $this->product->nid, array(), t('Add to cart'));
+    $this->checkout();
+    $this->assertRaw('Your order is complete!');
+
+    // Test new account email.
+    $mail = $this->drupalGetMails(array('id' => 'user_register_pending_approval'));
+    $this->assertTrue(!empty($mail), 'Blocked user email found.');
+    $mail = $this->drupalGetMails(array('id' => 'user_register_no_approval_required'));
+    $this->assertTrue(empty($mail), 'No unblocked user email found.');
   }
 
   function testCheckoutLogin() {

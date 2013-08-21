@@ -93,16 +93,6 @@ function uc_checkout_pane_customer($op, $order, $form = NULL, &$form_state = NUL
           );
           $contents['new_account'] = array_merge($array, $contents['new_account']);
         }
-
-        /**
-         * This code adds profile fields required for registration to the
-         * customer checkout pane.  However, I don't have the time to fool with
-         * validation/submission stuff, so I'm postponing this feature. -RS
-        $null = NULL;
-        $extra = _user_forms($null, NULL, NULL, 'register');
-        if (!empty($extra)) {
-          $contents = array_merge($contents, $extra);
-        }*/
       }
 
       return array('description' => $description, 'contents' => $contents);
@@ -143,10 +133,12 @@ function uc_checkout_pane_customer($op, $order, $form = NULL, &$form_state = NUL
             if (!empty($message)) {
               form_set_error('panes][customer][new_account][name', $message);
             }
-            if (db_query("SELECT uid FROM {users} WHERE name LIKE :name", array(':name' => $pane['new_account']['name']))->fetchField()) {
+            elseif (db_query("SELECT uid FROM {users} WHERE name LIKE :name", array(':name' => $pane['new_account']['name']))->fetchField()) {
               form_set_error('panes][customer][new_account][name', t('The username %name is already taken. Please enter a different name or leave the field blank for your username to be your e-mail address.', array('%name' => $pane['new_account']['name'])));
             }
-            $order->data['new_user']['name'] = $pane['new_account']['name'];
+            else {
+              $order->data['new_user']['name'] = $pane['new_account']['name'];
+            }
           }
           // Validate the password.
           if (variable_get('uc_cart_new_account_password', FALSE)) {
@@ -490,26 +482,16 @@ function theme_uc_cart_review_table($variables) {
   );
 
   // Set up table rows.
-  $display_items = entity_view('uc_order_product', $items, 'cart');
+  $display_items = uc_order_product_view_multiple($items);
   if (!empty($display_items['uc_order_product'])) {
     foreach (element_children($display_items['uc_order_product']) as $key) {
       $display_item = $display_items['uc_order_product'][$key];
-      if (count(element_children($display_item))) {
-        $total = $display_item['#total'];
-        $subtotal += $total;
-        $description = $display_item['title']['#markup'];
-        if (!empty($display_item['description']['#markup'])) {
-          $description .= $display_item['description']['#markup'];
-        }
-        $qty = $display_item['qty']['#default_value'];
-        $suffix = !empty($display_item['#suffixes']) ? implode(' ', $display_item['#suffixes']) : '';
-
-        $rows[] = array(
-          array('data' => array('#theme' => 'uc_qty', '#qty' => $qty), 'class' => array('qty')),
-          array('data' => $description, 'class' => array('products')),
-          array('data' => array('#theme' => 'uc_price', '#price' => $total, '#suffix' => $suffix), 'class' => array('price')),
-        );
-      }
+      $subtotal += $display_item['total']['#price'];
+      $rows[] = array(
+        array('data' => $display_item['qty'], 'class' => array('qty')),
+        array('data' => $display_item['product'], 'class' => array('products')),
+        array('data' => $display_item['total'], 'class' => array('price')),
+      );
     }
   }
 
@@ -555,7 +537,7 @@ function theme_uc_cart_review_table($variables) {
  */
 function theme_uc_checkout_pane_cart_review($variables) {
   $rows = array();
-  $items = entity_view('uc_order_product', $variables['items']);
+  $items = uc_order_product_view_multiple($variables['items']);
 
   foreach (element_children($items['uc_order_product']) as $key) {
     $item = $items['uc_order_product'][$key];
