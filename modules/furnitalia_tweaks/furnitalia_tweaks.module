@@ -293,7 +293,8 @@ function furnitalia_tweaks_page_alter(&$page) {
 	  INNER JOIN {field_data_field_category} cat on cat.field_category_tid = td.tid
 	  INNER JOIN {node} n on n.nid=cat.entity_id and n.status=1
 	  INNER JOIN {taxonomy_term_hierarchy} h on td.tid=h.tid
-	  WHERE td.vid = :vid", array(":vid" => 2));
+	  WHERE td.vid = :vid 
+	  ORDER BY td.weight", array(":vid" => 2));
 
 	$items = array();
 	foreach($result as $term) {
@@ -347,7 +348,8 @@ function furnitalia_tweaks_page_alter(&$page) {
 	  INNER JOIN {node} n on n.nid=cat.entity_id and n.status=1
 	  LEFT JOIN {taxonomy_term_hierarchy} h on td.tid=h.tid
 	  INNER JOIN {field_data_field_brand} b on b.entity_id=n.nid and b.field_brand_tid IN(:brand1, :brand2)
-	  WHERE td.vid = :vid", array(":brand1" => $italia, ":brand2" => $editions,":vid" => 2));
+	  WHERE td.vid = :vid 
+	  ORDER BY td.weight", array(":brand1" => $italia, ":brand2" => $editions,":vid" => 2));
 	  
 	foreach($result as $term) {
 		$attributes = array();
@@ -443,7 +445,8 @@ function furnitalia_tweaks_page_alter(&$page) {
 		  INNER JOIN {taxonomy_term_hierarchy} h on td.tid=h.tid and h.parent=:parent_cat
 		  INNER JOIN {field_data_field_category} cat on cat.field_category_tid = h.tid
 		  INNER JOIN {node} n on n.nid=cat.entity_id and n.status=1 " . $brand_join . " 
-		  WHERE td.vid = :vid", $params);
+		  WHERE td.vid = :vid 
+		  ORDER BY td.weight", $params);
 	
 		$items = array();
 		foreach($result as $term) {

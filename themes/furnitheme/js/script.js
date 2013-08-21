@@ -222,6 +222,15 @@ var skipAnimation = false;
 
 			});
 			
+			$("article.node-item .field-name-body .field-item").jScrollPane({
+			     verticalDragMinHeight: 25,
+				 verticalDragMaxHeight: 25,
+				 horizontalDragMinWidth: 25,
+				 horizontalDragMaxWidth: 25
+		    });
+		    
+		    console.log($("article.node-item .field-name-body .field-item"));
+			
         }
 	}
 	
@@ -261,7 +270,8 @@ var skipAnimation = false;
 			icons:false,
 			collapsible: true,
 			active: false,
-			heightStyle:'content'
+			heightStyle:'content',
+			animate:300
 		});
 		
 		//set active menu link in accordion
@@ -297,6 +307,11 @@ var skipAnimation = false;
 		$('#bg3').hover(function(e){
 			SetUpCategorySlider("bg3");
 			KeyHoleScroll(3);
+			
+		}, function(){});
+		
+		$('#bg4').hover(function(e){
+			KeyHoleScroll(4);
 			
 		}, function(){});
 		

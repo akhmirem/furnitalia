@@ -149,7 +149,7 @@ function preprocess_node_common_fields(&$content, $hook) {
 
 
 	$content['list_price']['#title'] = "MSRP:";
-	$content['sell_price']['#title'] = "Furnitalia:";
+	unset($content['sell_price']['#title']);
 
 	
 	$sale_price_set = !empty($content['field_sale_price']) && isset($content['field_sale_price']['#items']) && $content['field_sale_price']['#items'][0]['value'];
@@ -157,13 +157,14 @@ function preprocess_node_common_fields(&$content, $hook) {
 	if($sale_price_set) {
 		$new_sale_price = array();
 		
-		$new_sale_price['#title'] = "Special:";
+		$new_sale_price['#title'] = "special:";
 		$new_sale_price['#theme'] = "uc_product_price";
 		$new_sale_price['#value'] = $content['field_sale_price']['#items'][0]['value'];
 		$new_sale_price['#attributes'] = array('class' => array('sell-price'));
 		
 		$content['sale_price'] = $new_sale_price;
 		$content['sell_price']['#attributes']['class'] = array('old-price');
+		$content['sell_price']['#title'] = "regular:";
 	  	
 	} else {
 		
