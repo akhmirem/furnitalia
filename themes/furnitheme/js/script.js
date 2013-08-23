@@ -298,7 +298,7 @@ var skipAnimation = false;
 		
 		$("div.ui-accordion-content-active div.accordion-inner div.ui-accordion-content").each(function(index, val) {
 			if ($(this).find('a.active-menu').length) {
-				$(this).parents('.accordion-inner').accordion("option", "active", index);
+				$(this).parents('.accordion-inner').accordion("option", "active", 0);
 			}
 		});		
 		
