@@ -57,7 +57,7 @@ if ($teaser) { //item teaser view
 		<?php print render($content['list_price']); ?>
 		<?php print render($content['sell_price']); ?>
 		<?php print render($content['sale_price']); ?>
-		<?php print render($content['field_availability']); ?>
+		<?php //print render($content['field_availability']); ?>
 
 	</div>
 	
@@ -67,7 +67,7 @@ if ($teaser) { //item teaser view
 } else { //full page view
 ?>
 
-<?php //dsm($content); ?>
+<?php 	//dsm($content); ?>
 <article class="node-<?php print $node->nid; ?> <?php print $classes; ?> clearfix"<?php print $attributes; ?>>
 
   <?php if ($unpublished): ?>

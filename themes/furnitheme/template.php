@@ -94,7 +94,7 @@ function furnitheme_preprocess_page(&$vars) {
 	}
 
 	$vars['show_title'] = TRUE;	
-	if (arg(0) == 'node' && is_numeric(arg(1))) {
+	if (arg(0) == 'node' && is_numeric(arg(1)) || in_array(arg(0), array("sale"))) {
 		drupal_add_js(drupal_get_path('theme', 'furnitheme') . '/lib/jscrollpane/jquery.jscrollpane.min.js');
 		drupal_add_js(drupal_get_path('theme', 'furnitheme') . '/lib/jscrollpane/mwheelIntent.js');
 		drupal_add_css(drupal_get_path('theme', 'furnitheme') . '/lib/jscrollpane/jquery.jscrollpane.css');
@@ -157,14 +157,14 @@ function preprocess_node_common_fields(&$content, $hook) {
 	if($sale_price_set) {
 		$new_sale_price = array();
 		
-		$new_sale_price['#title'] = "special:";
+		$new_sale_price['#title'] = "SPECIAL:";
 		$new_sale_price['#theme'] = "uc_product_price";
 		$new_sale_price['#value'] = $content['field_sale_price']['#items'][0]['value'];
 		$new_sale_price['#attributes'] = array('class' => array('sell-price'));
 		
 		$content['sale_price'] = $new_sale_price;
 		$content['sell_price']['#attributes']['class'] = array('old-price');
-		$content['sell_price']['#title'] = "regular:";
+		$content['sell_price']['#title'] = "REGULAR:";
 	  	
 	} else {
 		

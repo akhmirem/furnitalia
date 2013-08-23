@@ -15,50 +15,49 @@ var timer2;
 var skipAnimation = false;
 
  (function($) {
-        Drupal.behaviors.furnitalia = {
-          attach: function(context, settings) {
+	Drupal.behaviors.furnitalia = {
+		attach: function(context, settings) {
           	
-          var params = $.deparam.querystring( true );
-		  console.log(JSON.stringify( params, null, 2 ));
+			var params = $.deparam.querystring( true );
+			console.log(JSON.stringify( params, null, 2 ));
 		  
-		  if ("noanim" in params) {
-			  if (params["noanim"] === true) {
-				  //skip animation
-				  skipAnimation = true;
-				  console.log("animation on front page is skipped");
-			  }
-		  }
+			if ("noanim" in params) {
+				if (params["noanim"] === true) {
+					//skip animation
+					skipAnimation = true;
+					console.log("animation on front page is skipped");
+				}
+			}
 		  
-		  if (!skipAnimation && $("#front-overlay").length) {
-		  
-			  var img = new Image();
-  
-			  // wrap our new image in jQuery, then:
-			  $(img)
-			    // once the image has loaded, execute this code
-			    .load(function () {
-			    
-					// insert loaded image into the div 
-					$('#menu-pic')
-						// remove the loading class (so no background spinner), 
-						.removeClass('loading')
-						.css("background-image", "url(" +  Drupal.settings.basePath + "sites/all/themes/furnitheme/images/front-keyhole-bg.png)");
+			if (!skipAnimation && $("#front-overlay").length) {
 
-					timer = window.setTimeout(AnimateFrontPageBackground, 500);
-			
-			    })
-			    
-			    // if there was an error loading the image, react accordingly
-			    .error(function () {
-			      // notify the user that the image could not be loaded
-			    })
-			    
-			    // *finally*, set the src attribute of the new image to our image
-			    .attr('src', Drupal.settings.basePath + 'sites/all/themes/furnitheme/images/front-keyhole-bg.png');
-			    
-			    
-			    $("#warning").css('display', 'none');
-			    
+			  var img = new Image();
+
+				// wrap our new image in jQuery, then:
+				$(img)
+					// once the image has loaded, execute this code
+					.load(function () {
+					
+						// insert loaded image into the div 
+						$('#menu-pic')
+							// remove the loading class (so no background spinner), 
+							.removeClass('loading')
+							.css("background-image", "url(" +  Drupal.settings.basePath + "sites/all/themes/furnitheme/images/front-keyhole-bg.png)");
+
+						timer = window.setTimeout(AnimateFrontPageBackground, 500);
+
+					})				
+				// if there was an error loading the image, react accordingly
+				.error(function () {
+				  // notify the user that the image could not be loaded
+				})
+				
+				// *finally*, set the src attribute of the new image to our image
+				.attr('src', Drupal.settings.basePath + 'sites/all/themes/furnitheme/images/front-keyhole-bg.png');
+				
+				
+				$("#warning").css('display', 'none');
+				
 			}			
 			    
 			    
@@ -83,7 +82,7 @@ var skipAnimation = false;
 				
 				InitCategoryPageAnimation();
 				
-				$("#main-nav").accordion("option", "active", 0); //make All categories active by default
+				$(".accordion").accordion("option", "active", 0); //make All categories active by default
 
 				//start first category slideshow
 				SetUpCategorySlider("bg1");
@@ -103,7 +102,7 @@ var skipAnimation = false;
 				//hide top overlay
 				$("#front-overlay").hide();
 				
-				$("#main-nav").accordion("option", "active", 0); //make All categories active by default
+				$(".accordion").accordion("option", "active", 0); //make All categories active by default
 				
 				//start first category slideshow
 				SetUpCategorySlider("bg1");
@@ -134,21 +133,21 @@ var skipAnimation = false;
 			
 			if(jQuery().dropkick) {
 				$('#edit-sort-by').attr('tabindex', '1').dropkick({
-					 change: function (value, label) {
-					 	$('#edit-sort-by').trigger('change');
-					 }
+					change: function (value, label) {
+						$('#edit-sort-by').trigger('change');
+					}
 				});
 				
 				$('#edit-brand').attr('tabindex', '2').dropkick({
-					 change: function (value, label) {
+					change: function (value, label) {
 						$('#edit-brand').trigger('change');
-					 }
+					}
 				});
 				
 				$("#share-this").attr('tabindex', '3').dropkick({
-				 change: function (value, label) {
+					change: function (value, label) {
 						$('#share-this').trigger('change');
-					 }
+					}
 				});
 			}
 					
@@ -222,14 +221,15 @@ var skipAnimation = false;
 
 			});
 			
-			$("article.node-item .field-name-body .field-item").jScrollPane({
-			     verticalDragMinHeight: 25,
-				 verticalDragMaxHeight: 25,
-				 horizontalDragMinWidth: 25,
-				 horizontalDragMaxWidth: 25
-		    });
-		    
-		    console.log($("article.node-item .field-name-body .field-item"));
+			// ------------ SCROLLBARS FOR PRODUCT DESCRIPTION TEXT ----------
+			if (jQuery().jScrollPane) {
+				$("article.node-item .field-name-body .field-item").jScrollPane({
+					verticalDragMinHeight: 25,
+					verticalDragMaxHeight: 25,
+					horizontalDragMinWidth: 25,
+					horizontalDragMaxWidth: 25
+				});
+			}
 			
         }
 	}
@@ -238,8 +238,8 @@ var skipAnimation = false;
 	var fancy = function (self) {
 	    // bind click event to big image
 	    self.anchor.on("click", function(e){
-	      // find index of corresponding thumbnail
-	      var pikaindex = $("#pikame").find("li.active").index();
+			// find index of corresponding thumbnail
+			var pikaindex = $("#pikame").find("li.active").index();
 	      // open fancybox gallery starting from corresponding index
 	      $.fancybox(fancyGallery,{
 	        // fancybox options
@@ -266,22 +266,38 @@ var skipAnimation = false;
 		 }
 
 	 	//main navigation menu accordeon
-		$("#main-nav").accordion({
+		$(".accordion").accordion({
 			icons:false,
 			collapsible: true,
 			active: false,
 			heightStyle:'content',
-			animate:300
+			animate:300,
 		});
 		
+		
+
 		//set active menu link in accordion
-		var foundActiveCat = false;
 		$("div.ui-accordion-content").each(function(index, val) {
 			if ($(this).find('a.active-menu').length) {
-				foundActiveCat = true;
-				$("#main-nav").accordion("option", "active", index);
+				$(".accordion").accordion("option", "active", index);
 			}
 		});
+		
+		$(".accordion-inner").accordion({
+			icons:false,
+			collapsible: true,
+			active: false,
+			heightStyle:'content',
+			animate:300,
+		});
+		
+		
+		$("div.ui-accordion-content-active div.accordion-inner div.ui-accordion-content").each(function(index, val) {
+			if ($(this).find('a.active-menu').length) {
+				$(this).parents('.accordion-inner').accordion("option", "active", index);
+			}
+		});		
+		
 
 				
 		$("#bg4").click(function() {
