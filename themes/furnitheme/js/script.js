@@ -80,7 +80,8 @@ var skipAnimation = false;
 				//hide top overlay
 				$("#front-overlay").addClass("loading").delay(FRONTPAGE_TRANSITION_DURATION).hide(1);
 				
-				InitCategoryPageAnimation();
+				//set up keyhole animation for categories
+				SetUpCategoryAnimKeyHole();	
 				
 				$(".accordion").accordion("option", "active", 0); //make All categories active by default
 
@@ -92,10 +93,13 @@ var skipAnimation = false;
 					
 				return false;
 					
-			});  
+			});
+			
+			InitCategoryPageAnimation();
 			
 			if (skipAnimation || $("#front-overlay").length == 0) {
-				InitCategoryPageAnimation();
+				//set up keyhole animation for categories
+				SetUpCategoryAnimKeyHole();	
 			}
 						
 			if (skipAnimation) {
@@ -305,7 +309,7 @@ var skipAnimation = false;
 		});
 
 		//set up keyhole animation for categories
-		SetUpCategoryAnimKeyHole();		
+		//SetUpCategoryAnimKeyHole();		
 
 		//hover events for category links
 		$('#bg1').hover(function(e){
