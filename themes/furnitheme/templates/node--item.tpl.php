@@ -18,6 +18,8 @@ if (isset($content['field_availability']) && is_array($content['field_availabili
 	$availability_icon = '<img src="' . base_path() . path_to_theme() . '/images/availability-icon.png"/>';
 	$content['field_availability'][0]['#markup'] = $availability_icon . $content['field_availability'][0]['#markup'];
 }
+
+dsm($node);
 	
 if ($teaser) { //item teaser view
 
@@ -48,11 +50,10 @@ if ($teaser) { //item teaser view
 
 	?>
 
+	<header>
+		<h2<?php print $title_attributes; ?>><a href="<?php print $node_url; ?>" class="title"><?php print $title; ?></a></h2>
+	</header>
 	<div class="item-details">
-		<header>
-			<h2<?php print $title_attributes; ?>><a href="<?php print $node_url; ?>" class="title"><?php print $title; ?></a></h2>
-		</header>
-		
 		
 		<?php print render($content['list_price']); ?>
 		<?php print render($content['sell_price']); ?>

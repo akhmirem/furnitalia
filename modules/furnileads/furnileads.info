@@ -1,0 +1,4 @@
+name = "Furnitalia Leads Administration"
+description = "Control Panel for Furnitalia Leads Administration"
+core = 7.x
+

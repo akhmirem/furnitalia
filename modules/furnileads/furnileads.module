@@ -1,0 +1,367 @@
+<?php
+
+define ('UNPROCESSED', 'N');
+define ('COMMUNICATED', 'Y');
+
+
+/**
+ * Implements hook_menu().
+ */
+function furnileads_menu() {
+	$items = array();
+	$items['admin/leads'] = array(
+		'title' => 'Furnitalia Leads',
+		'description' => 'Furnitalia Leads Control Panel.',
+		'page callback' => 'furnileads_page',
+		'access callback' => 'user_access',
+		'access arguments' => array('administer leads'),
+	);
+	$items['admin/leads/list'] = array(
+		'title' => 'View Leads',
+		'type' => MENU_DEFAULT_LOCAL_TASK,
+	);
+	$items['admin/leads/add'] = array(
+		'title' => 'Add lead',
+		'description' => 'Furnitalia Leads Control Panel.',
+		'page callback' => 'drupal_get_form',
+		'page arguments' => array('furnileads_lead_form'),
+		'type' => MENU_LOCAL_TASK,
+		'access callback' => 'user_access',
+		'access arguments' => array('administer leads'),
+	);
+	$items['admin/leads/%lead'] = array(
+		'title' => 'Furnitalia Leads',
+		'description' => 'Furnitalia Leads Control Panel.',
+		'page callback' => 'furnileads_lead_detail_page',
+		'page arguments' => array(2),
+		'type' => MENU_CALLBACK,
+		'access callback' => 'user_access',
+		'access arguments' => array('administer leads'),
+	);
+
+	return $items;
+}
+
+/**
+ * Implements hook_overlay_paths().
+ */
+function furnileads_overlay_paths() {
+  $paths = array(
+    'admin/leads' => TRUE,
+    'admin/leads/%lead' => TRUE,
+    'admin/leads/list' => TRUE,
+    'admin/leads/add' => TRUE,
+  );
+  return $paths;
+}
+
+/** 
+ * Implements hook_load().
+ */
+function lead_load($lid) {
+	$res = db_select('furnileads', 'fl')
+		->fields('fl')
+		->condition('lid', $lid)
+		->execute();
+
+	return $res->fetchObject();
+}
+
+/**
+ * Implements hook_permission().
+ */
+function furnileads_permission() {
+  return array(
+    'administer leads' => array(
+      'title' => t('Administer leads'),
+      'description' => t('Perform administration on Furnitalia leads.'),
+    ),
+  );
+}
+
+/**
+ * Display list of leads
+ */
+function furnileads_page() {
+	
+	$result = db_select('furnileads', 'f')
+		//->condition('vid', $vid)
+		->fields('f', array('lid', 'status', 'created',  'first_name', 'last_name', 'body', 'updated_by', 'updated')) 
+		->orderBy('status', 'ASC')
+		->orderBy('created', 'DESC')
+		->execute();
+
+	$time_format = 'm-d-Y H:i';
+	$rows = array(); 
+
+	while(($lead = $result->fetchAssoc())) {
+		$temp_row = array();
+
+		$temp_row['status'] = $lead['status'] == 'N' ? 'Unprocessed' : 'Contacted';
+		$temp_row['created'] = format_date($lead['created'], 'custom', $time_format); 
+		$temp_row['lead_name'] = $lead['first_name'] . ' ' . $lead['last_name'];
+		$temp_row['body'] = substr($lead['body'],0, 50).'...';
+
+		$user = user_load($lead['updated_by']);
+		$profile = field_get_items('user', $user, 'field_first_name');
+		$user_name = $profile[0]['value'];
+
+		$temp_row['updated_by'] = $user_name;
+		$temp_row['updated'] = empty($lead['updated']) ? "" : format_date($lead['updated'], 'custom', $time_format);
+
+		$temp_row['edit'] = l('Edit', 'admin/leads/' . $lead['lid']);
+
+		$rows []= $temp_row;
+	}
+
+	$header = array('Status', 'Created', 'Lead Name', 'Body', 'Lead owner', 'Last action', 'Actions');
+
+	return array(
+		'#theme' => 'table',
+		'#header' => $header,
+		'#rows' => $rows,
+	);
+}
+
+/**
+ * Display details for a selected lead.
+ */
+function furnileads_lead_detail_page($lead) {
+	if (!$lead) {
+		return drupal_not_found();
+	}
+
+	dsm($lead);
+
+	$output = drupal_get_form('furnileads_lead_form', $lead);
+
+	return $output;
+}
+
+/**
+ * Implements hook_form().
+ */
+function furnileads_lead_form($form, &$form_state, $lead=NULL) {
+
+	$new_lead = FALSE;
+	if (isset($lead)) {
+		$user = user_load($lead->updated_by);
+		$profile = field_get_items('user', $user, 'field_first_name');
+		$user_name = $profile[0]['value'];
+
+	} else {
+		$lead = new stdClass;
+		$lead->type = 'R';
+		$lead->first_name = '';
+		$lead->last_name = '';
+		$lead->email = '';
+		$lead->address = '';
+		$lead->phone = '';
+		$lead->body = '';
+		$lead->status = 'N';
+		$new_lead = TRUE;
+	}
+
+	$time_format = 'm-d-Y H:i';
+
+	$form =array();
+
+	if (!$new_lead) {
+		$form['created'] = array(
+			'#prefix' => '<div>',
+			'#markup' => 'Created: ' . format_date($lead->created, 'custom', $time_format), 
+			'#suffix' => '</div>',
+		);
+	}
+	$form['type'] = array(
+		'#type' => 'select',
+		'#title' => t('Lead type'),
+		'#options' => array(
+			'R' => t('Request'),
+			'C' => t('Contact'),
+		),
+		'#default_value' => $lead->type,
+	);
+
+	$form['status'] = array(
+		'#type' => 'select',
+		'#title' => t('Status'),
+		'#options' => array(
+			'N' => t('Unprocessed'),
+			'Y' => t('Contacted'),
+		),
+		'#default_value' => $lead->status == 'N' ? 'Unprocessed' : 'Contacted',
+	);
+	if(!$new_lead) {
+		$form['updated'] = array(
+			'#prefix' => '<div>',
+			'#markup' => t('Lead status last updated') . ": " .  (empty($lead->updated) ? 'N/A' : format_date($lead->updated, 'custom', $time_format)),
+			'#suffix' => '</div>',
+		);
+		$form['updated_by'] = array(
+			'#prefix' => '<div>',
+			'#markup' => t('Lead last updated by (lead owner)') . ": " . (empty($lead->updated_by) ? 'N/A' : $user_name), 
+			'#suffix' => '</div>',
+		);
+		
+		$form['status_comments'] = array(
+			'#type' => 'textarea',
+			'#title' => t('Status & comments'),
+			'#default_value' => $lead->status_comments,
+			'#cols' => '40',
+			'#rows' => '4',
+		);
+	}
+	$form['first_name'] = array(
+		'#type' => 'textfield',
+		'#title' => t('First name'),
+		'#default_value' => $lead->first_name,
+		'#size' => '40' ,
+		'#maxlength' => 128,
+		'#required' => TRUE,
+	);
+	$form['last_name'] = array(
+		'#type' => 'textfield',
+		'#title' => t('Last name'),
+		'#default_value' => $lead->last_name,
+		'#size' => '40' ,
+		'#maxlength' => 128,
+		'#required' => TRUE,
+	);
+	$form['email'] = array(
+		'#type' => 'textfield',
+		'#title' => t('Email'),
+		'#default_value' => $lead->email,
+		'#size' => '40' ,
+		'#maxlength' => 128,
+		'#required' => TRUE,
+	);
+	$form['address'] = array(
+		'#type' => 'textarea',
+		'#title' => t('Address'),
+		'#default_value' => $lead->address,
+		'#cols' => '40',
+		'#rows' => '4',
+	);
+	$form['phone'] = array(
+		'#type' => 'textfield',
+		'#title' => t('Phone'),
+		'#default_value' => $lead->phone,
+		'#size' => '15' ,
+		'#maxlength' => 20,
+	);
+	$form['body'] = array(
+		'#type' => 'textarea',
+		'#title' => t('Message'),
+		'#default_value' => $lead->body,
+		'#cols' => '40',
+		'#rows' => '4',
+	);
+	$form['submit'] = array(
+		'#type' => 'submit',
+		'#value' => t('Save'),
+	);
+
+	return $form;
+}
+
+/**
+  * Implements hook_submit().
+ */
+function furnileads_lead_form_submit($form, &$form_state) {
+	//dsm($form_state);
+	global $user;
+
+	$lead = $form_state['values'];
+
+	if(count($form_state['build_info']['args']) > 0 ) {
+		$lid = $form_state['build_info']['args'][0]->lid;
+		if (is_numeric($lid)) {
+
+			$lead['lid'] = $lid;
+			$lead['updated_by'] = $user->uid;
+			$lead['updated'] = REQUEST_TIME;
+
+			 db_update('furnileads')
+				 ->fields(array(
+					 'updated' => $lead['updated'],
+					 'updated_by' => $lead['updated_by'],
+					 'type' => $lead['type'],
+					 'first_name' => $lead['first_name'],
+					 'last_name' => $lead['last_name'],
+					 'email' => $lead['email'],
+					 'phone' => $lead['phone'],
+					 'address' => $lead['address'],
+					 'body' => $lead['body'],
+					 'status' => $lead['status'],
+					 'status_comments' => $lead['status_comments'],
+				 ))
+				->condition('lid', $lid)
+				->execute();
+
+			drupal_set_message('Changes for lead ' . $lead['first_name'] . ' ' . $lead['last_name']. ' were saved');
+			drupal_goto("admin/leads");
+
+
+		} else {
+			drupal_set_message("Changes to lead info were not saved. Missing lead ID.", "error");
+			drupal_goto("admin/leads");
+		}
+	} else {
+
+		$lead['updated_by'] = $user->uid;
+		$lead['created'] = REQUEST_TIME;
+		$lead['updated'] = REQUEST_TIME;
+		$lead['status_comments'] = '';
+		$lid = furnileads_insert_lead($lead);
+		if (is_numeric($lid)) {
+			drupal_set_message("Lead record was created");
+			drupal_goto("admin/leads/$lid");
+		}
+		drupal_goto("admin/leads");
+	}
+	
+}
+
+/**
+ * Insert lead record.
+ */
+function furnileads_insert_lead($lead) {
+	if (!is_array($lead)) {
+		drupal_set_message("Error saving lead record.");
+		return;
+	}
+
+	$lid = db_insert('furnileads')
+		->fields(array(
+ 			'created',
+			 'updated',
+			 'updated_by',
+			 'type',
+			 'first_name',
+			 'last_name',
+			 'email',
+			 'phone',
+			 'address',
+			 'body',
+			 'status',
+			 'status_comments',
+		 ))
+		->values(array(
+			 $lead['created'],
+			 $lead['updated'],
+			 $lead['updated_by'],
+			 $lead['type'],
+			 $lead['first_name'],
+			 $lead['last_name'],
+			 $lead['email'],
+			 $lead['phone'],
+			 $lead['address'],
+			 $lead['body'],
+			 $lead['status'],
+			 $lead['status_comments'],
+		))
+		->execute();
+
+	return $lid;
+}

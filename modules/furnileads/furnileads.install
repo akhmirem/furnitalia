@@ -1,0 +1,107 @@
+<?php
+
+/**
+ * Implements hook_schema().
+ */
+function furnileads_schema() {
+	$schema['furnileads'] = array(
+		'description' => 'Stores info about Furnitalia leads and communication
+		status.',
+		'fields' => array(
+			'lid' => array(
+				'description' => 'The primary identifier for a lead.',
+				'type' => 'serial',
+				'unsigned' => TRUE,
+				'not null' => TRUE,
+			),
+			'type' => array(
+				'description' => 'Lead type indicator',
+				'type' => 'varchar',
+				'length' => '1',
+				'not null' => TRUE,
+				'default' => 'R', 
+			),
+			'created' => array(
+				'description' => 'The Unix timestamp when the lead  was created.',
+				'type' => 'int',
+				'not null' => TRUE,
+				'default' => 0,
+			),
+			'updated' => array(
+				'description' => 'The Unix timestamp when the lead  was last
+				updated.',
+				'type' => 'int',
+				'not null' => TRUE,
+				'default' => 0,
+			),
+			'updated_by' => array(
+				'description' => 'The {users}.uid that owns this lead, last updated',
+				'type' => 'int',
+				'not null' => TRUE,
+				'default' => 0,
+			),
+			'status' => array(
+				'description' => 'Boolean indicating the lead communication status.',
+				'type' => 'varchar',
+				'length' => '1',
+				'not null' => TRUE,
+				'default' => 'N',
+			 ),
+			'first_name' => array(
+				'description' => 'The name of the lead.',
+				'type' => 'varchar',
+				'length' => 255,
+				'not null' => TRUE,
+				'default' => '',
+			),
+			'last_name' => array(
+				'description' => 'The last name of the lead.',
+				'type' => 'varchar',
+				'length' => 255,
+				'default' => '',
+			),
+			'email' => array(
+				'description' => 'The lead email.',
+				'type' => 'varchar',
+				'length' => 255,
+				'not null' => TRUE,
+				'default' => '',
+			),
+			'phone' => array(
+				'description' => 'The lead phone number.',
+				'type' => 'varchar',
+				'length' => 255,
+				'default' => '',
+			),
+			'address' => array(
+				'description' => 'The lead address.',
+				'type' => 'varchar',
+				'length' => 255,
+				'default' => '',
+			),
+			'body' => array(
+				'description' => 'The lead body message/request.',
+				'type' => 'text',
+				'size' => 'big',
+			),
+			'status_comments' => array(
+				'description' => 'Comments on the lead status.',
+				'type' => 'text',
+				'size' => 'big',
+			),
+
+		),
+		// Added primary keys in views_schema_6008()
+		'indexes' => array('lid' => array('lid')),
+		'primary key' => array('lid'),
+		'foreign keys' => array(
+			'lead_owner' => array(
+				'table' => 'users',
+				'columns' => array('uid' => 'uid'),
+			),
+		),
+	);
+
+	return $schema;
+
+}

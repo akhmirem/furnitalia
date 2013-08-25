@@ -272,25 +272,14 @@ aside.menu-left .accordion-inner ul.links li:hover, aside.menu-left .accordion-i
 .accordion-inner .ui-accordion-header {
 	padding: 0 .5em 0 .7em;
 }
-.region-content-top a.active-menu {
-	color: #981b1e;
-	text-transform: uppercase;
-	font-size: 1em;
-	font-weight: bold;
-	line-height:100%;
-}
+.accordion-inner .ui-accordion-content { 
+    padding: .2em 0 .5em; 
+} 
+.accordion-inner .ui-accordion-content ul.links { 
+    padding-left: 3em; 
+} 
 a.active-menu {
 	color:#981b1e;
-}
-.region-content-top a {
-	text-decoration: none;
-	color: #981b1e;
-	border-bottom:1px dotted #981b1e;
-	text-transform: lowercase;
-	font-size: 1.3em;
-	font-weight:bold;
-	position: relative;
-	top: .2em;
 }
 div.region-header li a {
 	border-bottom: 1px dotted #6D6E71;
@@ -317,7 +306,7 @@ div.region-header li a {
     position: relative;
     top: 0.3em;
 }
-.region-content-top a:hover, div.region-header li a:hover, #main-nav a:hover {
+div.region-header li a:hover, #main-nav a:hover {
 	color:#981b1e;
 }
 h1.title, /* The title of the page */
@@ -557,6 +546,7 @@ ul.furn-gallery li {
 	list-style-type: none;
 	width:220px;
 	height:165px;
+	float:left;
 }
 ul.search-results li {
 	float:left;
@@ -583,28 +573,32 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#33efefef', e
 	cursor:pointer;
 	display: none;
 	width: 220px;
-	height: 165px;
+	height: 115px;
+	padding-top:50px; 
 	position: absolute;
 	top: 0;
 	text-align: center;
 	color:white;
 	text-transform: uppercase;
 }
-.furn-gallery .item-details h2 {
-	font-size: 1.1em;
-	line-height: 1em;
-	margin: 0 auto;
-	letter-spacing: .15em;
-	font-weight: bold;
-}
-.furn-gallery .item-details h2 a {
-	color:white;
-	text-transform: uppercase;
-}
-.furn-gallery .item-details header {
-	padding-top:50px;
-	padding-bottom:8px;
-}
+
+.furn-gallery header { 
+    position: relative; 
+    bottom: 2em; 
+    text-align: right; 
+    padding-right: .3em; 
+    z-index:10; 
+} 
+.furn-gallery h2 { 
+    text-transform: uppercase; 
+    font-size: .9em; 
+    font-weight: normal; 
+} 
+.furn-gallery a.title { 
+    text-decoration: none; 
+    color: #981b1e; 
+} 
+
 .furn-gallery .item-details .product-info {
 	font-size:.85em;
 	font-weight: 600;
@@ -692,6 +686,10 @@ article #page-title {
 }
 article .sell-price {
 	text-transform: none;
+}
+.sell-price .uc-price-label { 
+    font-size: .8em; 
+    font-weight: normal; 
 }
 .field .field-label {
 	font-weight: 600;

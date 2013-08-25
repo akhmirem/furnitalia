@@ -337,6 +337,7 @@ function furnitalia_tweaks_page_alter(&$page) {
 				//parent term not in the list, insert it
 				$parent_term = taxonomy_term_load($term->parent_term);
 				
+				//generate link, mark it as active if it is
 				if (empty($active_brand) && $term->parent_term == $active_parent_tid) {
 					$link = l($parent_term->name, 'taxonomy/term/' . $term->parent_term, array('attributes' => array('class' => $active_attribute)));
 				} else {
@@ -352,7 +353,7 @@ function furnitalia_tweaks_page_alter(&$page) {
 				);
 			}
 			
-			
+			//generate link, mark it as active if it is			
 			if (empty($active_brand) && $term->tid == $active_cat_tid) {
 				$link = l($term->name, 'taxonomy/term/' . $term->tid, array('attributes' => array('class' => $active_attribute)));
 			} else {
@@ -371,7 +372,8 @@ function furnitalia_tweaks_page_alter(&$page) {
 		} else {
 			//if it is the parent term			
 			if (!isset($all_items[$term->tid])) {			
-				
+			
+				//generate link, mark it as active if it is				
 				if (empty($active_brand) && ($term->tid == $active_parent_tid || $term->tid == $active_cat_tid)) {
 					$link = l($term->name, 'taxonomy/term/' . $term->tid, array('attributes' => array('class' => $active_attribute)));
 				} else {
@@ -425,6 +427,7 @@ function furnitalia_tweaks_page_alter(&$page) {
 				//parent term not in the list, insert it
 				$parent_term = taxonomy_term_load($term->parent_term);
 				
+				//generate link, mark it as active if it is
 				if ($active_brand == $term->brand && $term->parent_term == $active_parent_tid) {
 					$link = l($parent_term->name, 'taxonomy/term/' . $term->parent_term, array('query' => $query_string, 'attributes' => array('class' => $active_attribute)));
 				} else {
@@ -441,6 +444,8 @@ function furnitalia_tweaks_page_alter(&$page) {
 			}
 			
 			//insert term into parent's list
+			
+			//generate link, mark it as active if it is
 			if ($active_brand == $term->brand && $term->tid == $active_cat_tid) {
 				$link = l($term->name, 'taxonomy/term/' . $term->tid, array('query' => $query_string, 'attributes' => array('class' => $active_attribute)));
 			} else {
@@ -456,6 +461,8 @@ function furnitalia_tweaks_page_alter(&$page) {
 		} else {
 			//if it is the parent term
 			if (!isset($temp_items[$term->tid])) {
+			
+				//generate link, mark it as active if it is			
 				if ($active_brand == $term->brand && ($term->tid == $active_cat_tid || $term->tid == $active_parent_tid)) {
 					$link = l($term->name, 'taxonomy/term/' . $term->tid, array('query' => $query_string, 'attributes' => array('class' => $active_attribute)));
 				} else {
@@ -475,50 +482,6 @@ function furnitalia_tweaks_page_alter(&$page) {
 	//-------------------------------------
 	// build the menus
 	//--------------------------------------
-	
-		
-/*
-	//now that we determined active categories and brands, mark those as active in arrays
-	if (empty($active_brand)) {
-		foreach($all_items as $item) {
-			if ($item['tid'] == $active_cat_tid || $item['tid'] == $active_parent_tid) {
-				//new link
-				$item['link'] = l($item['name'], 'taxonomy/term/' . $item['tid'], array('attributes' => array('class' => $active_attribute)));
-				
-				foreach($item['sub'] as $submenu) {
-					if ($submenu['tid'] == $active_cat_tid) {
-						//new link
-						$submenu['link'] = l($submenu['name'], 'taxonomy/term/' . $submenu['tid'], array('attributes'  => array('class' => $active_attribute)));
-					}
-				}
-			}
-		} 
-	} else {		
-		//if natuzzi italia brand is selected
-		if ($active_brand == $italia) {
-			$brand_menu = &$italia_items;
-			$query_string = $italia_query_string;
-		} else {
-			//editions item
-			$brand_menu = &$editions_items;
-			$query_string = $editions_query_string;
-		}
-		
-		foreach($brand_menu as $item) {
-			if ($item['tid'] == $active_cat_tid || $item['tid'] == $active_parent_tid) {
-				//new link
-				$item['link'] = l($item['name'], 'taxonomy/term/' . $item['tid'], array('attributes' => array('class' => $active_attribute), 'query' => $query_string));
-				
-				foreach($item['sub'] as $submenu) {
-					if ($submenu['tid'] == $active_cat_tid) {
-						//new link
-						$submenu['link'] = l($submenu['name'], 'taxonomy/term/' . $submenu['tid'], array('attributes' => array('class' => $active_attribute), 'query' => $query_string));
-					}
-				}
-			}
-		} 
-	}
-*/
 	
 	$output_all_brands_menu_items = array();
 	_build_subcat_menu_items($all_items, $output_all_brands_menu_items);
@@ -791,6 +754,49 @@ function furnitalia_tweaks_item_node_form_validate(&$form, &$form_state) {
 		return false;
 	}
 
+}
+
+/**
+ * Implements hook_node_view()
+ */
+function furnitalia_tweaks_node_load($nodes, $types) {
+	$sqid = 1; //clearance
+	
+	// Decide whether any of $types are relevant to our purposes.
+	if (count(array_intersect(array('item'), $types))) {
+	
+		//gather list of nodes on clearance
+		$res = db_query("SELECT GROUP_CONCAT(CAST(nid AS CHAR) SEPARATOR ',') FROM {nodequeue_nodes} q WHERE q.sqid = :sqid", array(':sqid' => $sqid));
+		$clearance_list = explode(',', $res->fetchField());
+		
+		dsm($clearance_list);
+		
+		foreach($nodes as $node) {
+			if (in_array($node->nid, $clearance_list)) {
+				$nodes[$node->nid]->clearance = TRUE;
+			}
+		}
+
+	}
+	
+	dsm($nodes);
+
+
+	/*
+switch ($node->type) {
+	    case 'item':
+	    	
+	    	$sqid = 1; //clearance list
+
+			$count = db_query('SELECT COUNT(*) as present FROM {nodequeue_nodes} q WHERE q.sqid = :sqid AND q.nid = :nid', array(':sqid' => $sqid, ':nid' => $node->nid));
+
+			$node->clearance = $count->fetchField() == 1;
+			
+			return $node;
+	    	
+	    	break;
+	}
+*/
 }
 
 /**
