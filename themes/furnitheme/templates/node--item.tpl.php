@@ -19,7 +19,6 @@ if (isset($content['field_availability']) && is_array($content['field_availabili
 	$content['field_availability'][0]['#markup'] = $availability_icon . $content['field_availability'][0]['#markup'];
 }
 
-dsm($node);
 	
 if ($teaser) { //item teaser view
 
@@ -53,6 +52,11 @@ if ($teaser) { //item teaser view
 	<header>
 		<h2<?php print $title_attributes; ?>><a href="<?php print $node_url; ?>" class="title"><?php print $title; ?></a></h2>
 	</header>
+	
+	<?php if (isset($node->clearance) && $node->clearance) : ?>
+		<span class="item-clearance"><img src="<?php print base_path() . path_to_theme(); ?>/images/Sale_Icon_Red_40x24.png" alt="Item on clearance"/></span>
+	<?php endif; ?>
+	
 	<div class="item-details">
 		
 		<?php print render($content['list_price']); ?>

@@ -686,12 +686,6 @@ function furnitalia_tweaks_get_parent_category($tid="") {
 
 }
 
-/*function furnitalia_tweaks_get_selected_brand() {
-	if (isset($_GET['brand']) && is_numeric($_GET['brand'])) {
-		return $_GET['brand'];
-	}
-}*/
-
 function furnitalia_tweaks_form_alter(&$form, &$form_state, $form_id){
 	if ($form['#id'] == 'item-node-form') {
 		
@@ -757,10 +751,10 @@ function furnitalia_tweaks_item_node_form_validate(&$form, &$form_state) {
 }
 
 /**
- * Implements hook_node_view()
+ * Implements hook_node_load()
  */
 function furnitalia_tweaks_node_load($nodes, $types) {
-	$sqid = 1; //clearance
+	$sqid = 1; //clearance queue
 	
 	// Decide whether any of $types are relevant to our purposes.
 	if (count(array_intersect(array('item'), $types))) {
@@ -768,9 +762,7 @@ function furnitalia_tweaks_node_load($nodes, $types) {
 		//gather list of nodes on clearance
 		$res = db_query("SELECT GROUP_CONCAT(CAST(nid AS CHAR) SEPARATOR ',') FROM {nodequeue_nodes} q WHERE q.sqid = :sqid", array(':sqid' => $sqid));
 		$clearance_list = explode(',', $res->fetchField());
-		
-		dsm($clearance_list);
-		
+				
 		foreach($nodes as $node) {
 			if (in_array($node->nid, $clearance_list)) {
 				$nodes[$node->nid]->clearance = TRUE;
@@ -779,24 +771,6 @@ function furnitalia_tweaks_node_load($nodes, $types) {
 
 	}
 	
-	dsm($nodes);
-
-
-	/*
-switch ($node->type) {
-	    case 'item':
-	    	
-	    	$sqid = 1; //clearance list
-
-			$count = db_query('SELECT COUNT(*) as present FROM {nodequeue_nodes} q WHERE q.sqid = :sqid AND q.nid = :nid', array(':sqid' => $sqid, ':nid' => $node->nid));
-
-			$node->clearance = $count->fetchField() == 1;
-			
-			return $node;
-	    	
-	    	break;
-	}
-*/
 }
 
 /**
@@ -985,17 +959,6 @@ function furnitalia_tweaks_front_page() {
  				  	 </div>',
 	);
 	
-	/*
-<ul class="cat-slider-2 category2 cat-preview">
-					  			<li><a href="#" class="category-image"><img src="' .drupal_get_path('theme', 'furnitheme') . "/images/category-image-2.png" . '" title="Furnitalia collections" /></a></li>
-					  		</ul>
-					  		<ul class="cat-slider-3 category3 cat-preview">
-					  			<li><a href="#" class="category-image"><img src="' .drupal_get_path('theme', 'furnitheme') . "/images/category-image-3.png" . '" title="Furnitalia collections"  /></a></li>
-					  		</ul>
-					  		<ul class="cat-slider-4 category4 cat-preview">
-					  			<li><a href="#" class="category-image"><img src="' .drupal_get_path('theme', 'furnitheme') . "/images/category-image-4.png" . '" title="Furnitalia collections"  /></a></li>
-					  		</ul>
-*/
 	
 	$build['front-anim'] = array (
 		'#markup' => '<div id="front-overlay">
