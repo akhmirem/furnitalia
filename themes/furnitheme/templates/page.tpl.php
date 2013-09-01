@@ -92,25 +92,9 @@
       </hgroup><!-- /#name-and-slogan -->
     <?php endif; ?>
 
-    <?php if ($secondary_menu): ?>
-     <!--
- <nav id="secondary-menu" role="navigation">
-        <?php print theme('links__system_secondary_menu', array(
-          'links' => $secondary_menu,
-          'attributes' => array(
-            'class' => array('links', 'inline', 'clearfix'),
-          ),
-          'heading' => array(
-            'text' => $secondary_menu_heading,
-            'level' => 'h2',
-            'class' => array('element-invisible'),
-          ),
-        )); ?>
-      </nav>
--->
-    <?php endif; ?>
-
     <?php print render($page['header']); ?>
+    
+    <a id="header-phone" href="tel:+18003874825">1-800-FUR-ITAL</a>
 
   </header>
 
@@ -195,11 +179,23 @@
   </div><!-- /#main -->
 
   <footer>
-	  <nav id="footer-info-menu"><?php print render($footer_info_menu); ?></nav>
-	  <nav id="footer-user-menu"><?php print render($footer_user_menu); ?></nav>
-	  <nav id="footer-policy-menu"><?php print render($footer_policy_menu); ?></nav>	
-	  <?php print  l("Catalogs", "catalogs", array('attributes' => array('id' => 'catalogs'))); ?>  
-	  <?php print render($page['footer']); ?>	  
+	<nav id="footer-info-menu"><?php print render($footer_info_menu); ?></nav>
+	
+	<!-- AddThis Follow BEGIN -->
+	<div class="addthis_toolbox addthis_32x32_style addthis_default_style">
+		<a class="addthis_button_facebook_follow" addthis:userid="pages/Furnitalia/65283884934"></a>
+		<a class="addthis_button_twitter_follow" addthis:userid="furnitalia"></a>
+		<a class="addthis_button_youtube_follow" addthis:userid="Furnitalia"></a>
+		<a class="addthis_button_flickr_follow" addthis:userid="furnitalia/"></a>
+	</div>
+	<script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-522150ba58af72c3"></script>
+	<!-- AddThis Follow END -->
+
+
+	<nav id="footer-user-menu"><?php print render($footer_user_menu); ?></nav>
+	<nav id="footer-policy-menu"><?php print render($footer_policy_menu); ?></nav>	
+	<?php print  l("Catalogs", "catalogs", array('attributes' => array('id' => 'catalogs'))); ?>  
+	<?php print render($page['footer']['webform_client-block-33']); ?>	  
   </footer>
   
   <?php if ($show_keyhole) : ?>
