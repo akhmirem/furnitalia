@@ -632,35 +632,62 @@ function furnitheme_set_up_top_menu (&$vars) {
  *
  * Alter exposed filter form in views
  */
-/*function furnitheme_form_views_exposed_form_alter(&$form, &$form_state, $form_id) {
-
-	
-  if (isset($form['sort_by'])) {
-    // Combine sort drop-downs into one.
-    $form['sorting'] = array(
-      '#type' => 'select',
-      '#id'   => 'sort',
-      '#title' => $form['sort_by']['#title'],
-      '#attributes' => array('class' => array('clearfix', 'option-set', 'dk', 'sortBy'), 'tabindex' => '1'),
-    );
-    foreach ($form['sort_by']['#options'] as $sort_by_key => $sort_by_title) {
-      foreach ($form['sort_order']['#options'] as $sort_order_key => $sort_order_title) {
-        $form['sorting']['#options'][$sort_by_key . '|' . $sort_order_key] = $sort_by_title . ' ' . $sort_order_title;
-      }
-    }
-
-    // Get default value for combined sort.
-    $sort_by_keys = array_keys($form['sort_by']['#options']);
-    $form['sorting']['#default_value'] = $sort_by_keys[0] . '|' . $form['sort_order']['#default_value'];
-  }
-
-  // Explode combined sort field into two values that are appropriate for views.
-  if (isset($form_state['input']['sorting'])) {
-    $sorting = explode('|', $form_state['input']['sorting']);
-    $form_state['input']['sort_by'] = $sorting[0];
-    $form_state['input']['sort_order'] = $sorting[1];
-  }
-}*/
+function furnitheme_form_views_exposed_form_alter(&$form, &$form_state, $form_id) {  
+  
+	if ($form['#id'] == 'views-exposed-form-taxonomy-term-page') { 
+		 $affected_exposed_filters = array('field_brand_tid');
+		 
+		 // prevent recursion - only execute once
+	    static $called = 0;
+	    if ($called === $form['#id']) {
+	      return;
+	    }
+	    $called = $form['#id']; // flag as called
+	    
+	    // get view results
+	    $view = $form_state['view']; //views_get_current_view();
+	    
+		$temp_view = $view->clone_view(); // create a temp view
+	    $temp_view->init_display();
+	    $temp_view->pre_execute();
+	    $temp_view->set_items_per_page(0); // we want results from all pages
+	    $temp_view->display_handler->has_exposed = 0; // prevent recursion
+	    $temp_view->execute();
+	    $results = $temp_view->result;
+	    
+	   // dsm($results);
+	    
+	     // return if no results
+	    if (!$results) {
+	      return;
+	    }
+	    
+	    // assemble results into a comma-separated nid list
+	    foreach($results as $row) {
+	      $nids[] = $row->nid;
+	    }
+	   
+	    // get the list of used terms
+	    $used_tids = db_query("SELECT GROUP_CONCAT(DISTINCT CAST (br.field_brand_tid AS CHAR) SEPARATOR ',') FROM {field_data_field_brand} br WHERE br.entity_id IN (:nids)", array(":nids" => $nids))->fetchField();
+	    
+	    //dsm($used_tids);
+	    
+	    if ($used_tids) {
+	      $used_tids = explode(',', $used_tids);
+	    } else {
+	      $used_tids = array(); // this shoudln't happen, but just in case...
+	    }	   
+	    
+		foreach($form['brand']['#options'] as $key => $option) {
+			// unset the unused term options
+			if ($key !== 'All' && !in_array($key, $used_tids)) {
+				unset($form['brand']['#options'][$key]);
+			}
+		}	
+        
+	}
+  
+}
 
 /**
  * Default preprocess function for all filter forms.
