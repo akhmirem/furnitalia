@@ -270,38 +270,37 @@ var skipAnimation = false;
 		 }
 
 	 	//main navigation menu accordeon
-		$(".accordion").accordion({
-			icons:false,
-			collapsible: true,
-			active: false,
-			heightStyle:'content',
-			animate:300,
+		$(".accordion").once(function() {
+			$(this). accordion({
+				icons:false,
+				collapsible: true,
+				active: false,
+				heightStyle:'content',
+				animate:300,
+			});
+			
+			//set active menu link in accordion
+			$("div.ui-accordion-content").each(function(index, val) {
+				if ($(this).find('a.active-menu').length) {
+					$(".accordion").accordion("option", "active", index);
+				}
+			});
+			
+			$(".accordion-inner").accordion({
+				icons:false,
+				collapsible: true,
+				active: false,
+				heightStyle:'content',
+				animate:300,
+			});
+			
+			
+			$("div.ui-accordion-content-active div.accordion-inner div.ui-accordion-content").each(function(index, val) {
+				if ($(this).find('a.active-menu').length) {
+					$(this).parents('.accordion-inner').accordion("option", "active", 0);
+				}
+			});	
 		});
-		
-		
-
-		//set active menu link in accordion
-		$("div.ui-accordion-content").each(function(index, val) {
-			if ($(this).find('a.active-menu').length) {
-				$(".accordion").accordion("option", "active", index);
-			}
-		});
-		
-		$(".accordion-inner").accordion({
-			icons:false,
-			collapsible: true,
-			active: false,
-			heightStyle:'content',
-			animate:300,
-		});
-		
-		
-		$("div.ui-accordion-content-active div.accordion-inner div.ui-accordion-content").each(function(index, val) {
-			if ($(this).find('a.active-menu').length) {
-				$(this).parents('.accordion-inner').accordion("option", "active", 0);
-			}
-		});		
-		
 
 				
 		$("#bg4").click(function() {

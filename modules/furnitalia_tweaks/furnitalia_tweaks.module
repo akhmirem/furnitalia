@@ -742,10 +742,13 @@ function furnitalia_tweaks_form_alter(&$form, &$form_state, $form_id){
 function furnitalia_tweaks_item_node_form_validate(&$form, &$form_state) {
 
 	//validate sale price for being a number or empty value
-	if (!is_numeric($form_state['values']['field_sale_price']['und'][0]['value']) || $form_state['values']['field_sale_price']['und'][0]['value'] == 0) {
+	$sale_price = $form_state['values']['field_sale_price']['und'][0]['value'];
+	if (!empty($sale_price)) {
 		
-		form_set_error('field_sale_price', 'Sale price must be numeric or empty!');	
-		return false;
+		if (!is_numeric($sale_price) || float($sale_price) == 0.0)  {		
+			form_set_error('field_sale_price', 'Sale price must be numeric or empty!');			
+			return false;
+		}
 	}
 
 }
