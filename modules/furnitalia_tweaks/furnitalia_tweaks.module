@@ -730,8 +730,7 @@ function furnitalia_tweaks_form_alter(&$form, &$form_state, $form_id){
 		//unset($form['field_show_add_to_cart']);
 		
 		$form['#validate'][] = 'furnitalia_tweaks_item_node_form_validate';
-		
-		dsm($form);
+
 
     }
 }
@@ -745,7 +744,7 @@ function furnitalia_tweaks_item_node_form_validate(&$form, &$form_state) {
 	$sale_price = $form_state['values']['field_sale_price']['und'][0]['value'];
 	if (!empty($sale_price)) {
 		
-		if (!is_numeric($sale_price) || float($sale_price) == 0.0)  {		
+		if (!is_numeric($sale_price) || floatval($sale_price) === 0.0)  {
 			form_set_error('field_sale_price', 'Sale price must be numeric or empty!');			
 			return false;
 		}
@@ -1006,3 +1005,13 @@ function furnitalia_tweaks_uc_product_alter(&$node) {
 
 	}
 }
+
+/**
+ * Implementation of hook_views_query_alter
+ * @param type $view
+ * @param type $query 
+ */
+/*function mymodule_views_query_alter(&$view, &$query) {
+	if ($view->name == 'VIEWNAME') {
+	}
+}*/

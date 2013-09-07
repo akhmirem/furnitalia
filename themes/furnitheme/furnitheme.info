@@ -37,13 +37,13 @@ stylesheets[all][] = css/jquery.sbscroller.css
 stylesheets[all][] = css/page-backgrounds.css
 stylesheets[all][] = css/tabs.css
 stylesheets[all][] = lib/fancybox/jquery.fancybox.css
+stylesheets[all][] = css/forms.css
 stylesheets[all][] = css/pages.css
 stylesheets[all][] = css/blocks.css
 ;stylesheets[all][] = css/navigation.css
 stylesheets[all][] = css/views-styles.css
 stylesheets[all][] = css/nodes.css
 stylesheets[all][] = css/comments.css
-stylesheets[all][] = css/forms.css
 stylesheets[all][] = css/fields.css
 stylesheets[all][] = css/print.css
 

@@ -147,14 +147,27 @@ function preprocess_node_common_fields(&$content, $hook) {
 		unset($content['add_to_cart']);
 	}
 
-
+	
 	$content['list_price']['#title'] = "MSRP:";
 	unset($content['sell_price']['#title']);
+	
+	$epsilon = 0.01;
+	$list_price = isset($content['list_price']['#value']) ? $content['list_price']['#value'] : $content['list_price'];
+	$sell_price = isset($content['sell_price']['#value']) ? $content['sell_price']['#value'] : $content['sell_price'];
+	$diff = abs(floatval($list_price) - floatval($sell_price));
+	if ($diff <= $epsilon) {
+	    // The prices are equal
+	    unset($content['list_price']);
+	}
 
 	
-	$sale_price_set = !empty($content['field_sale_price']) && isset($content['field_sale_price']['#items']) && $content['field_sale_price']['#items'][0]['value'];
+	$sale_price_set = variable_get('show_sale_prices', FALSE) && !empty($content['field_sale_price']) && isset($content['field_sale_price']['#items']) && $content['field_sale_price']['#items'][0]['value'];
 		
 	if($sale_price_set) {
+	
+		//don't display MSRP:
+		unset($content['list_price']);
+		
 		$new_sale_price = array();
 		
 		$new_sale_price['#title'] = "SPECIAL:";
@@ -183,10 +196,7 @@ function preprocess_node_common_fields(&$content, $hook) {
  *   The name of the template being rendered ("node" in this case.)
  */
 function furnitheme_preprocess_node(&$vars, $hook) {
-	//dsm($vars);
-	
-	preprocess_node_common_fields($vars['content'], 'page');
-	
+	preprocess_node_common_fields($vars['content'], 'page');	
 }
 
 /**
@@ -683,7 +693,12 @@ function furnitheme_form_views_exposed_form_alter(&$form, &$form_state, $form_id
 			if ($key !== 'All' && !in_array($key, $used_tids)) {
 				unset($form['brand']['#options'][$key]);
 			}
-		}	
+		}
+		
+		//alter SORT options -- remove Discounted price sort order if SALE prices are not shown
+		if (! variable_get('show_sale_prices', FALSE)) {
+			unset($form['sort_by']['#options']['field_sale_price_value']);
+		}
         
 	}
   

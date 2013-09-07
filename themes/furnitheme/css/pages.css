@@ -757,7 +757,7 @@ article.node-item {
 	position: relative;
 }
 article.view-mode-full {
-	width:716px;
+	width:50.5em;
 }
 #item-images {
 	width:460px;
@@ -770,14 +770,15 @@ article.view-mode-full .uc-price {
 }
 #item-info {
 	float:left;
-	width:211px;
+	width:17.7em;
 	/* border:1px dashed red; */
 	margin-left:10px;
 }
 article.node-item .field-name-body .field-item {
 	height:150px;
-	width:100%;
+	width:18.5em;
 	overflow: auto;
+	text-align: justify;
 }
 #pikawrapper {
 	height:150px;
@@ -814,6 +815,7 @@ article.node-item .field-name-body .field-item {
 .jspVerticalBar {
 	background:none;
 	width:25px;
+	right:-.5em;
 }
 .jspVerticalBar .jspDrag {
 	top:0;

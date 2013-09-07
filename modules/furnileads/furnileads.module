@@ -38,21 +38,25 @@ function furnileads_menu() {
 		'access callback' => 'user_access',
 		'access arguments' => array('administer leads'),
 	);
+	$items['admin/leads/xmlrpc'] = array(
+		'title' => 'Furnitalia Leads XMLRPC',
+		'page callback' => 'furnileads_lead_xmlrpc_page',
+		'type' => MENU_CALLBACK,
+		'access callback' => 'user_access',
+		'access arguments' => array('administer leads'),
+	);
 
 	return $items;
 }
 
 /**
- * Implements hook_overlay_paths().
+ * Implements hook_admin_paths_alter().
  */
-function furnileads_overlay_paths() {
-  $paths = array(
-    'admin/leads' => TRUE,
-    'admin/leads/%lead' => TRUE,
-    'admin/leads/list' => TRUE,
-    'admin/leads/add' => TRUE,
-  );
-  return $paths;
+function furnileads_admin_paths_alter(&$paths) {
+	$paths['admin/leads'] = TRUE;
+	$paths['admin/leads/list'] = TRUE;
+	$paths['admin/leads/add'] = TRUE;
+	$paths['admin/leads/%lead'] = TRUE;	
 }
 
 /** 
@@ -97,7 +101,10 @@ function furnileads_page() {
 	while(($lead = $result->fetchAssoc())) {
 		$temp_row = array();
 
-		$temp_row['status'] = $lead['status'] == 'N' ? 'Unprocessed' : 'Contacted';
+		$status_bg = "background-color:" . ($lead['status'] == 'N' ? 'pink' : 'lightGreen') . ';';
+		$status_class = $lead['status'] == 'N' ? 'unprocessed' : 'processed';
+		
+		$temp_row['status'] = array('data' => ($lead['status'] == 'N' ? 'New' : 'Contacted'), 'style' => array($status_bg), 'class' => array($status_class));
 		$temp_row['created'] = format_date($lead['created'], 'custom', $time_format); 
 		$temp_row['lead_name'] = $lead['first_name'] . ' ' . $lead['last_name'];
 		$temp_row['body'] = substr($lead['body'],0, 50).'...';
@@ -131,7 +138,7 @@ function furnileads_lead_detail_page($lead) {
 		return drupal_not_found();
 	}
 
-	dsm($lead);
+	//dsm($lead);
 
 	$output = drupal_get_form('furnileads_lead_form', $lead);
 
@@ -187,7 +194,7 @@ function furnileads_lead_form($form, &$form_state, $lead=NULL) {
 		'#type' => 'select',
 		'#title' => t('Status'),
 		'#options' => array(
-			'N' => t('Unprocessed'),
+			'N' => t('New'),
 			'Y' => t('Contacted'),
 		),
 		'#default_value' => $lead->status == 'N' ? 'Unprocessed' : 'Contacted',
@@ -261,6 +268,15 @@ function furnileads_lead_form($form, &$form_state, $lead=NULL) {
 		'#type' => 'submit',
 		'#value' => t('Save'),
 	);
+	
+	if (!$new_lead) {
+		//delete button
+		$form['delete'] = array(
+			'#type' => 'button',
+			'#value' => t('Delete'),
+			'#executes_submit_callback' => TRUE,
+		);
+	}
 
 	return $form;
 }
@@ -277,29 +293,39 @@ function furnileads_lead_form_submit($form, &$form_state) {
 	if(count($form_state['build_info']['args']) > 0 ) {
 		$lid = $form_state['build_info']['args'][0]->lid;
 		if (is_numeric($lid)) {
-
-			$lead['lid'] = $lid;
-			$lead['updated_by'] = $user->uid;
-			$lead['updated'] = REQUEST_TIME;
-
-			 db_update('furnileads')
-				 ->fields(array(
-					 'updated' => $lead['updated'],
-					 'updated_by' => $lead['updated_by'],
-					 'type' => $lead['type'],
-					 'first_name' => $lead['first_name'],
-					 'last_name' => $lead['last_name'],
-					 'email' => $lead['email'],
-					 'phone' => $lead['phone'],
-					 'address' => $lead['address'],
-					 'body' => $lead['body'],
-					 'status' => $lead['status'],
-					 'status_comments' => $lead['status_comments'],
-				 ))
-				->condition('lid', $lid)
-				->execute();
-
-			drupal_set_message('Changes for lead ' . $lead['first_name'] . ' ' . $lead['last_name']. ' were saved');
+			
+			if (strtolower($form_state['clicked_button']['#value']) == 'save') { 
+				$lead['lid'] = $lid;
+				$lead['updated_by'] = $user->uid;
+				$lead['updated'] = REQUEST_TIME;
+	
+				 db_update('furnileads')
+					 ->fields(array(
+						 'updated' => $lead['updated'],
+						 'updated_by' => $lead['updated_by'],
+						 'type' => $lead['type'],
+						 'first_name' => $lead['first_name'],
+						 'last_name' => $lead['last_name'],
+						 'email' => $lead['email'],
+						 'phone' => $lead['phone'],
+						 'address' => $lead['address'],
+						 'body' => $lead['body'],
+						 'status' => $lead['status'],
+						 'status_comments' => $lead['status_comments'],
+					 ))
+					->condition('lid', $lid)
+					->execute();
+	
+				drupal_set_message('Changes for lead ' . $lead['first_name'] . ' ' . $lead['last_name']. ' were saved');
+			
+			} else {
+				if (furnileads_delete_lead($lid)) {
+					drupal_set_message('Lead ' . $lead['email'] . ' deleted.');	
+				} else {
+					drupal_set_message('Error deleting lead ' . $lead['email'] . '.');	
+				}
+			}
+			
 			drupal_goto("admin/leads");
 
 
@@ -308,20 +334,24 @@ function furnileads_lead_form_submit($form, &$form_state) {
 			drupal_goto("admin/leads");
 		}
 	} else {
-
-		$lead['updated_by'] = $user->uid;
+		
+		//create a new lead
+		$lead['updated_by'] = 0;//$user->uid;
 		$lead['created'] = REQUEST_TIME;
-		$lead['updated'] = REQUEST_TIME;
+		$lead['updated'] = 0;//REQUEST_TIME;
 		$lead['status_comments'] = '';
 		$lid = furnileads_insert_lead($lead);
-		if (is_numeric($lid)) {
+		/*
+if (is_numeric($lid)) {
 			drupal_set_message("Lead record was created");
 			drupal_goto("admin/leads/$lid");
 		}
+*/
 		drupal_goto("admin/leads");
 	}
 	
 }
+
 
 /**
  * Insert lead record.
@@ -364,4 +394,164 @@ function furnileads_insert_lead($lead) {
 		->execute();
 
 	return $lid;
+}
+
+/**
+ * Insert lead record.
+ */
+function furnileads_delete_lead($lid) {
+	if (!is_numeric($lid)) {
+		drupal_set_message("Invalid lead ID specified.");
+		return;
+	}
+
+	$num_deleted = db_delete('furnileads')->condition('lid', $lid)->execute();
+
+	return $num_deleted;
+}
+
+
+/**
+ * Implements hook_xmlrpc().
+ *
+ * Provides Drupal with an array to map XML-RPC callbacks to existing functions.
+ * These functions may be defined in other modules. The example implementation
+ * defines specific functions for the example services.
+ *
+ * Note: Drupal's built-in XML-RPC server already includes several methods by
+ * default:
+ *
+ * Service dicovery methods:
+ * - system.listMethods: return a list of the methods the server has, by name.
+ * - system.methodSignature: return a description of the argument format a
+ * - system.methodHelp: returns a text description of a particular method.
+ *   particular method expects.
+ *
+ * Other:
+ * - system.multicall: perform several method calls in a single xmlrpc request.
+ * - system.getCapabilities: determine if a given capability is supported.
+ *
+ * The methods defined by hook_xmlrpc() will be added to those provided by
+ * default by Drupal's XML-RPC server.
+ *
+ * @see hook_xmlrpc()
+ */
+function furnileads_xmlrpc() {
+  $methods[] = array(
+    // First argument is the method name.
+    'furnileads.addlead',
+    // Callback to execute when this method is requested.
+    '_furnileads_xmlrpc_insert_lead',
+    // An array defines the types of output and input values for this method.
+    array(
+       'string', 'array', 
+    ),
+    // Include a little description that is shown when XML-RPC server is
+    // requested for the implemented methods list.
+    // Method description.
+    t('Creates a lead based on request submission data.'),
+  );
+  
+  return $methods;
+}
+
+/**
+ * This is the callback for the xmlrpc_example.add method.
+ *
+ * Sum the two arguments and return value or an error if the result is out of
+ * the configured limits.
+ *
+ * @param $num1
+ *   The first number to be summed.
+ * @param $num2
+ *   The second number to be summed.
+ *
+ * @return
+ *   The sum of the arguments, or error if it is not in server defined bounds.
+ *
+ * @see xmlrpc_error()
+ */
+function _furnileads_xmlrpc_insert_lead($lead_info) {
+	
+	global $base_url;
+	
+	if (!is_array($lead_info)) {
+		return xmlrpc_error(10002, t('Input lead information must be array'));
+	}
+	
+	if (!isset($lead_info['email'])) {
+		return xmlrpc_error(10002, t('Missing mandatory lead email address'));		
+	}
+	
+	$lead = array();
+	$lead['type'] = isset($lead_info['type']) ? $lead_info['type'] : 'R';
+	$lead['first_name'] = isset($lead_info['first_name']) ? $lead_info['first_name'] : '';	
+	$lead['last_name'] = isset($lead_info['last_name']) ? $lead_info['last_name'] : '';	
+	$lead['email'] = isset($lead_info['email']) ? $lead_info['email'] : '';	
+	$lead['phone'] = isset($lead_info['phone']) ? $lead_info['phone'] : '';
+	$lead['address'] = isset($lead_info['address']) ? $lead_info['address'] : '';
+	$lead['body'] = isset($lead_info['body']) ? $lead_info['body'] : '';	
+	
+	$lead['created'] = REQUEST_TIME;
+	$lead['updated'] = 0;
+	$lead['updated_by'] = 0;
+	$lead['status'] = 'N';
+	$lead['status_comments'] = "";
+	
+	$lid = furnileads_insert_lead($lead);
+	
+	if (is_numeric($lid)) {
+		return url($base_url . '/admin/leads/' . $lid, array('external' => TRUE)); 
+	} else {
+		return xmlrpc_error(10002, t('Error saving lead information.'));	
+	}
+	
+}
+
+/** 
+  * XMLRPC Client implementation
+ */
+function furnileads_xmlrpc_client() {
+  // First define the endpoint of the XML-RPC service, in this case is our
+  // own server.
+  global $base_url;
+  $server = url($base_url . '/xmlrpc.php', array('external' => TRUE));
+  
+  $lead_info = array();
+  $lead_info['first_name'] = 'Tester';	
+  $lead_info['last_name'] = 'Unspecified';	
+  $lead_info['email'] = 'somemail@domain.com';	
+  $lead_info['phone'] = '916-999-000-00';
+  $lead_info['address'] = 'PO Box 222222 Sacramento CA 05934';
+  $lead_info['body'] = 'Please give me more info on this product.';	
+	
+  // Then we should define the method to call. xmlrpc() requires that all the
+  // information related to the called method is passed as an array in the form
+  // of 'method_name' => arguments_array
+  $options = array(
+    'furnileads.addlead' => array(
+    	$lead_info,
+    ),
+  );
+  
+  // Make the xmlrpc request and process the results.
+  $result = xmlrpc($server, $options);
+  if ($result === FALSE) {
+    drupal_set_message(
+      t('Error return from xmlrpc(): Error: @errno, Message: @message',
+      array('@errno' => xmlrpc_errno(), '@message' => xmlrpc_error_msg())),
+      'error'
+    );
+  }
+  else {
+    drupal_set_message(
+      t('The XML-RPC server returned this response: @response',
+      array('@response' => print_r($result, TRUE)))
+    );
+  }
+}
+
+function furnileads_lead_xmlrpc_page() {
+	furnileads_xmlrpc_client();
+	return "This is a leads XMLRPC client";
 }

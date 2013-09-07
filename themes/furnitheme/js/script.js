@@ -18,8 +18,11 @@ var skipAnimation = false;
 	Drupal.behaviors.furnitalia = {
 		attach: function(context, settings) {
           	
-			var params = $.deparam.querystring( true );
-			console.log(JSON.stringify( params, null, 2 ));
+          	var params = [];
+          	if (!jQuery().deparam) {
+				params = $.deparam.querystring( true );
+				console.log(JSON.stringify( params, null, 2 ));
+			}
 		  
 			if ("noanim" in params) {
 				if (params["noanim"] === true) {
