@@ -1,4 +1,8 @@
-
+<?php
+	$theme_path = base_path() . drupal_get_path('theme', 'furnitheme');
+?>
+<article class="interior-design about-us">
+<img src="<?php print $theme_path; ?>/images/interior-design-top.jpg"/>
 <p>Whether you need help selecting the perfect armchair or&nbsp;putting together an&nbsp;entire room, Furnitalia got just the right people to&nbsp;help you. We&nbsp;offer personalized design services for your home or&nbsp;business.</p>
 
 <p>What We&nbsp;Do: Our designers will help you create a&nbsp;comfortable space with a&nbsp;sense of&nbsp;style and sophistication that will represent you. With an&nbsp;in-home visit, the specialist can evaluate your space from a&nbsp;professional point of&nbsp;view and provide a&nbsp;personalized design plan.</p>
@@ -18,3 +22,8 @@
 
 <p>*$125 Retainer Fee will be&nbsp;applied to&nbsp;a&nbsp;minimum store purchase of&nbsp;$2000 within 60&nbsp;days of&nbsp;agreement and will be&nbsp;waived with the furniture purchase. The retainer does not apply to&nbsp;prior purchases and must be&nbsp;paid prior to&nbsp;on-site visit. Furnitalia will provide floor plans and custom drawings to&nbsp;client upon placement of&nbsp;order. There will be&nbsp;no&nbsp;exceptions.<br />
 **The cost of&nbsp;3-D modeling services will vary depending on&nbsp;the space size and number of&nbsp;furniture pieces that will be&nbsp;modeled. Please contact our designers for details.</p>
+</article>
+
+<section id="content-right">
+	<img src="<?php print $theme_path;?>/images/interior-design-right.jpg"/>
+</section>

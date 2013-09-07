@@ -38,6 +38,15 @@ function furnileads_menu() {
 		'access callback' => 'user_access',
 		'access arguments' => array('administer leads'),
 	);
+	$items['admin/leads/%lead/edit'] = array(
+		'title' => 'Furnitalia Leads',
+		'description' => 'Furnitalia Leads Control Panel.',
+		'page callback' => 'furnileads_lead_detail_edit_page',
+		'page arguments' => array(2),
+		'type' => MENU_CALLBACK,
+		'access callback' => 'user_access',
+		'access arguments' => array('administer leads'),
+	);
 	$items['admin/leads/xmlrpc'] = array(
 		'title' => 'Furnitalia Leads XMLRPC',
 		'page callback' => 'furnileads_lead_xmlrpc_page',
@@ -116,7 +125,7 @@ function furnileads_page() {
 		$temp_row['updated_by'] = $user_name;
 		$temp_row['updated'] = empty($lead['updated']) ? "" : format_date($lead['updated'], 'custom', $time_format);
 
-		$temp_row['edit'] = l('Edit', 'admin/leads/' . $lead['lid']);
+		$temp_row['edit'] = l('Update', 'admin/leads/' . $lead['lid']);
 
 		$rows []= $temp_row;
 	}
@@ -131,14 +140,27 @@ function furnileads_page() {
 }
 
 /**
+ * Display edit form for a selected lead.
+ */
+function furnileads_lead_detail_edit_page($lead) {
+	if (!$lead) {
+		return drupal_not_found();
+	}
+
+	//dsm($lead);
+
+	$output = drupal_get_form('furnileads_lead_edit_form', $lead);
+
+	return $output;
+}
+
+/**
  * Display details for a selected lead.
  */
 function furnileads_lead_detail_page($lead) {
 	if (!$lead) {
 		return drupal_not_found();
 	}
-
-	//dsm($lead);
 
 	$output = drupal_get_form('furnileads_lead_form', $lead);
 
@@ -148,7 +170,128 @@ function furnileads_lead_detail_page($lead) {
 /**
  * Implements hook_form().
  */
-function furnileads_lead_form($form, &$form_state, $lead=NULL) {
+function furnileads_lead_form($form, &$form_state, $lead) {
+
+	$user = user_load($lead->updated_by);
+	$profile = field_get_items('user', $user, 'field_first_name');
+	$user_name = $profile[0]['value'];
+
+	$time_format = 'm-d-Y H:i';
+
+	$form =array();
+
+	if (!$new_lead) {
+		$form['created'] = array(
+			'#prefix' => '<div>',
+			'#markup' => 'Created: ' . format_date($lead->created, 'custom', $time_format), 
+			'#suffix' => '</div>',
+		);
+	}
+	$form['type'] = array(
+		'#type' => 'select',
+		'#title' => t('Lead type'),
+		'#options' => array(
+			'R' => t('Request'),
+			'C' => t('Contact'),
+		),
+		'#default_value' => $lead->type,
+	);
+
+	$form['status'] = array(
+		'#type' => 'select',
+		'#title' => t('Status'),
+		'#options' => array(
+			'N' => t('New'),
+			'Y' => t('Contacted'),
+		),
+		'#default_value' => $lead->status == 'N' ? 'Unprocessed' : 'Contacted',
+	);
+	if(!$new_lead) {
+		$form['updated'] = array(
+			'#prefix' => '<div>',
+			'#markup' => t('Lead status last updated') . ": " .  (empty($lead->updated) ? 'N/A' : format_date($lead->updated, 'custom', $time_format)),
+			'#suffix' => '</div>',
+		);
+		$form['updated_by'] = array(
+			'#prefix' => '<div>',
+			'#markup' => t('Lead last updated by (lead owner)') . ": " . (empty($lead->updated_by) ? 'N/A' : $user_name), 
+			'#suffix' => '</div>',
+		);
+		
+		$form['status_comments'] = array(
+			'#type' => 'textarea',
+			'#title' => t('Status & comments'),
+			'#default_value' => $lead->status_comments,
+			'#cols' => '40',
+			'#rows' => '4',
+		);
+	}
+	$form['first_name'] = array(
+		'#type' => 'textfield',
+		'#title' => t('First name'),
+		'#default_value' => $lead->first_name,
+		'#size' => '40' ,
+		'#maxlength' => 128,
+		'#required' => TRUE,
+	);
+	$form['last_name'] = array(
+		'#type' => 'textfield',
+		'#title' => t('Last name'),
+		'#default_value' => $lead->last_name,
+		'#size' => '40' ,
+		'#maxlength' => 128,
+		'#required' => TRUE,
+	);
+	$form['email'] = array(
+		'#type' => 'textfield',
+		'#title' => t('Email'),
+		'#default_value' => $lead->email,
+		'#size' => '40' ,
+		'#maxlength' => 128,
+		'#required' => TRUE,
+	);
+	$form['address'] = array(
+		'#type' => 'textarea',
+		'#title' => t('Address'),
+		'#default_value' => $lead->address,
+		'#cols' => '40',
+		'#rows' => '4',
+	);
+	$form['phone'] = array(
+		'#type' => 'textfield',
+		'#title' => t('Phone'),
+		'#default_value' => $lead->phone,
+		'#size' => '15' ,
+		'#maxlength' => 20,
+	);
+	$form['body'] = array(
+		'#type' => 'textarea',
+		'#title' => t('Message'),
+		'#default_value' => $lead->body,
+		'#cols' => '40',
+		'#rows' => '4',
+	);
+	$form['submit'] = array(
+		'#type' => 'submit',
+		'#value' => t('Save'),
+	);
+	
+	if (!$new_lead && _is_admin()) {
+		//delete button
+		$form['delete'] = array(
+			'#type' => 'button',
+			'#value' => t('Delete'),
+			'#executes_submit_callback' => TRUE,
+		);
+	}
+
+	return $form;
+}
+
+/**
+ * Implements hook_form().
+ */
+function furnileads_lead_edit_form($form, &$form_state, $lead=NULL) {
 
 	$new_lead = FALSE;
 	if (isset($lead)) {
@@ -269,7 +412,7 @@ function furnileads_lead_form($form, &$form_state, $lead=NULL) {
 		'#value' => t('Save'),
 	);
 	
-	if (!$new_lead) {
+	if (!$new_lead && _is_admin()) {
 		//delete button
 		$form['delete'] = array(
 			'#type' => 'button',
@@ -554,4 +697,10 @@ function furnileads_xmlrpc_client() {
 function furnileads_lead_xmlrpc_page() {
 	furnileads_xmlrpc_client();
 	return "This is a leads XMLRPC client";
+}
+
+function _is_admin() {
+	global $user;
+	
+	return $user->uid == 1;
 }
