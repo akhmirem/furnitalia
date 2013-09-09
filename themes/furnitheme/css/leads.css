@@ -1,0 +1,14 @@
+div.form-item-status, div.form-item-type  {
+	display:inline-block;
+	margin: auto 1em;
+}
+.form-item div.form-item-status, .form-item div.form-item-type {
+	padding-right:1em;
+}
+div.form-item-first-name, div.form-item-last-name, div.form-item-email, div.form-item-phone  {
+	display:inline-block;
+	margin: auto .5em;
+}
+div.form-item-last-name  {
+	clear:right;
+}

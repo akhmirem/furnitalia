@@ -164,11 +164,14 @@ p {
  * Content
  */
 #content, .region-header {
-	width:670px;
 	float:right;
 	overflow:hidden;
-	padding-right:55px;
+	padding-right:2em;
 	padding-top: 1.2em;
+	width:690px;
+}
+.region-header {
+	width: 670px;
 }
 #content {
 	overflow: visible;
@@ -539,8 +542,8 @@ ul.furn-gallery span.row {
 	float: left;
 }
 ul.furn-gallery li {
-	margin-right: 10px;
-	margin-bottom: 10px;
+	margin-right: 15px;
+	margin-bottom: 15px;
 	list-style-type: none;
 	width:220px;
 	height:165px;
@@ -993,7 +996,7 @@ span.menu-label {
 #block-webform-client-block-33 {
 	float:left;
 	height:80px;
-	margin-left: 5em;
+	margin-left: 4em;
 }
 #block-webform-client-block-33 .webform-component-markup, #block-webform-client-block-33 .webform-component-email, #block-webform-client-block-33 .form-item, #block-webform-client-block-33 .form-actions {
 	margin:.3em 0 .2em 0;	
@@ -1008,7 +1011,7 @@ span.menu-label {
 	font-weight: 700;
 }
 #catalogs {
-	margin-left: 5em;
+	margin-left: 4em;
 	margin-top: 1.3em;
 	display: block;
 	float: left;
@@ -1133,8 +1136,9 @@ span.hours-indent {
     margin-left: 3.2em;
 }
 article.about-us {
-    width: 70%;
+    width: 65%;
     float: left;
+    margin-right: .5em;
 }
 #content-right {
     width: 12.5em;

@@ -1,0 +1,4 @@
+name = "Furnitalia Batch Operations"
+description = "Run batch operations on website items"
+core = 7.x
+

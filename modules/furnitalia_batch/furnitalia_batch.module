@@ -1,0 +1,290 @@
+<?php
+
+/**
+* Implementation of hook_menu().
+*/
+function furnitalia_batch_menu(){
+  $items['furnitalia-batch']=array(
+      'title'=> t('Run Batch job for items'),
+      'page callback'=>'drupal_get_form',
+      'page arguments' => array('furnitalia_batch_form'),
+      'access callback' => 'user_access',
+	  'access arguments' => array('run batch'),
+      'type'=>MENU_CALLBACK,
+  );
+  
+  $items['furnitalia-batch/import']=array(
+      'title'=> t('Batch import items'),
+      'page callback'=>'drupal_get_form',
+      'page arguments' => array('furnitalia_batch_import_form'),
+      'access callback' => 'user_access',
+	  'access arguments' => array('run batch'),
+      'type'=>MENU_CALLBACK,
+  );
+
+  return $items;
+}
+
+/**
+ * Implements hook_permission().
+ */
+function furnitalia_batch_permission() {
+  return array(
+    'run batch' => array(
+      'title' => t('Run batch operations'),
+      'description' => t('Perform Furnitalia batch update operation.'),
+    ),
+  );
+}
+
+/**
+* Batch form callback
+*/
+function furnitalia_batch_form(){
+    $form = array(
+        'info'=>array(
+            '#type'=>'markup',
+            '#value'=>'Update items\' search content values',
+            ),
+        'submit'=>array(
+            '#type'=>'submit',
+            '#value'=>'Execute batch',
+            ),
+        );
+	
+	return $form;
+}
+
+/**
+* Batch form callback
+*/
+function furnitalia_batch_import_form(){
+    $form = array(
+        'info'=>array(
+            '#type'=>'markup',
+            '#value'=>'Import items from CSV',
+            ),
+        'submit'=>array(
+            '#type'=>'submit',
+            '#value'=>'Execute batch',
+            ),
+        );
+	
+	return $form;
+}
+
+
+/**
+ * Implements hook_form_submit()
+ */
+function furnitalia_batch_form_submit($form, &$form_state){
+
+	//global $base_path;
+	
+	//$path =  drupal_get_path('module', 'furnitalia_batch');
+
+	$batch = array(
+		'operations' => array(array('furnitalia_batch_resave_nodes', array())),
+		'finished' => 'furnitalia_batch_resave_nodes_finished',
+		'title' => 'Batch resaving nodes',
+		'init_message' => 'Initializing batch.',
+		'progress_message' => 'Processing...',
+		'error_message' => 'Error processing batch operation',
+		//'file' =>  $base_path . drupal_get_path('module', 'furnitalia_batch', 'furnitalia_batch.nodes.inc'),
+		//'file path' => $base_path . $path,
+	);
+
+	batch_set($batch);
+}
+
+
+/**
+ * Implements hook_form_submit()
+ */
+function furnitalia_batch_import_form_submit($form, &$form_state){
+
+	$batch = array(
+		'operations' => array(array('furnitalia_batch_import', array())),
+		'finished' => 'furnitalia_batch_import_finished',
+		'title' => 'Batch importing nodes',
+		'init_message' => 'Initializing batch.',
+		'progress_message' => 'Processing...',
+		'error_message' => 'Error processing batch operation',
+	);
+
+	batch_set($batch);
+
+}
+/**
+ * Batch operation
+ */
+function furnitalia_batch_resave_nodes(&$context){
+	if (!isset($context['sandbox']['progress'])) {
+		$context['sandbox']['progress'] = 0;
+		$context['sandbox']['current_node'] = 0;
+		$context['sandbox']['max'] = db_query("SELECT COUNT(DISTINCT nid) FROM {node} WHERE type='item'")->fetchField();
+	}
+
+	$limit = 5; // # of records updated per batch
+
+	//some SQL goes here
+	$result = db_select('node')
+		->fields('node', array('nid', 'type'))
+		->condition('nid', $context['sandbox']['current_node'], '>')
+		->condition('type', 'item', "=")		
+		->orderBy('nid')
+		->range(0, $limit)
+		->execute();
+
+	while($row = $result->fetchAssoc()) {
+
+	    $node = furnitalia_batch_process_node($row);
+
+		$context['results'][] = array($node->nid, check_plain($node->title), $node->sell_price);
+		
+		// Update our progress information.
+		$context['sandbox']['progress']++;
+		$context['sandbox']['current_node'] = $node->nid;
+		$context['message'] = check_plain($node->title);
+	}
+    
+	// Inform the batch engine that we are not finished,
+	// and provide an estimation of the completion level we reached.
+	if ($context['sandbox']['progress'] < $context['sandbox']['max']) {
+		$context['finished'] = $context['sandbox']['progress'] / $context['sandbox']['max'];
+	}
+}
+
+/**
+ * Resaving the node
+ */
+function furnitalia_batch_process_node($obj=array()){
+
+	$node = node_load($obj['nid']);
+	
+	//do something
+	//$node->title = str_replace("UPD: ", "", $node->title);
+	
+	//node_save($node);
+	
+	return $node;
+}
+
+/**
+ * Ending of batch processing
+ */
+function furnitalia_batch_resave_nodes_finished($success, $results, $operations) {
+	if ($success) {
+		
+		$message = 'Batch complete. ' . count($results) . ' items processed.';				
+		
+//		require_once dirname(__FILE__) . "/parsecsv/parsecsv.lib.php";
+//		$csv = new parseCSV();
+//		$csv->output (true, 'items.csv', $results);
+//		$csv->save('items.csv', $results, true);
+		
+	}
+	else {
+		// An error occurred.
+		// $operations contains the operations that remained unprocessed.
+		$error_operation = reset($operations);
+		$message = 'An error occurred while processing ' . $error_operation[0] . ' with arguments :' . print_r($error_operation[0], TRUE);
+	}
+	drupal_set_message($message);
+	
+}
+
+/**
+ * Batch operation
+ */
+function furnitalia_batch_import(&$context) {
+	if (!isset($context['sandbox']['progress'])) {
+	
+		$context['sandbox']['nodes'] = __build_node_import_array();
+
+		$context['sandbox']['progress'] = 0;
+		$context['sandbox']['max'] = count($context['sandbox']['nodes']);
+	}
+
+	$limit = 5; // # of records updated per batch
+
+	for($i = 0; $i < $limit; ++$i) { 
+		$node = furnitalia_batch_process_node_import($context['sandbox']['nodes'][$context['sandbox']['progress']]);
+
+		$context['results'][] = array($node->nid, check_plain($node->title), $node->sell_price);
+		
+		// Update our progress information.
+		$context['sandbox']['progress']++;
+		$context['message'] = check_plain($node->title);
+	}
+    
+	// Inform the batch engine that we are not finished,
+	// and provide an estimation of the completion level we reached.
+	if ($context['sandbox']['progress'] < $context['sandbox']['max']) {
+		$context['finished'] = $context['sandbox']['progress'] / $context['sandbox']['max'];
+	}
+}
+
+/**
+ * Resaving the node
+ */
+function furnitalia_batch_process_node_import($obj=array()){
+
+	$node = node_load($obj[0]);
+	
+	//do things with node
+	$node->sell_price = $obj[2];
+	
+	node_save($node);
+	
+	return $node;
+}
+
+/**
+ * Ending of batch processing
+ */
+function furnitalia_batch_import_finished($success, $results, $operations) {
+	if ($success) {
+		
+		$message = 'Batch complete. ' . count($results) . ' items processed.';				
+		
+		
+//		$csv->output (true, 'items.csv', $results);
+//		$results = array_unshift($results, array('nid', 'title', 'sell_price');
+//		$csv->save('items.csv', $results, true);
+		
+	}
+	else {
+		// An error occurred.
+		// $operations contains the operations that remained unprocessed.
+		$error_operation = reset($operations);
+		$message = 'An error occurred while processing ' . $error_operation[0] . ' with arguments :' . print_r($error_operation[0], TRUE);
+	}
+	drupal_set_message($message);
+	
+}
+
+function __build_node_import_array() {
+	require_once dirname(__FILE__) . "/parsecsv/parsecsv.lib.php";
+	
+	$output = array();
+	$csv = new parseCSV('items.csv');
+	$output = $csv->data;
+	
+	/*foreach($csv->data as $row => $cols) {
+		$temp = array();
+		
+		foreach($cols as $i => $val) {
+			$temp []= $val;
+		}
+		$output[$cols[0]] = $temp;
+	}*/
+	
+	return $output;
+}
+
+
+
+
+
+
