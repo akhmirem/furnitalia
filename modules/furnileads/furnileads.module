@@ -104,6 +104,8 @@ function furnileads_page() {
 		->fields('f', array('lid', 'status', 'created',  'first_name', 'last_name', 'body', 'updated_by', 'updated')) 
 		->orderBy('status', 'ASC')
 		->orderBy('created', 'DESC')
+		->extend('PagerDefault')
+		->limit(50)
 		->execute();
 
 	$time_format = 'm-d-Y H:i';
@@ -134,11 +136,19 @@ function furnileads_page() {
 
 	$header = array('Status', 'Created', 'Lead Name', 'Body', 'Lead owner', 'Last action', 'Actions');
 
-	return array(
+	//output results as table
+	$output['rows'] = array(
 		'#theme' => 'table',
 		'#header' => $header,
 		'#rows' => $rows,
 	);
+	
+	//add pager to the bottom
+	$output['pager'] = array(
+		'#markup' => theme('pager', array('tags' => array()))
+	);
+	
+	return $output;
 }
 
 /**
@@ -275,6 +285,14 @@ function furnileads_lead_form($form, &$form_state, $lead) {
 		'#size' => '15' ,
 		'#maxlength' => 20,
 	);
+	$form['zip'] = array(
+		'#type' => 'textfield',
+		'#disabled' => TRUE,		
+		'#title' => t('ZIP'),
+		'#default_value' => $lead->zip,
+		'#size' => '7' ,
+		'#maxlength' => 7,
+	);
 	$form['address'] = array(
 		'#type' => 'textfield',
 		'#disabled' => TRUE,		
@@ -329,6 +347,7 @@ function furnileads_lead_edit_form($form, &$form_state, $lead=NULL) {
 		$lead->phone = '';
 		$lead->body = '';
 		$lead->status = 'N';
+		$lead->zip = '';
 		$new_lead = TRUE;
 	}
 
@@ -423,7 +442,13 @@ function furnileads_lead_edit_form($form, &$form_state, $lead=NULL) {
 		'#size' => '15' ,
 		'#maxlength' => 20,
 	);
-
+	$form['zip'] = array(
+		'#type' => 'textfield',		
+		'#title' => t('ZIP'),
+		'#default_value' => $lead->zip,
+		'#size' => '7' ,
+		'#maxlength' => 7,
+	);
 	$form['address'] = array(
 		'#type' => 'textfield',
 		'#title' => t('Address'),
@@ -494,6 +519,7 @@ function furnileads_lead_edit_form_submit($form, &$form_state) {
 						'body' => $lead['body'],
 						'status' => $lead['status'],
 						'status_comments' => $lead['status_comments'],
+						'zip' => $lead['zip'],
 					 ))
 					->condition('lid', $lid)
 					->execute();
@@ -558,6 +584,7 @@ function furnileads_insert_lead($lead) {
 			 'body',
 			 'status',
 			 'status_comments',
+			 'zip',
 		 ))
 		->values(array(
 			 $lead['created'],
@@ -572,6 +599,7 @@ function furnileads_insert_lead($lead) {
 			 $lead['body'],
 			 $lead['status'],
 			 $lead['status_comments'],
+			 $lead['zip'],
 		))
 		->execute();
 
@@ -677,6 +705,7 @@ function _furnileads_xmlrpc_insert_lead($lead_info) {
 	$lead['updated_by'] = 0;
 	$lead['status'] = 'N';
 	$lead['status_comments'] = "";
+	$lead['zip'] = "";
 	
 	$lid = furnileads_insert_lead($lead);
 	

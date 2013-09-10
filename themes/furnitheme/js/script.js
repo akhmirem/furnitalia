@@ -256,7 +256,7 @@ var skipAnimation = false;
 	      return false; // prevent default and stop propagation
 	     }); // on click
 	     
-	     if ($('#pikame').find('li').count > 4) {
+	     if ($('#pikame li').length > 4) {
 		     $("#pikame").wrap($('<div id="pikawrapper"></div>'));
 		     $("#pikawrapper").jScrollPane({
 			     verticalDragMinHeight: 25,

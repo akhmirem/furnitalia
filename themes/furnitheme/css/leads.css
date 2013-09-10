@@ -5,10 +5,22 @@ div.form-item-status, div.form-item-type  {
 .form-item div.form-item-status, .form-item div.form-item-type {
 	padding-right:1em;
 }
-div.form-item-first-name, div.form-item-last-name, div.form-item-email, div.form-item-phone  {
-	display:inline-block;
+div.form-item-first-name, div.form-item-last-name, div.form-item-email, div.form-item-phone, div.form-item-address, div.form-item-zip   {
+	float:left;
 	margin: auto .5em;
 }
 div.form-item-last-name  {
 	clear:right;
 }
+div.form-item-zip {
+	clear:left;
+}
+div.form-item-body {
+	clear:both;
+}
+
+/* ITEM FORM TWEAKS */
+#edit-field-category-und {
+	height:20em;
+}
+/* \ITEM FORM TWEAKS */

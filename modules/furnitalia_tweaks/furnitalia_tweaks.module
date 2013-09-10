@@ -689,6 +689,8 @@ function furnitalia_tweaks_get_parent_category($tid="") {
 function furnitalia_tweaks_form_alter(&$form, &$form_state, $form_id){
 	if ($form['#id'] == 'item-node-form') {
 		
+		
+		drupal_add_css(drupal_get_path('theme', 'furnitheme') . '/css/leads.css');
 
 		//place video field in tabs
 	    $form['item_video'] = array(
@@ -896,6 +898,23 @@ function furnitalia_tweaks_webform_submission_presave($node, &$submission) {
 		$lead_info['body'] .= $submission->data[6]['value'][0] . "\n";
 		$lead_info['body'] .= $submission->data[7]['value'][0];
 		$lead_info['zip'] = $submission->data[8]['value'][0];
+		$lead_info['type'] = 'R';
+	}
+	
+	//defaults
+	$lead_info['created'] = REQUEST_TIME;
+	$lead_info['updated'] = 0;
+	$lead_info['updated_by'] = 0;
+	$lead_info['status'] = 'N';
+	$lead_info['status_comments'] = "";
+	$lead_info['address'] = "";
+	
+	$lid = furnileads_insert_lead($lead_info);
+	
+	if (is_numeric($lid)) {
+		
+	} else {
+		
 	}
 
 
