@@ -256,13 +256,15 @@ var skipAnimation = false;
 	      return false; // prevent default and stop propagation
 	     }); // on click
 	     
-	     $("#pikame").wrap($('<div id="pikawrapper"></div>'));
-	     $("#pikawrapper").jScrollPane({
-		     verticalDragMinHeight: 25,
-			 verticalDragMaxHeight: 25,
-			 horizontalDragMinWidth: 25,
-			 horizontalDragMaxWidth: 25
-	     });
+	     if ($('#pikame').find('li').count > 4) {
+		     $("#pikame").wrap($('<div id="pikawrapper"></div>'));
+		     $("#pikawrapper").jScrollPane({
+			     verticalDragMinHeight: 25,
+				 verticalDragMaxHeight: 25,
+				 horizontalDragMinWidth: 25,
+				 horizontalDragMaxWidth: 25
+		     });
+	     }
 	 }
 	 
 	 

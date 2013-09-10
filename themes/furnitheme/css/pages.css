@@ -170,6 +170,10 @@ p {
 	padding-top: 1.2em;
 	width:690px;
 }
+body.not-front #content {
+	width:720px;
+	padding-right: 0;
+}
 .region-header {
 	width: 670px;
 }
@@ -773,7 +777,7 @@ article.view-mode-full .uc-price {
 }
 #item-info {
 	float:left;
-	width:17.7em;
+	width:17.3em;
 	/* border:1px dashed red; */
 	margin-left:10px;
 }
@@ -790,7 +794,7 @@ article.node-item .field-name-body .field-item {
     white-space:nowrap;
     outline: none;
 }
-#pikawrapper li {
+body.page-node #pikame li {
 	 display:inline-block;
 }
 .pika-imgnav {
@@ -974,15 +978,18 @@ span.menu-label {
 /* 
  * REQUESTS/CONTACT FORM
  */
-#webform-component-first-name, #webform-component-last-name {
+#webform-component-first-name, #webform-component-last-name, #webform-component-email, #webform-component-phone, #webform-component-zip-code {
 	float:left;
 }
-#webform-component-last-name {
+#webform-component-last-name, #webform-component-zip-code, #webform-component-phone {
     clear: right;
     margin-left: 2em;
 }
 #webform-component-email {
-	clear:both;
+	clear:left;
+}
+#webform-component-item, #webform-component-message {
+	clear: both;
 }
 .form-item {
     margin: 1em 0;
@@ -1135,10 +1142,14 @@ a.directions-link {
 span.hours-indent {
     margin-left: 3.2em;
 }
-article.about-us {
-    width: 65%;
+article.about-us, article.interior-design {
+    width: 33em;
     float: left;
-    margin-right: .5em;
+    text-align: justify;
+    padding-right: .7em;
+}
+article.interior-design {
+	padding-right: 1em;
 }
 #content-right {
     width: 12.5em;

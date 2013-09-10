@@ -1,7 +1,7 @@
 <?php
 	$theme_path = base_path() . drupal_get_path('theme', 'furnitheme');
 ?>
-<article class="interior-design about-us">
+<article class="interior-design">
 <img src="<?php print $theme_path; ?>/images/interior-design-top.jpg"/>
 <p>Whether you need help selecting the perfect armchair or&nbsp;putting together an&nbsp;entire room, Furnitalia got just the right people to&nbsp;help you. We&nbsp;offer personalized design services for your home or&nbsp;business.</p>
 
