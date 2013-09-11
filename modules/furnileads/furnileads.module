@@ -98,15 +98,24 @@ function furnileads_permission() {
  * Display list of leads
  */
 function furnileads_page() {
+
+	$query = db_select('furnileads', 'f');
+	$query->fields('f', array('status'));
+	$query->addExpression('COUNT(f.lid)', 'lead_count');
+	$query->groupBy('f.status');
+	$result = $query->execute();
+	$stats_info = "";
+	$status_options = _get_lead_status_options();
+	while($record = $result->fetchAssoc()) {
+        $stats_info .= '<strong>' . $status_options[$record['status']] . ":</strong>" . " " .  $record['lead_count']  . "&nbsp;&nbsp;|&nbsp;&nbsp;";
+    } 
 	
-	$result = db_select('furnileads', 'f')
-		//->condition('vid', $vid)
-		->fields('f', array('lid', 'status', 'created',  'first_name', 'last_name', 'body', 'updated_by', 'updated')) 
-		->orderBy('status', 'ASC')
-		->orderBy('created', 'DESC')
-		->extend('PagerDefault')
-		->limit(50)
-		->execute();
+	$query = db_select('furnileads', 'f');
+	$query->fields('f', array('lid', 'status', 'created',  'first_name', 'last_name', 'body', 'updated_by', 'updated'));
+	$query->addExpression('CASE WHEN f.status=\'N\' THEN 1 WHEN f.status=\'P\' THEN 2 WHEN f.status=\'S\' THEN 3 WHEN f.status=\'C\' THEN 4 ELSE 0 END', 'sort_col');
+	$query->orderBy('sort_col', 'ASC');
+		
+	$result = $query->extend('PagerDefault')->limit(50)->execute();
 
 	$time_format = 'm-d-Y H:i';
 	$rows = array(); 
@@ -114,10 +123,35 @@ function furnileads_page() {
 	while(($lead = $result->fetchAssoc())) {
 		$temp_row = array();
 
-		$status_bg = "background-color:" . ($lead['status'] == 'N' ? 'pink' : 'lightGreen') . ';';
-		$status_class = $lead['status'] == 'N' ? 'unprocessed' : 'processed';
+		switch ($lead['status']) {
+			case 'N':
+				$status_bg = "background-color:pink;";
+				$status_class = "open";
+				$status_caption = "Open";
+				break;
+			case 'P':
+				$status_bg = "background-color:yellow;";
+				$status_class = "pending";			
+				$status_caption = "Pending";
+				break;
+			case 'S':
+				$status_bg = "background-color:green;";
+				$status_class = "sold";
+				$status_caption = "Sold";				
+				break;				
+			case 'C':
+				$status_bg = "background-color:blue;";
+				$status_class = "closed";
+				$status_caption = "Closed";
+				break;				
+			default:
+				$status_bg = "background-color:white;";
+				$status_class = "";
+				$status_caption = "Data Error";
+				break;
+		}
 		
-		$temp_row['status'] = array('data' => ($lead['status'] == 'N' ? 'New' : 'Contacted'), 'style' => array($status_bg), 'class' => array($status_class));
+		$temp_row['status'] = array('data' => $status_caption, 'style' => array($status_bg), 'class' => array($status_class));
 		$temp_row['created'] = format_date($lead['created'], 'custom', $time_format); 
 		$temp_row['lead_name'] = $lead['first_name'] . ' ' . $lead['last_name'];
 		$temp_row['body'] = substr($lead['body'],0, 50).'...';
@@ -136,6 +170,13 @@ function furnileads_page() {
 
 	$header = array('Status', 'Created', 'Lead Name', 'Body', 'Lead owner', 'Last action', 'Actions');
 
+	//show lead statistics
+	$output['stats'] = array(
+		'#prefix' => '<div id="lead-stats" style="border:2px solid #981b1e; padding:1em; margin-bottom:1em;">',
+		'#markup' => $stats_info,
+		'#suffix' => '</div>',
+	);
+	
 	//output results as table
 	$output['rows'] = array(
 		'#theme' => 'table',
@@ -207,27 +248,18 @@ function furnileads_lead_form($form, &$form_state, $lead) {
 	$form['status_wrapper'] = array(
 		'#type' => 'fieldset',
 		'#title' => 'Status',
-		'#attributes' => array(
-			//'class' => array('container-inline'),
-		),
 	);
 	$form['status_wrapper']['status'] = array(
-		'#type' => 'radios',
+		'#type' => 'select',
 		'#title' => t('Status'),
-		'#options' => array(
-			'N' => t('New'),
-			'Y' => t('Contacted'),
-		),
+		'#options' => _get_lead_status_options(),
 		'#default_value' => $lead->status,
 	);
 	
 	$form['status_wrapper']['type'] = array(
-		'#type' => 'radios',
+		'#type' => 'select',
 		'#title' => t('Lead type'),
-		'#options' => array(
-			'R' => t('Request'),
-			'C' => t('Contact'),
-		),
+		'#options' => _get_lead_types(),
 		'#default_value' => $lead->type,
 	);
 	$form['status_wrapper']['updated'] = array(
@@ -366,27 +398,18 @@ function furnileads_lead_edit_form($form, &$form_state, $lead=NULL) {
 	$form['status_wrapper'] = array(
 		'#type' => 'fieldset',
 		'#title' => 'Status',
-		'#attributes' => array(
-			//'class' => array('container-inline'),
-		),
 	);
 	$form['status_wrapper']['status'] = array(
-		'#type' => 'radios',
+		'#type' => 'select',
 		'#title' => t('Status'),
-		'#options' => array(
-			'N' => t('New'),
-			'Y' => t('Contacted'),
-		),
+		'#options' => _get_lead_status_options(),
 		'#default_value' => $lead->status,
 	);
 	
 	$form['status_wrapper']['type'] = array(
-		'#type' => 'radios',
+		'#type' => 'select',
 		'#title' => t('Lead type'),
-		'#options' => array(
-			'R' => t('Request'),
-			'C' => t('Contact'),
-		),
+		'#options' => _get_lead_types(),
 		'#default_value' => $lead->type,
 	);
 
@@ -691,7 +714,7 @@ function _furnileads_xmlrpc_insert_lead($lead_info) {
 	}
 	
 	$lead = array();
-	$lead['type'] = isset($lead_info['type']) ? $lead_info['type'] : 'R';
+	$lead['type'] = isset($lead_info['type']) ? $lead_info['type'] : '';
 	$lead['first_name'] = isset($lead_info['first_name']) ? $lead_info['first_name'] : '';	
 	$lead['last_name'] = isset($lead_info['last_name']) ? $lead_info['last_name'] : '';	
 	$lead['email'] = isset($lead_info['email']) ? $lead_info['email'] : '';	
@@ -781,4 +804,27 @@ function furnileads_set_breadcrumb() {
     $breadcrumb[] = drupal_get_title();
 
 	drupal_set_breadcrumb($breadcrumb);         
+}
+
+
+function _get_lead_status_options() {
+	$lead_status_options = array(
+		'N' => 'Open',
+		'P' => 'Pending',
+		'S' => 'Sold',
+		'C' => 'Closed',
+	);
+	
+	return $lead_status_options;
+}
+
+function _get_lead_types() {
+	$lead_types = array(
+		'R' => 'Request Product Info',
+		'P' => 'Request Parts / Support',
+		'S' => 'SPAM',
+		'F' => 'Feedback',
+	);
+	
+	return $lead_types;
 }

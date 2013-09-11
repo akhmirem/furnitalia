@@ -18,8 +18,8 @@ function furnileads_schema() {
 				'description' => 'Lead type indicator',
 				'type' => 'varchar',
 				'length' => '1',
-				'not null' => TRUE,
-				'default' => 'R', 
+				'not null' => FALSE,
+				'default' => NULL, 
 			),
 			'created' => array(
 				'description' => 'The Unix timestamp when the lead  was created.',
