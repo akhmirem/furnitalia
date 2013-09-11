@@ -125,22 +125,22 @@ function furnileads_page() {
 
 		switch ($lead['status']) {
 			case 'N':
-				$status_bg = "background-color:pink;";
+				$status_bg = "background-color:rgb(255, 130, 130);";
 				$status_class = "open";
 				$status_caption = "Open";
 				break;
 			case 'P':
-				$status_bg = "background-color:yellow;";
+				$status_bg = "background-color:rgb(253, 235, 117);";
 				$status_class = "pending";			
 				$status_caption = "Pending";
 				break;
 			case 'S':
-				$status_bg = "background-color:green;";
+				$status_bg = "background-color:rgb(160, 236, 111);";
 				$status_class = "sold";
 				$status_caption = "Sold";				
 				break;				
 			case 'C':
-				$status_bg = "background-color:blue;";
+				$status_bg = "background-color:rgb(90, 198, 255);";
 				$status_class = "closed";
 				$status_caption = "Closed";
 				break;				
