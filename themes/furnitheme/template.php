@@ -645,7 +645,8 @@ function furnitheme_set_up_top_menu (&$vars) {
 function furnitheme_form_views_exposed_form_alter(&$form, &$form_state, $form_id) {  
   
 	if ($form['#id'] == 'views-exposed-form-taxonomy-term-page') { 
-		 $affected_exposed_filters = array('field_brand_tid');
+		
+		$affected_exposed_filters = array('field_brand_tid');
 		 
 		 // prevent recursion - only execute once
 	    static $called = 0;

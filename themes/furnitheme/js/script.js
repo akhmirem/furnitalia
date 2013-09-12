@@ -156,6 +156,12 @@ var skipAnimation = false;
 						$('#share-this').trigger('change');
 					}
 				});
+				
+				$("#edit-availability").attr('tabindex', '4').dropkick({
+					change: function (value, label) {
+						$('#edit-availability').trigger('change');
+					}
+				});
 			}
 					
 			

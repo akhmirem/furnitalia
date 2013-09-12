@@ -207,7 +207,7 @@ body.not-front #content {
 }
 #left-section {
 	float:left;
-	width: 260px;
+	width: 270px;
 	padding-left: 15px;
 	margin-top:20px;
 }
@@ -223,16 +223,19 @@ div.region-left{
 #main-nav {
 }
 #main-nav a, h1 {
-	font-size:1.4em;
+	font-size:1.6em;
 	border-bottom:1.5px solid #6d6e71;
 	display:block;
 	text-transform:uppercase;
+	margin-right: .85em;
+	padding-bottom: .3em;
 }
 #main-nav .ui-accordion-content a {
 	font-weight:light;
 	font-size:1.1em;
 	text-decoration:none;
 	border-bottom:none;
+	padding-bottom: .1em;
 }
 #main-nav .accordion-inner .ui-accordion-content a {
 	font-size: .85em;
@@ -1086,6 +1089,9 @@ hr.grey {
 	background-color: #6d6e71;
 	height: 1px;
 	width: 84.7%;
+}
+body.not-front #promo hr {
+	width: 100%;
 }
 #promo p {
 	font-size: .8em;
