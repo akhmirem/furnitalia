@@ -124,9 +124,6 @@ function furnitalia_tweaks_get_page_title($tid) {
 }
 
 function furnitalia_tweaks_brand_cat_page($brand, $cat = NULL, $subcat = NULL) {
-	//dsm($cat);
-	//dsm($subcat);
-	
 	$alias = $cat;
 	
 	if (isset($subcat)) {
@@ -135,35 +132,33 @@ function furnitalia_tweaks_brand_cat_page($brand, $cat = NULL, $subcat = NULL) {
 	
 	if ($brand == 'italia') {
 		$brand_tid = 21;
+		$display_id = "page_italia";
 	} else if ($brand == 'editions') {
 		$brand_tid = 22;
+		$display_id = "page_editions";
 	}
 	
 	$normal_path = explode('/', drupal_get_normal_path($alias)); //TO-DO check for validity
 	if (is_array($normal_path) && count($normal_path) == 3) { //taxonomy/term/xxx
 		$tid = $normal_path[2];
 		
-		$term = taxonomy_term_load($brand_tid); //21-natuzzi italia
-		$vocabulary = taxonomy_vocabulary_load($term->vid);
+		$term = taxonomy_term_load($tid);
 
 		$view_name = 'taxonomy_term';
-		$display_id='page_brands';
-		$args = array($term->tid);
+		$args = array($tid);
 		
-		drupal_set_title($term->name . " - Contemporary Italian Furniture");
+		$title = $brand == 'italia' ? 'Natuzzi Italia' : 'Natuzzi Editions';
+		$title .= " - " . $term->name;		
+		drupal_set_title($title . " - Contemporary Italian Furniture");
 		
 		$view = views_get_view($view_name);		  
 		$view->set_display($display_id);
 		$view->set_arguments($args);
-		    
-		//set exposed filter value
-	    $filter = $view->get_item($display_id, 'filter', 'term_node_tid_depth');
-		$filter['value']['value'] = $tid;
-		$filter['exposed'] = FALSE;
-		$view->set_item($display_id, 'filter', 'term_node_tid_depth', $filter);    
 	    		
 	    //get view output
+	    $view->pre_execute();
 		$output =  $view->preview($display_id);
+		$view->post_execute();
 		
 		return $output;
 
@@ -186,14 +181,6 @@ function furnitalia_tweaks_taxonomy_term_page($term) {
   $view = views_get_view($view_name);		  
   $view->set_arguments($args);
 
-  #$view->set_item($display_id, 'filter', 'field_brand_value', NULL);
-  #$filter = $view->get_item($display_id, 'filter', 'field_brand_value');
-  #$filter['value']['value'] = $term->tid;
-  #$filter['expose']['bef_format'] = 'bef_hidden';
-  #$filter['expose']['label'] = '';
-  #$view->set_item($display_id, 'filter', 'field_brand_value', NULL);
-  #$view->set_exposed_input($filter->view->exposed_input);
-
   switch($vocabulary->name) {
     case 'Categories':
       $display_id='page';
@@ -206,13 +193,6 @@ function furnitalia_tweaks_taxonomy_term_page($term) {
       //$view->init_display($display_id);
       //$view->preview = TRUE;
 
-      //unset($view->display['default']->display_options['filters']['field_category_tid']);
-      //unset($view->display['default']->display_options['filters']['field_availability_value']);      
-      //unset($view->display['default']->display_options['exposed_form']['options']['bef']['field_brand_tid']);
-      //unset($view->display['default']->display_options['exposed_form']['options']['bef']['field_availability_value']);      
-      
-      //dsm($view);
-      //dsm($view->display[$display_id]);
       break;
     default: 
       // Returns the default term page provided by taxonomy module.
@@ -221,7 +201,9 @@ function furnitalia_tweaks_taxonomy_term_page($term) {
   }
 
   $view->set_display($display_id);
+  $view->pre_execute();
   $output =  $view->preview($display_id);
+  $view->post_execute();
 
   return $output;
 

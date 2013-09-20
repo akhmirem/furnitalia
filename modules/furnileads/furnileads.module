@@ -499,7 +499,7 @@ function furnileads_lead_edit_form($form, &$form_state, $lead=NULL) {
 		'#value' => t('Save'),
 	);
 	
-	if (!$new_lead && _is_admin()) {
+	if (!$new_lead) { // && _is_admin()) {
 		//delete button
 		$form['delete'] = array(
 			'#type' => 'button',

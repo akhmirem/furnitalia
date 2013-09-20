@@ -761,6 +761,7 @@ function furnitheme_form_views_exposed_form_alter(&$form, &$form_state, $form_id
 					unset($form['category']['#options'][$key]);
 				}
 			}
+			
 		}
 		
 		//alter SORT options -- remove Discounted price sort order if SALE prices are not shown
