@@ -1092,7 +1092,8 @@ function furnitalia_tweaks_front_page() {
 	//$build += furnitalia_tweaks_taxonomy_term_page($sofas_term);
 
 	$build['category-preview'] = array(
-		'#markup' => '<div id="cat-preview">					
+		'#markup' => '<div id="cat-preview">
+						<h2>Featured:</h2>			
 						<div id="category-image-pane">
 							<ul class="cat-slider category1 cat-preview" style="display:block">
 					  			<li><a href="#" class="category-image"><img src="' .drupal_get_path('theme', 'furnitheme') . "/images/cat-images/all/gilda_lounge.png" . '" title="Furnitalia collections"  /></a></li>

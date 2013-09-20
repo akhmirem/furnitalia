@@ -354,19 +354,19 @@ $('#edit-sort-by').attr('tabindex', '1').dropkick({
 
 		//hover events for category links
 		$('#bg1').hover(function(e){
-			SetUpCategorySlider("bg1");
+			//SetUpCategorySlider("bg1");
 			KeyHoleScroll(1);
 			
 		}, function(){});
 		
 		$('#bg2').hover(function(e){
-			SetUpCategorySlider("bg2");
+			//SetUpCategorySlider("bg2");
 			KeyHoleScroll(2);
 			
 		}, function(){});		
 					
 		$('#bg3').hover(function(e){
-			SetUpCategorySlider("bg3");
+			//SetUpCategorySlider("bg3");
 			KeyHoleScroll(3);
 			
 		}, function(){});
@@ -387,7 +387,9 @@ $('#edit-sort-by').attr('tabindex', '1').dropkick({
 			'bg3':[{'image':imgPathPrefix + 'editions/B520_valeria_sofa.png'}, {'image':imgPathPrefix + 'editions/B537_sophia_recliner.png'},  {'image':imgPathPrefix + 'editions/A399_nina_sofa.png'}, {'image':imgPathPrefix + 'editions/B815_pascal_chair.png'}]
 		}
 		
-		$('#category-image-pane').html('').PikaChoose({showCaption:false, showTooltips:false, data:catPreviewInfo[category], autoPlay:true, speed:2000});
+		category = 'bg1';
+		
+		$('#category-image-pane').html('').PikaChoose({showCaption:false, showTooltips:false, data:catPreviewInfo[category], autoPlay:true, speed:3000});
 	}
 	
 	function SetUpCategoryAnimKeyHole() {

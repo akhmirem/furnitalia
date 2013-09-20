@@ -595,7 +595,7 @@ function furnileads_insert_lead($lead) {
 
 	$lid = db_insert('furnileads')
 		->fields(array(
- 			'created',
+ 			 'created',
 			 'updated',
 			 'updated_by',
 			 'type',

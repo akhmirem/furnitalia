@@ -661,6 +661,19 @@ aside.contact-page a {
 
 #cat-preview {
 	height: 350px;
+	position: relative;
+	top: .75em;
+}
+#cat-preview h2 {
+	font-weight: 300;
+	font-size: 1.1em;
+	margin: 0;
+	padding: 0;
+	text-transform: uppercase;
+	text-align: right;
+	border-bottom: 1px solid #6d6e71;
+	padding-right: 13em;
+	color: #981b1e;
 }
 #cat-preview .pika-stage {
 	width:500px;
