@@ -33,7 +33,6 @@ ul li.leaf {
 /*
  * Body
  */
-
 body {
 	margin: 0;
 	padding: 0;
@@ -47,7 +46,6 @@ html, button, input, select, textarea {
 
 #page {
 	width:1024px;
-	/* border:1px dashed black; */
 	text-align:left;
 	margin:0 auto;
 	position: relative;
@@ -76,7 +74,6 @@ p {
  * The skip-link link will be completely hidden until a user tabs to the link.
  * See the element-focusable rule in system.base.css.
  */
-
 #skip-link {
   margin: 0;
 }
@@ -93,10 +90,6 @@ p {
 /*
  * Header
  */
-
-#header {
-}
-
 #logo { /* Wrapping link for logo */
   float: left; /* LTR */
   margin: 1em 0 0 1.5em;
@@ -151,13 +144,6 @@ p {
 }
 .region-header ul.menu .welcome-user {
 	color:#981b1e;
-}
-
-/*
- * Main (container for everything else)
- */
-
-#main {
 }
 
 /*
@@ -220,14 +206,12 @@ body.not-front #content {
 div.region-left{
 	padding-left: .75em;
 }
-#main-nav {
-}
 #main-nav a, h1 {
-	font-size:1.6em;
+	font-size:1.5em;
 	border-bottom:1.5px solid #6d6e71;
 	display:block;
 	text-transform:uppercase;
-	margin-right: .85em;
+	margin-right: 1em;
 	padding-bottom: .3em;
 }
 #main-nav .ui-accordion-content a {
@@ -246,10 +230,6 @@ h1 {
 	font-size:1.5em;
 	border:none;
 }
-aside.sidebars {
-}
-aside.menu-left {	
-}
 .ui-widget-content {
 	border:none;
 	background:transparent;
@@ -257,7 +237,6 @@ aside.menu-left {
 }
 .ui-state-active, .ui-widget-content .ui-state-active, .ui-widget-header .ui-state-active {
 	background: none;
-	
 }
 .ui-accordion .ui-accordion-header {
 	margin:0;
@@ -539,9 +518,6 @@ div.view-content {
 	clear:both;
 }
 ul.furn-gallery {
-	width:690px;
-}
-ul.furn-gallery {
 	margin:0;
 	padding:0;
 }
@@ -564,6 +540,13 @@ ul.furn-gallery li.col-first {
 ul.furn-gallery li.col-last {
 	margin-right: 0;
 }
+.search-results .search-snippet-info {
+	padding: 0;
+}
+.search-results .title {
+	font-size: 1em;
+}
+
 .furn-gallery .item-details {
 /* 	background:transparent url(../images/gallery-thumb-overlay.png) no-repeat center center; */
 
@@ -639,7 +622,7 @@ div.keyhole {
 	position:absolute;
 	top:0;
 	right:0;
-	z-index: -1;
+	z-index: 1;
 }
 
 #options .form-item {
@@ -700,7 +683,7 @@ article #page-title {
 	color: #981b1e;
 }
 
-.item-info-p, .field-label, article .sell-price {
+.item-info-p, .field-label, article .sell-price, article .form-item label {
 	font-size:1em;
 	font-weight:300;
 	text-transform: uppercase;
@@ -835,7 +818,7 @@ body.page-node #pikame li {
 	border-left: 1px solid #981b1e;
 	left: .5em;
 }
-.item-info-p, .field-label {
+.item-info-p, .field-label, article .form-item label  {
 	color:#981b1e;
 	margin: 1.5em 0 0 0;
 	font-weight:bold;
@@ -960,7 +943,7 @@ footer nav {
 footer .addthis_toolbox {
 	float: left;
 	position: absolute;
-	top: 6.5em;
+	top: 7.3em;
 	left: 3em;
 }
 footer a {
@@ -1060,10 +1043,15 @@ hr.grey {
 	margin: .1em 0 1em 0;
 	background-color: #6d6e71;
 }
+hr.article-sep {
+	clear:both;
+	margin:.5em 0;
+	height: 1px;
+}
 
 /*
  * PROMO
-*/
+ */
 #promo {
 	height: 160px;
 	clear: both;
@@ -1085,8 +1073,8 @@ hr.grey {
 	color: #981b1e;
 }
 #promo hr {
-	margin: .5em 0;
-	background-color: #6d6e71;
+	margin:.5em 0;
+	background-color:#6d6e71;
 	height: 1px;
 	width: 84.7%;
 }
@@ -1094,14 +1082,14 @@ body.not-front #promo hr {
 	width: 100%;
 }
 #promo p {
-	font-size: .8em;
-	line-height: 130%;
-	margin: .2em 0;
-	width:40em;
+	font-size:.8em;
+	line-height:130%;
+	margin:.2em 0;
+	width:38em;
 }
 #promo img{
 	float:left;
-	padding-right: .5em;
+	padding-right:.5em;
 }
 #promo a.more-info {
 	float: left;

@@ -69,6 +69,7 @@ h2.block-title { /* Block title */
 	display: inline;
 	float: right;
 	margin: 1em 3em 0 0;
+	z-index: 5;
 }
 #block-shortcut-shortcuts { /* "Shortcuts" block */
 }

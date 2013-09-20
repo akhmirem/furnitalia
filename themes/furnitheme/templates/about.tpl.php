@@ -2,7 +2,7 @@
 	$theme_path = base_path() . drupal_get_path('theme', 'furnitheme');
 ?>
 <article class="about-us">
-<img src="<?php print $theme_path; ?>/images/about-us-top-left.jpg"/>
+<img src="<?php print $theme_path; ?>/images/new_about_us_top.jpg"/>
 <p>Furnitalia came about from one couple’s deep appreciation of Italian contemporary furniture. Dmitriy Aks, an engineer, admired the beauty, craftsmanship and precision with which Italians build their furniture, especially leather furniture. Ella Aks, an interior designer, delighted in the artistry of the lines and materials.</p>
 						
 <p>Moving to California, they discovered Italian contemporary furniture was not available
@@ -15,5 +15,5 @@ in the Sacramento area. Only after a great amount of time and effort spent resea
 </article>
 
 <section id="content-right">
-	<img src="<?php print $theme_path;?>/images/about-us-right.jpg"/>
+	<img src="<?php print $theme_path;?>/images/new_about_us_right.jpg"/>
 </section>

@@ -195,7 +195,9 @@ if ($teaser) { //item teaser view
 	  
   </div>
   
+ <br/>
  
+ <?php //print render($content); ?>
 
 </article><!-- /.node -->
 

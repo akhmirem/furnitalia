@@ -139,7 +139,31 @@ var skipAnimation = false;
 			
 			
 			if(jQuery().dropkick) {
-				$('#edit-sort-by').attr('tabindex', '1').dropkick({
+			
+				$('div.view select').each(function( index ) {
+					//var id = $(this).attr('id');
+					var sel = $(this);
+					$(this).attr('tabindex', index).dropkick({
+						change: function (value, label) {
+							sel.trigger('change');
+						}
+					});
+					
+				});
+				
+				$('article.node select').each(function( index ) {
+					//var id = $(this).attr('id');
+					var sel = $(this);
+					$(this).attr('tabindex', index).dropkick({
+						change: function (value, label) {
+							sel.trigger('change');
+						}
+					});
+					
+				});
+				
+				/*
+$('#edit-sort-by').attr('tabindex', '1').dropkick({
 					change: function (value, label) {
 						$('#edit-sort-by').trigger('change');
 					}
@@ -162,6 +186,13 @@ var skipAnimation = false;
 						$('#edit-availability').trigger('change');
 					}
 				});
+				
+				$("#edit-category").attr('tabindex', '5').dropkick({
+					change: function (value, label) {
+						$('#edit-category').trigger('change');
+					}
+				});
+*/
 			}
 					
 			
@@ -378,7 +409,7 @@ var skipAnimation = false;
 				'width':ANIM_FRAME_WIDTH,
 				'left':'auto',
 				'right':0,
-				'z-index':'-2'
+				'z-index':'1'
 			}).insertBefore($('.keyhole'));
 			
 			// insert loaded image into the div 

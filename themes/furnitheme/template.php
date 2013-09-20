@@ -104,7 +104,9 @@ function furnitheme_preprocess_page(&$vars) {
 	}
 	
 	//disable taxonomy tabs
-	if (arg(0) == 'taxonomy' && arg(1) == 'term' && is_numeric(arg(2)) && arg(3) == "") {
+	if ((arg(0) == 'taxonomy' && arg(1) == 'term' && is_numeric(arg(2)) && arg(3) == "") ||
+		 arg(0) == 'natuzzi-italia' || arg(0) == 'natuzzi-editions' )
+	{
 		unset($vars['tabs']);
 		
 		//don't display title
@@ -134,6 +136,7 @@ function furnitheme_preprocess_page(&$vars) {
 	
 	$vars['contact_page'] = FALSE;
 	if (arg(0) == 'contact') {
+	
 		//contact us page
 		$vars['contact_page'] = TRUE;
 	}
@@ -196,7 +199,9 @@ function preprocess_node_common_fields(&$content, $hook) {
  *   The name of the template being rendered ("node" in this case.)
  */
 function furnitheme_preprocess_node(&$vars, $hook) {
-	preprocess_node_common_fields($vars['content'], 'page');	
+	if ($vars['type'] == 'item') {
+		preprocess_node_common_fields($vars['content'], 'page');	
+	}
 }
 
 /**
@@ -573,6 +578,7 @@ function furnitheme_set_up_footer_menu (&$vars) {
 		'<span class="menu-label">About Furnitalia</span>',
 		l("About us", 'about'),
 		l("Contact us", "contact"), 
+		l("Blog", "blog"),
 	);
 	$vars['footer_info_menu'] = array(
 		'#theme' => 'item_list',
@@ -666,9 +672,7 @@ function furnitheme_form_views_exposed_form_alter(&$form, &$form_state, $form_id
 	    $temp_view->execute();
 	    $results = $temp_view->result;
 	    
-	   // dsm($results);
-	    
-	     // return if no results
+	    // return if no results
 	    if (!$results) {
 	      return;
 	    }
@@ -681,12 +685,11 @@ function furnitheme_form_views_exposed_form_alter(&$form, &$form_state, $form_id
 	    // get the list of used terms
 	    $used_tids = db_query("SELECT GROUP_CONCAT(DISTINCT CAST (br.field_brand_tid AS CHAR) SEPARATOR ',') FROM {field_data_field_brand} br WHERE br.entity_id IN (:nids)", array(":nids" => $nids))->fetchField();
 	    
-	    //dsm($used_tids);
 	    
 	    if ($used_tids) {
-	      $used_tids = explode(',', $used_tids);
+	    	$used_tids = explode(',', $used_tids);
 	    } else {
-	      $used_tids = array(); // this shoudln't happen, but just in case...
+	    	$used_tids = array(); // this shoudln't happen, but just in case...
 	    }	   
 	    
 		foreach($form['brand']['#options'] as $key => $option) {
@@ -701,6 +704,74 @@ function furnitheme_form_views_exposed_form_alter(&$form, &$form_state, $form_id
 			unset($form['sort_by']['#options']['field_sale_price_value']);
 		}
         
+	} else if ($form['#id'] == 'views-exposed-form-taxonomy-term-page-brands') {
+		if (isset($form['category'])) {
+			// prevent recursion - only execute once
+		    static $called_brand = 0;
+		    if ($called_brand === $form['#id']) {
+		      return;
+		    }
+		    
+		    $called_brand = $form['#id']; // flag as called
+		
+			// get view results
+		    $view = &$form_state['view']; //views_get_current_view();
+		    
+			/*
+	unset($view->display['default']->display_options['filters']['field_availability_value']);      
+			unset($view->display['default']->display_options['exposed_form']['options']['bef']['field_availability_value']);
+			unset($view->display[$view->current_display]->display_options['filters']['field_availability_value']);      
+			unset($view->display[$view->current_display]->display_options['exposed_form']['options']['bef']['field_availability_value']);
+			unset($view->filter['field_availability_value']);		
+			unset($form['availability']);
+			unset($form['#info']['filter-field_availability_value']);
+	*/
+		    
+			$temp_view = $view->clone_view(); // create a temp view
+		    $temp_view->init_display();
+		    $temp_view->pre_execute();
+		    $temp_view->set_items_per_page(0); // we want results from all pages
+		    $temp_view->display_handler->has_exposed = 0; // prevent recursion
+		    $temp_view->execute();
+		    $results = $temp_view->result;
+		    
+		     // return if no results
+		    if (!$results) {
+		    	return;
+		    }
+		    		    
+		    // assemble results into a comma-separated nid list
+		    foreach($results as $row) {
+		    	$nids[] = $row->nid;
+		    }
+		   
+		    // get the list of used terms
+		    $used_tids = db_query("SELECT GROUP_CONCAT(DISTINCT CAST (CASE WHEN h.parent=0 THEN br.field_category_tid ELSE h.parent END AS CHAR) SEPARATOR ',') FROM {field_data_field_category} br INNER JOIN {taxonomy_term_hierarchy} h on h.tid=br.field_category_tid WHERE br.entity_id IN (:nids)", array(":nids" => $nids))->fetchField();
+		    
+		    		    
+		    if ($used_tids) {
+		      $used_tids = explode(',', $used_tids);
+		    } else {
+		      $used_tids = array(); // this shoudln't happen, but just in case...
+		    }
+		    
+			foreach($form['category']['#options'] as $key => $option) {
+				// unset the unused term options
+				if ($key !== 'All' && !in_array($key, $used_tids)) {
+					unset($form['category']['#options'][$key]);
+				}
+			}
+		}
+		
+		//alter SORT options -- remove Discounted price sort order if SALE prices are not shown
+		if (! variable_get('show_sale_prices', FALSE)) {
+			unset($form['sort_by']['#options']['field_sale_price_value']);
+		}
+		
+		//dsm($view);	
+	    //dsm($form);		
+
+		
 	}
   
 }

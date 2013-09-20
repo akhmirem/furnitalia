@@ -1,0 +1,12 @@
+name = Option Images
+description = Allows users to upload images per attribute option.
+dependencies[] = uc_attribute
+package = Ubercart - extra
+core = 7.x
+
+; Information added by drupal.org packaging script on 2012-07-27
+version = "7.x-1.0-beta2"
+core = "7.x"
+project = "uc_option_image"
+datestamp = "1343413997"
+

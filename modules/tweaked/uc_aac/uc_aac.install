@@ -1,0 +1,64 @@
+<?php
+
+/**
+ * @file
+ * Install hooks for uc_aac.module.
+ */
+
+/**
+ * Implementation of hook install().
+ */
+function uc_aac_install() {
+  // TODO Please review the conversion of this statement to the D7 database API syntax.
+  /* db_query("UPDATE {system} SET weight = 10 WHERE name = 'uc_aac'") */
+  db_update('system')
+  ->fields(array(
+    'weight' => 10,
+  ))
+  ->condition('name', 'uc_aac')
+  ->execute();
+}
+
+/**
+ * Implementation of hook uninstall().
+ */
+function uc_aac_uninstall() {
+  // TODO Please review the conversion of this statement to the D7 database API syntax.
+  /* db_query("DELETE FROM {variable} WHERE name LIKE 'uc_aac%'") */
+  db_delete('variable')
+  ->condition('name', 'uc_aac%', 'LIKE')
+  ->execute();
+}
+
+/**
+ * @todo Please document this function.
+ * @see http://drupal.org/node/1354
+ */
+function uc_aac_update_1() {
+  $ret = array();
+  // TODO update_sql has been removed. Use the database API for any schema or data changes.
+  $ret[] = array() /* update_sql("UPDATE {system} SET weight = 10 WHERE name = 'uc_aac'") */;
+  // hook_update_N() no longer returns a $ret array. Instead, return
+  // nothing or a translated string indicating the update ran successfully.
+  // See http://drupal.org/node/224333#update_sql.
+  return t('TODO Add a descriptive string here to show in the UI.') /* $ret */;
+}
+
+/**
+ * @todo Please document this function.
+ * @see http://drupal.org/node/1354
+ */
+function uc_aac_update_6200() {
+  $ret = array();
+
+  // Clean up duplicate reprice variables
+  $reprice = variable_get('uc_aac_attribute_reprice', 1);
+  // TODO update_sql has been removed. Use the database API for any schema or data changes.
+  $ret[] = array() /* update_sql("DELETE FROM {variable} WHERE name LIKE 'uc_aac%reprice'") */;
+  variable_set('uc_aac_reprice', $reprice);
+
+  // hook_update_N() no longer returns a $ret array. Instead, return
+  // nothing or a translated string indicating the update ran successfully.
+  // See http://drupal.org/node/224333#update_sql.
+  return t('TODO Add a descriptive string here to show in the UI.') /* $ret */;
+}

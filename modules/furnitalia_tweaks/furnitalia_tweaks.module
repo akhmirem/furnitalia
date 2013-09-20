@@ -100,8 +100,131 @@ function furnitalia_tweaks_menu() {
 	    'access callback' => TRUE,
 	    'type' => MENU_NORMAL_ITEM,
     );
+    $items['natuzzi-italia'] = array (
+		'page callback' => 'furnitalia_tweaks_brand_cat_page',
+		'page arguments' => array('italia'),
+		'access callback' => TRUE, 
+		'type' => MENU_CALLBACK,
+	);
+	$items['natuzzi-editions'] = array (
+		'page callback' => 'furnitalia_tweaks_brand_cat_page',
+		'page arguments' => array('editions'),
+		'access callback' => TRUE, 
+		'type' => MENU_CALLBACK,
+	);
 	
 	return $items;
+}
+
+function furnitalia_tweaks_get_page_title($tid) {
+
+  $term = taxonomy_get_term($tid);
+    
+  return $term->name ? $term->name : "Furnitalia Collections";
+}
+
+function furnitalia_tweaks_brand_cat_page($brand, $cat = NULL, $subcat = NULL) {
+	//dsm($cat);
+	//dsm($subcat);
+	
+	$alias = $cat;
+	
+	if (isset($subcat)) {
+		$alias .= '/' . $subcat;
+	}
+	
+	if ($brand == 'italia') {
+		$brand_tid = 21;
+	} else if ($brand == 'editions') {
+		$brand_tid = 22;
+	}
+	
+	$normal_path = explode('/', drupal_get_normal_path($alias)); //TO-DO check for validity
+	if (is_array($normal_path) && count($normal_path) == 3) { //taxonomy/term/xxx
+		$tid = $normal_path[2];
+		
+		$term = taxonomy_term_load($brand_tid); //21-natuzzi italia
+		$vocabulary = taxonomy_vocabulary_load($term->vid);
+
+		$view_name = 'taxonomy_term';
+		$display_id='page_brands';
+		$args = array($term->tid);
+		
+		drupal_set_title($term->name . " - Contemporary Italian Furniture");
+		
+		$view = views_get_view($view_name);		  
+		$view->set_display($display_id);
+		$view->set_arguments($args);
+		    
+		//set exposed filter value
+	    $filter = $view->get_item($display_id, 'filter', 'term_node_tid_depth');
+		$filter['value']['value'] = $tid;
+		$filter['exposed'] = FALSE;
+		$view->set_item($display_id, 'filter', 'term_node_tid_depth', $filter);    
+	    		
+	    //get view output
+		$output =  $view->preview($display_id);
+		
+		return $output;
+
+
+		
+	} else {	
+		//just return default natuzzi italia brand page
+		return furnitalia_tweaks_taxonomy_term_page(taxonomy_term_load($brand_tid));
+	}
+}
+
+function furnitalia_tweaks_taxonomy_term_page($term) {
+
+  $vocabulary = taxonomy_vocabulary_load($term->vid);
+
+  $view_name = 'taxonomy_term';
+  $display_id='page';
+  $args = array($term->tid);
+
+  $view = views_get_view($view_name);		  
+  $view->set_arguments($args);
+
+  #$view->set_item($display_id, 'filter', 'field_brand_value', NULL);
+  #$filter = $view->get_item($display_id, 'filter', 'field_brand_value');
+  #$filter['value']['value'] = $term->tid;
+  #$filter['expose']['bef_format'] = 'bef_hidden';
+  #$filter['expose']['label'] = '';
+  #$view->set_item($display_id, 'filter', 'field_brand_value', NULL);
+  #$view->set_exposed_input($filter->view->exposed_input);
+
+  switch($vocabulary->name) {
+    case 'Categories':
+      $display_id='page';
+      break;
+    case 'Brand':
+      $display_id='page_brands';
+      
+      drupal_set_title($term->name . " - Contemporary Italian Furniture");
+      
+      //$view->init_display($display_id);
+      //$view->preview = TRUE;
+
+      //unset($view->display['default']->display_options['filters']['field_category_tid']);
+      //unset($view->display['default']->display_options['filters']['field_availability_value']);      
+      //unset($view->display['default']->display_options['exposed_form']['options']['bef']['field_brand_tid']);
+      //unset($view->display['default']->display_options['exposed_form']['options']['bef']['field_availability_value']);      
+      
+      //dsm($view);
+      //dsm($view->display[$display_id]);
+      break;
+    default: 
+      // Returns the default term page provided by taxonomy module.
+      module_load_include('inc', 'taxonomy', 'taxonomy.pages');
+      return taxonomy_term_page($tid);
+  }
+
+  $view->set_display($display_id);
+  $output =  $view->preview($display_id);
+
+  return $output;
+
 }
 
 /**
@@ -110,6 +233,15 @@ function furnitalia_tweaks_menu() {
 function furnitalia_tweaks_menu_alter(&$items) {
 	$items['taxonomy/term/%taxonomy_term']['page callback'] = 'furnitalia_tweaks_taxonomy_term_page';
 	unset($items['taxonomy/term/%taxonomy_term']['file']);
+	
+/*
+	if (isset($menu['taxonomy/term/%'])) {
+      $menu['taxonomy/term/%']['page callback'] = 'furnitalia_tweaks_taxonomy_term_page';
+      $menu['taxonomy/term/%']['title'] = t('Furnitalia Collections');
+      $menu['taxonomy/term/%']['title callback'] = 'furnitalia_tweaks_get_page_title'; 
+      $menu['taxonomy/term/%']['title arguments'] = array(2); 
+  }
+*/
 	
 	if(isset($items['user/%user/shortcuts'])) {
 		unset($items['user/%user/shortcuts']);
@@ -193,7 +325,7 @@ function furnitalia_tweaks_about() {
  * @return
  *   The page content.
  */
-function furnitalia_tweaks_taxonomy_term_page($term) {
+/*function furnitalia_tweaks_taxonomy_term_page($term) {
   // If there is a menu link to this term, the link becomes the last part of
   // the active trail, and the link name becomes the page title. Thus, we must
   // explicitly set the page title to be the term title.  
@@ -236,7 +368,7 @@ function furnitalia_tweaks_taxonomy_term_page($term) {
     );
   }
   return $build;
-}
+} */
 
 /**
  * Construct a drupal_render() style array from an array of loaded nodes.
@@ -288,7 +420,12 @@ function furnitalia_tweaks_page_alter(&$page) {
 	//before building menu, mark active items
 	$active_cat_tid = "";
 	$active_parent_tid = "";
-	$active_brand = (isset($_GET['brand']) && is_numeric($_GET['brand'])) ? $_GET['brand'] : '';
+	$active_brand = "";
+	if (arg(0) == 'natuzzi-italia') {
+		$active_brand = $italia;
+	} else if (arg(0) == 'natuzzi-editions') {
+		$active_brand = $editions;
+	}
 	
 	if (arg(0) == 'taxonomy' && arg(1) == 'term' && is_numeric(arg(2)) && arg(3) == "") { 
 		//1. if we are in taxonomy term page, i.e. taxonomy/term/2
@@ -296,8 +433,22 @@ function furnitalia_tweaks_page_alter(&$page) {
 		$active_cat_tid = arg(2);
 		$active_parent_tid = furnitalia_tweaks_get_parent_category($active_cat_tid);
 	
+	} else if (arg(0) == 'natuzzi-italia' || arg(0) == 'natuzzi-editions') {
+		//2. natuzzi-italia/living/sofas, etc..
+		//   natuzzi-editions/accessories
+		
+		$alias = arg(1);
+		if (arg(2) != "") {
+			$alias .= "/" . arg(2);
+		}
+		$normal_path = explode('/', drupal_get_normal_path($alias)); //TO-DO check for validity
+		if (is_array($normal_path) && count($normal_path) == 3) { //taxonomy/term/xxx
+			$active_cat_tid = $normal_path[2];
+			$active_parent_tid = furnitalia_tweaks_get_parent_category($active_cat_tid);
+		}
+
 	} else if (arg(0) == 'node' && is_numeric(arg(1)) && arg(2) != "") {
-		//2. if we are in node page, i.e. node/22
+		//3. if we are in node page, i.e. node/22
 		if (isset($vars['content']['system_main']['nodes'])) {	//user this var in order to to load node again
             $node = array_values($vars['content']['system_main']['nodes']);
             $node = $node[0];
@@ -309,6 +460,7 @@ function furnitalia_tweaks_page_alter(&$page) {
 	            	//get top top and it's parent category
 					$active_cat_tid = $term->tid;
 					$active_parent_tid = furnitalia_tweaks_get_parent_category($active_cat_tid);
+					break;
 	            }  
             }
             
@@ -396,8 +548,6 @@ function furnitalia_tweaks_page_alter(&$page) {
 	//--------------------------------------
 	$italia_items = array();
 	$editions_items = array();
-	$italia_query_string = array('brand' => $italia);
-	$editions_query_string = array('brand' => $editions);
 	
 	$result = db_query("
 	  SELECT DISTINCT td.tid, td.name, b.field_brand_tid as brand, h.parent as parent_term, td.weight as delta
@@ -414,11 +564,11 @@ function furnitalia_tweaks_page_alter(&$page) {
 		if	($term->brand == $italia) {
 			//if natuzzi italia brand			
 			$temp_items = &$italia_items;
-			$query_string = $italia_query_string;
+			$path_prefix = "natuzzi-italia/";
 		} else {
 			//natuzzi editions brand term
 			$temp_items = &$editions_items;		
-			$query_string = $editions_query_string;
+			$path_prefix = "natuzzi-editions/";
 		}
 		
 		if ($term->parent_term != 0 ) {
@@ -428,10 +578,11 @@ function furnitalia_tweaks_page_alter(&$page) {
 				$parent_term = taxonomy_term_load($term->parent_term);
 				
 				//generate link, mark it as active if it is
+				$path = $path_prefix . drupal_get_path_alias('taxonomy/term/' . $term->parent_term);
 				if ($active_brand == $term->brand && $term->parent_term == $active_parent_tid) {
-					$link = l($parent_term->name, 'taxonomy/term/' . $term->parent_term, array('query' => $query_string, 'attributes' => array('class' => $active_attribute)));
+					$link = l($parent_term->name, $path, array('attributes' => array('class' => $active_attribute)));
 				} else {
-					$link = l($parent_term->name, 'taxonomy/term/' . $term->parent_term, array('query' => $query_string));		
+					$link = l($parent_term->name, $path);		
 				}
 				
 				$temp_items[$term->parent_term] = array(
@@ -446,10 +597,11 @@ function furnitalia_tweaks_page_alter(&$page) {
 			//insert term into parent's list
 			
 			//generate link, mark it as active if it is
+			$path = $path_prefix . drupal_get_path_alias('taxonomy/term/' . $term->tid);
 			if ($active_brand == $term->brand && $term->tid == $active_cat_tid) {
-				$link = l($term->name, 'taxonomy/term/' . $term->tid, array('query' => $query_string, 'attributes' => array('class' => $active_attribute)));
+				$link = l($term->name, $path, array('attributes' => array('class' => $active_attribute)));
 			} else {
-				$link = l($term->name, 'taxonomy/term/' . $term->tid, array('query' => $query_string));
+				$link = l($term->name, $path);
 			}
 			$temp_items[$term->parent_term]['sub'][$term->tid] = array(
 				'tid' => $term->tid,
@@ -463,14 +615,15 @@ function furnitalia_tweaks_page_alter(&$page) {
 			if (!isset($temp_items[$term->tid])) {
 			
 				//generate link, mark it as active if it is			
+				$path = $path_prefix . drupal_get_path_alias('taxonomy/term/' . $term->tid);
 				if ($active_brand == $term->brand && ($term->tid == $active_cat_tid || $term->tid == $active_parent_tid)) {
-					$link = l($term->name, 'taxonomy/term/' . $term->tid, array('query' => $query_string, 'attributes' => array('class' => $active_attribute)));
+					$link = l($term->name, $path, array('attributes' => array('class' => $active_attribute)));
 				} else {
-					$link = l($term->name, 'taxonomy/term/' . $term->tid, array('query' => $query_string));
+					$link = l($term->name, $path);
 				}	
 				$temp_items[$term->tid] = array(
 					'tid' => $term->tid,
-					'link' => l($term->name, 'taxonomy/term/' . $term->tid, array('query' => $query_string)),
+					'link' => l($term->name, $path),
 					'delta' => $term->weight,
 					'name' => $parent_term->name,
 					'sub' => array(),

@@ -1,0 +1,4 @@
+name = Furnitalia Dependent Attributes
+description = Specify which attribute/option combinations to enable/disable on a per product basis.
+package = "Ubercart - core (optional)"
+core = 7.x

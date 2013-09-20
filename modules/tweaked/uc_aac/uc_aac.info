@@ -1,0 +1,8 @@
+name = Ajax Attribute Calculations
+description = Allows product information on the product screens to be updated via Ajax.
+dependencies[] = uc_attribute
+package = Ubercart - extra
+files[] = uc_aac.install
+files[] = uc_aac.module
+core = 7.x
+

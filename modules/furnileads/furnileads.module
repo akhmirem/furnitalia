@@ -114,7 +114,7 @@ function furnileads_page() {
 	$query->fields('f', array('lid', 'status', 'created',  'first_name', 'last_name', 'body', 'updated_by', 'updated'));
 	$query->addExpression('CASE WHEN f.status=\'N\' THEN 1 WHEN f.status=\'P\' THEN 2 WHEN f.status=\'S\' THEN 3 WHEN f.status=\'C\' THEN 4 ELSE 0 END', 'sort_col');
 	$query->orderBy('sort_col', 'ASC');
-		
+	$query->orderBy('created', 'DESC');	
 	$result = $query->extend('PagerDefault')->limit(50)->execute();
 
 	$time_format = 'm-d-Y H:i';
