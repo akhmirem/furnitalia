@@ -698,11 +698,6 @@ function furnitheme_form_views_exposed_form_alter(&$form, &$form_state, $form_id
 				unset($form['brand']['#options'][$key]);
 			}
 		}
-		
-		//alter SORT options -- remove Discounted price sort order if SALE prices are not shown
-		if (! variable_get('show_sale_prices', FALSE)) {
-			unset($form['sort_by']['#options']['field_sale_price_value']);
-		}
         
 	} else if ($form['#id'] == 'views-exposed-form-taxonomy-term-page-brands') {
 		if (isset($form['category'])) {
@@ -763,16 +758,17 @@ function furnitheme_form_views_exposed_form_alter(&$form, &$form_state, $form_id
 			}
 			
 		}
-		
-		//alter SORT options -- remove Discounted price sort order if SALE prices are not shown
-		if (! variable_get('show_sale_prices', FALSE)) {
-			unset($form['sort_by']['#options']['field_sale_price_value']);
-		}
-		
-		//dsm($view);	
-	    //dsm($form);		
 
-		
+	}
+	
+	if (strstr($form['#id'], 'views-exposed-form-taxonomy-term')) {
+		if (isset($form['sort_by'])) {
+			//alter SORT options -- remove Discounted price sort order if SALE prices are not shown
+			if (!variable_get('show_sale_prices', FALSE)) {
+				unset($form['sort_by']['#options']['field_sale_price_value']);
+			}
+
+		}
 	}
   
 }
