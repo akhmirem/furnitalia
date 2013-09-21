@@ -650,9 +650,11 @@ function furnitheme_set_up_top_menu (&$vars) {
  */
 function furnitheme_form_views_exposed_form_alter(&$form, &$form_state, $form_id) {  
   
+
+	//dsm($form['#id']);
+	
 	if ($form['#id'] == 'views-exposed-form-taxonomy-term-page') { 
 		
-		$affected_exposed_filters = array('field_brand_tid');
 		 
 		 // prevent recursion - only execute once
 	    static $called = 0;
@@ -698,33 +700,60 @@ function furnitheme_form_views_exposed_form_alter(&$form, &$form_state, $form_id
 				unset($form['brand']['#options'][$key]);
 			}
 		}
+		
+		if (isset($form['availability'])) {
+					   
+		    // get the list of used terms
+		    $used_tids = db_query("SELECT GROUP_CONCAT(DISTINCT CAST (br.field_availability_value AS CHAR) SEPARATOR ',') FROM {field_data_field_availability} br WHERE br.entity_id IN (:nids)", array(":nids" => $nids))->fetchField();
+		    
+		    if ($used_tids) {
+		      $used_tids = explode(',', $used_tids);
+		    } else {
+		      $used_tids = array(); // this shoudln't happen, but just in case...
+		    }
+		    
+			foreach($form['availability']['#options'] as $key => $option) {
+				// unset the unused term options
+				if ($key !== 'All' && !in_array($key, $used_tids)) {
+					unset($form['availability']['#options'][$key]);
+				}
+			}
+			
+		}
         
-	} else if ($form['#id'] == 'views-exposed-form-taxonomy-term-page-brands') {
+	} else if ($form['#id'] == 'views-exposed-form-taxonomy-term-page-brands' || $form['#id'] == 'views-exposed-form-taxonomy-term-page-in-store') {
 		if (isset($form['category'])) {
+			
 			// prevent recursion - only execute once
 		    static $called_brand = 0;
 		    if ($called_brand === $form['#id']) {
 		      return;
-		    }
-		    
-		    $called_brand = $form['#id']; // flag as called
+		    }		    
+		    $called_brand = $form['#id']; 				  // flag as called
 		
 			// get view results
-		    $view = &$form_state['view']; //views_get_current_view();
+		    $view = $form_state['view']; 				  // views_get_current_view();
 		    
-			$temp_view = $view->clone_view(); // create a temp view
+			$temp_view = $view->clone_view(); 			  // create a temp view
 		    $temp_view->init_display();
+		    
+		    if ($form['#id'] == 'views-exposed-form-taxonomy-term-page-in-store') {
+		    	$temp_view->set_display('page_in_store');
+		    } else {
+			    $temp_view->set_display('page_brands');
+		    }
+		    
 		    $temp_view->pre_execute();
-		    $temp_view->set_items_per_page(0); // we want results from all pages
+		    $temp_view->set_items_per_page(0); 			  // we want results from all pages
 		    $temp_view->display_handler->has_exposed = 0; // prevent recursion
 		    $temp_view->execute();
 		    $results = $temp_view->result;
 		    
-		     // return if no results
+		    // return if no results
 		    if (!$results) {
 		    	return;
 		    }
-		    		    
+		    	    		    
 		    // assemble results into a comma-separated nid list
 		    foreach($results as $row) {
 		    	$nids[] = $row->nid;
@@ -748,10 +777,30 @@ function furnitheme_form_views_exposed_form_alter(&$form, &$form_state, $form_id
 			}
 			
 		}
+		
+		if (isset($form['availability'])) {
+					   
+		    // get the list of used terms
+		    $used_tids = db_query("SELECT GROUP_CONCAT(DISTINCT CAST (br.field_availability_value AS CHAR) SEPARATOR ',') FROM {field_data_field_availability} br WHERE br.entity_id IN (:nids)", array(":nids" => $nids))->fetchField();
+		    
+		    if ($used_tids) {
+		      $used_tids = explode(',', $used_tids);
+		    } else {
+		      $used_tids = array(); // this shoudln't happen, but just in case...
+		    }
+		    
+			foreach($form['availability']['#options'] as $key => $option) {
+				// unset the unused term options
+				if ($key !== 'All' && !in_array($key, $used_tids)) {
+					unset($form['availability']['#options'][$key]);
+				}
+			}
+			
+		}
 
 	}
 	
-	if (strstr($form['#id'], 'views-exposed-form-taxonomy-term')) {
+	if (strstr($form['#id'], 'views-exposed-form-taxonomy-term-page')) {
 		if (isset($form['sort_by'])) {
 			//alter SORT options -- remove Discounted price sort order if SALE prices are not shown
 			if (!variable_get('show_sale_prices', FALSE)) {

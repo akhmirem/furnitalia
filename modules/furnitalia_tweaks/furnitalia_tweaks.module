@@ -657,9 +657,16 @@ function furnitalia_tweaks_page_alter(&$page) {
 		'#attributes' => array('class' => 'links'),
 	);
 	
+	//mark up structure for In Store link
+	$page['left']['furn_menu']['in-store'] = array(
+		'#prefix' => '<h3> ' . l( "In Store", 'in-store', array('attributes' => array('id' => 'bg5'))) . '</h3><div>', //<a id="bg5" href="/in-store">In Store</a></h3><div>',
+		'#suffix' => '</div>',		
+	);
+	
 	//mark up structure for interior design link
 	$page['left']['furn_menu']['interior_design'] = array(
-		'#prefix' => '<h3><a id="bg4" href="/interior-design">Furnitalia Interior Design</a></h3>',
+		'#prefix' => '<h3> ' . l( "Interior Design Services", 'interior-design', array('attributes' => array('id' => 'bg4'))) . '</h3><div>', //'<h3><a id="bg4" href="/interior-design">Furnitalia Interior Design</a></h3><div>',
+		'#suffix' => '</div>',		
 	);
 
 }
@@ -824,7 +831,7 @@ function furnitalia_tweaks_get_parent_category($tid="") {
 function furnitalia_tweaks_form_alter(&$form, &$form_state, $form_id){
 	if ($form['#id'] == 'item-node-form') {
 		
-		
+		dsm($form);
 		drupal_add_css(drupal_get_path('theme', 'furnitheme') . '/css/leads.css');
 
 		//place video field in tabs
@@ -865,6 +872,9 @@ function furnitalia_tweaks_form_alter(&$form, &$form_state, $form_id){
 		$form['revision_information']['#access'] = FALSE;
 		$form['author']['#access'] = FALSE;
 		//unset($form['field_show_add_to_cart']);
+		
+		//restrict title to be less than or equal to 20 characters
+		$form['title']['#maxlength'] = '25';
 		
 		$form['#validate'][] = 'furnitalia_tweaks_item_node_form_validate';
 

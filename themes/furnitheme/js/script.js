@@ -21,7 +21,7 @@ var skipAnimation = false;
           	var params = [];
           	if (!jQuery().deparam) {
 				params = $.deparam.querystring( true );
-				console.log(JSON.stringify( params, null, 2 ));
+				//console.log(JSON.stringify( params, null, 2 ));
 			}
 		  
 			if ("noanim" in params) {
@@ -342,12 +342,16 @@ $('#edit-sort-by').attr('tabindex', '1').dropkick({
 					$(this).parents('.accordion-inner').accordion("option", "active", 0);
 				}
 			});	
+			
+			$("#ui-accordion-main-nav-header-3").unbind('click');//click(function() {
+			$("#ui-accordion-main-nav-header-4").unbind('click');
 		});
 
 				
-		$("#bg4").click(function() {
-		    window.location.href = Drupal.settings.basePath + "interior-design";
-		});
+		//$("#bg4").unbind('click');//click(function() {
+		//$("#bg5").unbind('click');//click(function() {
+//		    window.location.href = Drupal.settings.basePath + "interior-design";
+//		});
 
 		//set up keyhole animation for categories
 		//SetUpCategoryAnimKeyHole();		
@@ -435,7 +439,7 @@ $('#edit-sort-by').attr('tabindex', '1').dropkick({
 		var backgroundXShift = -ANIM_FRAME_WIDTH * (index - 1);
 		$('#menu-pic').stop().animate({backgroundPosition:"(" + backgroundXShift + "px 0)"}, {
 			duration:500,
-			easing:'linear',
+			easing:'linear'
 		});
 	}
 	

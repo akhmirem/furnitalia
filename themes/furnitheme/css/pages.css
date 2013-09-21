@@ -149,6 +149,9 @@ p {
 /*
  * Content
  */
+#main {
+	width:100%; /* IE7 */
+}
 #content, .region-header {
 	float:right;
 	overflow:hidden;
