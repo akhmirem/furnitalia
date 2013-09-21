@@ -318,7 +318,7 @@ $('#edit-sort-by').attr('tabindex', '1').dropkick({
 				collapsible: true,
 				active: false,
 				heightStyle:'content',
-				animate:300,
+				animate:300
 			});
 			
 			//set active menu link in accordion
@@ -333,7 +333,7 @@ $('#edit-sort-by').attr('tabindex', '1').dropkick({
 				collapsible: true,
 				active: false,
 				heightStyle:'content',
-				animate:300,
+				animate:300
 			});
 			
 			

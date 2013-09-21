@@ -712,16 +712,6 @@ function furnitheme_form_views_exposed_form_alter(&$form, &$form_state, $form_id
 			// get view results
 		    $view = &$form_state['view']; //views_get_current_view();
 		    
-			/*
-	unset($view->display['default']->display_options['filters']['field_availability_value']);      
-			unset($view->display['default']->display_options['exposed_form']['options']['bef']['field_availability_value']);
-			unset($view->display[$view->current_display]->display_options['filters']['field_availability_value']);      
-			unset($view->display[$view->current_display]->display_options['exposed_form']['options']['bef']['field_availability_value']);
-			unset($view->filter['field_availability_value']);		
-			unset($form['availability']);
-			unset($form['#info']['filter-field_availability_value']);
-	*/
-		    
 			$temp_view = $view->clone_view(); // create a temp view
 		    $temp_view->init_display();
 		    $temp_view->pre_execute();

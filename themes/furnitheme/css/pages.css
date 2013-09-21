@@ -406,6 +406,19 @@ ul.pager a li, ul.pager li a {
 
 .more-link { /* Aggregator, blog, and forum more link */
 }
+.node-blog ul.links {
+	float: right;
+	padding: 0;
+	margin: 0.3em 0;
+}
+ul.inline li.node-readmore {
+	list-style: none;
+}
+li.node-readmore a {
+	text-transform: uppercase;
+	color:#981b1e;
+	font-size:1em;
+}
 
 /*
  * First sidebar (on left in LTR languages, on right in RTL)
@@ -1090,6 +1103,7 @@ hr.article-sep {
 	background-color:#6d6e71;
 	height: 1px;
 	width: 84.7%;
+	text-align: left;
 }
 body.not-front #promo hr {
 	width: 100%;

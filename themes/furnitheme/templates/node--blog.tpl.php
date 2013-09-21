@@ -99,7 +99,7 @@
     hide($content['links']);
     print render($content);
   ?>
-
+  <?php print render($content['links']['node']); ?>
   <?php //print render($content['links']); ?>
 
   <?php //print render($content['comments']); ?>

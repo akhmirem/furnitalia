@@ -70,6 +70,7 @@ h2.block-title { /* Block title */
 	float: right;
 	margin: 1em 3em 0 0;
 	z-index: 5;
+	position: relative;
 }
 #block-shortcut-shortcuts { /* "Shortcuts" block */
 }
