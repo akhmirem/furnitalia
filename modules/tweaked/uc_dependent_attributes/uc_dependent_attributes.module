@@ -97,7 +97,8 @@ function uc_dependent_attributes_form_alter(&$form, $form_state, $form_id) {
         }
 		
         // Build an array hierarchy and merge with other combos
-        $disabled = array_merge_recursive_preserve($disabled, array_hierarchy($combo_ordered));
+        $array_hierarchy = array_hierarchy($combo_ordered);
+        $disabled = array_merge_recursive_preserve($disabled, $array_hierarchy);
         
 		//dsm("disabled:");
 		//dsm($disabled);        
@@ -243,12 +244,14 @@ function array_hierarchy($array) {
  *   Returns an array containg all merged keys => values from all passed in
  *   arrays.
  */
-function array_merge_recursive_preserve() {
+function array_merge_recursive_preserve(&$return, &$params) {
   // Holds all the arrays passed
-  $params = &func_get_args();
+  //$params = &func_get_args();
 
   // First array is used as the base, everything else overwrites on it
-  $return = array_shift($params);
+  //$return = array_shift($params);
+  
+  $params = array($params);
 
   // Merge all arrays on the first array
   foreach ($params as $array) {
@@ -284,13 +287,14 @@ function array_merge_recursive_preserve() {
  *   Returns an array containg all the values from the first array that are not
  *   present in any subsequent array.
  */
-function array_diff_assoc_recursive() {
+function array_diff_assoc_recursive(&$array1, &$params) {
   // Holds all the arrays passed
-  $params = &func_get_args();
+  //$params = &func_get_args();
 
   // First array is used as the base, everything else overwrites on it
-  $array1 = array_shift($params);
-
+  //$array1 = array_shift($params);
+  $params = array($params);
+  
   foreach ($array1 as $key => $value) {
     if (is_array($value)) {
       if (!isset($params[0][$key]) || !is_array($params[0][$key])) {
