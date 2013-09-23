@@ -100,6 +100,11 @@ function furnitalia_tweaks_menu() {
 	    'access callback' => TRUE,
 	    'type' => MENU_NORMAL_ITEM,
     );
+    $items['collections'] = array(
+    	'page callback' => 'furnitalia_tweaks_taxonomy_term_page',
+		'access callback' => TRUE, 
+		'type' => MENU_CALLBACK,
+    );
     $items['natuzzi-italia'] = array (
 		'page callback' => 'furnitalia_tweaks_brand_cat_page',
 		'page arguments' => array('italia'),
@@ -124,11 +129,6 @@ function furnitalia_tweaks_get_page_title($tid) {
 }
 
 function furnitalia_tweaks_brand_cat_page($brand, $cat = NULL, $subcat = NULL) {
-	$alias = $cat;
-	
-	if (isset($subcat)) {
-		$alias .= '/' . $subcat;
-	}
 	
 	if ($brand == 'italia') {
 		$brand_tid = 21;
@@ -136,6 +136,21 @@ function furnitalia_tweaks_brand_cat_page($brand, $cat = NULL, $subcat = NULL) {
 	} else if ($brand == 'editions') {
 		$brand_tid = 22;
 		$display_id = "page_editions";
+	}
+	
+	//root path -- no category ID give -- show brand description info
+	if (! isset($cat)) {
+		if ($brand == 'italia') {
+			return "Natuzzi Italia Description Page";
+		} else if ($brand == 'editions') {
+			return "Natuzzi Editions Description Page";
+		}
+	}
+	
+	$alias = $cat;
+	
+	if (isset($subcat)) {
+		$alias .= '/' . $subcat;
 	}
 	
 	$normal_path = explode('/', drupal_get_normal_path($alias)); //TO-DO check for validity
@@ -170,7 +185,11 @@ function furnitalia_tweaks_brand_cat_page($brand, $cat = NULL, $subcat = NULL) {
 	}
 }
 
-function furnitalia_tweaks_taxonomy_term_page($term) {
+function furnitalia_tweaks_taxonomy_term_page($term=NULL) {
+
+	if (arg(0) == 'collections' && $term == NULL) {
+		return "Description of all collections";
+	}
 
   $vocabulary = taxonomy_vocabulary_load($term->vid);
 
@@ -619,11 +638,15 @@ function furnitalia_tweaks_page_alter(&$page) {
 	//--------------------------------------
 	
 	$output_all_brands_menu_items = array();
-	_build_subcat_menu_items($all_items, $output_all_brands_menu_items);
+	
+	if (arg(0) == 'collections' || (arg(0) == 'taxonomy' && arg(1) == 'term' && is_numeric(arg(2)))) {
+		//show subcategories if it is /collections or /taxonomy/term/id page
+		_build_subcat_menu_items($all_items, $output_all_brands_menu_items);
+	}
 	
 	//markup structure for all collections
 	$page['left']['furn_menu']['all'] = array(
-		'#prefix' => '<h3><a id="bg1" href="#">All Collections</a></h3><div>',
+		'#prefix' => '<h3 class="ui-accordion-header ui-helper-reset ui-state-default ui-corner-all">' . l("All Collections", 'collections', array('attributes' => array('id' => 'bg1'))) . '</h3><div class="ui-accordion-content ui-helper-reset ui-widget-content ui-corner-bottom">',
 		'#suffix' => '</div>',
 		'#theme' => 'item_list',
 		'#items' => array_values($output_all_brands_menu_items),
@@ -632,11 +655,13 @@ function furnitalia_tweaks_page_alter(&$page) {
 	);	
 	
 	$output_italia_menu_items = array();
-	_build_subcat_menu_items($italia_items, $output_italia_menu_items);
+	if (arg(0) == 'natuzzi-italia') {
+		_build_subcat_menu_items($italia_items, $output_italia_menu_items);
+	}
 
 	//mark up structure for natuzzi italia items
 	$page['left']['furn_menu']['italia'] = array(
-		'#prefix' => '<h3><a id="bg2" href="#">Natuzzi Italia</a></h3><div>',
+		'#prefix' => '<h3 class="ui-accordion-header ui-helper-reset ui-state-default ui-corner-all">' . l("Natuzzi Italia", 'natuzzi-italia', array('attributes' => array('id' => 'bg2'))) . '</h3><div class="ui-accordion-content ui-helper-reset ui-widget-content ui-corner-bottom">',
 		'#suffix' => '</div>',
 		'#theme' => 'item_list',
 		'#items' => array_values($output_italia_menu_items),
@@ -645,11 +670,13 @@ function furnitalia_tweaks_page_alter(&$page) {
 	);
 	
 	$output_editions_menu_items = array();
-	_build_subcat_menu_items($editions_items, $output_editions_menu_items);
+	if (arg(0) == 'natuzzi-editions') {
+		_build_subcat_menu_items($editions_items, $output_editions_menu_items);
+	}
 
 	//mark up structure for natuzzi editions items
 	$page['left']['furn_menu']['editions'] = array(
-		'#prefix' => '<h3><a id="bg3" href="#">Natuzzi Editions</a></h3><div>',
+		'#prefix' => '<h3 class="ui-accordion-header ui-helper-reset ui-state-default ui-corner-all">' . l("Natuzzi Editions", 'natuzzi-editions', array('attributes' => array('id' => 'bg3'))) . '</h3><div class="ui-accordion-content ui-helper-reset ui-widget-content ui-corner-bottom">',
 		'#suffix' => '</div>',
 		'#theme' => 'item_list',
 		'#items' => array_values($output_editions_menu_items),
@@ -659,13 +686,13 @@ function furnitalia_tweaks_page_alter(&$page) {
 	
 	//mark up structure for In Store link
 	$page['left']['furn_menu']['in-store'] = array(
-		'#prefix' => '<h3> ' . l( "In Store", 'in-store', array('attributes' => array('id' => 'bg5'))) . '</h3><div>',
+		'#prefix' => '<h3 class="ui-accordion-header ui-helper-reset ui-state-default ui-corner-all"> ' . l( "In Store", 'in-store', array('attributes' => array('id' => 'bg5'))) . '</h3><div class="ui-accordion-content ui-helper-reset ui-widget-content ui-corner-bottom">',
 		'#suffix' => '</div>',		
 	);
 	
 	//mark up structure for interior design link
 	$page['left']['furn_menu']['interior_design'] = array(
-		'#prefix' => '<h3> ' . l( "Interior Design Services", 'interior-design', array('attributes' => array('id' => 'bg4'))) . '</h3><div>',
+		'#prefix' => '<h3 class="ui-accordion-header ui-helper-reset ui-state-default ui-corner-all"> ' . l( "Interior Design Services", 'interior-design', array('attributes' => array('id' => 'bg4'))) . '</h3><div class="ui-accordion-content ui-helper-reset ui-widget-content ui-corner-bottom">',
 		'#suffix' => '</div>',		
 	);
 
@@ -831,7 +858,7 @@ function furnitalia_tweaks_get_parent_category($tid="") {
 function furnitalia_tweaks_form_alter(&$form, &$form_state, $form_id){
 	if ($form['#id'] == 'item-node-form') {
 		
-		dsm($form);
+		//dsm($form);
 		drupal_add_css(drupal_get_path('theme', 'furnitheme') . '/css/leads.css');
 
 		//place video field in tabs
