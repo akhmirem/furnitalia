@@ -86,7 +86,7 @@ var skipAnimation = false;
 				//set up keyhole animation for categories
 				SetUpCategoryAnimKeyHole();	
 				
-				$(".accordion").accordion("option", "active", 0); //make All categories active by default
+				//$(".accordion").accordion("option", "active", 0); //make All categories active by default
 
 				//start first category slideshow
 				SetUpCategorySlider("bg1");
@@ -109,7 +109,7 @@ var skipAnimation = false;
 				//hide top overlay
 				$("#front-overlay").hide();
 				
-				$(".accordion").accordion("option", "active", 0); //make All categories active by default
+				//$(".accordion").accordion("option", "active", 0); //make All categories active by default
 				
 				//start first category slideshow
 				SetUpCategorySlider("bg1");

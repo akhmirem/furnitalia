@@ -141,9 +141,9 @@ function furnitalia_tweaks_brand_cat_page($brand, $cat = NULL, $subcat = NULL) {
 	//root path -- no category ID give -- show brand description info
 	if (! isset($cat)) {
 		if ($brand == 'italia') {
-			return "Natuzzi Italia Description Page";
+			return "Natuzzi Italia -- Description Page To Go Here";
 		} else if ($brand == 'editions') {
-			return "Natuzzi Editions Description Page";
+			return "Natuzzi Editions -- Description Page To Go Here";
 		}
 	}
 	
@@ -188,7 +188,7 @@ function furnitalia_tweaks_brand_cat_page($brand, $cat = NULL, $subcat = NULL) {
 function furnitalia_tweaks_taxonomy_term_page($term=NULL) {
 
 	if (arg(0) == 'collections' && $term == NULL) {
-		return "Description of all collections";
+		return "All Collections -- Description Page to Go Here";
 	}
 
   $vocabulary = taxonomy_vocabulary_load($term->vid);
