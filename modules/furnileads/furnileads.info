@@ -2,3 +2,9 @@ name = "Furnitalia Leads Administration"
 description = "Control Panel for Furnitalia Leads Administration"
 core = 7.x
 
+files[] = furnileads.module
+files[] = furnileads.install
+files[] = views/furnileads.views.inc
+files[] = views/furnileads_handler_field_status.inc
+files[] = views/furnileads_handler_field_edit_link.inc
+files[] = views/furnileads_handler_field_owner.inc

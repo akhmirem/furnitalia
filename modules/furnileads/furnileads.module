@@ -113,7 +113,7 @@ function furnileads_page() {
     } 
 	
 	$query = db_select('furnileads', 'f');
-	$query->fields('f', array('lid', 'status', 'created',  'first_name', 'last_name', 'body', 'updated_by', 'updated'));
+	$query->fields('f', array('lid', 'status', 'created',  'first_name', 'last_name', 'body', 'uid', 'updated'));
 	$query->addExpression('CASE WHEN f.status=\'N\' THEN 1 WHEN f.status=\'P\' THEN 2 WHEN f.status=\'S\' THEN 3 WHEN f.status=\'C\' THEN 4 ELSE 0 END', 'sort_col');
 	$query->orderBy('sort_col', 'ASC');
 	$query->orderBy('created', 'DESC');	
@@ -158,11 +158,11 @@ function furnileads_page() {
 		$temp_row['lead_name'] = $lead['first_name'] . ' ' . $lead['last_name'];
 		$temp_row['body'] = substr($lead['body'],0, 50).'...';
 
-		$user = user_load($lead['updated_by']);
+		$user = user_load($lead['uid']);
 		$profile = field_get_items('user', $user, 'field_first_name');
 		$user_name = $profile[0]['value'];
 
-		$temp_row['updated_by'] = $user_name;
+		$temp_row['uid'] = $user_name;
 		$temp_row['updated'] = empty($lead['updated']) ? "" : format_date($lead['updated'], 'custom', $time_format);
 
 		$temp_row['edit'] = l('View', 'admin/leads/' . $lead['lid']) . ' | ' . l('Edit', 'admin/leads/' . $lead['lid'] . '/edit');
@@ -233,7 +233,7 @@ function furnileads_lead_form($form, &$form_state, $lead) {
 
 	drupal_add_css(drupal_get_path('theme', 'furnitheme') . '/css/leads.css');
 
-	$user = user_load($lead->updated_by);
+	$user = user_load($lead->uid);
 	$profile = field_get_items('user', $user, 'field_first_name');
 	$user_name = $profile[0]['value'];
 
@@ -269,9 +269,9 @@ function furnileads_lead_form($form, &$form_state, $lead) {
 		'#markup' => '<strong>' . t('Last updated') . ": </strong>" .  (empty($lead->updated) ? 'N/A' : format_date($lead->updated, 'custom', $time_format)),
 		'#suffix' => '</div>',
 	);
-	$form['status_wrapper']['updated_by'] = array(
+	$form['status_wrapper']['uid'] = array(
 		'#prefix' => '<div>',
-		'#markup' => '<strong>' . t('Lead owner') . ": </strong>" . (empty($lead->updated_by) ? 'N/A' : $user_name), 
+		'#markup' => '<strong>' . t('Lead owner') . ": </strong>" . (empty($lead->uid) ? 'N/A' : $user_name), 
 		'#suffix' => '</div>',
 	);
 	
@@ -367,7 +367,7 @@ function furnileads_lead_edit_form($form, &$form_state, $lead=NULL) {
 
 	$new_lead = FALSE;
 	if (isset($lead)) {
-		$user = user_load($lead->updated_by);
+		$user = user_load($lead->uid);
 		$profile = field_get_items('user', $user, 'field_first_name');
 		$user_name = $profile[0]['value'];
 
@@ -422,9 +422,9 @@ function furnileads_lead_edit_form($form, &$form_state, $lead=NULL) {
 			'#markup' => '<strong>' . t('Last updated') . ": </strong>" .  (empty($lead->updated) ? 'N/A' : format_date($lead->updated, 'custom', $time_format)),
 			'#suffix' => '</div>',
 		);
-		$form['status_wrapper']['updated_by'] = array(
+		$form['status_wrapper']['uid'] = array(
 			'#prefix' => '<div>',
-			'#markup' => '<strong>' . t('Lead owner') . ": </strong>" . (empty($lead->updated_by) ? 'N/A' : $user_name), 
+			'#markup' => '<strong>' . t('Lead owner') . ": </strong>" . (empty($lead->uid) ? 'N/A' : $user_name), 
 			'#suffix' => '</div>',
 		);
 		
@@ -528,13 +528,13 @@ function furnileads_lead_edit_form_submit($form, &$form_state) {
 			
 			if (strtolower($form_state['clicked_button']['#value']) == 'save') { 
 				$lead['lid'] = $lid;
-				$lead['updated_by'] = $user->uid;
+				$lead['uid'] = $user->uid;
 				$lead['updated'] = REQUEST_TIME;
 				
 				db_update('furnileads')
 					->fields(array(
 						'updated' => $lead['updated'],
-						'updated_by' => $lead['updated_by'],
+						'uid' => $lead['uid'],
 						'type' => $lead['type'],
 						'first_name' => $lead['first_name'],
 						'last_name' => $lead['last_name'],
@@ -569,7 +569,7 @@ function furnileads_lead_edit_form_submit($form, &$form_state) {
 	} else {
 		
 		//create a new lead
-		$lead['updated_by'] = 0;//$user->uid;
+		$lead['uid'] = 0;//$user->uid;
 		$lead['created'] = REQUEST_TIME;
 		$lead['updated'] = 0;//REQUEST_TIME;
 		$lead['status_comments'] = '';
@@ -599,7 +599,7 @@ function furnileads_insert_lead($lead) {
 		->fields(array(
  			 'created',
 			 'updated',
-			 'updated_by',
+			 'uid',
 			 'type',
 			 'first_name',
 			 'last_name',
@@ -614,7 +614,7 @@ function furnileads_insert_lead($lead) {
 		->values(array(
 			 $lead['created'],
 			 $lead['updated'],
-			 $lead['updated_by'],
+			 $lead['uid'],
 			 $lead['type'],
 			 $lead['first_name'],
 			 $lead['last_name'],
@@ -727,7 +727,7 @@ function _furnileads_xmlrpc_insert_lead($lead_info) {
 	//defaults
 	$lead['created'] = REQUEST_TIME;
 	$lead['updated'] = 0;
-	$lead['updated_by'] = 0;
+	$lead['uid'] = 0;
 	$lead['status'] = 'N';
 	$lead['status_comments'] = "";
 	$lead['zip'] = "";
@@ -814,7 +814,7 @@ function _get_lead_status_options() {
 		'N' => 'Open',
 		'P' => 'Pending',
 		'S' => 'Sold',
-		'C' => 'Closed',
+		'X' => 'Closed',
 	);
 	
 	return $lead_status_options;

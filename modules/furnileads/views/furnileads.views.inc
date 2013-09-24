@@ -24,10 +24,10 @@ function furnileads_views_data() {
 
   
  // Pull in user fields directly.
-  $data['users']['table']['join']['furnileads'] = array(
-    'left_field' => 'updated_by',
+  /*$data['users']['table']['join']['furnileads'] = array(
+    'left_field' => 'uid',
     'field' => 'uid',
-  );
+  );*/
 
   // The nodequeue_nodes table is how nodequeue connects to the
   // rest of the world, but we will only join it in via relationship.
@@ -165,13 +165,12 @@ function furnileads_views_data() {
     ),
   );
   
-  // ZIP
-  $data['furnileads']['zip'] = array(
-    'title' => t('Lead ZIP'),
-    'help' => t('Lead ZIP code.'),
+  // Status
+  $data['furnileads']['status'] = array(
+    'title' => t('Lead Status'),
+    'help' => t('Lead Status.'),
     'field' => array(
-      'handler' => 'views_handler_field',
-      'click sortable' => TRUE,
+      'handler' => 'furnileads_handler_field_status',
      ),
     'sort' => array(
       'handler' => 'views_handler_sort',
@@ -215,6 +214,67 @@ function furnileads_views_data() {
       'handler' => 'views_handler_filter_date',
     ),
   );
+  
+  // Edit Link
+  $data['furnileads']['edit_link'] = array(
+    'title' => t('Edit Lead Link'),
+    'help' => t('Link to edit lead record.'),
+    'real field' => 'lid',
+    'field' => array(
+      'handler' => 'furnileads_handler_field_edit_link',
+    ),
+  );
+  
+  // uid field
+  $data['furnileads']['uid'] = array(  
+  	'title' => t('Lead Owner'),
+    'help' => t("The name of the lead owner."),
+    'relationship' => array(
+      'title' => t('Lead Owner'),
+      'base' => 'users',
+      'base field' => 'uid',
+      'handler' => 'views_handler_relationship',
+      'label' => t('owner'),
+    ),
+    'field' => array(
+      'handler' => 'furnileads_handler_field_owner',
+      'click sortable' => TRUE,
+    ),
+    'filter' => array(
+      'handler' => 'views_handler_filter_string',
+    ),
+    'sort' => array(
+      'handler' => 'views_handler_sort',
+    ),
+    'argument' => array(
+      'handler' => 'views_handler_argument_string',
+    ),
+  );
+  
+  /*$data['furnileads']['uid'] = array(
+    'title' => t('Lead Owner'),
+    'relationship' => array(
+      'title' => t('Lead Owner'),
+      'base' => 'users',
+      'base field' => 'uid',
+      'handler' => 'views_handler_relationship',
+      'label' => t('owner'),
+    ),
+    'real field' => 'updated_by',
+    'filter' => array(
+      'handler' => 'views_handler_filter_numeric',
+    ),
+    'argument' => array(
+      'handler' => 'views_handler_argument_numeric',
+    ),
+    'field' => array(
+      'handler' => 'views_handler_field_user_name',
+    ),
+  );*/
+
+
+
+
 
   /*
 // specialized is null/is not null filter
@@ -229,6 +289,24 @@ function furnileads_views_data() {
 */
 
   return $data;
+}
+
+/**
+ * Implements hook_views_handlers().
+ */
+function furnileads_views_handlers() {
+
+  return array(
+    'info' => array(
+      'path' => drupal_get_path('module', 'furnileads') . '/views',
+    ),
+    'handlers' => array(
+      'furnileads_handler_field_status' => array(
+        'parent' => 'views_handler_field',
+        'file' => 'furnileads_handler_field_status.inc',
+      ),
+    ),
+  );
 }
 
 /**
