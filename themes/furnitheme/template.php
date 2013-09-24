@@ -88,7 +88,7 @@ function furnitheme_preprocess_page(&$vars) {
 	$vars['show_keyhole'] = FALSE;
 	$vars['show_promo'] = FALSE;
 	
-	if (arg(0) == 'front') {
+	if (in_array(arg(0), array('front', 'collections')) || (in_array(arg(0), array('natuzzi-italia', 'natuzzi-editions')) && arg(2) == "")) {
 		$vars['show_keyhole'] = TRUE;
 		$vars['show_promo'] = TRUE;
 	}

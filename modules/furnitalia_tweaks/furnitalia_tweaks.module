@@ -140,11 +140,30 @@ function furnitalia_tweaks_brand_cat_page($brand, $cat = NULL, $subcat = NULL) {
 	
 	//root path -- no category ID give -- show brand description info
 	if (! isset($cat)) {
-		if ($brand == 'italia') {
-			return "Natuzzi Italia -- Description Page To Go Here";
+		$build = array();
+		
+		if ($brand == 'italia') {			
+
+			$build['desc'] = array(
+				'#markup' => "Natuzzi Italia -- Description Page To Go Here",
+			);
+			
 		} else if ($brand == 'editions') {
-			return "Natuzzi Editions -- Description Page To Go Here";
+			$build['desc'] = array(
+				'#markup' => "Natuzzi Editions -- Description Page To Go Here",
+			);
 		}
+		
+		drupal_add_js(drupal_get_path('theme', 'furnitheme') . "/js/jquery.bgpos.js");
+		drupal_add_library('system', 'drupal.ajax');
+		
+		$build['add'] = array(
+			'#markup' => '<div id="menu-pic-wrapper">
+					  		<div id="menu-pic" class="menu-hover loading">&nbsp;</div>
+					  	</div>',
+		);
+		
+		return $build;
 	}
 	
 	$alias = $cat;
@@ -188,7 +207,23 @@ function furnitalia_tweaks_brand_cat_page($brand, $cat = NULL, $subcat = NULL) {
 function furnitalia_tweaks_taxonomy_term_page($term=NULL) {
 
 	if (arg(0) == 'collections' && $term == NULL) {
-		return "All Collections -- Description Page to Go Here";
+
+		$build = array();
+		
+		$build['desc'] = array(
+			'#markup' => "All Collections -- Description Page to Go Here",
+		);
+		
+		drupal_add_js(drupal_get_path('theme', 'furnitheme') . "/js/jquery.bgpos.js");
+		drupal_add_library('system', 'drupal.ajax');
+		
+		$build['add'] = array(
+			'#markup' => '<div id="menu-pic-wrapper">
+					  		<div id="menu-pic" class="menu-hover loading">&nbsp;</div>
+					  	</div>',
+		);
+		
+		return $build;
 	}
 
   $vocabulary = taxonomy_vocabulary_load($term->vid);
