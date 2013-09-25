@@ -215,6 +215,23 @@ function furnileads_views_data() {
     ),
   );
   
+  // last action timestamp
+  $data['furnileads']['updated'] = array(
+    'title' => t('Lead last action timestamp'),
+    'help' => t('Last action taken by lead owner timestamp.'),
+    'field' => array(
+      'handler' => 'views_handler_field_date',
+      'click sortable' => TRUE,
+    ),
+    'sort' => array(
+      'handler' => 'views_handler_sort_date',
+    ),
+    'filter' => array(
+      'handler' => 'views_handler_filter_date',
+    ),
+  );
+
+  
   // Edit Link
   $data['furnileads']['edit_link'] = array(
     'title' => t('Edit Lead Link'),
@@ -241,7 +258,7 @@ function furnileads_views_data() {
       'click sortable' => TRUE,
     ),
     'filter' => array(
-      'handler' => 'views_handler_filter_string',
+      'handler' => 'furnileads_handler_filter_uid_select',
     ),
     'sort' => array(
       'handler' => 'views_handler_sort',

@@ -141,7 +141,7 @@ function furnileads_page() {
 				$status_class = "sold";
 				$status_caption = "Sold";				
 				break;				
-			case 'C':
+			case 'X':
 				$status_bg = "background-color:rgb(90, 198, 255);";
 				$status_class = "closed";
 				$status_caption = "Closed";
