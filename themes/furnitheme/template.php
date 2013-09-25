@@ -149,6 +149,16 @@ function preprocess_node_common_fields(&$content, $hook) {
 	if (!empty($content['field_show_add_to_cart']) && $content['field_show_add_to_cart']['#items'][0]['value'] == '0') {
 		unset($content['add_to_cart']);
 	}
+	
+	//for collection items, disable list price, sale price, change label for price
+	//dsm($content);
+	if (isset($content['field_starting_from_price']) && $content['field_starting_from_price']['#items'][0]['value']) {
+		unset($content['list_price']);
+		$content['sell_price']['#title'] = "FROM:";
+		unset($content['field_sale_price']);
+		
+		return;
+	}
 
 	
 	$content['list_price']['#title'] = "MSRP:";
@@ -182,10 +192,7 @@ function preprocess_node_common_fields(&$content, $hook) {
 		$content['sell_price']['#attributes']['class'] = array('old-price');
 		$content['sell_price']['#title'] = "REGULAR:";
 	  	
-	} else {
-		
-		
-	}	
+	}
 	
 }
 

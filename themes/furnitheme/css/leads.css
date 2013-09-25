@@ -23,4 +23,10 @@ div.form-item-body {
 #edit-field-category-und {
 	height:20em;
 }
+.field-name-field-show-add-to-cart, .field-name-field-starting-from-price {
+	background-color: yellow;
+	padding: 1em;
+	border-left: 5px solid red;
+	border-right: 5px solid red;
+}
 /* \ITEM FORM TWEAKS */
