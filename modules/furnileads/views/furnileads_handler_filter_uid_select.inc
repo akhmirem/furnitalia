@@ -16,10 +16,7 @@ class furnileads_handler_filter_uid_select extends views_handler_filter_in_opera
     foreach ($users_list as $user) {
       $users[$user->uid] = $user->name;
     }
-
-    // We don't need Guest user here, so remove it.
-    unset($users[0]);
-
+	
     // Sort by username.
     natsort($users);
 

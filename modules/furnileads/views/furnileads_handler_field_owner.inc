@@ -38,8 +38,6 @@ class furnileads_handler_field_owner extends views_handler_field {
   function render($values) {
     $value = $this->get_value($values);
     
-    dsm($values);
-    
     $account = new stdClass();
 	$account->uid = $this->get_value($values, 'uid');
 	$account->name = $this->get_value($values);
