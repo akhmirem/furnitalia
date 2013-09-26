@@ -156,14 +156,14 @@ p {
 	float:right;
 	overflow:hidden;
 	padding-top: 1.2em;
-	width: 690px;
-	padding-right: 2em;
+	/*width: 690px;
+	padding-right: 2em;*/
 }
-body.not-front #content, .region-header {
+#content, .region-header {
 	width:720px;
 	padding-right: 0;
 }
-body.front .region-header, body.keyhole .region-header {
+body.front .region-header, body.keyhole .region-header, body.front #content, body.keyhole #content {
 	width:670px;
 	padding-right: 2em;
 }

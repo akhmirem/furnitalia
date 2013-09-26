@@ -431,7 +431,7 @@ $("li.active-menu div.ui-accordion-content").each(function(index, val) {
 				'left':'auto',
 				'right':0,
 				'z-index':'1'
-			}).insertBefore($('.keyhole'));
+			}).insertBefore($('div.keyhole'));
 			
 			// insert loaded image into the div 
 			$('#menu-pic')
