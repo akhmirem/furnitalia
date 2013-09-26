@@ -155,16 +155,20 @@ p {
 #content, .region-header {
 	float:right;
 	overflow:hidden;
-	padding-right:2em;
 	padding-top: 1.2em;
-	width:690px;
+	width: 690px;
+	padding-right: 2em;
 }
-body.not-front #content {
+body.not-front #content, .region-header {
 	width:720px;
 	padding-right: 0;
 }
-.region-header {
-	width: 670px;
+body.front .region-header, body.keyhole .region-header {
+	width:670px;
+	padding-right: 2em;
+}
+body.front #block-search-form, body.keyhole #block-search-form {
+	margin-right: 5.5em;
 }
 #content {
 	overflow: visible;
@@ -191,8 +195,12 @@ body.not-front #content {
 #header-phone {
 	position: absolute;
 	top: .5em;
-	right: 6.5em;
+	right: 0;
 	text-decoration: none;
+	z-index: 10;
+}
+body.front #header-phone, body.keyhole #header-phone {
+	right:9.8em;
 }
 #left-section {
 	float:left;
@@ -811,10 +819,15 @@ article.node-item .field-name-body .field-item {
     outline: none;
 }
 body.page-node #pikame li {
-	 display:inline-block;
+	display:inline-block;
+	margin: 0 2px 0 0;
+	padding: 0 5px 0 0;
 }
 .pika-imgnav {
 	visibility: hidden;
+}
+.pika-thumbs {
+	padding: 0;
 }
 .jspDrag {
 	position: relative;

@@ -220,7 +220,9 @@ function furnitheme_preprocess_node(&$vars, $hook) {
  *   The name of the template being rendered ("html" in this case.)
  */
 function furnitheme_preprocess_html(&$variables, $hook) {
-	
+	if (in_array(arg(0), array('collections', 'natuzzi-italia', 'natuzzi-editions')) && arg(1) == '') {
+		 $variables['classes_array'][] = 'keyhole';
+	}
 }
 
 /**
