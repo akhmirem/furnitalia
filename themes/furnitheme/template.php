@@ -822,6 +822,52 @@ function furnitheme_form_views_exposed_form_alter(&$form, &$form_state, $form_id
 }
 
 /**
+ * Display a view as a table style.
+ */
+function furnitheme_preprocess_views_view_table(&$vars) {
+	$view     = $vars['view'];
+	if($view->name == 'leads_test') {
+		drupal_add_css(drupal_get_path('theme', 'furnitheme') . '/css/leads.css');
+			
+		// add css class for each lead row to distinguish them by status color
+		$status_field_labels = $vars['field_classes']['status'];
+		$results = $view->result;
+		foreach ($status_field_labels as $row => $field_class) {
+			$new_class = "";
+			switch($results[$row]->furnileads_status) {
+				case 'N':
+					$new_class = "lead-open";
+					break;
+				case 'P':
+					$new_class = "lead-pending";
+					break;
+				case 'S':
+					$new_class = "lead-sold";
+					break;
+				case 'X':
+					$new_class = "lead-closed";
+					break;
+				default:
+					break;
+			}
+			
+			$status_field_labels[$row] .= " " . $new_class;
+		}
+		
+		$vars['field_classes']['status'] = $status_field_labels;
+		
+		//change lead ownder Anonymous to blank
+		foreach($vars['rows'] as $row => $val) {
+			if ($val['name'] == 'Anonymous') {
+				$vars['rows'][$row]['name'] = "";
+			}
+		}
+		
+		//dsm($vars);
+	}
+}
+
+/**
  * Default preprocess function for all filter forms.
  */
 /*function furnitheme_preprocess_views_exposed_form(&$vars) {
