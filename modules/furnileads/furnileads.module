@@ -5,6 +5,7 @@
  */
 function furnileads_menu() {
 	$items = array();
+	
 	$items['admin/leads'] = array(
 		'title' => 'Furnitalia Leads',
 		'description' => 'Furnitalia Leads Control Panel.',
@@ -12,6 +13,7 @@ function furnileads_menu() {
 		'access callback' => 'user_access',
 		'access arguments' => array('administer leads'),
 	);
+	
 	$items['admin/leads/list'] = array(
 		'title' => 'View Leads',
 		'type' => MENU_DEFAULT_LOCAL_TASK,

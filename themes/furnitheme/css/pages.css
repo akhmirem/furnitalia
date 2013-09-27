@@ -163,7 +163,7 @@ p {
 	width:720px;
 	padding-right: 0;
 }
-body.front .region-header, body.keyhole .region-header, body.front #content, body.keyhole #content {
+body.front .region-header, body.keyhole .region-header, body.keyhole #content {
 	width:670px;
 	padding-right: 2em;
 }
@@ -688,6 +688,7 @@ aside.contact-page a {
 	height: 350px;
 	position: relative;
 	top: .85em;
+	right:1em;
 }
 #cat-preview h2 {
 	font-weight: 300;
