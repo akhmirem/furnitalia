@@ -89,6 +89,11 @@ function furnileads_schema() {
 				'type' => 'text',
 				'size' => 'big',
 			),
+			'log' => array(
+				'description' => 'A log with timestamp to keep track of changes to lead record',
+				'type' => 'text',
+				'size' => 'big',
+			),
 
 		),
 		// Added primary keys in views_schema_6008()

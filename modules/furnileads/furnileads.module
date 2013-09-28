@@ -114,7 +114,7 @@ function furnileads_page() {
 	
 	$query = db_select('furnileads', 'f');
 	$query->fields('f', array('lid', 'status', 'created',  'first_name', 'last_name', 'body', 'uid', 'updated'));
-	$query->addExpression('CASE WHEN f.status=\'N\' THEN 1 WHEN f.status=\'P\' THEN 2 WHEN f.status=\'S\' THEN 3 WHEN f.status=\'C\' THEN 4 ELSE 0 END', 'sort_col');
+	$query->addExpression('CASE WHEN f.status=\'N\' THEN 1 WHEN f.status=\'P\' THEN 2 WHEN f.status=\'S\' THEN 3 WHEN f.status=\'X\' THEN 4 ELSE 0 END', 'sort_col');
 	$query->orderBy('sort_col', 'ASC');
 	$query->orderBy('created', 'DESC');	
 	$result = $query->extend('PagerDefault')->limit(50)->execute();
@@ -282,6 +282,14 @@ function furnileads_lead_form($form, &$form_state, $lead) {
 		'#cols' => '40',
 		'#rows' => '4',
 	);
+	$form['status_wrapper']['log'] = array(
+		'#type' => 'textarea',
+		'#title' => t('Change Log'),
+		'#default_value' => $lead->log,
+		'#cols' => '40',
+		'#rows' => '4',
+		'#disabled' => TRUE,
+	);
 
 		
 	$form['first_name'] = array(
@@ -435,6 +443,14 @@ function furnileads_lead_edit_form($form, &$form_state, $lead=NULL) {
 			'#cols' => '40',
 			'#rows' => '4',
 		);
+		$form['status_wrapper']['log'] = array(
+			'#type' => 'textarea',
+			'#title' => t('Change Log'),
+			'#default_value' => $lead->log,
+			'#cols' => '40',
+			'#rows' => '4',
+			'#disabled' => TRUE,
+		);
 	}
 	$form['first_name'] = array(
 		'#type' => 'textfield',
@@ -521,6 +537,7 @@ function furnileads_lead_edit_form_submit($form, &$form_state) {
 	global $user;
 
 	$lead = $form_state['values'];
+	$time_format = 'm-d-Y H:i';
 
 	if(count($form_state['build_info']['args']) > 0 ) {
 		$lid = $form_state['build_info']['args'][0]->lid;
@@ -545,6 +562,7 @@ function furnileads_lead_edit_form_submit($form, &$form_state) {
 						'status' => $lead['status'],
 						'status_comments' => $lead['status_comments'],
 						'zip' => $lead['zip'],
+						'log' => $lead['log'] . "\n" . format_date(REQUEST_TIME, 'custom', $time_format) . ' by ' . $user->name,
 					 ))
 					->condition('lid', $lid)
 					->execute();
@@ -573,6 +591,7 @@ function furnileads_lead_edit_form_submit($form, &$form_state) {
 		$lead['created'] = REQUEST_TIME;
 		$lead['updated'] = 0;//REQUEST_TIME;
 		$lead['status_comments'] = '';
+		$lead['log'] = 'Created: ' . format_date(REQUEST_TIME, 'custom', $time_format);
 		$lid = furnileads_insert_lead($lead);
 		/*
 if (is_numeric($lid)) {
@@ -610,6 +629,7 @@ function furnileads_insert_lead($lead) {
 			 'status',
 			 'status_comments',
 			 'zip',
+			 'log',
 		 ))
 		->values(array(
 			 $lead['created'],
@@ -625,6 +645,7 @@ function furnileads_insert_lead($lead) {
 			 $lead['status'],
 			 $lead['status_comments'],
 			 $lead['zip'],
+			 $lead['log'],
 		))
 		->execute();
 
@@ -731,6 +752,7 @@ function _furnileads_xmlrpc_insert_lead($lead_info) {
 	$lead['status'] = 'N';
 	$lead['status_comments'] = "";
 	$lead['zip'] = "";
+	$lead['log'] = "";
 	
 	$lid = furnileads_insert_lead($lead);
 	
@@ -839,4 +861,92 @@ function furnileads_views_api() {
     'api' => '2.0',
     'path' => drupal_get_path('module', 'furnileads') . '/views',
   );
+}
+
+/**
+ * Display a view as a table style.
+ */
+function furnileads_preprocess_views_view_table(&$vars) {
+	$view     = $vars['view'];
+	if($view->name == 'leads_test') {
+		drupal_add_css(drupal_get_path('theme', 'furnitheme') . '/css/leads.css');
+			
+		// add css class for each lead row to distinguish them by status color
+		$status_field_labels = $vars['field_classes']['status'];
+		$results = $view->result;
+		foreach ($status_field_labels as $row => $field_class) {
+			$new_class = "";
+			switch($results[$row]->furnileads_status) {
+				case 'N':
+					$new_class = "lead-open";
+					break;
+				case 'P':
+					$new_class = "lead-pending";
+					break;
+				case 'S':
+					$new_class = "lead-sold";
+					break;
+				case 'X':
+					$new_class = "lead-closed";
+					break;
+				default:
+					break;
+			}
+			
+			$status_field_labels[$row] .= " " . $new_class;
+		}
+		
+		$vars['field_classes']['status'] = $status_field_labels;
+		
+		//change lead ownder Anonymous to blank
+		foreach($vars['rows'] as $row => $val) {
+			if ($val['name'] == 'Anonymous') {
+				$vars['rows'][$row]['name'] = "";
+			}
+		}
+		
+		//dsm($vars);
+	}
+}
+
+/**
+ * Implements hook_preprocess_views_view().
+ */
+function furnileads_preprocess_views_view(&$vars) {
+  if ($vars['view']->name === 'leads_test') {
+    // Wrap exposed filters in a fieldset.
+    if ($vars['exposed']) {
+      drupal_add_js('misc/form.js');
+      drupal_add_js('misc/collapse.js');
+      // Default collapsed
+      $collapsed = TRUE;
+      $class = array('collapsible', 'collapsed');
+      if (count($_GET) > 1){
+        // assume other get vars are exposed filters, so expand fieldset
+        // to show applied filters
+        $collapsed = FALSE;
+        $class = array('collapsible');
+      }
+      $fieldset['element'] = array(
+        '#title' => 'Refine leads list',
+        '#collapsible' => TRUE,
+        '#collapsed' => $collapsed,
+        '#attributes' => array('class' => $class),
+        '#children' => $vars['exposed'],
+      );
+      	
+      	$query = db_select('furnileads', 'f');
+		$query->fields('f', array('status'));
+		$query->addExpression('COUNT(f.lid)', 'lead_count');
+		$query->groupBy('f.status');
+		$result = $query->execute();
+		$stats_info = "";
+		$status_options = _get_lead_status_options();
+		while($record = $result->fetchAssoc()) {
+		    $stats_info .= '<strong>' . $status_options[$record['status']] . ":</strong>" . " " .  $record['lead_count']  . "&nbsp;&nbsp;|&nbsp;&nbsp;";
+		} 
+		
+      $vars['exposed'] = $stats_info . '<br/>' . theme('fieldset', $fieldset);
+    }
+  }
 }

@@ -32,6 +32,10 @@ td.lead-closed {
 	background-color:rgb(90, 198, 255);
 }
 
+ul.tips, div.description, .form-item div.description {
+	clear:both;
+}
+
 /* ITEM FORM TWEAKS */
 #edit-field-category-und {
 	height:20em;
