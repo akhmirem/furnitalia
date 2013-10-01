@@ -6,13 +6,15 @@
 function furnileads_menu() {
 	$items = array();
 	
-	$items['admin/leads'] = array(
+	/*
+$items['admin/leads'] = array(
 		'title' => 'Furnitalia Leads',
 		'description' => 'Furnitalia Leads Control Panel.',
 		'page callback' => 'furnileads_page',
 		'access callback' => 'user_access',
 		'access arguments' => array('administer leads'),
 	);
+*/
 	
 	$items['admin/leads/list'] = array(
 		'title' => 'View Leads',
@@ -99,7 +101,7 @@ function furnileads_permission() {
 /**
  * Display list of leads
  */
-function furnileads_page() {
+/*function furnileads_page() {
 
 	$query = db_select('furnileads', 'f');
 	$query->fields('f', array('status'));
@@ -192,7 +194,7 @@ function furnileads_page() {
 	);
 	
 	return $output;
-}
+}*/
 
 /**
  * Display edit form for a selected lead.
