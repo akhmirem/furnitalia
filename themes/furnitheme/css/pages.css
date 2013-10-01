@@ -811,6 +811,7 @@ article.node-item .field-name-body .field-item {
 	width:18.5em;
 	overflow: auto;
 	text-align: justify;
+	outline: none;
 }
 #pikawrapper {
 	height:150px;
@@ -881,14 +882,12 @@ article ul.inline li {
 	margin: .5em 0;
 	padding: .5em 0;
 }
-#share-form {
+div.sharethis-buttons {
 	margin-top:1em;
 }
-#share-form .dk_container {
-	width:13.5em;
-	float:none;
+div.sharethis-wrapper span {
+	margin: 0
 }
-
 
 /*
  * Custom dropdown
@@ -1099,7 +1098,7 @@ hr.article-sep {
 #promo {
 	height: 160px;
 	clear: both;
-	padding: 2.7em 0 0 2em;
+	padding: 2.7em 0 0 1em;
 }
 #promo h3 {
 	font-size: .9em;
@@ -1193,4 +1192,17 @@ article.interior-design {
 #content-right {
     width: 12.5em;
     float: left;
+}
+
+#stitch {
+	background: transparent url(../images/Stitch2MT2.png) repeat-y center center;
+	width: 50px;
+	position: absolute;
+	right: -50px;
+	height: 100%;
+	z-index: 100;
+	top: 0;
+}
+body.page-node #stitch {
+	right: -70px;
 }

@@ -72,7 +72,7 @@ if ($teaser) { //item teaser view
 } else { //full page view
 ?>
 
-<?php 	//dsm($content); ?>
+<?php //dsm($content); ?>
 <article class="node-<?php print $node->nid; ?> <?php print $classes; ?> clearfix"<?php print $attributes; ?>>
 
   <?php if ($unpublished): ?>
@@ -133,7 +133,8 @@ if ($teaser) { //item teaser view
 		  <span class="favorites"><a href="<?php print file_create_url($content['field_product_pdf']['#items'][0]['uri']);?>">schematics pdf<img src="<?php print base_path() . path_to_theme(); ?>/images/SubLink_Arrow_Red_6x9.png" class="sublink-arrow"/></a></span>
 	  <?php endif; ?>
 
-  	  <form action="" id="share-form">
+  	 <!--
+ <form action="" id="share-form">
  		  <label for="share">SHARE:</label>	
 	  	  <select id="share-this" name ="share">
 	  	  	<option value="default" >Select an option</option>
@@ -145,6 +146,9 @@ if ($teaser) { //item teaser view
 	  	  <input type="hidden" name="data-url" value="<?php print $base_url . "/" . $node_url ?>" />
  	  	  <input type="hidden" name="data-title" value="Check out &quot;<?php print $title ?>&quot; at Furnitalia" />
   	  </form>
+-->
+  	  
+  	  <?php print render($content['sharethis']); ?>
 	  
   </div>
   <div id="item-info">

@@ -197,7 +197,7 @@
   <?php if ($show_keyhole) : ?>
   	<div class="keyhole">&nbsp;</div>
   <?php endif; ?>
-
+  <div id="stitch">&nbsp;</div>
 </div><!-- /#page -->
 
 <?php print render($page['bottom']); ?>
