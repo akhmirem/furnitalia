@@ -351,7 +351,7 @@ function furnileads_lead_form($form, &$form_state, $lead) {
 		'#title' => t('Message'),
 		'#default_value' => $lead->body,
 		'#cols' => '40',
-		'#rows' => '4',
+		'#rows' => '10',
 	);
 	
 	//wrap around container
@@ -505,7 +505,7 @@ function furnileads_lead_edit_form($form, &$form_state, $lead=NULL) {
 		'#title' => t('Message'),
 		'#default_value' => $lead->body,
 		'#cols' => '40',
-		'#rows' => '4',
+		'#rows' => '10',
 	);
 	
 	
