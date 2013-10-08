@@ -63,6 +63,9 @@ a:link, a:visited, .ui-state-default a, .ui-state-default a:link, .ui-state-defa
 a:hover, .ui-state-default a:hover {
 	color:#981b1e;
 }
+a.dk_toggle:hover {
+	color:#fff;
+}
 
 p {
     line-height: 1.3em;
