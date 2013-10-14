@@ -102,18 +102,21 @@ function furnitalia_tweaks_menu() {
     );
     $items['collections'] = array(
     	'page callback' => 'furnitalia_tweaks_taxonomy_term_page',
+    	'title' => 'Furniture Collections',
 		'access callback' => TRUE, 
 		'type' => MENU_CALLBACK,
     );
     $items['natuzzi-italia'] = array (
 		'page callback' => 'furnitalia_tweaks_brand_cat_page',
 		'page arguments' => array('italia'),
+    	'title' => 'Natuzzi Italia Furniture Collections',
 		'access callback' => TRUE, 
 		'type' => MENU_CALLBACK,
 	);
 	$items['natuzzi-editions'] = array (
 		'page callback' => 'furnitalia_tweaks_brand_cat_page',
 		'page arguments' => array('editions'),
+    	'title' => 'Natuzzi Editions Furniture Collections',		
 		'access callback' => TRUE, 
 		'type' => MENU_CALLBACK,
 	);
