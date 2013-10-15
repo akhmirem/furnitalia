@@ -1,0 +1,9 @@
+name = XML sitemap for Furnitalia menu
+description = Add Furnitalia menu links to the sitemap.
+package = XML sitemap
+core = 7.x
+dependencies[] = xmlsitemap
+dependencies[] = taxonomy
+files[] = xmlsitemap_furnitalia.module
+files[] = xmlsitemap_furnitalia.install
+

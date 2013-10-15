@@ -1,0 +1,214 @@
+<?php
+
+/**
+ * Implements hook_xmlsitemap_link_info().
+ */
+function xmlsitemap_furnitalia_xmlsitemap_link_info() {
+  return array(
+    'furnitalia' => array(
+      'label' => t('Furnitalia Menu links'),
+    ),
+  );
+}
+
+/**
+ * Implements hook_cron().
+ *
+ * Process old taxonomy terms not found in the {xmlsitemap} table.
+ */
+function xmlsitemap_furnitalia_cron() {
+  xmlsitemap_furnitalia_xmlsitemap_index_links(xmlsitemap_var('batch_limit'));
+}
+
+/**
+ * Implements hook_xmlsitemap_index_links().
+ */
+function xmlsitemap_furnitalia_xmlsitemap_index_links($limit) {
+  
+  	$editions = 22;
+	$italia = 21;
+	
+	//-------------------------------------	
+	// all collections query
+	//-------------------------------------	
+	$result = db_query("
+	  	SELECT DISTINCT td.tid, td.name, h.parent as parent_term, td.weight as delta
+		FROM {taxonomy_term_data} td
+		INNER JOIN {field_data_field_category} cat on cat.field_category_tid = td.tid
+		INNER JOIN {node} n on n.nid=cat.entity_id and n.status=1
+		INNER JOIN {taxonomy_term_hierarchy} h on td.tid=h.tid
+		WHERE td.vid = :vid 
+		ORDER BY td.weight", array(":vid" => 2));
+
+	$all_items = array();
+	foreach($result as $term) {
+		
+		if ($term->parent_term != 0 ) {
+			//if it's an item with parent term
+			if (!isset($all_items[$term->parent_term])) {
+				//parent term not in the list, insert it
+				$parent_term = taxonomy_term_load($term->parent_term);
+								
+				$link = url('taxonomy/term/' . $term->parent_term, array('absolute' => TRUE));		
+				
+				//misc assignment, from furnitalia_tweaks				
+				$all_items[$term->parent_term] = array(
+					'tid' => $term->parent_term,
+					'link' => $link,
+					'sub' => array(),
+				);
+				
+				$xmlsitemap = array(
+					'id' => $term->parent_term,
+					'type' => 'furnitalia',
+				    'priority' => 0.95,
+					'loc' => $link,
+				);
+				xmlsitemap_link_save($xmlsitemap);
+				
+			}
+			
+			$link = url('taxonomy/term/' . $term->tid, array('absolute' => TRUE));	
+			
+			//misc assignment, from furnitalia_tweaks
+			$all_items[$term->parent_term]['sub'][$term->tid] = array(
+				'tid' => $term->tid,
+				'link' => $link,
+			);
+			
+			$xmlsitemap = array(
+				'id' => $term->tid,			
+				'type' => 'furnitalia',
+			    'priority' => 0.9,
+				'loc' => $link,
+			);
+			xmlsitemap_link_save($xmlsitemap);
+			
+		} else {
+			//if it is the parent term			
+			if (!isset($all_items[$term->tid])) {			
+			
+				$link = url('taxonomy/term/' . $term->tid, array('absolute' => TRUE));	
+				
+				//misc assignment, from furnitalia_tweaks
+				$all_items[$term->tid] = array(
+					'tid' => $term->tid,
+					'link' => $link,
+					'sub' => array(),
+				);
+				
+				$xmlsitemap = array(
+					'id' => $term->tid,							
+					'type' => 'furnitalia',
+				    'priority' => 0.95,
+					'loc' => $link,
+				);
+				xmlsitemap_link_save($xmlsitemap);
+			}
+		}		
+	}
+	
+	
+	//-------------------------------------
+	// italia/editions collections query  
+	//--------------------------------------
+	$italia_items = array();
+	$editions_items = array();
+	
+	$result = db_query("
+	  SELECT DISTINCT td.tid, td.name, b.field_brand_tid as brand, h.parent as parent_term, td.weight as delta
+	  FROM {taxonomy_term_data} td
+	  INNER JOIN {field_data_field_category} cat on cat.field_category_tid = td.tid
+	  INNER JOIN {node} n on n.nid=cat.entity_id and n.status=1
+	  LEFT JOIN {taxonomy_term_hierarchy} h on td.tid=h.tid
+	  INNER JOIN {field_data_field_brand} b on b.entity_id=n.nid and b.field_brand_tid IN(:brand1, :brand2)
+	  WHERE td.vid = :vid 
+	  ORDER BY td.weight", array(":brand1" => $italia, ":brand2" => $editions,":vid" => 2));
+	  
+	foreach($result as $term) {
+		
+		if	($term->brand == $italia) {
+			//if natuzzi italia brand			
+			$temp_items = &$italia_items;
+			$path_prefix = "natuzzi-italia/";
+		} else {
+			//natuzzi editions brand term
+			$temp_items = &$editions_items;		
+			$path_prefix = "natuzzi-editions/";
+		}
+		
+		if ($term->parent_term != 0 ) {
+			//if it's an item with parent term
+			if (!isset($temp_items[$term->parent_term])) {
+				//parent term not in the list, insert it
+				$parent_term = taxonomy_term_load($term->parent_term);
+				
+				//generate link
+				$path = $path_prefix . drupal_get_path_alias('taxonomy/term/' . $term->parent_term);
+				$link = url($path, array('absolute' => TRUE));	
+				
+				//misc assignment, from furnitalia_tweaks				
+				$temp_items[$term->parent_term] = array(
+					'tid' => $term->parent_term,
+					'link' => $link,
+					'sub' => array(),
+				);
+				
+				$xmlsitemap = array(
+					'id' => $term->parent_term . '00' .$term->brand,
+					'type' => 'furnitalia',
+				    'priority' => 0.95,
+					'loc' => $link,
+				);
+				xmlsitemap_link_save($xmlsitemap);
+			}
+			
+			//insert term into parent's list
+			
+			//generate link
+			$path = $path_prefix . drupal_get_path_alias('taxonomy/term/' . $term->tid);
+			$link = url($path, array('absolute' => TRUE));
+
+			//misc assignment, from furnitalia_tweaks
+			$temp_items[$term->parent_term]['sub'][$term->tid] = array(
+				'tid' => $term->tid,
+				'link' => $link,
+			);
+			
+			$xmlsitemap = array(
+				'id' => $term->tid . '00' .$term->brand,
+				'type' => 'furnitalia',
+			    'priority' => 0.9,
+				'loc' => $link,
+			);
+			xmlsitemap_link_save($xmlsitemap);
+
+			
+		} else {
+			//if it is the parent term
+			if (!isset($temp_items[$term->tid])) {
+			
+				//generate link	
+				$path = $path_prefix . drupal_get_path_alias('taxonomy/term/' . $term->tid);
+				$link = url($path, array('absolute' => TRUE));
+
+				//misc assignment, from furnitalia_tweaks
+				$temp_items[$term->tid] = array(
+					'tid' => $term->tid,
+					'link' => l($term->name, $path),
+					'sub' => array(),
+				);
+				
+				$xmlsitemap = array(
+					'id' => $term->tid . '00' .$term->brand,
+					'type' => 'furnitalia',
+				    'priority' => 0.95,
+					'loc' => $link,
+				);
+				xmlsitemap_link_save($xmlsitemap);
+
+			}
+		}
+	}
+  
+}
