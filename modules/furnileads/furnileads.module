@@ -579,12 +579,12 @@ function furnileads_lead_edit_form_submit($form, &$form_state) {
 				}
 			}
 			
-			drupal_goto("admin/leads");
+			//drupal_goto(drupal_get_destination());
 
 
 		} else {
 			drupal_set_message("Changes to lead info were not saved. Missing lead ID.", "error");
-			drupal_goto("admin/leads");
+			//drupal_goto(drupal_get_destination());
 		}
 	} else {
 		
@@ -601,7 +601,8 @@ if (is_numeric($lid)) {
 			drupal_goto("admin/leads/$lid");
 		}
 */
-		drupal_goto("admin/leads");
+
+		drupal_goto('admin/leads');
 	}
 	
 }
@@ -909,6 +910,27 @@ function furnileads_preprocess_views_view_table(&$vars) {
 		
 		//dsm($vars);
 	}
+}
+
+/**
+ * Implements hook_form_alter().
+ *
+ * Alter exposed filter form in views
+ */
+function furnileads_form_views_exposed_form_alter(&$form, &$form_state, $form_id) {  
+	if($form['#id'] == 'views-exposed-form-leads-test-page-1') {
+	
+		$end_week = strtotime("last sunday midnight");
+		$start_week = strtotime("-1 week",$end_week);
+		
+		$start_week = date("m/d/Y",$start_week);
+		$end_week = date("m/d/Y",$end_week);
+		
+		$form['created']['min']['#value'] = $start_week;
+		$form['created']['max']['#value'] = $end_week;		
+		
+		dsm($form);
+    }
 }
 
 /**

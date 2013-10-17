@@ -176,10 +176,19 @@ function furnileads_views_data() {
       'handler' => 'views_handler_sort',
     ),
     'filter' => array(
-      'handler' => 'views_handler_filter_string',
+      'handler' => 'furnileads_handler_filter_status_select',
+      'label' => t('Lead status'),
     ),
     'argument' => array(
       'handler' => 'views_handler_argument_string',
+    ),
+  );
+
+  $data['furnileads']['status-filter'] = array(
+    'title' => t('Filter by Lead Status'),
+    'help' => t('Lead Status.'),
+    'filter' => array(
+      'handler' => 'furnileads_handler_filter_status_select',
     ),
   );
 
@@ -321,6 +330,9 @@ function furnileads_views_handlers() {
       'furnileads_handler_field_status' => array(
         'parent' => 'views_handler_field',
         'file' => 'furnileads_handler_field_status.inc',
+      ),
+      'furnileads_handler_filter_status_select' => array(
+        'parent' => 'views_handler_filter_string',
       ),
     ),
   );
