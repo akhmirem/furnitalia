@@ -929,7 +929,17 @@ function furnileads_form_views_exposed_form_alter(&$form, &$form_state, $form_id
 		$form['created']['min']['#value'] = $start_week;
 		$form['created']['max']['#value'] = $end_week;		
 		
-		dsm($form);
+    } else if($form['#id'] == 'views-exposed-form-leads-test-page-2') {
+	
+		$start_week = strtotime("last monday midnight");
+		$end_week = strtotime("+1 week",$start_week);
+		
+		$start_week = date("m/d/Y",$start_week);
+		$end_week = date("m/d/Y",$end_week);
+		
+		$form['created']['min']['#value'] = $start_week;
+		$form['created']['max']['#value'] = $end_week;		
+		
     }
 }
 
