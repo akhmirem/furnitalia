@@ -148,12 +148,12 @@ function furnitalia_tweaks_brand_cat_page($brand, $cat = NULL, $subcat = NULL) {
 		if ($brand == 'italia') {			
 
 			$build['desc'] = array(
-				'#markup' => "Natuzzi Italia -- Description Page To Go Here",
+				'#markup' => theme('natuzzi-cat'), //"Natuzzi Italia -- Description Page To Go Here",
 			);
 			
 		} else if ($brand == 'editions') {
 			$build['desc'] = array(
-				'#markup' => "Natuzzi Editions -- Description Page To Go Here",
+				'#markup' => theme('editions-cat'), //"Natuzzi Editions -- Description Page To Go Here",
 			);
 		}
 		
@@ -214,7 +214,7 @@ function furnitalia_tweaks_taxonomy_term_page($term=NULL) {
 		$build = array();
 		
 		$build['desc'] = array(
-			'#markup' => "All Collections -- Description Page to Go Here",
+			'#markup' => theme('all-cats'), #"All Collections -- Description Page to Go Here",
 		);
 		
 		drupal_add_js(drupal_get_path('theme', 'furnitheme') . "/js/jquery.bgpos.js");
@@ -340,6 +340,22 @@ function furnitalia_tweaks_theme($existing, $type, $theme, $path) {
             'template' => 'interior-design',
             'path' => drupal_get_path('theme', 'furnitheme') . '/templates',
         ),
+		'all-cats' => array(
+            'arguments' => array(),
+            'template' => 'all-cats',
+            'path' => drupal_get_path('theme', 'furnitheme') . '/templates',
+        ),
+		'natuzzi-cat' => array(
+            'arguments' => array(),
+            'template' => 'natuzzi-cat',
+            'path' => drupal_get_path('theme', 'furnitheme') . '/templates',
+		),
+		'editions-cat' => array(
+            'arguments' => array(),
+            'template' => 'editions-cat',
+            'path' => drupal_get_path('theme', 'furnitheme') . '/templates',
+		),
+		
         
     );
     return $themes;

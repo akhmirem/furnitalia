@@ -94,7 +94,7 @@ function furnitheme_preprocess_page(&$vars) {
 	}
 
 	$vars['show_title'] = TRUE;	
-	if (arg(0) == 'node' && is_numeric(arg(1)) || in_array(arg(0), array("sale"))) {
+	if (arg(0) == 'node' && is_numeric(arg(1)) || in_array(arg(0), array("sale","collections","natuzzi-italia","natuzzi-editions"))) {
 		drupal_add_js(drupal_get_path('theme', 'furnitheme') . '/lib/jscrollpane/jquery.jscrollpane.min.js');
 		drupal_add_js(drupal_get_path('theme', 'furnitheme') . '/lib/jscrollpane/mwheelIntent.js');
 		drupal_add_css(drupal_get_path('theme', 'furnitheme') . '/lib/jscrollpane/jquery.jscrollpane.css');

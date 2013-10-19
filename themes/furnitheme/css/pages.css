@@ -1209,3 +1209,24 @@ article.interior-design {
 body.page-node #stitch {
 	right: -70px;
 }
+
+/**
+ * Category Description page
+ */
+section.category-desc h2, section.natuzzi-cat h2 {
+	position: relative;
+	top: .9em;
+	left: 16em;
+	font-size: .9em;
+}
+section.natuzzi-cat h2 {
+	left:13em;
+}
+section.category-desc p {
+	text-transform: uppercase;
+	font-size: .9em;
+	margin: 1.5em 15em 0 16em;
+}
+section.natuzzi-cat p {
+	margin:1em 14em 0 0;
+}
