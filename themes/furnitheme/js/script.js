@@ -177,6 +177,11 @@ var skipAnimation = false;
 				
 				var ajax = new Drupal.ajax("#contact-us", $('#contact-us')[0], element_settings);
 			});
+			$('article a.appointment').once(function() {
+				element_settings.url = Drupal.settings.basePath + 'contact/ajax/';
+				
+				var ajax = new Drupal.ajax("article a.appointment", $('article a.appointment')[0], element_settings);
+			});
 			
 			$('#request-quote').once(function() {
 				element_settings.url = $(this).attr('href');

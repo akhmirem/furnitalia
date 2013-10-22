@@ -66,10 +66,22 @@ a:hover, .ui-state-default a:hover {
 a.dk_toggle:hover {
 	color:#fff;
 }
+a.appointment {
+	color:#981b1e;
+	font-size:1.5em;
+	display: block;
+	padding: 1em 0;
+}
+a.appointment:hover {
+	background:#f3d8f1;
+}
 
 p {
     line-height: 1.3em;
     margin: 0.7em 0;
+}
+p.disclaimer {
+	font-size:.8em;
 }
 
 
