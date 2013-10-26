@@ -916,7 +916,7 @@ function furnitalia_tweaks_form_alter(&$form, &$form_state, $form_id){
 		drupal_add_css(drupal_get_path('theme', 'furnitheme') . '/css/leads.css');
 
 		//place video field in tabs
-	    $form['item_video'] = array(
+	    $form['item_video_container'] = array(
 	        '#type' => 'fieldset',
 	        '#title' => t('Item Video'),
 	        '#collapsible' => TRUE,
@@ -924,8 +924,11 @@ function furnitalia_tweaks_form_alter(&$form, &$form_state, $form_id){
 	        '#group' => 'additional_settings',
 	        '#weight' => -2, //Tab location
 	    );
-	    $form['item_video']['und'][0] = $form['field_video'];
-	    $form['field_video']['#access'] = FALSE;
+
+	    $form['field_video']['#container'] = array('field_video');	//make sure parent item doesn't change after moving form element
+	    $form['item_video_container']['field_video'] = $form['field_video'];
+	    unset($form['field_video']);
+	    
 	    
 	    $form['buttons']['#weight'] = 100;
 	    

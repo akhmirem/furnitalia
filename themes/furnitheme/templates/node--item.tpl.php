@@ -19,6 +19,12 @@ if (isset($content['field_availability']) && is_array($content['field_availabili
 	$content['field_availability'][0]['#markup'] = $availability_icon . $content['field_availability'][0]['#markup'];
 }
 
+//determine if item contains video
+$has_video = FALSE;
+if(isset($content['field_video']) && is_array($content['field_video']) && is_array($content['field_video']['#items']) && count($content['field_video']['#items'] > 0)) {
+	$has_video = TRUE;
+}
+
 	
 if ($teaser) { //item teaser view
 
@@ -111,8 +117,13 @@ if ($teaser) { //item teaser view
 	  		
 		  	<li><a href="<?php print $full_img_url; ?>"><?php print theme("image", array("path" => $thumb_url, "attributes" => array("ref" => $img_url))); ?></a></li>
 		  	
-
+		  		
 	  	<?php endforeach;?>
+	  	
+	  	<?php if ($has_video): ?>
+	  		<li><img src="<?php print base_path() . path_to_theme(); ?>/images/play-button.gif" id="item-video-img" /></li>
+	  	<?php endif; ?>
+
 	  </ul>
 	  
 	  <span><a href="#" id="zoom-in"><img src="<?php print base_path() . path_to_theme(); ?>/images/Zoom_In_18x20.png"/>Zoom in</a></span>
@@ -182,6 +193,13 @@ if ($teaser) { //item teaser view
 	  <?php print l("Request info", "request/$node->nid/ajax", array('attributes' => array('id' => 'request-quote'))); ?>
 	  
   </div>
+  
+  <?php if ($has_video): ?>
+	  <div id="hidden-video">
+	  	  <!-- This is a hidden container for item video, its contents will appear in popup box -->
+		  <?php print render($content['field_video']); ?>
+	  </div>
+  <?php endif; ?>
   
  <br/>
  

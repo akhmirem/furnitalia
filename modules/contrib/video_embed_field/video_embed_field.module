@@ -352,7 +352,11 @@ function template_preprocess_video_embed_field_embed_code(&$variables) {
 
   // Prepare embed code
   if ($handler && isset($handler['function']) && function_exists($handler['function'])) {
-    $variables['embed_code'] = drupal_render(call_user_func($handler['function'], $variables['url'], $variables['style_settings']));
+	//PATCH STARTS
+    //$variables['embed_code'] = drupal_render(call_user_func($handler['function'], $variables['url'], $variables['style_settings']));
+    $embed = call_user_func($handler['function'], $variables['url'], $variables['style_settings']);
+    $variables['embed_code'] = drupal_render($embed);
+    //PATCH ENDS
   }
   else {
     $variables['embed_code'] = l($variables['url'], $variables['url']);

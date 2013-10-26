@@ -903,6 +903,9 @@ div.sharethis-buttons {
 div.sharethis-wrapper span {
 	margin: 0
 }
+#hidden-video {
+	display: none;
+}
 
 /*
  * Custom dropdown
@@ -1210,7 +1213,7 @@ article.interior-design {
 }
 
 #stitch {
-	background: transparent url(../images/Stitch2MT2.png) repeat-y center center;
+	background: transparent url(../images/stitch-small.png) repeat-y center center;
 	width: 50px;
 	position: absolute;
 	right: -50px;

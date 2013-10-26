@@ -238,6 +238,18 @@ var skipAnimation = false;
 				});
 			}
 			
+			$("#item-video-img").unbind('click').click(function() {
+				$.fancybox.open($('div.embedded-video'), {
+					width:800,
+					height:600,
+					closeBtn:true,
+					closeClick:false,
+					mouseWheel:true,
+					openEffect	: 'none',
+					closeEffect	: 'none'
+				});
+			});
+			
         }
 	}
 	
