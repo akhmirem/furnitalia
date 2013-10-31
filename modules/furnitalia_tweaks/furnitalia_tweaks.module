@@ -1022,7 +1022,7 @@ function furnitalia_tweaks_favorites_list() {
 	$favorites = flag_get_user_flags('node', NULL, $user->uid);
 	
 	if(!isset($favorites['favorites']) || empty($favorites['favorites'])) {
-		return "Your favorites list is empty. You can add items to favorites by clicking on 'Add to favorites' button on item info page";
+		return "Your don't have any favorites yet. <br/> You can add items to favorites by clicking on 'Add to favorites' button when viewing product descriptions.";
 	}
 	
 	$nids = array();

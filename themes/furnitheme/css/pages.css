@@ -1245,3 +1245,19 @@ section.category-desc p {
 section.natuzzi-cat p {
 	margin:1em 14em 0 0;
 }
+
+/**
+ * Catalogs
+ */
+article.catalogs section {
+	float:left;
+	width:24em;
+	padding-bottom:1em; 
+}
+article.catalogs ul {
+	margin:0; padding:0;
+}
+article.catalogs li {
+	list-style-type:none;
+	clear:both;
+}
