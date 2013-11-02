@@ -1108,6 +1108,7 @@ function  furnitalia_tweaks_prepare_node_attributes($nodes) {
 
 function furnitalia_tweaks_webform_submission_presave($node, &$submission) {	
 	
+	$time_format = 'm-d-Y H:i';
 	$lead_info = array();
 	if ($node->nid == 32) {
 		
@@ -1116,6 +1117,7 @@ function furnitalia_tweaks_webform_submission_presave($node, &$submission) {
 		$lead_info['email'] = $submission->data[3]['value'][0];
 		$lead_info['zip'] = $submission->data[5]['value'][0];
 		$lead_info['body'] = $submission->data[4]['value'][0];
+		$lead_info['phone'] = "";
 		
 	} else if ($node->nid == 34) {
 		$lead_info['first_name'] = $submission->data[1]['value'][0];
@@ -1136,6 +1138,8 @@ function furnitalia_tweaks_webform_submission_presave($node, &$submission) {
 	$lead_info['status_comments'] = "";
 	$lead_info['address'] = "";
 	$lead_info['type'] = "";
+	$lead_info['uid'] = 0;
+	$lead_info['log'] = 'Created: ' . format_date(REQUEST_TIME, 'custom', $time_format);
 	
 	$lid = furnileads_insert_lead($lead_info);
 	

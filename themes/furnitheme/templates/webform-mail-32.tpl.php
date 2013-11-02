@@ -90,8 +90,7 @@
 							<tbody>
 								<tr>                              
 									<td width="370" height="100" align="left" valign="top" style="font-family:Helvetica Neue, Helvetica,Arial, Helvetica, sans-serif;font-size:16px;line-height:150%;font-weight:normal;text-decoration:none;color:#555555;">
-										<p>Hello <span style="font-style:italic;">%value[first_name]</span>, we have 
-										received the  message you left on  &quot;Contact us&quot; form. One of Furnitalia&acute;s design consultants will be in contact with you within 24 hours by e-mail address you provided.
+										<p>Hello <span style="font-style:italic;">%value[first_name]</span>, thank you for contacting us! We have have received your  message from &quot;Contact us&quot; form. One of Furnitalia&acute;s design consultants will be in contact with you within 24 hours by e-mail address that you provided.
 										</p>      
 									</td>
 								</tr>                            
