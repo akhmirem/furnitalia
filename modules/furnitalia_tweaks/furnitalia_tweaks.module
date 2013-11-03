@@ -1144,9 +1144,9 @@ function furnitalia_tweaks_webform_submission_presave($node, &$submission) {
 	$lid = furnileads_insert_lead($lead_info);
 	
 	if (is_numeric($lid)) {
-		
+		watchdog('furnitalia', 'Lead record created for %first %last, with ID:%id', array('%first' => $lead_info['first_name'], '%last' => $lead_info['last_name'], '%id' => $lid), WATCHDOG_INFO, $link = NULL);	
 	} else {
-		
+		watchdog('furnitalia', 'Failed to create lead record created for %first %last', array('%first' => $lead_info['first_name'], '%last' => $lead_info['last_name']), WATCHDOG_ERROR, $link = NULL);	
 	}
 
 
