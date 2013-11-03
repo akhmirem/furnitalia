@@ -1,6 +1,6 @@
 <?php
 	$theme_path = base_path() . drupal_get_path('theme', 'furnitheme');
-	$pdf_icon = '<img src="' . $theme_path . '/images/pdf_icon.png" />';
+	$pdf_icon = '<img src="' . $theme_path . '/images/pdf-icon.png" />';
 	$files = base_path() . 'sites/default/files';
 ?>
 <article class="catalogs">
