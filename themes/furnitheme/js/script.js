@@ -338,8 +338,19 @@ var skipAnimation = false;
 		var imgPathPrefix = Drupal.settings.basePath + "sites/all/themes/furnitheme/images/cat-images/";
 		var catPreviewInfo = {
 			'bg1':[{'image':imgPathPrefix + 'all/gilda_lounge.png'}, {'image':imgPathPrefix + 'all/victor_dining_table.png'}, {'image':imgPathPrefix + 'all/vivian_chair.png'}, {'image':imgPathPrefix + 'all/zina_bed.png'}],
-			'bg2':[{'image':imgPathPrefix + 'italia/surround_sectional.png'}, {'image':imgPathPrefix + 'italia/sound_chair.png'},  {'image':imgPathPrefix + 'italia/samuel_table.png'}, {'image':imgPathPrefix + 'italia/tribeca_dining_table.png'}],
-			'bg3':[{'image':imgPathPrefix + 'editions/B520_valeria_sofa.png'}, {'image':imgPathPrefix + 'editions/B537_sophia_recliner.png'},  {'image':imgPathPrefix + 'editions/A399_nina_sofa.png'}, {'image':imgPathPrefix + 'editions/B815_pascal_chair.png'}]
+			//'bg2':[{'image':imgPathPrefix + 'italia/surround_sectional.png'}, {'image':imgPathPrefix + 'italia/sound_chair.png'},  {'image':imgPathPrefix + 'italia/samuel_table.png'}, {'image':imgPathPrefix + 'italia/tribeca_dining_table.png'}],
+			//'bg3':[{'image':imgPathPrefix + 'editions/B520_valeria_sofa.png'}, {'image':imgPathPrefix + 'editions/B537_sophia_recliner.png'},  {'image':imgPathPrefix + 'editions/A399_nina_sofa.png'}, {'image':imgPathPrefix + 'editions/B815_pascal_chair.png'}]
+		}
+		
+		var promo = {
+			'image':Drupal.settings.basePath + "sites/all/themes/furnitheme/images/banner-large.jpg",
+			'link':Drupal.settings.basePath + "in-store",
+			'title':'Natuzzi Italia Sale'
+		};
+		if (promo) {
+			for (var bg in catPreviewInfo) {
+				catPreviewInfo[bg].unshift(promo );
+			}
 		}
 		
 		category = 'bg1';

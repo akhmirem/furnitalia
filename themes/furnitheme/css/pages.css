@@ -251,6 +251,9 @@ div.region-left{
 	font-size: .85em;
 	line-height: 1.5em;
 }
+#main-nav h3 a.active {
+	color: #981b1e;
+}
 h1 {
 	font-weight: 500;
 	font-size:1.5em;
@@ -557,11 +560,11 @@ li.node-readmore a {
 div.view-content {
 	clear:both;
 }
-ul.furn-gallery {
+ul.furn-gallery, ul.brands-list {
 	margin:0;
 	padding:0;
 }
-ul.furn-gallery span.row {
+ul.furn-gallery span.row, ul.brands-list span.row {
 	float: left;
 }
 ul.furn-gallery li {
@@ -572,12 +575,18 @@ ul.furn-gallery li {
 	height:165px;
 	float:left;
 }
+ul.brands-list li {
+	margin-right: 15px;
+	margin-bottom: 15px;
+	list-style-type: none;
+	float:left;
+}
 ul.search-results li {
 	float:left;
 }
-ul.furn-gallery li.col-first {
+ul.furn-gallery li.col-first, ul.brands-list li.col-first {
 }
-ul.furn-gallery li.col-last {
+ul.furn-gallery li.col-last, ul.brands-list li.col-last {
 	margin-right: 0;
 }
 .search-results .search-snippet-info {
@@ -845,6 +854,9 @@ body.page-node #pikame li {
 }
 .pika-thumbs {
 	padding: 0;
+}
+.brand-img {
+	margin: 1em 0 .5em;
 }
 .jspDrag {
 	position: relative;
@@ -1228,10 +1240,13 @@ body.page-node #stitch {
 /**
  * Category Description page
  */
-section.category-desc h2, section.natuzzi-cat h2 {
+section.natuzzi-cat h2 {
 	position: relative;
 	top: .9em;
 	left: 16em;
+	font-size: .9em;
+}
+section.category-desc h2 {
 	font-size: .9em;
 }
 section.natuzzi-cat h2 {
@@ -1240,7 +1255,6 @@ section.natuzzi-cat h2 {
 section.category-desc p {
 	text-transform: uppercase;
 	font-size: .9em;
-	margin: 1.5em 15em 0 16em;
 }
 section.natuzzi-cat p {
 	margin:1em 14em 0 0;

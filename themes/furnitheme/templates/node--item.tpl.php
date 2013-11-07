@@ -151,6 +151,13 @@ if ($teaser) { //item teaser view
 		<h1 class="title" id="page-title"><?php print $node->title; ?></h1>
 		<?php $content['field_alu']['#title'] = 'Model'; ?>
 		<?php print render($content['field_alu']); ?>
+		
+		<?php if (is_array($content['field_brand']['#object']->field_brand['und'][0]['taxonomy_term']->field_brand_image)) : ?>
+		  <?php $brand_image = $content['field_brand']['#object']->field_brand['und'][0]['taxonomy_term']->field_brand_image['und'][0]; ?>
+		  <?php print theme("image", array("path" => $brand_image['uri'], 'attributes' => array("class" => array("brand-img")))); ?>
+		<?php endif; ?>
+	  
+
 		<?php print render($content['body']); ?>  
 	  
 	  <p class="item-info-p">
@@ -177,11 +184,6 @@ if ($teaser) { //item teaser view
 	  	?>
 	  </p>
 
-	  <?php if (is_array($content['field_brand']['#object']->field_brand['und'][0]['taxonomy_term']->field_brand_image)) : ?>
-		  <?php $brand_image = $content['field_brand']['#object']->field_brand['und'][0]['taxonomy_term']->field_brand_image['und'][0]; ?>
-		  <?php print theme("image", array("path" => $brand_image['uri'])); ?>
-	  <?php endif; ?>
-	  
 	  <?php if (isset($content['field_availability'])) : ?>
 		  <?php print render($content['field_availability']); ?>
 	  <?php endif; ?>

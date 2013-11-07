@@ -120,7 +120,6 @@ function furnitalia_tweaks_menu() {
 		'access callback' => TRUE, 
 		'type' => MENU_CALLBACK,
 	);
-	
 	return $items;
 }
 
@@ -142,7 +141,7 @@ function furnitalia_tweaks_brand_cat_page($brand, $cat = NULL, $subcat = NULL) {
 	}
 	
 	//root path -- no category ID give -- show brand description info
-	if (! isset($cat)) {
+	if (!isset($cat)) {
 		$build = array();
 		
 		if ($brand == 'italia') {			
@@ -371,60 +370,6 @@ function furnitalia_tweaks_about() {
 	return $build;
 }
 
-
-/**
- * Menu callback; displays all nodes associated with a term.
- *
- * @param $term
- *   The taxonomy term.
- * @return
- *   The page content.
- */
-/*function furnitalia_tweaks_taxonomy_term_page($term) {
-  // If there is a menu link to this term, the link becomes the last part of
-  // the active trail, and the link name becomes the page title. Thus, we must
-  // explicitly set the page title to be the term title.  
-  drupal_set_title($term->name);
-
-  // Build breadcrumb based on the hierarchy of the term.
-  $current = (object) array(
-    'tid' => $term->tid,
-  );  
-
-  // Set the term path as the canonical URL to prevent duplicate content.
-  $uri = entity_uri('taxonomy_term', $term);
-  drupal_add_html_head_link(array('rel' => 'canonical', 'href' => url($uri['path'], $uri['options'])), TRUE);
-  // Set the non-aliased path as a default shortlink.
-  drupal_add_html_head_link(array('rel' => 'shortlink', 'href' => url($uri['path'], array_merge($uri['options'], array('alias' => TRUE)))), TRUE);
-
-  // Normally we would call taxonomy_term_show() here, but for backwards
-  // compatibility in Drupal 7 we do not want to do that (it produces different
-  // data structures and HTML markup than what Drupal 7 released with). Calling
-  // taxonomy_term_view() directly provides essentially the same thing, but
-  // allows us to wrap the rendered term in our desired array structure.
-  $build['term_heading'] = array(
-    '#prefix' => '<div class="term-listing-heading">',
-    '#suffix' => '</div>',
-    'term' => taxonomy_term_view($term, 'full'),
-  );
-
-  if ($nids = taxonomy_select_nodes($term->tid, TRUE, variable_get('default_nodes_main', 10))) {
-    $nodes = node_load_multiple($nids);
-    //dsm($nodes);
-    
-    $build += furnitalia_tweaks_prepare_node_attributes($nodes);
-    
-  }
-  else {
-    $build['no_content'] = array(
-      '#prefix' => '<p>',
-      '#markup' => t('There is currently no content classified with this term.'),
-      '#suffix' => '</p>',
-    );
-  }
-  return $build;
-} */
-
 /**
  * Construct a drupal_render() style array from an array of loaded nodes.
  *
@@ -476,6 +421,8 @@ function furnitalia_tweaks_page_alter(&$page) {
 	$active_cat_tid = "";
 	$active_parent_tid = "";
 	$active_brand = "";
+	$all_coll_active = FALSE;
+	
 	if (arg(0) == 'natuzzi-italia') {
 		$active_brand = $italia;
 	} else if (arg(0) == 'natuzzi-editions') {
@@ -562,6 +509,7 @@ function furnitalia_tweaks_page_alter(&$page) {
 			
 			//generate link, mark it as active if it is			
 			if (empty($active_brand) && $term->tid == $active_cat_tid) {
+				$all_coll_active = TRUE;
 				$link = l($term->name, 'taxonomy/term/' . $term->tid, array('attributes' => array('class' => $active_attribute)));
 			} else {
 				$link = l($term->name, 'taxonomy/term/' . $term->tid);
@@ -582,6 +530,7 @@ function furnitalia_tweaks_page_alter(&$page) {
 			
 				//generate link, mark it as active if it is				
 				if (empty($active_brand) && ($term->tid == $active_parent_tid || $term->tid == $active_cat_tid)) {
+					$all_coll_active = TRUE;
 					$link = l($term->name, 'taxonomy/term/' . $term->tid, array('attributes' => array('class' => $active_attribute)));
 				} else {
 					$link = l($term->name, 'taxonomy/term/' . $term->tid);		
@@ -698,9 +647,17 @@ function furnitalia_tweaks_page_alter(&$page) {
 		_build_subcat_menu_items($all_items, $output_all_brands_menu_items);
 	}
 	
+	// !Menu declarations
+	//markup structure for all collections
+	$cat_parent_class = "";
+	$page['left']['furn_menu']['brands'] = array(		
+		'#prefix' => '<h3 class="ui-accordion-header ui-helper-reset ui-state-default ui-corner-all"> ' . l("Brands", 'brands', array('attributes' => array('id' => 'bg0', 'class' => array((drupal_match_path(request_path(), "brand/*\nbrands")) ? " active" : "")))) . '</h3><div class="ui-accordion-content ui-helper-reset ui-widget-content ui-corner-bottom">',
+		'#suffix' => '</div>',		
+	);	
+	
 	//markup structure for all collections
 	$page['left']['furn_menu']['all'] = array(
-		'#prefix' => '<h3 class="ui-accordion-header ui-helper-reset ui-state-default ui-corner-all">' . l("All Collections", 'collections', array('attributes' => array('id' => 'bg1'))) . '</h3><div class="ui-accordion-content ui-helper-reset ui-widget-content ui-corner-bottom">',
+		'#prefix' => '<h3 class="ui-accordion-header ui-helper-reset ui-state-default ui-corner-all">' . l("All Collections", 'collections', array('attributes' => array('id' => 'bg1', 'class' => array($all_coll_active ? " active" : "")))) . '</h3><div class="ui-accordion-content ui-helper-reset ui-widget-content ui-corner-bottom">',
 		'#suffix' => '</div>',
 		'#theme' => 'item_list',
 		'#items' => array_values($output_all_brands_menu_items),
@@ -715,7 +672,7 @@ function furnitalia_tweaks_page_alter(&$page) {
 
 	//mark up structure for natuzzi italia items
 	$page['left']['furn_menu']['italia'] = array(
-		'#prefix' => '<h3 class="ui-accordion-header ui-helper-reset ui-state-default ui-corner-all">' . l("Natuzzi Italia", 'natuzzi-italia', array('attributes' => array('id' => 'bg2'))) . '</h3><div class="ui-accordion-content ui-helper-reset ui-widget-content ui-corner-bottom">',
+		'#prefix' => '<h3 class="ui-accordion-header ui-helper-reset ui-state-default ui-corner-all">' . l("Natuzzi Italia", 'natuzzi-italia', array('attributes' => array('id' => 'bg2', 'class' => array(($active_brand == $italia) ? " active" : "")))) . '</h3><div class="ui-accordion-content ui-helper-reset ui-widget-content ui-corner-bottom">',
 		'#suffix' => '</div>',
 		'#theme' => 'item_list',
 		'#items' => array_values($output_italia_menu_items),
@@ -730,7 +687,7 @@ function furnitalia_tweaks_page_alter(&$page) {
 
 	//mark up structure for natuzzi editions items
 	$page['left']['furn_menu']['editions'] = array(
-		'#prefix' => '<h3 class="ui-accordion-header ui-helper-reset ui-state-default ui-corner-all">' . l("Natuzzi Editions", 'natuzzi-editions', array('attributes' => array('id' => 'bg3'))) . '</h3><div class="ui-accordion-content ui-helper-reset ui-widget-content ui-corner-bottom">',
+		'#prefix' => '<h3 class="ui-accordion-header ui-helper-reset ui-state-default ui-corner-all">' . l("Natuzzi Editions", 'natuzzi-editions', array('attributes' => array('id' => 'bg3', 'class' => array(($active_brand == $editions) ? " active" : "")))) . '</h3><div class="ui-accordion-content ui-helper-reset ui-widget-content ui-corner-bottom">',
 		'#suffix' => '</div>',
 		'#theme' => 'item_list',
 		'#items' => array_values($output_editions_menu_items),
@@ -740,13 +697,13 @@ function furnitalia_tweaks_page_alter(&$page) {
 	
 	//mark up structure for In Store link
 	$page['left']['furn_menu']['in-store'] = array(
-		'#prefix' => '<h3 class="ui-accordion-header ui-helper-reset ui-state-default ui-corner-all"> ' . l( "In Store", 'in-store', array('attributes' => array('id' => 'bg5'))) . '</h3><div class="ui-accordion-content ui-helper-reset ui-widget-content ui-corner-bottom">',
+		'#prefix' => '<h3 class="ui-accordion-header ui-helper-reset ui-state-default ui-corner-all"> ' . l( "In Store", 'in-store', array('attributes' => array('id' => 'bg5', 'class' => array((arg(0) == 'in-store') ? " active" : "")))) . '</h3><div class="ui-accordion-content ui-helper-reset ui-widget-content ui-corner-bottom">',
 		'#suffix' => '</div>',		
 	);
 	
 	//mark up structure for interior design link
 	$page['left']['furn_menu']['interior_design'] = array(
-		'#prefix' => '<h3 class="ui-accordion-header ui-helper-reset ui-state-default ui-corner-all"> ' . l( "Interior Design Services", 'interior-design', array('attributes' => array('id' => 'bg4'))) . '</h3><div class="ui-accordion-content ui-helper-reset ui-widget-content ui-corner-bottom">',
+		'#prefix' => '<h3 class="ui-accordion-header ui-helper-reset ui-state-default ui-corner-all"> ' . l( "Interior Design Services", 'interior-design', array('attributes' => array('id' => 'bg4', 'class' => array((arg(0) == 'interior-design') ? " active" : "")))) . '</h3><div class="ui-accordion-content ui-helper-reset ui-widget-content ui-corner-bottom">',
 		'#suffix' => '</div>',		
 	);
 
@@ -1148,14 +1105,6 @@ function furnitalia_tweaks_webform_submission_presave($node, &$submission) {
 	} else {
 		watchdog('furnitalia', 'Failed to create lead record created for %first %last', array('%first' => $lead_info['first_name'], '%last' => $lead_info['last_name']), WATCHDOG_ERROR, $link = NULL);	
 	}
-
-
-  /*
-  if ($submission->nid == 157) {
-    watchdog("Furnitalia", "Contact Us submission saved: " . $submission->data[3]['value'][0], array(), WATCHDOG_INFO, null);
-  } else if ($submission->nid == 52) {
-    watchdog("Furnitalia", "Request submission saved: " . $submission->data[5]['value'][0], array(), WATCHDOG_INFO, null);
-  }*/
 }
 
 /**
