@@ -62,6 +62,7 @@ function furnitheme_css_alter(&$css) {
  * @param $hook
  *   The name of the template being rendered ("page" in this case.)
  */
+ //!PreprocessPage
 function furnitheme_preprocess_page(&$vars) {
 
 	global $user;
@@ -83,35 +84,26 @@ function furnitheme_preprocess_page(&$vars) {
 	//dropdown custom controls		
 	drupal_add_js(drupal_get_path('theme', 'furnitheme') . '/js/jquery.dropkick-1.0.0.js');
 	drupal_add_css(drupal_get_path('theme', 'furnitheme') . '/css/dropkick.css');
-
 	
-	$vars['show_keyhole'] = FALSE;
-	$vars['show_promo'] = FALSE;
+	$italia_editions_gallery_paths = array("natuzzi-italia", "natuzzi-italia/*", "natuzzi-italia/*/*", "natuzzi-editions", "natuzzi-editions/*", "natuzzi-editions/*/*");
+	$paths_with_keyholes = array('<front>', 'collections', 'natuzzi-italia', 'natuzzi-editions');
+	$paths_no_title = array_merge(array("node/*", "sale", "collections", "taxonomy/term/*"), $italia_editions_gallery_paths);
+	$paths_no_tabs = array_merge(array("taxonomy/term/*", "natuzzi-italia", "natuzzi-editions"), $italia_editions_gallery_paths);	
 	
-	if (in_array(arg(0), array('front', 'collections')) || (in_array(arg(0), array('natuzzi-italia', 'natuzzi-editions')) && arg(2) == "")) {
-		$vars['show_keyhole'] = TRUE;
-		$vars['show_promo'] = TRUE;
-	}
-
-	$vars['show_title'] = TRUE;	
-	if (arg(0) == 'node' && is_numeric(arg(1)) || in_array(arg(0), array("sale","collections","natuzzi-italia","natuzzi-editions"))) {
+	//determine whether to show/hide titles and promo area depending on path
+	$vars['show_keyhole'] = drupal_match_path(current_path(), implode("\n", $paths_with_keyholes));
+	$vars['show_promo'] = TRUE; // drupal_match_path(current_path(), implode("\n", $paths_with_promos));
+	$vars['show_title'] = !drupal_match_path(current_path(), implode("\n", $paths_no_title));
+	
+	if (drupal_match_path(current_path(), "node/*")) {
 		drupal_add_js(drupal_get_path('theme', 'furnitheme') . '/lib/jscrollpane/jquery.jscrollpane.min.js');
 		drupal_add_js(drupal_get_path('theme', 'furnitheme') . '/lib/jscrollpane/mwheelIntent.js');
 		drupal_add_css(drupal_get_path('theme', 'furnitheme') . '/lib/jscrollpane/jquery.jscrollpane.css');
-
-		//don't display title
-		$vars['show_title'] = FALSE;		
 	}
 	
 	//disable taxonomy tabs
-	if ((arg(0) == 'taxonomy' && arg(1) == 'term' && is_numeric(arg(2)) && arg(3) == "") ||
-		 arg(0) == 'natuzzi-italia' || arg(0) == 'natuzzi-editions' )
-	{
+	if (drupal_match_path(current_path(), implode("\n", $paths_no_tabs))) {
 		unset($vars['tabs']);
-		
-		//don't display title
-		$vars['show_title'] = FALSE;
-		$vars['show_promo'] = TRUE;
 	}
 	
 	//set footer menu links	
@@ -129,14 +121,12 @@ function furnitheme_preprocess_page(&$vars) {
 			preprocess_node_common_fields($content, 'page');
 						
 			$vars['page']['content']['system_main']['nodes'][$node->nid] = $content;			
-			
 				
 		}
 	}
 	
 	$vars['contact_page'] = FALSE;
-	if (arg(0) == 'contact') {
-	
+	if (arg(0) == 'contact') {	
 		//contact us page
 		$vars['contact_page'] = TRUE;
 	}

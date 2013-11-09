@@ -107,7 +107,7 @@ p.disclaimer {
  */
 #logo { /* Wrapping link for logo */
   float: left; /* LTR */
-  margin: 1em 0 0 1.5em;
+  margin: 1em 0 0 1em;
   padding: 0;
 }
 #logo img {
@@ -315,16 +315,15 @@ div.region-header li a {
     text-transform: uppercase;
 }
 #edit-actions {
-	top: .25em;
+	top: .3em;
 	position: relative;
 }
 #edit-submit {
     position: relative;
     top: 0.3em;
 }
-/*div.region-header li a:hover, #main-nav a:hover {
-	color:#981b1e;
-}*/
+#edit-actions #edit-submit {top:0;}
+
 h1.title, /* The title of the page */
 h2.node-title, /* Title of a piece of content when it is given in a list of content */
 h2.block-title, /* Block title */
@@ -493,9 +492,9 @@ li.node-readmore a {
  
 #front-overlay {
 	position: absolute;
-	top:0;
-	left: 0;
-	width:100%;
+	top:5px;
+	left: 15px;
+	width:1010px;
 	height:670px;
 	z-index: 101;
 	background-color: #ffffff;
@@ -512,25 +511,25 @@ li.node-readmore a {
 #front-left {
 	z-index: 10;
 	background:white;
-	width:560px;
-	background:url(../images/frontpage-left.png) no-repeat center center;					
+	width:550px;
+	background:url(../images/frontpage-left.png) no-repeat right center;
 }
 #front-right {
-	background:transparent url(../images/frontpage-right.png) no-repeat center center;
+	background:transparent url(../images/frontpage-right.png) no-repeat left center;
 	z-index:5;
-	width: 472px;
-	left: 556px;
+	width: 460px;
+	left: 550px;
 }
 
 #enterFurnitalia {
 	position: absolute;
-	left: 440px;
+	left: 425px;
 	top: 300px;
 	font-size: 2.2em;
 	font-weight: 100;
 	text-decoration: none;
 	border-bottom: 2px solid #6d6e71;
-	width: 10em;
+	width: 11.2em;
 	display: block;
 	padding: 0 .3em .3em 5em;
 	z-index: 200;
@@ -540,7 +539,7 @@ li.node-readmore a {
 #menu-pic-wrapper {
     position:relative;
     height:670px;
-	width: 1024px;
+	width: 1010px;
 }
 #menu-pic {
 	position:relative;
@@ -594,6 +593,10 @@ ul.furn-gallery li.col-last, ul.brands-list li.col-last {
 }
 .search-results .title {
 	font-size: 1em;
+}
+div.view-furntialia-brands div.view-footer {
+	font-size: 1.25em;
+	margin-top: 1em;
 }
 
 .furn-gallery .item-details {
@@ -745,7 +748,11 @@ article #page-title {
 	text-transform: uppercase;
 	color: #981b1e;
 }
-
+#item-info h1 {
+	padding: 0;
+	margin: -.4em 0 0 0;
+	font-size: 1.1em;
+}
 .item-info-p, .field-label, article .sell-price, article .form-item label {
 	font-size:1em;
 	font-weight:300;
@@ -821,9 +828,6 @@ article.view-mode-full {
 	float:left;
 }
 
-article.view-mode-full .uc-price {
-	float:right;
-}
 #item-info {
 	float:left;
 	width:17.3em;
@@ -993,12 +997,13 @@ div.sharethis-wrapper span {
 }
 
 footer {
-	width:100%;
+	width:1010px;
+	margin-left: 15px;
+	position: relative;
 	height:140px;
-	background:transparent url(../images/footer-bg.jpg) no-repeat;
+	background:transparent url(../images/footer-bg.jpg) no-repeat -15px center;
 	font-size: .85em;
 	text-transform: capitalize;
-	position: relative;
 }
 footer .item-list ul li {
 	line-height: 130%;
@@ -1126,9 +1131,8 @@ hr.article-sep {
  * PROMO
  */
 #promo {
-	height: 160px;
 	clear: both;
-	padding: 2.7em 0 0 1em;
+	padding: 15px 0 0 15px;
 }
 #promo h3 {
 	font-size: .9em;
