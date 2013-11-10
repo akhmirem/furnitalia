@@ -161,7 +161,7 @@
 	    </aside>
 	    <?php endif; ?>
 	    
-	    <div id="dialog-form" title="Request product info" style="display:none">
+	    <div id="dialog-form" style="display:none">
 		  <p>Javascript must be enabled in your browser to submit a request.</p>
 		</div>
 	

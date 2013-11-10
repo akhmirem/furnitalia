@@ -500,10 +500,10 @@ var skipAnimation = false;
 	    }
 	    
 	    //open pop-up dialog
-	    console.log("attempting to display popup");
+	    //console.log("attempting to display popup");
 		$.fancybox.open($('#dialog-form'), {
-			width:800,
-			height:600,
+			//width:800,
+			//height:600,
 			closeBtn:true,
 			closeClick:false,
 			mouseWheel:true,

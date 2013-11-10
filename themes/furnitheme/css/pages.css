@@ -917,6 +917,9 @@ article ul.inline li {
 	margin: .5em 0;
 	padding: .5em 0;
 }
+#request-quote {
+	width:auto;
+}
 div.sharethis-buttons {
 	margin-top:1em;
 }
@@ -930,7 +933,6 @@ div.sharethis-wrapper span {
 /*
  * Custom dropdown
  */
-
 .dropdown {
     position: relative;
     width: 300px;
@@ -1046,21 +1048,29 @@ span.menu-label {
 /* 
  * REQUESTS/CONTACT FORM
  */
+.form-item {
+    margin: 1em 0;
+}
+article .form-item label  {
+	margin-top:1em;
+}
 #webform-component-first-name, #webform-component-last-name, #webform-component-email, #webform-component-phone, #webform-component-zip-code {
 	float:left;
+	margin:0;
 }
 #webform-component-last-name, #webform-component-zip-code, #webform-component-phone {
     clear: right;
     margin-left: 2em;
+}
+#webform-component-first-name label, #webform-component-last-name label {
+	margin-top:0;
 }
 #webform-component-email {
 	clear:left;
 }
 #webform-component-item, #webform-component-message {
 	clear: both;
-}
-.form-item {
-    margin: 1em 0;
+	padding-top: .1em;
 }
 .webform-confirmation {
     font-size: 1.5em;
@@ -1269,7 +1279,7 @@ section.natuzzi-cat p {
 }
 
 /**
- * Catalogs
+ * Catalogs Page
  */
 article.catalogs section {
 	float:left;
