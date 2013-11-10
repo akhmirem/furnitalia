@@ -213,6 +213,10 @@ body.front #block-search-form, body.keyhole #block-search-form {
 	right: 0;
 	text-decoration: none;
 	z-index: 10;
+	font-size: .9em;
+}
+#header-phone a {
+	text-decoration: none;
 }
 body.front #header-phone, body.keyhole #header-phone {
 	right:9.8em;
@@ -397,8 +401,8 @@ span.field-label { /* The inline field label used by the Fences module */
 }
 span.gallery-instructions {
 	float: left;
-	font-size: .85em;
-	margin-top: .6em;
+	font-size: .8em;
+	margin-top: .4em;
 }
 .item-list .pager { /* A list of page numbers when more than 1 page of content is available */
 	padding: 0;

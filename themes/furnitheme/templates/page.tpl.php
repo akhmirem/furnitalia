@@ -93,8 +93,10 @@
     <?php endif; ?>
 
     <?php print render($page['header']); ?>
-    
-    <a id="header-phone" href="tel:+18003874825">1-800-FUR-ITAL</a>
+    <span id="header-phone">
+        <a href="tel:+18003874825">1-800-387-4825</a> <b>|</b> 
+		<a href="tel:+19164840333">916-484-0333 (Sacramento CA)</a>
+    </span>
 
   </header>
 
