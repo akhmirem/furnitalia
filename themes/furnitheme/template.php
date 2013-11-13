@@ -814,7 +814,7 @@ function furnitheme_form_views_exposed_form_alter(&$form, &$form_state, $form_id
 		if (isset($form['sort_by'])) {
 			//alter SORT options -- remove Discounted price sort order if SALE prices are not shown
 			if (!variable_get('show_sale_prices', FALSE)) {
-				unset($form['sort_by']['#options']['field_sale_price_value']);
+				unset($form['sort_by']['#options']['field_special_price_value']);
 			}
 
 		}
