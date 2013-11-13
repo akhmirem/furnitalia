@@ -893,8 +893,7 @@ function furnitalia_tweaks_form_alter(&$form, &$form_state, $form_id){
 
 	    $form['field_video']['#container'] = array('field_video');	//make sure parent item doesn't change after moving form element
 	    $form['item_video_container']['field_video'] = $form['field_video'];
-	    unset($form['field_video']);
-	    
+	    unset($form['field_video']);	    
 	    
 	    $form['buttons']['#weight'] = 100;
 	    
@@ -908,8 +907,8 @@ function furnitalia_tweaks_form_alter(&$form, &$form_state, $form_id){
 		//$form['base']['show_add_to_cart']['#weight'] = 2;
 		
 		//put sale price in product info
-		$form['field_sale_price']['und'][0]['value']['#attributes'] = array('size'=> array("15"));
-		$form['base']['prices']['field_sale_price'] = $form['field_sale_price'];
+		$form['field_special_price']['und'][0]['value']['#attributes'] = array('size'=> array("15"));
+		$form['base']['prices']['field_special_price'] = $form['field_special_price'];
 		$form['base']['prices']['list_price']['#title'] = "MSRP";
 		$form['base']['prices']['sell_price']['#title'] = "Furnitalia";
 		
@@ -917,7 +916,7 @@ function furnitalia_tweaks_form_alter(&$form, &$form_state, $form_id){
 		$form['base']['prices']['cost']['#access'] = FALSE;
 		$form['base']['pkg_qty']['#access'] = FALSE;
 		$form['base']['ordering']['#access'] = FALSE;		
-	    $form['field_sale_price']['#access'] = FALSE;
+	    unset($form['field_special_price']);
 		$form['field_alu']['#access'] = FALSE;
 		$form['revision_information']['#access'] = FALSE;
 		$form['author']['#access'] = FALSE;
@@ -925,28 +924,9 @@ function furnitalia_tweaks_form_alter(&$form, &$form_state, $form_id){
 		
 		//restrict title to be less than or equal to 20 characters
 		$form['title']['#maxlength'] = '25';
-		
-		$form['#validate'][] = 'furnitalia_tweaks_item_node_form_validate';
 
 
     }
-}
-
-/**
-* Custom validation of node form elements
-*/
-function furnitalia_tweaks_item_node_form_validate(&$form, &$form_state) {
-
-	//validate sale price for being a number or empty value
-	$sale_price = $form_state['values']['field_sale_price']['und'][0]['value'];
-	if (!empty($sale_price)) {
-		
-		if (!is_numeric($sale_price) || floatval($sale_price) === 0.0)  {
-			form_set_error('field_sale_price', 'Sale price must be numeric or empty!');			
-			return false;
-		}
-	}
-
 }
 
 /**
