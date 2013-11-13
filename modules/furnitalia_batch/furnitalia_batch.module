@@ -165,7 +165,7 @@ function furnitalia_batch_process_node($obj=array()){
 	//do something
 	//$node->title = str_replace("UPD: ", "", $node->title);
 	
-	//node_save($node);
+	node_save($node);
 	
 	return $node;
 }
@@ -235,7 +235,7 @@ function furnitalia_batch_process_node_import($obj=array()){
 	//do things with node
 	$node->sell_price = $obj[2];
 	
-	node_save($node);
+	//node_save($node);
 	
 	return $node;
 }
@@ -267,8 +267,10 @@ function furnitalia_batch_import_finished($success, $results, $operations) {
 function __build_node_import_array() {
 	require_once dirname(__FILE__) . "/parsecsv/parsecsv.lib.php";
 	
+	$files_dir = variable_get('file_public_path', conf_path() . '/files'); 
+	
 	$output = array();
-	$csv = new parseCSV('items.csv');
+	$csv = new parseCSV($files_dir . '/item_imports/items.csv');
 	$output = $csv->data;
 	
 	/*foreach($csv->data as $row => $cols) {

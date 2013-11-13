@@ -145,7 +145,7 @@ function preprocess_node_common_fields(&$content, $hook) {
 	if (isset($content['field_starting_from_price']) && $content['field_starting_from_price']['#items'][0]['value']) {
 		unset($content['list_price']);
 		$content['sell_price']['#title'] = "FROM:";
-		unset($content['field_sale_price']);
+		unset($content['field_special_price']);
 		
 		return;
 	}
@@ -164,7 +164,18 @@ function preprocess_node_common_fields(&$content, $hook) {
 	}
 
 	
-	$sale_price_set = variable_get('show_sale_prices', FALSE) && !empty($content['field_sale_price']) && isset($content['field_sale_price']['#items']) && $content['field_sale_price']['#items'][0]['value'];
+	$sale_price_set = FALSE;
+	$special_price = NULL;
+	
+	if(variable_get('show_sale_prices', FALSE)) {
+		 if(!empty($content['field_special_price']) && isset($content['field_special_price']['#items']) && $content['field_special_price']['#items'][0]['value']) {
+		 	$special_price = $content['field_special_price']['#items'][0]['value'];
+		 	$diff = abs(floatval($special_price) - floatval($sell_price));
+		 	if ($diff > $epsilon) {
+			 	$sale_price_set = TRUE; //sell price and special price are not same
+			}
+		 }
+	}
 		
 	if($sale_price_set) {
 	
@@ -175,7 +186,7 @@ function preprocess_node_common_fields(&$content, $hook) {
 		
 		$new_sale_price['#title'] = "SPECIAL:";
 		$new_sale_price['#theme'] = "uc_product_price";
-		$new_sale_price['#value'] = $content['field_sale_price']['#items'][0]['value'];
+		$new_sale_price['#value'] = $special_price;
 		$new_sale_price['#attributes'] = array('class' => array('sell-price'));
 		
 		$content['sale_price'] = $new_sale_price;

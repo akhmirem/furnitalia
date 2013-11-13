@@ -757,12 +757,22 @@ function _build_subcat_menu_items($categories_structure = array(), &$output_menu
   * Implements hook_node_presave()
   *
   */
-/*
+//!NodePresave
 function furnitalia_tweaks_node_presave($node) {
 
-	if ($node->type == 'item') {
+	if ($node->type == 'item') {	
 				
-		//on each item save, go through selected categories
+		if (count($node->field_special_price['und']) > 0) {
+			$special_price = $node->field_special_price['und'][0]['value'];
+			if (intval($special_price) == 0) {
+				$node->field_special_price['und'][0]['value'] = $node->sell_price; //set default
+			}
+		} else {
+			$node->field_special_price['und'][] = array('value' => $node->sell_price); //set default
+		}
+
+				
+		/*//on each item save, go through selected categories
 		//and automatically assign parent categories to item
 		
 		$parent_cats = array();
@@ -784,12 +794,11 @@ function furnitalia_tweaks_node_presave($node) {
 		}
 		
 		$field_category['und'] = array_merge($field_category['und'], $cats_to_add);
-		$node->field_category = $field_category;
+		$node->field_category = $field_category;*/
 		
 	}
 	return $node;
 }
-*/
 
 /*function furnitalia_tweaks_is_link_active($tid, $vars, $query = NULL, $ignore_query=false) {
 	if ( arg(0) == 'taxonomy' && arg(1) == 'term') {
@@ -1170,11 +1179,18 @@ function furnitalia_tweaks_products_ajax () {
  */
 function furnitalia_tweaks_uc_product_alter(&$node) {
 	if (variable_get('show_sale_prices', FALSE)) {
-		
-		$node->price = isset($node->field_sale_price['und'][0]['value']) && $node->field_sale_price['und'][0]['value'] > 0 ? $node->field_sale_price['und'][0]['value'] : $node->price;
-
+		if (isset($node->field_special_price['und'][0]['value'])) {
+			$special_price = $node->field_special_price['und'][0]['value'];
+			
+			$diff = abs(floatval($special_price) - floatval($node->price));
+		 	if ($diff > 0.01) {
+			 	//sell price and special price are not same
+			 	$node->price = $special_price;
+			}
+		}
 	}
 }
+
 
 /**
  * Implementation of hook_views_query_alter
