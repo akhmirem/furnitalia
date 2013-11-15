@@ -347,8 +347,14 @@ function furnitalia_batch_export(&$context) {
 	while($row = $result->fetchAssoc()) {
 
 	    $node = node_load($row['nid']);
+	    
+	    $node->main_cat = taxonomy_term_load($node->field_category['und'][0]['tid']);
+	    $node->main_cat = $node->main_cat->name;
+	    
+	    $node->brand = taxonomy_term_load($node->field_brand['und'][0]['tid']);
+	    $node->brand = $node->brand->name;
 
-		$context['results'][] = array($node->nid, check_plain($node->title), $node->list_price, $node->sell_price, $node->field_special_price['und'][0]['value'], "http://www.furnitalia.com/node/$node->nid");
+		$context['results'][] = array($node->nid, check_plain($node->title), $node->main_cat, $node->brand, $node->list_price, $node->sell_price, $node->field_special_price['und'][0]['value'], "http://www.furnitalia.com/node/$node->nid");
 		
 		// Update our progress information.
 		$context['sandbox']['progress']++;
@@ -376,7 +382,7 @@ function furnitalia_batch_export_finished($success, $results, $operations) {
 		$files_dir = variable_get('file_public_path', conf_path() . '/files'); 
 		dsm($results);
 		$csv = new parseCSV();	
-		$csv->save($files_dir . '/batch/items_export.csv', $results, FALSE, array('nid', 'title', 'msrp', 'sell_price', 'special_price', 'link'));
+		$csv->save($files_dir . '/batch/items_export.csv', $results, FALSE, array('nid', 'title', 'category', 'brand', 'msrp', 'sell_price', 'special_price', 'link'));
 		
 	}
 	else {
