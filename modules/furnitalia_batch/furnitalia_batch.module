@@ -21,6 +21,15 @@ function furnitalia_batch_menu(){
 	  'access arguments' => array('run batch'),
       'type'=>MENU_CALLBACK,
   );
+  
+  $items['furnitalia-batch/export']=array(
+      'title'=> t('Batch export items'),
+      'page callback'=>'drupal_get_form',
+      'page arguments' => array('furnitalia_batch_export_form'),
+      'access callback' => 'user_access',
+	  'access arguments' => array('run batch'),
+      'type'=>MENU_CALLBACK,
+  );
 
   return $items;
 }
@@ -73,6 +82,24 @@ function furnitalia_batch_import_form(){
 	return $form;
 }
 
+/**
+* Batch form callback
+*/
+function furnitalia_batch_export_form(){
+    $form = array(
+        'info'=>array(
+            '#type'=>'markup',
+            '#value'=>'Export items into CSV',
+            ),
+        'submit'=>array(
+            '#type'=>'submit',
+            '#value'=>'Export',
+            ),
+        );
+	
+	return $form;
+}
+
 
 /**
  * Implements hook_form_submit()
@@ -115,6 +142,25 @@ function furnitalia_batch_import_form_submit($form, &$form_state){
 	batch_set($batch);
 
 }
+
+/**
+ * Implements hook_form_submit()
+ */
+function furnitalia_batch_export_form_submit($form, &$form_state){
+
+	$batch = array(
+		'operations' => array(array('furnitalia_batch_export', array())),
+		'finished' => 'furnitalia_batch_export_finished',
+		'title' => 'Generating items CSV file',
+		'init_message' => 'Initializing batch.',
+		'progress_message' => 'Processing...',
+		'error_message' => 'Error processing batch operation',
+	);
+
+	batch_set($batch);
+
+}
+
 /**
  * Batch operation
  */
@@ -176,12 +222,7 @@ function furnitalia_batch_process_node($obj=array()){
 function furnitalia_batch_resave_nodes_finished($success, $results, $operations) {
 	if ($success) {
 		
-		$message = 'Batch complete. ' . count($results) . ' items processed.';				
-		
-//		require_once dirname(__FILE__) . "/parsecsv/parsecsv.lib.php";
-//		$csv = new parseCSV();
-//		$csv->output (true, 'items.csv', $results);
-//		$csv->save('items.csv', $results, true);
+		$message = 'Batch complete. ' . count($results) . ' items processed.';
 		
 	}
 	else {
@@ -189,6 +230,7 @@ function furnitalia_batch_resave_nodes_finished($success, $results, $operations)
 		// $operations contains the operations that remained unprocessed.
 		$error_operation = reset($operations);
 		$message = 'An error occurred while processing ' . $error_operation[0] . ' with arguments :' . print_r($error_operation[0], TRUE);
+		dsm($results);
 	}
 	drupal_set_message($message);
 	
@@ -201,6 +243,7 @@ function furnitalia_batch_import(&$context) {
 	if (!isset($context['sandbox']['progress'])) {
 	
 		$context['sandbox']['nodes'] = __build_node_import_array();
+		//dsm($context['sandbox']['nodes']);
 
 		$context['sandbox']['progress'] = 0;
 		$context['sandbox']['max'] = count($context['sandbox']['nodes']);
@@ -211,11 +254,15 @@ function furnitalia_batch_import(&$context) {
 	for($i = 0; $i < $limit; ++$i) { 
 		$node = furnitalia_batch_process_node_import($context['sandbox']['nodes'][$context['sandbox']['progress']]);
 
-		$context['results'][] = array($node->nid, check_plain($node->title), $node->sell_price);
+		$context['results'][] = array($node->nid, check_plain($node->title), $node->field_special_price['und'][0]['value']);
 		
 		// Update our progress information.
 		$context['sandbox']['progress']++;
 		$context['message'] = check_plain($node->title);
+		
+		if ($context['sandbox']['progress'] >= $context['sandbox']['max']) {
+			break;
+		}
 	}
     
 	// Inform the batch engine that we are not finished,
@@ -230,12 +277,15 @@ function furnitalia_batch_import(&$context) {
  */
 function furnitalia_batch_process_node_import($obj=array()){
 
-	$node = node_load($obj[0]);
+	$node = node_load($obj['nid']);
 	
 	//do things with node
-	$node->sell_price = $obj[2];
+	$node->sell_price = $obj['sell_price'];
+	$node->field_special_price['und'][0]['value'] = $obj['special_price'];
 	
-	//node_save($node);
+	$node->log = "Batch imported on " . format_date(REQUEST_TIME, 'custom', 'm-d-Y H:i');
+	
+	node_save($node);
 	
 	return $node;
 }
@@ -246,12 +296,7 @@ function furnitalia_batch_process_node_import($obj=array()){
 function furnitalia_batch_import_finished($success, $results, $operations) {
 	if ($success) {
 		
-		$message = 'Batch complete. ' . count($results) . ' items processed.';				
-		
-		
-//		$csv->output (true, 'items.csv', $results);
-//		$results = array_unshift($results, array('nid', 'title', 'sell_price');
-//		$csv->save('items.csv', $results, true);
+		$message = 'Batch complete. ' . count($results) . ' items processed.';
 		
 	}
 	else {
@@ -270,19 +315,78 @@ function __build_node_import_array() {
 	$files_dir = variable_get('file_public_path', conf_path() . '/files'); 
 	
 	$output = array();
-	$csv = new parseCSV($files_dir . '/item_imports/items.csv');
+	$csv = new parseCSV($files_dir . '/batch/items_export.csv');
 	$output = $csv->data;
 	
-	/*foreach($csv->data as $row => $cols) {
-		$temp = array();
-		
-		foreach($cols as $i => $val) {
-			$temp []= $val;
-		}
-		$output[$cols[0]] = $temp;
-	}*/
-	
 	return $output;
+}
+
+/**
+ * Batch operation
+ */
+function furnitalia_batch_export(&$context) {
+
+	if (!isset($context['sandbox']['progress'])) {
+		$context['sandbox']['progress'] = 0;
+		$context['sandbox']['current_node'] = 0;
+		$context['sandbox']['max'] = db_query("SELECT COUNT(DISTINCT nid) FROM {node} WHERE type='item' and status='1'")->fetchField();
+	}
+
+	$limit = 5; // # of records updated per batch
+
+	//some SQL goes here
+	$result = db_select('node')
+		->fields('node', array('nid', 'type'))
+		->condition('status', 1)
+		->condition('nid', $context['sandbox']['current_node'], '>')
+		->condition('type', 'item', "=")		
+		->orderBy('nid')
+		->range(0, $limit)
+		->execute();
+
+	while($row = $result->fetchAssoc()) {
+
+	    $node = node_load($row['nid']);
+
+		$context['results'][] = array($node->nid, check_plain($node->title), $node->list_price, $node->sell_price, $node->field_special_price['und'][0]['value'], "http://www.furnitalia.com/node/$node->nid");
+		
+		// Update our progress information.
+		$context['sandbox']['progress']++;
+		$context['sandbox']['current_node'] = $node->nid;
+		$context['message'] = check_plain($node->title);
+	}
+    
+	// Inform the batch engine that we are not finished,
+	// and provide an estimation of the completion level we reached.
+	if ($context['sandbox']['progress'] < $context['sandbox']['max']) {
+		$context['finished'] = $context['sandbox']['progress'] / $context['sandbox']['max'];
+	}
+}
+
+/**
+ * Ending of batch processing
+ */
+function furnitalia_batch_export_finished($success, $results, $operations) {
+	if ($success) {
+		
+		$message = 'Batch complete. ' . count($results) . ' items exported.';	
+		
+		require_once dirname(__FILE__) . "/parsecsv/parsecsv.lib.php";
+	
+		$files_dir = variable_get('file_public_path', conf_path() . '/files'); 
+		dsm($results);
+		$csv = new parseCSV();	
+		$csv->save($files_dir . '/batch/items_export.csv', $results, FALSE, array('nid', 'title', 'msrp', 'sell_price', 'special_price', 'link'));
+		
+	}
+	else {
+		// An error occurred.
+		// $operations contains the operations that remained unprocessed.
+		$error_operation = reset($operations);
+		$message = 'An error occurred while processing ' . $error_operation[0] . ' with arguments :' . print_r($error_operation[0], TRUE);
+	}
+	drupal_set_message($message);
+	
 }
 
 

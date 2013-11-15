@@ -182,6 +182,11 @@ var skipAnimation = false;
 				
 				var ajax = new Drupal.ajax("article a.appointment", $('article a.appointment')[0], element_settings);
 			});
+			$('a.contact').once(function() {
+				element_settings.url = Drupal.settings.basePath + 'contact/ajax/';
+				
+				var ajax = new Drupal.ajax("a.contat", $('a.contact')[0], element_settings);
+			});
 			
 			$('#request-quote').once(function() {
 				element_settings.url = $(this).attr('href');
@@ -342,11 +347,12 @@ var skipAnimation = false;
 			//'bg3':[{'image':imgPathPrefix + 'editions/B520_valeria_sofa.png'}, {'image':imgPathPrefix + 'editions/B537_sophia_recliner.png'},  {'image':imgPathPrefix + 'editions/A399_nina_sofa.png'}, {'image':imgPathPrefix + 'editions/B815_pascal_chair.png'}]
 		}
 		
-		var promo = {
+		var promo = null;
+		/*{
 			'image':Drupal.settings.basePath + "sites/all/themes/furnitheme/images/banner-large.jpg",
 			'link':Drupal.settings.basePath + "in-store",
 			'title':'Natuzzi Italia Sale'
-		};
+		};*/
 		if (promo) {
 			for (var bg in catPreviewInfo) {
 				catPreviewInfo[bg].unshift(promo );

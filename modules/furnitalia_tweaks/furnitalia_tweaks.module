@@ -800,67 +800,6 @@ function furnitalia_tweaks_node_presave($node) {
 	return $node;
 }
 
-/*function furnitalia_tweaks_is_link_active($tid, $vars, $query = NULL, $ignore_query=false) {
-	if ( arg(0) == 'taxonomy' && arg(1) == 'term') {
-		if (is_numeric(arg(2)) && (arg(2) == $tid || furnitalia_tweaks_is_child(arg(2), $tid))) {
-			if (is_array($query) && isset($query['brand'])) {
-				if (isset($_GET['brand'])) {
-					return $query['brand'] == $_GET['brand'];
-				}
-				
-				return false;
-				
-			} else {
-				
-				if ($ignore_query) { 
-					return true; 
-				}
-				
-				if (isset($_GET['brand'])) {
-					return false;
-				} else {
-					return true;
-				}
-			}
-		}
-	} else {
-        if (arg(0) == 'node' && is_numeric(arg(1)) && arg(2) != 'edit') {
-
-        	if (isset($vars['content']['system_main']['nodes'])) {
-	            $node = array_values($vars['content']['system_main']['nodes']);
-	            $node = $node[0];
-	            
-	            if ($node['#bundle'] == 'item') {
-	           
-		            foreach($node['field_category']['#items'] as $term) {
-		            	
-		            	if (isset($query) && $query['brand'] == $node['field_brand']['#items'][0]['tid']) {
-			            	if ($term['tid'] == $tid || furnitalia_tweaks_is_child($term['tid'], $tid)) {
-				            	return true;
-			            	}
-		            	}
-		            }  
-	            } 
-            }
-        }   
-    }   
-	
-	return FALSE;
-	
-}*/
-
-/*function furnitalia_tweaks_is_child($first_tid, $second_tid) {
-	$parents = taxonomy_get_parents($first_tid);
-	
-	foreach($parents as $parent_term) {
-		if ($parent_term->tid == $second_tid) {
-			return true;
-		}
-	}
-	
-	return false;
-}*/
-
 function furnitalia_tweaks_get_parent_category($tid="") {
 	
 	$parents = taxonomy_get_parents($tid);
@@ -870,11 +809,13 @@ function furnitalia_tweaks_get_parent_category($tid="") {
 		return $tid;
 	} else {
 		return $parents[0]->tid;
-	}
-		
-
+	}	
 }
 
+/**
+ * Implements hook_form_alter
+ *
+ */
 function furnitalia_tweaks_form_alter(&$form, &$form_state, $form_id){
 	if ($form['#id'] == 'item-node-form') {
 		
@@ -924,8 +865,7 @@ function furnitalia_tweaks_form_alter(&$form, &$form_state, $form_id){
 		
 		//restrict title to be less than or equal to 20 characters
 		$form['title']['#maxlength'] = '25';
-
-
+		
     }
 }
 
@@ -933,7 +873,7 @@ function furnitalia_tweaks_form_alter(&$form, &$form_state, $form_id){
  * Implements hook_node_load()
  */
 function furnitalia_tweaks_node_load($nodes, $types) {
-	$sqid = 1; //clearance queue
+	/*$sqid = 1; //clearance queue
 	
 	// Decide whether any of $types are relevant to our purposes.
 	if (count(array_intersect(array('item'), $types))) {
@@ -948,7 +888,7 @@ function furnitalia_tweaks_node_load($nodes, $types) {
 			}
 		}
 
-	}
+	}*/
 	
 }
 
@@ -1038,7 +978,7 @@ function furnitalia_tweaks_contact_js($item, $nid=NULL){
     
 }
 
-function  furnitalia_tweaks_prepare_node_attributes($nodes) {
+function furnitalia_tweaks_prepare_node_attributes($nodes) {
 	
 	if (!is_array($nodes)) {
 		return array();

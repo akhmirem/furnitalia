@@ -75,6 +75,9 @@ a.appointment {
 a.appointment:hover {
 	background:#f3d8f1;
 }
+#header-phone a.main-phone {
+	color:#981b1e;
+}
 
 p {
     line-height: 1.3em;
@@ -1174,10 +1177,10 @@ body.not-front #promo hr {
 	width: 100%;
 }
 #promo p {
-	font-size:.8em;
-	line-height:130%;
-	margin:.2em 0;
-	width:38em;
+	font-size: 1em;
+	line-height: 130%;
+	margin: .2em 0;
+	width: 45em;
 }
 #promo img{
 	float:left;

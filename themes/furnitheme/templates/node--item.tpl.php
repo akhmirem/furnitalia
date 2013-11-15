@@ -59,8 +59,8 @@ if ($teaser) { //item teaser view
 		<h2<?php print $title_attributes; ?>><a href="<?php print $node_url; ?>" class="title"><?php print $title; ?></a></h2>
 	</header>
 	
-	<?php if (isset($node->clearance) && $node->clearance) : ?>
-		<span class="item-clearance"><img src="<?php print base_path() . path_to_theme(); ?>/images/Sale_Icon_Red_40x24.png" alt="Item on clearance"/></span>
+	<?php if(isset($content['sale_price']) && !empty($content['sale_price'])) : ?>
+		<span class="item-clearance"><img src="<?php print base_path() . path_to_theme(); ?>/images/Sale_Icon_Red_40x24.png" alt="Item on clearance"/></span>	
 	<?php endif; ?>
 	
 	<div class="item-details">

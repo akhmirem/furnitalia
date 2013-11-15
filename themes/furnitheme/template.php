@@ -122,6 +122,8 @@ function furnitheme_preprocess_page(&$vars) {
 						
 			$vars['page']['content']['system_main']['nodes'][$node->nid] = $content;			
 				
+		} else if ($node->type == 'blog') {
+			$vars['show_title'] = TRUE;
 		}
 	}
 	
@@ -643,6 +645,10 @@ function furnitheme_set_up_top_menu (&$vars) {
 
 	$top_menu []= l("My Cart", 'cart');
 	$top_menu []= l("Favorites", 'my-favorites');
+	
+	if(!$vars['show_keyhole']) {
+		$top_menu []= l("Stores", 'contact');
+	}
 	
 	$vars['page']['header']['top_menu'] = array(
 		'#theme' => 'item_list',
