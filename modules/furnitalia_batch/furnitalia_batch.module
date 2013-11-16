@@ -252,13 +252,17 @@ function furnitalia_batch_import(&$context) {
 	$limit = 5; // # of records updated per batch
 
 	for($i = 0; $i < $limit; ++$i) { 
-		$node = furnitalia_batch_process_node_import($context['sandbox']['nodes'][$context['sandbox']['progress']]);
+		$current_row = $context['sandbox']['nodes'][$context['sandbox']['progress']];
+		
+		$node = furnitalia_batch_process_node_import($current_row);
 
-		$context['results'][] = array($node->nid, check_plain($node->title), $node->field_special_price['und'][0]['value']);
+		if ($node) {
+			$context['results'][] = array($node->nid, check_plain($node->title), $node->field_special_price['und'][0]['value']);
+		}
 		
 		// Update our progress information.
 		$context['sandbox']['progress']++;
-		$context['message'] = check_plain($node->title);
+		$context['message'] = $node ? check_plain($node->title) : "Skipped node with nid: " . $current_row['nid'];
 		
 		if ($context['sandbox']['progress'] >= $context['sandbox']['max']) {
 			break;
@@ -279,13 +283,15 @@ function furnitalia_batch_process_node_import($obj=array()){
 
 	$node = node_load($obj['nid']);
 	
-	//do things with node
-	$node->sell_price = $obj['sell_price'];
-	$node->field_special_price['und'][0]['value'] = $obj['special_price'];
-	
-	$node->log = "Batch imported on " . format_date(REQUEST_TIME, 'custom', 'm-d-Y H:i');
-	
-	node_save($node);
+	if ($node) {	
+		//do things with node
+		$node->sell_price = $obj['sell_price'];
+		$node->field_special_price['und'][0]['value'] = $obj['special_price'];
+		
+		$node->log = "Edited by batch operation on " . format_date(REQUEST_TIME, 'custom', 'm-d-Y H:i');
+		
+		node_save($node);
+	}
 	
 	return $node;
 }

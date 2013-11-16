@@ -65,7 +65,7 @@ if ($teaser) { //item teaser view
 	
 	<div class="item-details">
 		
-		<?php print render($content['list_price']); ?>
+		<?php //print render($content['list_price']); ?>
 		<?php print render($content['sell_price']); ?>
 		<?php print render($content['sale_price']); ?>
 
@@ -142,6 +142,8 @@ if ($teaser) { //item teaser view
 	  <?php if(isset($content['field_product_pdf']) && count($content['field_product_pdf']['#items']) > 0) : ?>
 		  <span class="favorites"><a href="<?php print file_create_url($content['field_product_pdf']['#items'][0]['uri']);?>">schematics pdf<img src="<?php print base_path() . path_to_theme(); ?>/images/SubLink_Arrow_Red_6x9.png" class="sublink-arrow"/></a></span>
 	  <?php endif; ?>
+	  
+	  <?php print render($content['body']); ?>  
   	  
   	  <?php print render($content['sharethis']); ?>
 	  
@@ -151,14 +153,12 @@ if ($teaser) { //item teaser view
 		<h1 class="title" id="page-title"><?php print $node->title; ?></h1>
 		<?php $content['field_alu']['#title'] = 'Model'; ?>
 		<?php print render($content['field_alu']); ?>
+		<?php print render($content['model']); ?>
 		
 		<?php if (is_array($content['field_brand']['#object']->field_brand['und'][0]['taxonomy_term']->field_brand_image)) : ?>
 		  <?php $brand_image = $content['field_brand']['#object']->field_brand['und'][0]['taxonomy_term']->field_brand_image['und'][0]; ?>
 		  <?php print theme("image", array("path" => $brand_image['uri'], 'attributes' => array("class" => array("brand-img")))); ?>
 		<?php endif; ?>
-	  
-
-		<?php print render($content['body']); ?>  
 	  
 	  <p class="item-info-p">
 	  	<?php print render($content['dimensions']);?>
@@ -177,7 +177,7 @@ if ($teaser) { //item teaser view
 	  	Price:<br/>
 	  	
 	  	<?php 
-	  	print render($content['list_price']);
+	  	//print render($content['list_price']);
 	  	print render($content['sell_price']);
 	  	print render($content['sale_price']);
 	  	
@@ -209,7 +209,7 @@ if ($teaser) { //item teaser view
 
 </article><!-- /.node -->
 
- <hr /><br />
+ <hr />
 
 
 <?php } ?>

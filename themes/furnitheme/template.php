@@ -138,9 +138,10 @@ function furnitheme_preprocess_page(&$vars) {
 function preprocess_node_common_fields(&$content, $hook) {
 	
 
-	if (!empty($content['field_show_add_to_cart']) && $content['field_show_add_to_cart']['#items'][0]['value'] == '0') {
+	//!TEMPORARILY FORCE REMOVE ADD TO CART BUTTON
+	//if (!empty($content['field_show_add_to_cart']) && $content['field_show_add_to_cart']['#items'][0]['value'] == '0') {
 		unset($content['add_to_cart']);
-	}
+	//}
 	
 	//for collection items, disable list price, sale price, change label for price
 	//dsm($content);
@@ -153,17 +154,19 @@ function preprocess_node_common_fields(&$content, $hook) {
 	}
 
 	
-	$content['list_price']['#title'] = "MSRP:";
+	//$content['list_price']['#title'] = "MSRP:";
 	unset($content['sell_price']['#title']);
 	
 	$epsilon = 0.01;
-	$list_price = isset($content['list_price']['#value']) ? $content['list_price']['#value'] : $content['list_price'];
+	//$list_price = isset($content['list_price']['#value']) ? $content['list_price']['#value'] : $content['list_price'];
 	$sell_price = isset($content['sell_price']['#value']) ? $content['sell_price']['#value'] : $content['sell_price'];
-	$diff = abs(floatval($list_price) - floatval($sell_price));
-	if ($diff <= $epsilon) {
-	    // The prices are equal
-	    unset($content['list_price']);
-	}
+	//$diff = abs(floatval($list_price) - floatval($sell_price));
+	//if ($diff <= $epsilon) {
+	//    // The prices are equal
+	//    unset($content['list_price']);
+	//}
+	
+	unset($content['list_price']);
 
 	
 	$sale_price_set = FALSE;
@@ -193,7 +196,7 @@ function preprocess_node_common_fields(&$content, $hook) {
 		
 		$content['sale_price'] = $new_sale_price;
 		$content['sell_price']['#attributes']['class'] = array('old-price');
-		$content['sell_price']['#title'] = "REGULAR:";
+		//$content['sell_price']['#title'] = "REGULAR:";
 	  	
 	}
 	
@@ -431,7 +434,7 @@ function furnitheme_uc_product_model($variables) {
   $attributes['class'][] = "model";
 
   $output = '<div ' . drupal_attributes($attributes) . '>';
-  $output .= '<span class="product-info-label">' . t('Model') . ':</span> ';
+  $output .= '<span class="product-info-label">' . t('SKU') . ':</span> ';
   $output .= '<span class="product-info-value">' . check_plain($model) . '</span>';
   $output .= '</div>';
 
@@ -737,43 +740,44 @@ function furnitheme_form_views_exposed_form_alter(&$form, &$form_state, $form_id
 			
 		}
         
-	} else if ($form['#id'] == 'views-exposed-form-taxonomy-term-page-brands' || $form['#id'] == 'views-exposed-form-taxonomy-term-page-in-store') {
-		if (isset($form['category'])) {
-			
-			// prevent recursion - only execute once
-		    static $called_brand = 0;
-		    if ($called_brand === $form['#id']) {
-		      return;
-		    }		    
-		    $called_brand = $form['#id']; 				  // flag as called
+	} else if (in_array($form['#id'], array('views-exposed-form-taxonomy-term-page-brands', 'views-exposed-form-taxonomy-term-page-in-store', 'views-exposed-form-taxonomy-term-page-italia', 'views-exposed-form-taxonomy-term-page-editions'))) {
+	
+		// prevent recursion - only execute once
+	    static $called_brand = 0;
+	    if ($called_brand === $form['#id']) {
+	      return;
+	    }		    
+	    $called_brand = $form['#id']; 				  // flag as called
+	
+		// get view results
+	    $view = $form_state['view']; 				  // views_get_current_view();
+	    
+		$temp_view = $view->clone_view(); 			  // create a temp view
+	    $temp_view->init_display();
+	    
+	    if ($form['#id'] == 'views-exposed-form-taxonomy-term-page-in-store') {
+	    	$temp_view->set_display('page_in_store');
+	    } else {
+		    $temp_view->set_display('page_brands');
+	    }
+	    
+	    $temp_view->pre_execute();
+	    $temp_view->set_items_per_page(0); 			  // we want results from all pages
+	    $temp_view->display_handler->has_exposed = 0; // prevent recursion
+	    $temp_view->execute();
+	    $results = $temp_view->result;
+	    
+	    // return if no results
+	    if (!$results) {
+	    	return;
+	    }
+	    	    		    
+	    // assemble results into a comma-separated nid list
+	    foreach($results as $row) {
+	    	$nids[] = $row->nid;
+	    }
 		
-			// get view results
-		    $view = $form_state['view']; 				  // views_get_current_view();
-		    
-			$temp_view = $view->clone_view(); 			  // create a temp view
-		    $temp_view->init_display();
-		    
-		    if ($form['#id'] == 'views-exposed-form-taxonomy-term-page-in-store') {
-		    	$temp_view->set_display('page_in_store');
-		    } else {
-			    $temp_view->set_display('page_brands');
-		    }
-		    
-		    $temp_view->pre_execute();
-		    $temp_view->set_items_per_page(0); 			  // we want results from all pages
-		    $temp_view->display_handler->has_exposed = 0; // prevent recursion
-		    $temp_view->execute();
-		    $results = $temp_view->result;
-		    
-		    // return if no results
-		    if (!$results) {
-		    	return;
-		    }
-		    	    		    
-		    // assemble results into a comma-separated nid list
-		    foreach($results as $row) {
-		    	$nids[] = $row->nid;
-		    }
+		if (isset($form['category'])) {			
 		   
 		    // get the list of used terms
 		    $used_tids = db_query("SELECT GROUP_CONCAT(DISTINCT CAST (CASE WHEN h.parent=0 THEN br.field_category_tid ELSE h.parent END AS CHAR) SEPARATOR ',') FROM {field_data_field_category} br INNER JOIN {taxonomy_term_hierarchy} h on h.tid=br.field_category_tid WHERE br.entity_id IN (:nids)", array(":nids" => $nids))->fetchField();

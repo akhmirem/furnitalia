@@ -234,14 +234,14 @@ var skipAnimation = false;
 			});
 			
 			// ------------ SCROLLBARS FOR PRODUCT DESCRIPTION TEXT ----------
-			if (jQuery().jScrollPane) {
+			/*if (jQuery().jScrollPane) {
 				$("article.node-item .field-name-body .field-item").jScrollPane({
 					verticalDragMinHeight: 25,
 					verticalDragMaxHeight: 25,
 					horizontalDragMinWidth: 25,
 					horizontalDragMaxWidth: 25
 				});
-			}
+			}*/
 			
 			$("#item-video-img").unbind('click').click(function() {
 				$.fancybox.open($('div.embedded-video'), {

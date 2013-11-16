@@ -842,11 +842,9 @@ article.view-mode-full {
 	margin-left:10px;
 }
 article.node-item .field-name-body .field-item {
-	height:150px;
-	width:18.5em;
-	overflow: auto;
-	text-align: justify;
 	outline: none;
+	clear: both;
+	padding-top: .3em;
 }
 #pikawrapper {
 	height:150px;

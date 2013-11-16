@@ -7,6 +7,14 @@
 
 @media print {
 
+  @page {
+	  margin-top:0.5em;
+  }
+
+  a[href]:after {
+    content: none !important;
+  }
+
   a:link,
   a:visited { /* underline all links */
     text-decoration: underline !important;
@@ -15,21 +23,6 @@
   #site-name a:link,
   #site-name a:visited { /* Don't underline header */
     text-decoration: none !important;
-  }
-
-  #content a[href]:after { /* Add visible URL after links. */
-    content: " (" attr(href) ")";
-    font-weight: normal;
-    font-size: 16px;
-  }
-
-  #content a[href^="javascript:"]:after,
-  #content a[href^="#"]:after { /* Only display useful links. */
-    content: "";
-  }
-
-  #content abbr[title]:after { /* Add visible title after abbreviations. */
-    content: " (" attr(title) ")";
   }
 
   #content { /* Un-float the content */
@@ -47,35 +40,59 @@
     background-color: transparent !important;
     background-image: none !important;
   }
-  
-  #main-nav a {
-    display:inline;
-    float:left;
-    margin:1em .3em .3em .3;
-    border:none;
-    font-size:0.9em;
+  #logo {
+  	margin:0;
   }
-  #left-section {
-    width:100%;
-    clear:both;
-    top:1.5em;
-    position:relative;
-    border-top:1px solid black;
+  #page {
+	  margin-top:0cm;
+  }
+  #page, #content {
+    width:90%;
+  }
+  
+  #logo {
+    margin-top:0;
   }
   #header-phone {
-    float:left;
+    font-size:.6em;
   }
   .region-header {
     margin:0;
   }
-  #logo {
-    margin-top:0;
+
+  
+  #left-section {
+    width:90%;
+    height: auto;
+	margin:0;
+	padding:0;
   }
-  #page, #content {
-    width:100%;
+  #main-nav a {
+    display:inline;
+    float:left;
+    margin:.5em .3em .3em .3;
+    border:none;
+    font-size:0.9em;
   }
+  
   #item-info {  
     margin-left:.5em;
+  }
+  article.node-item .field-name-body  { 
+	  position: relative;
+	  overflow: visible;
+	  width: 50em;
+  }
+  #pikawrapper {
+	  overflow: visible;
+	  white-space: normal;
+  }
+  .jspContainer {
+	  overflow: visible;
+	  position: inherit;
+  }
+  .jspPane {
+	  position: inherit;
   }
   
   #skip-link,
@@ -98,21 +115,13 @@
   #header div.item-list,
   #request-quote,
   .jspVerticalBar,
-  .jspHorizontalBar{ /* Hide sidebars and nav elements */
+  .jspHorizontalBar,
+  .sharethis-buttons,
+  aside.content,
+  #dialog-form,
+  #stitch { /* Hide sidebars and nav elements */
     visibility: hidden;
     display: none;
-  }
-  
-  #pikawrapper {
-	  overflow: visible;
-	  white-space: normal;
-  }
-  .jspContainer {
-	  overflow: visible;
-	  position: inherit;
-  }
-  .jspPane {
-	  position: inherit;
   }
 
 } /* End @media print */
