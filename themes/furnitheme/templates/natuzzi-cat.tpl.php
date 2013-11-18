@@ -5,7 +5,7 @@
 
 <section class="natuzzi-cat">
 	<h2 class="field-label">Natuzzi Italia - It’s How You Live</h2>
-	<img src="<?php print $theme_path ?>/images/natuzzi.png" style="float:left;padding:1em .5em;" />
+	<img src="<?php print $theme_path ?>/images/natuzzi.png" style="float:left;margin: 0 .5em 0.1em 0;" />
 
 <p>The Natuzzi brand aims to bring quality and Italian style, to consumers around the world, through coordinated and innovative living room. Natuzzi Group was founded in 1959 by Pasquale Natuzzi, current Chairman, Chief Executive Officer and Group Stylist. Natuzzi offers wide range of products delivering high quality in terms of creativity, detail of design, and choice of materials and finishes. From the tanning of hides to the production of frames and padding, from the cutting of cover ings to stitching. The entire production process is carried out in the Group’s Italian own factories. </p> 
 

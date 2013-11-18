@@ -77,6 +77,7 @@ a.appointment:hover {
 }
 #header-phone a.main-phone {
 	color:#981b1e;
+	font-size: 1.2em;
 }
 
 p {
@@ -216,19 +217,19 @@ body.front #block-search-form, body.keyhole #block-search-form {
 	right: 0;
 	text-decoration: none;
 	z-index: 10;
-	font-size: .9em;
+	font-size: 0.95em;
 }
 #header-phone a {
 	text-decoration: none;
 }
 body.front #header-phone, body.keyhole #header-phone {
-	right:9.8em;
+	right:7.9em;
 }
 #left-section {
 	float:left;
 	width: 270px;
 	padding-left: 15px;
-	margin-top:20px;
+	margin-top:17px;
 }
 
 .views-exposed-form label, div.region-left .form-item label {
@@ -721,7 +722,7 @@ aside.contact-page a {
 #cat-preview {
 	height: 350px;
 	position: relative;
-	top: .85em;
+	top: 0.7em;
 	right:1em;
 }
 #cat-preview h2 {
@@ -1008,7 +1009,7 @@ footer {
 	margin-left: 15px;
 	position: relative;
 	height:140px;
-	background:transparent url(../images/footer-bg.jpg) no-repeat -15px center;
+	background:transparent url(../images/footer-bg.jpg) no-repeat -13px center;
 	font-size: .85em;
 	text-transform: capitalize;
 }
@@ -1147,7 +1148,7 @@ hr.article-sep {
  */
 #promo {
 	clear: both;
-	padding: 15px 0 0 15px;
+	padding: 15px 0 5px 15px;
 }
 #promo h3 {
 	font-size: .9em;
@@ -1269,11 +1270,12 @@ section.category-desc h2 {
 	font-size: .9em;
 }
 section.natuzzi-cat h2 {
-	left:13em;
+	left:9.1em;
 }
 section.category-desc p {
-	text-transform: uppercase;
-	font-size: .9em;
+	font-size: 1.2em;
+	margin-right: 11em;
+	margin-top: .2em;
 }
 section.natuzzi-cat p {
 	margin:1em 14em 0 0;

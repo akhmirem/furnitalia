@@ -4,10 +4,10 @@
 ?>
 
 <section class="natuzzi-cat">
-	<h2 class="field-label">Natuzzi Editions - Design. Comfort. Craftsmanship.</h2>
-	<img src="<?php print $theme_path ?>/images/editions.png" style="float:left;padding:1em .5em;" />
+	<h2 class="field-label">Natuzzi Editions - <br/>Design. Comfort. Craftsmanship.</h2>
+	<img src="<?php print $theme_path ?>/images/editions.png" style="float:left;margin: 0 .5em 0 0;position: relative;bottom: .8em;" />
 
-<p>A brand for the American Market, Natuzzi Editions is made by the experience of the Natuzzi Group and manufactured globally.</p> 
+<p style="line-height: 130%;font-size: 1.1em;">A brand for the American Market, Natuzzi Editions is made by the experience of the Natuzzi Group and manufactured globally.</p> 
 <p>We strive to bring you the latest in fashionable and comfortable upholstered furniture.</p> 
 
 <p>The options are endless and offered to accommodate your lifestyle. 

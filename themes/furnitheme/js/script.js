@@ -311,28 +311,29 @@ var skipAnimation = false;
 		});
 
 		//set up keyhole animation for categories
+		SetUpCategorySlider("bg1");
 
 		//hover events for category links
 		$('#bg1').hover(function(e){
 			//SetUpCategorySlider("bg1");
-			KeyHoleScroll(1);
+			//KeyHoleScroll(1);
 			
 		}, function(){});
 		
 		$('#bg2').hover(function(e){
 			//SetUpCategorySlider("bg2");
-			KeyHoleScroll(2);
+			//KeyHoleScroll(2);
 			
 		}, function(){});		
 					
 		$('#bg3').hover(function(e){
 			//SetUpCategorySlider("bg3");
-			KeyHoleScroll(3);
+			//KeyHoleScroll(3);
 			
 		}, function(){});
 		
 		$('#bg4').hover(function(e){
-			KeyHoleScroll(4);
+			//KeyHoleScroll(4);
 			
 		}, function(){});
 		
@@ -370,7 +371,7 @@ var skipAnimation = false;
 		ANIM_BG_TOTAL_WIDTH = 250 * 4;
 
 	
-		var keyHoleImg = Drupal.settings.basePath + 'sites/all/themes/furnitheme/images/bg-categores-keyhole.jpg';
+		var keyHoleImg = Drupal.settings.basePath + 'sites/all/themes/furnitheme/images/keyhole-gradient.png';
 		var img = new Image();
 		
 		$('#menu-pic').addClass('loading');
