@@ -312,30 +312,6 @@ var skipAnimation = false;
 
 		//set up keyhole animation for categories
 		SetUpCategorySlider("bg1");
-
-		//hover events for category links
-		$('#bg1').hover(function(e){
-			//SetUpCategorySlider("bg1");
-			//KeyHoleScroll(1);
-			
-		}, function(){});
-		
-		$('#bg2').hover(function(e){
-			//SetUpCategorySlider("bg2");
-			//KeyHoleScroll(2);
-			
-		}, function(){});		
-					
-		$('#bg3').hover(function(e){
-			//SetUpCategorySlider("bg3");
-			//KeyHoleScroll(3);
-			
-		}, function(){});
-		
-		$('#bg4').hover(function(e){
-			//KeyHoleScroll(4);
-			
-		}, function(){});
 		
 	}
 	
@@ -368,48 +344,15 @@ var skipAnimation = false;
 	function SetUpCategoryAnimKeyHole() {
 	
 		ANIM_FRAME_WIDTH = 250;
-		ANIM_BG_TOTAL_WIDTH = 250 * 4;
-
-	
-		var keyHoleImg = Drupal.settings.basePath + 'sites/all/themes/furnitheme/images/keyhole-gradient.png';
-		var img = new Image();
 		
-		$('#menu-pic').addClass('loading');
-		
-		$(img)
-	    .load(function () {
-	    
-	    	$('#menu-pic-wrapper').css({
-				'position':'absolute',
-				'width':ANIM_FRAME_WIDTH,
-				'left':'auto',
-				'right':0,
-				'z-index':'1'
-			}).insertBefore($('div.keyhole'));
-			
-			// insert loaded image into the div 
-			$('#menu-pic')
-				// remove the loading class (so no background spinner), 
-				.removeClass('loading')
-				.css("background-image", "url(" +  keyHoleImg + ")")
-				.css({'width':ANIM_FRAME_WIDTH, 'left':0}).show()
-				.addClass("ready");
-	
-	    })
-	    .attr('src', keyHoleImg);
-				
-	}
-	
-	function KeyHoleScroll(index) {
-		if (!$('#menu-pic').hasClass("ready")) {
-			return;
-		}
-		
-		var backgroundXShift = -ANIM_FRAME_WIDTH * (index - 1);
-		$('#menu-pic').stop().animate({backgroundPosition:"(" + backgroundXShift + "px 0)"}, {
-			duration:500,
-			easing:'linear'
-		});
+		$('#menu-pic-wrapper').css({
+			'position':'absolute',
+			'width':ANIM_FRAME_WIDTH,
+			'left':'auto',
+			'right':0,
+			'z-index':'1'
+		}).insertBefore($('div.keyhole'));
+		$('#menu-pic').hide();
 	}
 	
 	function AnimateFrontPageBackground() {
