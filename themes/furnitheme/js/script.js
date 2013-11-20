@@ -371,7 +371,7 @@ var skipAnimation = false;
 		ANIM_BG_TOTAL_WIDTH = 250 * 4;
 
 	
-		var keyHoleImg = Drupal.settings.basePath + 'sites/all/themes/furnitheme/images/keyhole-gradient.png';
+		var keyHoleImg = Drupal.settings.basePath + 'sites/all/themes/furnitheme/images/keyhole-red-gradient.jpg';
 		var img = new Image();
 		
 		$('#menu-pic').addClass('loading');
