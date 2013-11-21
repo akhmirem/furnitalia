@@ -1177,9 +1177,13 @@ body.not-front #promo hr {
 }
 #promo p {
 	font-size: 1em;
-	line-height: 130%;
+	line-height: 140%;
 	margin: .2em 0;
 	width: 45em;
+	color:black;
+}
+#promo span.promo-accent {
+	color:#981b1e;
 }
 #promo img{
 	float:left;

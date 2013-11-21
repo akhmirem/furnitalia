@@ -324,12 +324,12 @@ var skipAnimation = false;
 			//'bg3':[{'image':imgPathPrefix + 'editions/B520_valeria_sofa.png'}, {'image':imgPathPrefix + 'editions/B537_sophia_recliner.png'},  {'image':imgPathPrefix + 'editions/A399_nina_sofa.png'}, {'image':imgPathPrefix + 'editions/B815_pascal_chair.png'}]
 		}
 		
-		var promo = null;
-		/*{
-			'image':Drupal.settings.basePath + "sites/all/themes/furnitheme/images/banner-large.jpg",
-			'link':Drupal.settings.basePath + "in-store",
-			'title':'Natuzzi Italia Sale'
-		};*/
+		var promo = 
+		{
+			'image':Drupal.settings.basePath + "sites/default/files/promo/black-friday/Friday_Web3.jpg",
+			'title':'Black Friday Sale'
+			//'link':Drupal.settings.basePath + "in-store",
+		};
 		if (promo) {
 			for (var bg in catPreviewInfo) {
 				catPreviewInfo[bg].unshift(promo );
