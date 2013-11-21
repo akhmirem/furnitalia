@@ -1092,6 +1092,9 @@ article .form-item label  {
 	float:left;
 	color:white;
 }
+#block-webform-client-block-33 .webform-component-markup p {
+	font-size: .95em;
+}
 #block-webform-client-block-33 .webform-component-markup p, #catalogs, span.menu-label {
 	margin:0;
 	text-transform: uppercase;
@@ -1148,13 +1151,13 @@ hr.article-sep {
  */
 #promo {
 	clear: both;
-	padding: 15px 0 5px 15px;
+	padding: 20px 0 5px 15px;
 }
 #promo h3 {
 	font-size: .9em;
 	text-transform: uppercase;
-	line-height: 130%;
-	margin: .2em 0;
+	line-height: 100%;
+	margin: .6em 0 .2em;
 	font-weight: 100;
 }
 #promo h4 {
@@ -1166,7 +1169,7 @@ hr.article-sep {
 	color: #981b1e;
 }
 #promo hr {
-	margin:.5em 0;
+	margin: 0.2em 0 0.5em;
 	background-color:#6d6e71;
 	height: 1px;
 	width: 84.7%;
@@ -1179,7 +1182,7 @@ body.not-front #promo hr {
 	font-size: 1em;
 	line-height: 140%;
 	margin: .2em 0;
-	width: 45em;
+	width: 46em;
 	color:black;
 }
 #promo span.promo-accent {
@@ -1187,7 +1190,7 @@ body.not-front #promo hr {
 }
 #promo img{
 	float:left;
-	padding-right:.5em;
+	padding-right:1.7em;
 }
 #promo a.more-info {
 	float: left;
