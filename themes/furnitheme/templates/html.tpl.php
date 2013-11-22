@@ -89,7 +89,9 @@
 
   <?php print $styles; ?>
   <!--[if IE ]>
-    <script src="<?php print $base_path . drupal_get_path('theme', 'furnitheme'); ?>/css/ie.css></script>
+	<style>
+		@import url(<?php print url(drupal_get_path('theme', 'furnitheme') . "/css/ie.css", array('absolute' => TRUE)); ?>);
+	</style>
    <![endif]-->
   <?php print $scripts; ?>
   <?php if ($add_respond_js): ?>
