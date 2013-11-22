@@ -255,6 +255,11 @@ var skipAnimation = false;
 				});
 			});
 			
+			$("#promo img").click(function() {
+				openPromoImg();
+				return false;
+			});
+			
         }
 	}
 	
@@ -319,26 +324,68 @@ var skipAnimation = false;
 		//Category Slide Show images list
 		var imgPathPrefix = Drupal.settings.basePath + "sites/all/themes/furnitheme/images/cat-images/";
 		var catPreviewInfo = {
-			'bg1':[{'image':imgPathPrefix + 'all/gilda_lounge.png'}, {'image':imgPathPrefix + 'all/victor_dining_table.png'}, {'image':imgPathPrefix + 'all/vivian_chair.png'}, {'image':imgPathPrefix + 'all/zina_bed.png'}],
+			'bg1':[{'image':Drupal.settings.basePath + "sites/default/files/promo/black-friday/Friday_Web1.jpg"}, {'image':Drupal.settings.basePath + "sites/default/files/promo/black-friday/Friday_Web2.jpg"}, {'image':Drupal.settings.basePath + "sites/default/files/promo/black-friday/Friday_Web3.jpg"}],
+			//'bg1':[{'image':imgPathPrefix + 'all/gilda_lounge.png'}, {'image':imgPathPrefix + 'all/victor_dining_table.png'}, {'image':imgPathPrefix + 'all/vivian_chair.png'}, {'image':imgPathPrefix + 'all/zina_bed.png'}],
 			//'bg2':[{'image':imgPathPrefix + 'italia/surround_sectional.png'}, {'image':imgPathPrefix + 'italia/sound_chair.png'},  {'image':imgPathPrefix + 'italia/samuel_table.png'}, {'image':imgPathPrefix + 'italia/tribeca_dining_table.png'}],
 			//'bg3':[{'image':imgPathPrefix + 'editions/B520_valeria_sofa.png'}, {'image':imgPathPrefix + 'editions/B537_sophia_recliner.png'},  {'image':imgPathPrefix + 'editions/A399_nina_sofa.png'}, {'image':imgPathPrefix + 'editions/B815_pascal_chair.png'}]
 		}
 		
-		var promo = 
-		{
+		var promo = null;
+		/*{
 			'image':Drupal.settings.basePath + "sites/default/files/promo/black-friday/Friday_Web3.jpg",
 			'title':'Black Friday Sale'
 			//'link':Drupal.settings.basePath + "in-store",
-		};
+		};*/
 		if (promo) {
 			for (var bg in catPreviewInfo) {
-				catPreviewInfo[bg].unshift(promo );
+				catPreviewInfo[bg].unshift(promo);
 			}
 		}
 		
 		category = 'bg1';
 		
-		$('#category-image-pane').html('').PikaChoose({showCaption:false, showTooltips:false, data:catPreviewInfo[category], autoPlay:true, speed:3000});
+		//!Promo
+		$('#category-image-pane').html('').PikaChoose({
+			showCaption:false, 
+			showTooltips:false, 
+			data:catPreviewInfo[category], 
+			autoPlay:true, 
+			speed:2000, 
+			buildFinished: function() {
+
+				$('#category-image-pane div.pika-stage').click(function(){					
+					openPromoImg();
+					return false;
+				});
+			}
+		});
+	}
+	
+	function openPromoImg() {
+		var promoImgPath = Drupal.settings.basePath + "sites/default/files/promo/black-friday/Black-Friday-Eblast600x745.jpg";
+		var img = new Image();
+
+		$.fancybox.showLoading();
+		
+		// wrap our new image in jQuery, then:
+		$(img)
+			// once the image has loaded, execute this code
+			.load(function () {
+			
+				$.fancybox.hideLoading();
+				$.fancybox.open('<img src="'+ promoImgPath +'" alt="Black Friday sale"/>',
+				{
+					closeBtn:true,
+					closeClick:false,
+					mouseWheel:true,
+					openEffect	: 'none',
+					closeEffect	: 'none'
+				});
+				
+				
+			})					
+			// *finally*, set the src attribute of the new image to our image
+			.attr('src', promoImgPath);
 	}
 	
 	function SetUpCategoryAnimKeyHole() {
