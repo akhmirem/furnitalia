@@ -308,7 +308,7 @@ a.active-menu {
 	color:#981b1e;
 }
 div.region-header li a {
-    font-size: 0.9em;
+    font-size: 0.85em;
     font-weight: 100;
     margin: 0 1.5em 0 0;
     text-decoration: none;
@@ -1182,7 +1182,7 @@ body.not-front #promo hr {
 	font-size: 1em;
 	line-height: 140%;
 	margin: .2em 0;
-	width: 46em;
+	width: 47em;
 	color:black;
 }
 #promo span.promo-accent {

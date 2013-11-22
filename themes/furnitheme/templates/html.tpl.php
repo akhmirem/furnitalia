@@ -88,8 +88,8 @@
   <meta http-equiv="cleartype" content="on">
 
   <?php print $styles; ?>
-  <!--[if lte IE 7]>
-    <script src="<?php print $base_path . $path_to_zen; ?>/css/ie.css></script>
+  <!--[if IE ]>
+    <script src="<?php print $base_path . drupal_get_path('theme', 'furnitheme'); ?>/css/ie.css></script>
    <![endif]-->
   <?php print $scripts; ?>
   <?php if ($add_respond_js): ?>
