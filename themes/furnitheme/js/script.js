@@ -260,6 +260,16 @@ var skipAnimation = false;
 				return false;
 			});
 			
+			$("#chat-online").click(function() {
+				$.fancybox.open('<p style="">LiveHelp is unavailable at this moment. Please call us at 1-800-387-4825 or 916-484-0333 (Sacramento, CA); 916-742-7900 (Roseville, CA)</p>',
+				{
+					closeBtn:true,
+					closeClick:false,
+				});
+
+				return false;
+			});
+			
         }
 	}
 	
