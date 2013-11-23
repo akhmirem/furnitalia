@@ -48,6 +48,7 @@ var skipAnimation = false;
 							.css("background-image", "url(" +  Drupal.settings.basePath + "sites/all/themes/furnitheme/images/front-keyhole-bg.png)");
 
 						$("#stitch").hide();
+						$("div.keyhole").hide();
 						timer = window.setTimeout(AnimateFrontPageBackground, 500);
 
 					})				
@@ -84,6 +85,8 @@ var skipAnimation = false;
 				//hide top overlay
 				$("#front-overlay").addClass("loading").delay(FRONTPAGE_TRANSITION_DURATION).hide(1);
 				$("#stitch").delay(FRONTPAGE_TRANSITION_DURATION).fadeIn(FRONTPAGE_TRANSITION_DURATION);
+				
+				$("div.keyhole").fadeIn();
 				
 				//set up keyhole animation for categories
 				SetUpCategoryAnimKeyHole();	

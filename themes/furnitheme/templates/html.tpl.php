@@ -88,7 +88,7 @@
   <meta http-equiv="cleartype" content="on">
 
   <?php print $styles; ?>
-  <!--[if IE ]>
+  <!--[if gt IE 6]>
 	<style>
 		@import url(<?php print url(drupal_get_path('theme', 'furnitheme') . "/css/ie.css", array('absolute' => TRUE)); ?>);
 	</style>

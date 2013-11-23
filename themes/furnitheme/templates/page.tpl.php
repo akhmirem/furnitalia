@@ -179,6 +179,10 @@
 
   <footer>
 	<nav id="footer-info-menu"><?php print render($footer_info_menu); ?></nav>
+	<nav id="footer-user-menu"><?php print render($footer_user_menu); ?></nav>
+	<nav id="footer-policy-menu"><?php print render($footer_policy_menu); ?></nav>	
+	<?php print  l("Catalogs", "catalogs", array('attributes' => array('id' => 'catalogs'))); ?>  
+	<?php print render($page['footer']['webform_client-block-33']); ?>	  
 	
 	<!-- AddThis Follow BEGIN -->
 	<div class="addthis_toolbox addthis_32x32_style addthis_default_style">
@@ -191,10 +195,6 @@
 	<!-- AddThis Follow END -->
 
 
-	<nav id="footer-user-menu"><?php print render($footer_user_menu); ?></nav>
-	<nav id="footer-policy-menu"><?php print render($footer_policy_menu); ?></nav>	
-	<?php print  l("Catalogs", "catalogs", array('attributes' => array('id' => 'catalogs'))); ?>  
-	<?php print render($page['footer']['webform_client-block-33']); ?>	  
   </footer>
   
   <?php if ($show_keyhole) : ?>
