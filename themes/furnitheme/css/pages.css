@@ -1031,6 +1031,7 @@ footer .addthis_toolbox {
 	position: absolute;
 	top: 7.3em;
 	left: 3em;
+	width:180px;
 }
 footer a {
 	text-decoration: none;

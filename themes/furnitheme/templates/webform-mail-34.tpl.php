@@ -22,16 +22,17 @@
 ?>
 
 <?php
-	$is_user = $email['email'] == 3; 
+
+	global $base_url, $theme_path;
 	
 	//$data = '<pre>' . print_r($submission, TRUE) .'</pre>';	
 	//$data .= '<br/><br/><pre>Email var:<br/>' . print_r($email, TRUE) .'</pre>';	
 	
-	
+	$is_user = $email['email'] == 3; 
 	$nid = (int)$submission->data[7]['value'][0];
 	$n = node_load($nid);
 	
-	$url = l($n->title, "node/$nid", array("attributes" => array("rel" => "nofollow", "_target" => "blank")));
+	$url = url(l($n->title, "node/$nid", array("attributes" => array("rel" => "nofollow", "_target" => "blank"))), array('absolute' => true));
 	
 	
 	$image = $n->field_image['und'][0];
@@ -42,17 +43,15 @@
 		'alt' => $image['alt'],
 	));
 	$image_html_rendered = render($image_html);	
-	$img = l($image_html_rendered, "node/" . $n->nid, array('html' => true));
-	
-	global $base_url, $theme_path;
+	$img = l($image_html_rendered, "node/" . $n->nid, array('html' => TRUE, 'absolute' => TRUE));
 	
 	$theme = $base_url . '/' . $theme_path;
 
 ?>
 
-<?php if ($is_user) :?>
-	<div>
+<?php if ($is_user) : ?>
 
+	<div>
 
 <html>
 <body>
@@ -244,6 +243,7 @@
 		<p>%email[first_name]</p>
 		<p>%email[last_name]</p>
 		<p>%email[phone]</p>
+		<p>%email[zip]</p>
 		<p>%email[email]</p>
 		<p>%email[question]</p>
 

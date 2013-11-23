@@ -329,30 +329,29 @@ var skipAnimation = false;
 		});
 
 		//set up keyhole animation for categories
-		SetUpCategorySlider("bg1");
+		//SetUpCategorySlider("bg1");
 		
 	}
 	
 	function SetUpCategorySlider(category) {
 		//Category Slide Show images list
+		
 		var imgPathPrefix = Drupal.settings.basePath + "sites/all/themes/furnitheme/images/cat-images/";
 		var catPreviewInfo = {
-			'bg1':[{'image':Drupal.settings.basePath + "sites/default/files/promo/black-friday/Friday_Web1.jpg"}, {'image':Drupal.settings.basePath + "sites/default/files/promo/black-friday/Friday_Web2.jpg"}, {'image':Drupal.settings.basePath + "sites/default/files/promo/black-friday/Friday_Web3.jpg"}],
-			//'bg1':[{'image':imgPathPrefix + 'all/gilda_lounge.png'}, {'image':imgPathPrefix + 'all/victor_dining_table.png'}, {'image':imgPathPrefix + 'all/vivian_chair.png'}, {'image':imgPathPrefix + 'all/zina_bed.png'}],
-			//'bg2':[{'image':imgPathPrefix + 'italia/surround_sectional.png'}, {'image':imgPathPrefix + 'italia/sound_chair.png'},  {'image':imgPathPrefix + 'italia/samuel_table.png'}, {'image':imgPathPrefix + 'italia/tribeca_dining_table.png'}],
-			//'bg3':[{'image':imgPathPrefix + 'editions/B520_valeria_sofa.png'}, {'image':imgPathPrefix + 'editions/B537_sophia_recliner.png'},  {'image':imgPathPrefix + 'editions/A399_nina_sofa.png'}, {'image':imgPathPrefix + 'editions/B815_pascal_chair.png'}]
-		}
-		
-		var promo = null;
-		/*{
-			'image':Drupal.settings.basePath + "sites/default/files/promo/black-friday/Friday_Web3.jpg",
-			'title':'Black Friday Sale'
-			//'link':Drupal.settings.basePath + "in-store",
-		};*/
-		if (promo) {
-			for (var bg in catPreviewInfo) {
-				catPreviewInfo[bg].unshift(promo);
-			}
+			'bg1':[
+				{'image':Drupal.settings.basePath + "sites/default/files/promo/black-friday/Friday_Web1.jpg"},
+				{'image':Drupal.settings.basePath + "sites/default/files/promo/black-friday/Natuzzi_Editions-B645-Stefano-Sectional.png"},
+				{'image':Drupal.settings.basePath + "sites/default/files/promo/black-friday/Exstra_TulipTable.png"},
+				{'image':Drupal.settings.basePath + "sites/default/files/promo/black-friday/Natuzzi_Italia-Soud_Chair.png"},				
+				{'image':Drupal.settings.basePath + "sites/default/files/promo/black-friday/Friday_Web2.jpg"},								
+				{'image':Drupal.settings.basePath + "sites/default/files/promo/black-friday/Natuzzi-Italia_Bateau.png"},				
+				{'image':Drupal.settings.basePath + "sites/default/files/promo/black-friday/Natuzzi_Editions-B815_Pascal_Chair.png"},			
+				{'image':Drupal.settings.basePath + "sites/default/files/promo/black-friday/Natuzzi_Italia-Surround.png"},						
+				{'image':Drupal.settings.basePath + "sites/default/files/promo/black-friday/Friday_Web3.jpg"},									
+				{'image':Drupal.settings.basePath + "sites/default/files/promo/black-friday/Natuzzi_Editions-B520-Valeria-Sofa.png"},
+				{'image':Drupal.settings.basePath + "sites/default/files/promo/black-friday/Italsofa_Twister.png"},
+				{'image':Drupal.settings.basePath + "sites/default/files/promo/black-friday/Natuzzi_Editions-B725_Enzo_Sofa.png"}
+			]
 		}
 		
 		category = 'bg1';
@@ -363,7 +362,7 @@ var skipAnimation = false;
 			showTooltips:false, 
 			data:catPreviewInfo[category], 
 			autoPlay:true, 
-			speed:2000, 
+			speed:3000, 
 			buildFinished: function() {
 
 				$('#category-image-pane div.pika-stage').click(function(){					
