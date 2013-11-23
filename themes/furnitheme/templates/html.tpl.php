@@ -88,11 +88,9 @@
   <meta http-equiv="cleartype" content="on">
 
   <?php print $styles; ?>
-  <!--[if gt IE 6]>
-	<style>
-		@import url(<?php print url(drupal_get_path('theme', 'furnitheme') . "/css/ie.css", array('absolute' => TRUE)); ?>);
-	</style>
-   <![endif]-->
+  <!--[if gt IE 6]><!-->
+	<link rel="stylesheet" href="<?php print url(drupal_get_path('theme', 'furnitheme') . "/css/ie.css", array('absolute' => TRUE)); ?>">
+  <!--[endif]-->
   <?php print $scripts; ?>
   <?php if ($add_respond_js): ?>
     <!--[if lt IE 9]>
