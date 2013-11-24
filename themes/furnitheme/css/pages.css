@@ -688,11 +688,12 @@ div.keyhole {
 #options .form-item {
 	clear:both;
 }
-
-#contact-us, #chat-online {
-	display:block;
+#contact-us, #chat-online, #craftysyntax_4 {
 	width:200px;
 	height:50px;
+}  
+#contact-us, #chat-online {
+	display:block;
 	background: transparent url(../images/contact-icons.png) no-repeat center center;
 	clear:both;
 	text-indent: -9999em;

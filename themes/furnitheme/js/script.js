@@ -34,7 +34,8 @@ var skipAnimation = false;
 		  
 			if (!skipAnimation && $("#front-overlay").length) {
 
-			  var img = new Image();
+			  $("#front-overlay").once(function(){
+				var img = new Image();
 
 				// wrap our new image in jQuery, then:
 				$(img)
@@ -61,7 +62,8 @@ var skipAnimation = false;
 				.attr('src', Drupal.settings.basePath + 'sites/all/themes/furnitheme/images/front-keyhole-bg.png');
 				
 				
-				$("#warning").css('display', 'none');
+				$("#warning").css('display', 'none');  
+			  })
 				
 			}			
 			    
@@ -89,12 +91,10 @@ var skipAnimation = false;
 				$("div.keyhole").fadeIn();
 				
 				//set up keyhole animation for categories
-				SetUpCategoryAnimKeyHole();	
-				
-				//$(".accordion").accordion("option", "active", 0); //make All categories active by default
+				InitRightKeyHole();	
 
 				//start first category slideshow
-				SetUpCategorySlider();
+				InitFeaturedSlideShow();
 				
 				$('#menu-pic').stop().css("background-position" , "0 0");				
 
@@ -107,17 +107,15 @@ var skipAnimation = false;
 			
 			if (skipAnimation || $("#front-overlay").length == 0) {
 				//set up keyhole animation for categories
-				SetUpCategoryAnimKeyHole();	
+				InitRightKeyHole();	
 			}
 						
 			if (skipAnimation) {
 				//hide top overlay
 				$("#front-overlay").hide();
 				
-				//$(".accordion").accordion("option", "active", 0); //make All categories active by default
-				
 				//start first category slideshow
-				SetUpCategorySlider();
+				InitFeaturedSlideShow();
 				$('#menu-pic').stop().css("background-position" , "0 0");
 				
 			}          
@@ -328,23 +326,22 @@ var skipAnimation = false;
 		
 	}
 	
-	function SetUpCategorySlider() {
-		//Category Slide Show images list
-		
-		var imgPathPrefix = Drupal.settings.basePath + "sites/all/themes/furnitheme/images/cat-images/";
+	function InitFeaturedSlideShow() {
+		//Featured Slide Show images list		
+		var imgPathPrefix = Drupal.settings.basePath + "sites/default/files/promo/black-friday/";
 		var featuredImgs = [
-				{'image':Drupal.settings.basePath + "sites/default/files/promo/black-friday/Friday_Web1.jpg"},
-				{'image':Drupal.settings.basePath + "sites/default/files/promo/black-friday/Natuzzi_Editions-B645-Stefano-Sectional.png"},
-				{'image':Drupal.settings.basePath + "sites/default/files/promo/black-friday/Exstra_TulipTable.png"},
-				{'image':Drupal.settings.basePath + "sites/default/files/promo/black-friday/Natuzzi_Italia-Soud_Chair.png"},				
-				{'image':Drupal.settings.basePath + "sites/default/files/promo/black-friday/Friday_Web2.jpg"},								
-				{'image':Drupal.settings.basePath + "sites/default/files/promo/black-friday/Natuzzi-Italia_Bateau.png"},				
-				{'image':Drupal.settings.basePath + "sites/default/files/promo/black-friday/Natuzzi_Editions-B815_Pascal_Chair.png"},			
-				{'image':Drupal.settings.basePath + "sites/default/files/promo/black-friday/Natuzzi_Italia-Surround.png"},						
-				{'image':Drupal.settings.basePath + "sites/default/files/promo/black-friday/Friday_Web3.jpg"},									
-				{'image':Drupal.settings.basePath + "sites/default/files/promo/black-friday/Natuzzi_Editions-B520-Valeria-Sofa.png"},
-				{'image':Drupal.settings.basePath + "sites/default/files/promo/black-friday/Italsofa_Twister.png"},
-				{'image':Drupal.settings.basePath + "sites/default/files/promo/black-friday/Natuzzi_Editions-B725_Enzo_Sofa.png"}
+				{'image':imgPathPrefix + "Friday_Web1.jpg"},
+				{'image':imgPathPrefix + "Natuzzi_Editions-B645-Stefano-Sectional.png"},
+				{'image':imgPathPrefix + "Exstra_TulipTable.png"},
+				{'image':imgPathPrefix + "Natuzzi_Italia-Soud_Chair.png"},				
+				{'image':imgPathPrefix + "Friday_Web2.jpg"},								
+				{'image':imgPathPrefix + "Natuzzi-Italia_Bateau.png"},				
+				{'image':imgPathPrefix + "Natuzzi_Editions-B815_Pascal_Chair.png"},			
+				{'image':imgPathPrefix + "Natuzzi_Italia-Surround.png"},						
+				{'image':imgPathPrefix + "Friday_Web3.jpg"},									
+				{'image':imgPathPrefix + "Natuzzi_Editions-B520-Valeria-Sofa.png"},
+				{'image':imgPathPrefix + "Italsofa_Twister.png"},
+				{'image':imgPathPrefix + "Natuzzi_Editions-B725_Enzo_Sofa.png"}
 		]
 		
 		//!Promo
@@ -391,18 +388,20 @@ var skipAnimation = false;
 			.attr('src', promoImgPath);
 	}
 	
-	function SetUpCategoryAnimKeyHole() {
+	function InitRightKeyHole() {
 	
 		ANIM_FRAME_WIDTH = 250;
 		
-		$('#menu-pic-wrapper').css({
-			'position':'absolute',
-			'width':ANIM_FRAME_WIDTH,
-			'left':'auto',
-			'right':0,
-			'z-index':'1'
-		}).insertBefore($('div.keyhole'));
-		$('#menu-pic').hide();
+		$('#menu-pic-wrapper').once(function() {
+			$(this).css({
+				'position':'absolute',
+				'width':ANIM_FRAME_WIDTH,
+				'left':'auto',
+				'right':0,
+				'z-index':'1'
+			}).insertBefore($('div.keyhole'));
+			$('#menu-pic').stop().hide();
+		})
 	}
 	
 	function AnimateFrontPageBackground() {
