@@ -154,11 +154,10 @@
 	    
 	    <?php if (!$contact_page) : ?>
 	    <aside class="contact sidebars">
-			<a href="#chat" title="Chat online" id="chat-online">Chat online</a>
+			<!--<a href="http://www.furnitalia.com/livehelp/livehelp.php?department=1" title="Live help" id="chat-online">Chat online</a>-->
+     		<DIV id="craftysyntax_4"><script type="text/javascript" src="http://www.furnitalia.com/livehelp/livehelp_js.php?eo=0&amp;department=4&amp;serversession=1&amp;pingtimes=10&amp;dynamic=Y&amp;creditline=W"></script></DIV>
 			<a href="#contact" title="Contact" id="contact-us">Contact us</a>
-     		
-     		<!--<DIV id="craftysyntax_4"><script type="text/javascript" src="http://www.furnitalia.com/livehelp/livehelp_js.php?eo=0&amp;department=4&amp;serversession=1&amp;pingtimes=10&amp;dynamic=Y&amp;creditline=W"></script></DIV>
-     	-->	
+     	
 	    </aside>
 	    <?php endif; ?>
 	    

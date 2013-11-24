@@ -94,7 +94,7 @@ var skipAnimation = false;
 				//$(".accordion").accordion("option", "active", 0); //make All categories active by default
 
 				//start first category slideshow
-				SetUpCategorySlider("bg1");
+				SetUpCategorySlider();
 				
 				$('#menu-pic').stop().css("background-position" , "0 0");				
 
@@ -117,7 +117,7 @@ var skipAnimation = false;
 				//$(".accordion").accordion("option", "active", 0); //make All categories active by default
 				
 				//start first category slideshow
-				SetUpCategorySlider("bg1");
+				SetUpCategorySlider();
 				$('#menu-pic').stop().css("background-position" , "0 0");
 				
 			}          
@@ -253,8 +253,6 @@ var skipAnimation = false;
 					closeBtn:true,
 					closeClick:false,
 					mouseWheel:true,
-					openEffect	: 'none',
-					closeEffect	: 'none'
 				});
 			});
 			
@@ -263,7 +261,7 @@ var skipAnimation = false;
 				return false;
 			});
 			
-			$("#chat-online").click(function() {
+			/*$("#chat-online").click(function() {
 				$.fancybox.open('<p style="">LiveHelp is unavailable at this moment. Please call us at 1-800-387-4825 or 916-484-0333 (Sacramento, CA); 916-742-7900 (Roseville, CA)</p>',
 				{
 					closeBtn:true,
@@ -271,7 +269,7 @@ var skipAnimation = false;
 				});
 
 				return false;
-			});
+			});*/
 			
         }
 	}
@@ -327,18 +325,14 @@ var skipAnimation = false;
 			});	
 
 		});
-
-		//set up keyhole animation for categories
-		//SetUpCategorySlider("bg1");
 		
 	}
 	
-	function SetUpCategorySlider(category) {
+	function SetUpCategorySlider() {
 		//Category Slide Show images list
 		
 		var imgPathPrefix = Drupal.settings.basePath + "sites/all/themes/furnitheme/images/cat-images/";
-		var catPreviewInfo = {
-			'bg1':[
+		var featuredImgs = [
 				{'image':Drupal.settings.basePath + "sites/default/files/promo/black-friday/Friday_Web1.jpg"},
 				{'image':Drupal.settings.basePath + "sites/default/files/promo/black-friday/Natuzzi_Editions-B645-Stefano-Sectional.png"},
 				{'image':Drupal.settings.basePath + "sites/default/files/promo/black-friday/Exstra_TulipTable.png"},
@@ -351,16 +345,13 @@ var skipAnimation = false;
 				{'image':Drupal.settings.basePath + "sites/default/files/promo/black-friday/Natuzzi_Editions-B520-Valeria-Sofa.png"},
 				{'image':Drupal.settings.basePath + "sites/default/files/promo/black-friday/Italsofa_Twister.png"},
 				{'image':Drupal.settings.basePath + "sites/default/files/promo/black-friday/Natuzzi_Editions-B725_Enzo_Sofa.png"}
-			]
-		}
-		
-		category = 'bg1';
+		]
 		
 		//!Promo
 		$('#category-image-pane').html('').PikaChoose({
 			showCaption:false, 
 			showTooltips:false, 
-			data:catPreviewInfo[category], 
+			data:featuredImgs, 
 			autoPlay:true, 
 			speed:3000, 
 			buildFinished: function() {
