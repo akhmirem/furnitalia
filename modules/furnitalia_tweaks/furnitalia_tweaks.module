@@ -1012,7 +1012,7 @@ function furnitalia_tweaks_webform_submission_presave($node, &$submission) {
 		$lead_info['phone'] = $submission->data[4]['value'][0];
 		$lead_info['body'] = $submission->data[5]['value'][0] . "\n";		
 		$lead_info['body'] .= $submission->data[6]['value'][0] . "\n";
-		$lead_info['body'] .= $submission->data[7]['value'][0];
+		$lead_info['body'] .= url('node/'.$submission->data[7]['value'][0], array('absolute' => true));
 		$lead_info['zip'] = $submission->data[8]['value'][0];
 	}
 	

@@ -32,8 +32,7 @@
 	$nid = (int)$submission->data[7]['value'][0];
 	$n = node_load($nid);
 	
-	$url = url(l($n->title, "node/$nid", array("attributes" => array("rel" => "nofollow", "_target" => "blank"))), array('absolute' => true));
-	
+	$url = l($n->title, "node/$nid", array("attributes" => array("rel" => "nofollow", "_target" => "blank"), 'absolute' => true));
 	
 	$image = $n->field_image['und'][0];
 
@@ -243,7 +242,7 @@
 		<p>%email[first_name]</p>
 		<p>%email[last_name]</p>
 		<p>%email[phone]</p>
-		<p>%email[zip]</p>
+		<p>%email[zip_code]</p>
 		<p>%email[email]</p>
 		<p>%email[question]</p>
 
