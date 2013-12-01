@@ -86,40 +86,36 @@
 
 <h2 dir="ltr" >Return Policy</h2>
 
-<p>Customer service is the foundation of Furnitalia's reputation and our success. With that in mind, we want our customers to be completely satisfied with their purchases online as in our showrooms. In the event that you are not happy with your purchase our return policy is explained below. If you have additional questions, please feel free to email us at info@furnitalia.com</p>
+<p>Customer service is the foundation of Furnitalia's reputation and our success. With that in mind, we want our customers to be completely satisfied with their purchases online as in our showrooms. In the event that you are not happy with your purchase our return policy is explained below. If you have additional questions, please feel free to email us at <a href="mailto:info@furnitalia.com?Subject=Return%20Policy%20question" target="_top">info@furnitalia.com</a>.</p>
 
 <h3 dir="ltr" >Undamaged / Non-Defective Product:</h3>
-
-<p>All refunds for any returned/exchanged items will be issued in a form of store credit only.</p>
-
-<p>Accessories: We will gladly exchange in-stock accessories in original condition with original receipt within 15 days. </p>
-<p>Furniture returns/exchanges: All furniture returns or exchanges are subject to a 35% restocking fee plus additional shipping charges within 7 days of delivery. Please note that floor models, items sold "as is", and clearance items may not be returned under any circumstances.</p>
-<p>Special Order Items: No refunds or exchanges on special orders after 24hrs.</p>
+<p>All refunds for any returned/exchanged items will be issued in a form of store credit only. <p>
+<p><em>Accessories:</em> We will gladly exchange in-stock accessories in original condition with original receipt within 15 days. </p>
+<p><em>Furniture returns/exchanges:</em> All furniture returns or exchanges are subject to a 35% restocking fee plus additional shipping charges within 7 days of delivery. Please note that floor models, items sold "as is", and clearance items may not be returned under any circumstances.</p>
+<p><em>Special Order Items:</em> No refunds or exchanges on special orders after 24hrs.</p>
 <p>Shipping and handling costs are not refundable.</p>
-<p>All out-of-state purchases (except California) purchased from Furnitalia or furnitalia.com will not be accepted for return, with exception for damaged (by carrier), or manufacturer defect.</p>
+<p>All <em>out-of-state</em> purchases (except California) purchased from Furnitalia or furnitalia.com will not be accepted for return, with exception for damaged (by carrier), or manufacturer defect.</p>
 <p>For items that were delivered correctly or were not defective upon Purchaser's receipt (including items originally shipped or delivered for free), Purchaser is responsible for all shipping and delivery charges to return the merchandise to Furnitalia Sacramento. If Furnitalia arranges the return, the shipper will bill Furnitalia and that amount will be deducted from the amount credited to Purchaser. Items to be returned must be unused, unassembled and in their original packaging with all instructions and inserts. Once the product is received and our shipping department confirms it is in as-new condition, the purchase price of the item(s) will be refunded as a store credit less original shipping costs. There will be no refunds/store credits for merchandise delivered in good condition to Purchaser, but returned damaged.
 </p>
 
+
 <h3 dir="ltr" >Defective Merchandise and Shipping/Freight Damage:</h3>
+<p>Damaged furniture is rare, but in case you get damaged furniture, you should make sure to take digital photos of the damages including the damaged packaging materials (if any) before the delivery person leaves. Call us immediately at <a href="tel:+19164840333">(916) 484-0333</a> and we shall guide you on how to resolve the matter at the earliest.<br/>
+Purchaser shall inspect all packages before signing the delivery ticket. If Purchaser feels merchandise is defective upon receipt, he/she must contact Furnitalia within 24 hours of receipt thereof and provide digital photos and a description of the problem. Once Furnitalia has determined that the merchandise is defective, Furnitalia, at its discretion, may exchange or repair the merchandise.<br/>
+In the event that damaged merchandise arrives at Purchaser's location, Purchaser shall take the following steps to insure that a freight claim can be filed:<br/><br/>
+<span style="text-decoration:underline">Items Shipped Via Third Party:</span>
+<ul>
+	<li>Note on the freight company delivery receipt "Damaged" with a description of the piece.</li>
+	<li>Notify the Furnitalia Shipping Department within 24 hours of receipt.</li>
+	<li>Keep all packing material for inspection.</li>
+	<li>Take digital photographs of the damaged item and packing material.</li>
+</ul>
 
-<p>Damaged furniture is rare, but in case you get damaged furniture, you should make sure to take digital photos of the damages including the damaged packaging materials (if any) before the delivery person leaves. Call us immediately at (916) 484-0333 and we shall guide you on how to resolve the matter at the earliest.</p>
+<span style="text-decoration:underline">For pickups or deliveries:</span>
+<ul>
+	<li>Note any damage on the delivery/pickup slip.</li>
+	<li>For deliveries, both Purchaser and delivery driver must make notes on the delivery slip if damages to the goods or packaging are present.</li>
+	<li>For customers who follow these steps, Furnitalia will file a freight claim with the shipper and arrange for repair or send a replacement. Purchaser will bear sole responsibility for any damaged merchandise that arrives at Purchaser's location if any of the above steps are not taken. If the freight company damages goods on return shipment to Furnitalia, it is Purchaser's responsibility to make the freight claim.</li>
+</ul> <br/>
 
-<p>Purchaser shall inspect all packages before signing the delivery ticket. If Purchaser feels merchandise is defective upon receipt, he/she must contact Furnitalia within 24 hours of receipt thereof and provide digital photos and a description of the problem. Once Furnitalia has determined that the merchandise is defective, Furnitalia, at its discretion, may exchange or repair the merchandise.</p>
-
-<p>In the event that damaged merchandise arrives at Purchaser's location, Purchaser shall take the following steps to insure that a freight claim can be filed:<br/>
-Items Shipped Via Third Party
-Note on the freight company delivery receipt "Damaged" with a description of the piece.
-Notify the Furnitalia Shipping Department within 24 hours of receipt.
-Keep all packing material for inspection.
-Take digital photographs of the damaged item and packing material.
-</p>
-
-<p>For pickups or deliveries:<br/>
-Note any damage on the delivery/pickup slip.<br/>
-For deliveries, both Purchaser and delivery driver must make notes on the delivery slip if damages to the goods or packaging are present.<br/>
-For customers who follow these steps, Furnitalia will file a freight claim with the shipper and arrange for repair or send a replacement. Purchaser will bear sole responsibility for any damaged merchandise that arrives at Purchaser's location if any of the above steps are not taken. If the freight company damages goods on return shipment to Furnitalia, it is Purchaser's responsibility to make the freight claim.<br/>
-</p>
-
-<p>*** Policy Subject to Change without Notice</p>
-
-<br />
+*** Policy Subject to Change without Notice
