@@ -169,8 +169,11 @@
 	
 	<?php if ($show_promo) : ?>
 	<section id="promo" class="clearfix">
-		<!-- <img src="<?php print $base_path . path_to_theme(); ?>/images/dummy-promo.gif"/> -->
-		<?php include_once("promo.tpl.php"); ?>
+		<?php if (variable_get("promo_type", "default") == "default") :?>
+			<?php include_once("promo-default.tpl.php"); ?>
+		<?php else : ?>
+			<?php include_once("promo.tpl.php"); ?>
+		<?php endif; ?>
 	</section>
 	<?php endif; ?>
 

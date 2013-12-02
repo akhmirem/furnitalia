@@ -186,7 +186,7 @@ var skipAnimation = false;
 			$('a.contact').once(function() {
 				element_settings.url = Drupal.settings.basePath + 'contact/ajax/';
 				
-				var ajax = new Drupal.ajax("a.contat", $('a.contact')[0], element_settings);
+				var ajax = new Drupal.ajax("a.contact", $('a.contact')[0], element_settings);
 			});
 			
 			$('#request-quote').once(function() {
@@ -330,15 +330,15 @@ var skipAnimation = false;
 		//Featured Slide Show images list		
 		var imgPathPrefix = Drupal.settings.basePath + "sites/default/files/promo/black-friday/";
 		var featuredImgs = [
-				{'image':imgPathPrefix + "Friday_Web1.jpg"},
+				//{'image':imgPathPrefix + "Friday_Web1.jpg"},
 				{'image':imgPathPrefix + "Natuzzi_Editions-B645-Stefano-Sectional.png"},
 				{'image':imgPathPrefix + "Exstra_TulipTable.png"},
 				{'image':imgPathPrefix + "Natuzzi_Italia-Soud_Chair.png"},				
-				{'image':imgPathPrefix + "Friday_Web2.jpg"},								
+				//{'image':imgPathPrefix + "Friday_Web2.jpg"},								
 				{'image':imgPathPrefix + "Natuzzi-Italia_Bateau.png"},				
 				{'image':imgPathPrefix + "Natuzzi_Editions-B815_Pascal_Chair.png"},			
 				{'image':imgPathPrefix + "Natuzzi_Italia-Surround.png"},						
-				{'image':imgPathPrefix + "Friday_Web3.jpg"},									
+				//{'image':imgPathPrefix + "Friday_Web3.jpg"},									
 				{'image':imgPathPrefix + "Natuzzi_Editions-B520-Valeria-Sofa.png"},
 				{'image':imgPathPrefix + "Italsofa_Twister.png"},
 				{'image':imgPathPrefix + "Natuzzi_Editions-B725_Enzo_Sofa.png"}
@@ -353,10 +353,10 @@ var skipAnimation = false;
 			speed:3000, 
 			buildFinished: function() {
 
-				$('#category-image-pane div.pika-stage').click(function(){					
+				/*$('#category-image-pane div.pika-stage').click(function(){					
 					openPromoImg();
 					return false;
-				});
+				});*/
 			}
 		});
 	}
