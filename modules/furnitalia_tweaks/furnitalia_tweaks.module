@@ -101,7 +101,7 @@ function furnitalia_tweaks_menu() {
 	    'type' => MENU_NORMAL_ITEM,
     );
     $items['collections'] = array(
-    	'page callback' => 'furnitalia_tweaks_taxonomy_term_page',
+    	'page callback' => 'furnitalia_tweaks_collections_page',
     	'title' => 'Furniture Collections',
 		'access callback' => TRUE, 
 		'type' => MENU_CALLBACK,
@@ -206,9 +206,12 @@ function furnitalia_tweaks_brand_cat_page($brand, $cat = NULL, $subcat = NULL) {
 	}
 }
 
-function furnitalia_tweaks_taxonomy_term_page($term=NULL) {
+/**
+ * Collections page handler
+ */
+function furnitalia_tweaks_collections_page($term=NULL) {
 
-	if (arg(0) == 'collections' && $term == NULL) {
+	if (arg(1) == "") { 	//if it's just /collections/ page
 
 		$build = array();
 		
@@ -226,7 +229,26 @@ function furnitalia_tweaks_taxonomy_term_page($term=NULL) {
 		);
 		
 		return $build;
+		
+	} else {				//something else is after "collections/"
+		
+		$path = explode("/", current_path());
+		array_shift($path); 			// remove the 'collections' part
+		$path = implode("/", $path); 	// get normal path without "collections"
+		
+		$new_path = drupal_lookup_path("source", $path); //attempt to find normal path
+		if ($new_path) {
+			drupal_goto($path);
+		} else {
+			drupal_goto("collections");	//redirect to root collections page
+		}
 	}
+}
+
+/**
+ * Taxonomy term handler page
+ */
+function furnitalia_tweaks_taxonomy_term_page($term=NULL) {
 
   $vocabulary = taxonomy_vocabulary_load($term->vid);
 
@@ -842,6 +864,10 @@ function furnitalia_tweaks_form_alter(&$form, &$form_state, $form_id){
 	    $form['base']['field_alu'] = $form['field_alu'];
 		$form['base']['field_alu']['#weight'] = 1;
 		
+		//put 'display sale price' in product info
+		$form['base']['prices']['field_display_sale_price'] = $form['field_display_sale_price'];
+		unset($form['field_display_sale_price']);
+		
 		//put checkbox 'show add-to-cart button
 		//$form['base']['show_add_to_cart'] = $form['field_show_add_to_cart'];
 		//$form['base']['show_add_to_cart']['und']['#title'] = "Show 'Add to Cart' button?";
@@ -1098,7 +1124,7 @@ function furnitalia_tweaks_products_ajax () {
  * Alters the price with temporary sale price
  */
 function furnitalia_tweaks_uc_product_alter(&$node) {
-	if (variable_get('show_sale_prices', FALSE)) {
+	if (furnitalia_tweaks_show_sale_price($node)) {
 		if (isset($node->field_special_price['und'][0]['value'])) {
 			$special_price = $node->field_special_price['und'][0]['value'];
 			
@@ -1109,6 +1135,36 @@ function furnitalia_tweaks_uc_product_alter(&$node) {
 			}
 		}
 	}
+}
+
+/**
+ * Determine if item needs to show special prices or regular price
+ */
+function furnitalia_tweaks_show_sale_price($node) {
+
+	$rendered  = TRUE;
+	if (is_object($node)) {
+		$node = (array) $node;
+		$rendered = FALSE;
+	}
+
+	if (!empty($node['field_display_sale_price'])) {
+		if ($rendered) {
+		
+			if ($node['field_display_sale_price']['#items'][0]['value'] == '1') {
+				return true;
+			} 
+		} else {
+		
+			if ($node['field_display_sale_price']['und'][0]['value'] == '1') {
+				return true;
+			}
+		}
+
+	} 
+
+	return variable_get('show_sale_prices', FALSE);
+
 }
 
 

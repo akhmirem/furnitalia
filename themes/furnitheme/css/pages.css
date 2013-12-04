@@ -356,6 +356,9 @@ div.messages ul {
   margin-top: 0;
   margin-bottom: 0;
 }
+body.front div.messages,  body.keyhole div.messages {
+	width: 420px;
+}
 
 div.status { /* Normal priority messages */
 }

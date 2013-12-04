@@ -143,7 +143,7 @@ var skipAnimation = false;
 			
 			if(jQuery().dropkick) {
 			
-				$('div.view select').each(function( index ) {
+				$('#content select').each(function( index ) {
 					//var id = $(this).attr('id');
 					var sel = $(this);
 					$(this).attr('tabindex', index).dropkick({

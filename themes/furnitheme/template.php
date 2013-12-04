@@ -172,7 +172,7 @@ function preprocess_node_common_fields(&$content, $hook) {
 	$sale_price_set = FALSE;
 	$special_price = NULL;
 	
-	if(variable_get('show_sale_prices', FALSE)) {
+	if(furnitalia_tweaks_show_sale_price($content)) {
 		 if(!empty($content['field_special_price']) && isset($content['field_special_price']['#items']) && $content['field_special_price']['#items'][0]['value']) {
 		 	$special_price = $content['field_special_price']['#items'][0]['value'];
 		 	$diff = abs(floatval($special_price) - floatval($sell_price));
