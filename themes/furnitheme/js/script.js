@@ -23,9 +23,9 @@ var skipAnimation = false;
 				params = $.deparam.querystring( true );
 				//console.log(JSON.stringify( params, null, 2 ));
 			}
-		  
+
 			if ("noanim" in params) {
-				if (params["noanim"] === true) {
+				if (params["noanim"]) {
 					//skip animation
 					skipAnimation = true;
 					console.log("animation on front page is skipped");
@@ -34,7 +34,7 @@ var skipAnimation = false;
 		  
 			if (!skipAnimation && $("#front-overlay").length) {
 
-			  $("#front-overlay").once(function(){
+			  $("#front-overlay").once(function() {
 				var img = new Image();
 
 				// wrap our new image in jQuery, then:

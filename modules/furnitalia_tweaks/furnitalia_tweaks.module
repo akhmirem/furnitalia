@@ -240,7 +240,7 @@ function furnitalia_tweaks_collections_page($term=NULL) {
 		if ($new_path) {
 			drupal_goto($path);
 		} else {
-			drupal_goto("collections");	//redirect to root collections page
+			drupal_goto('collections');	//redirect to root collections page
 		}
 	}
 }
@@ -1086,17 +1086,19 @@ function furnitalia_tweaks_front_page() {
  				  	 </div>',
 	);
 	
-	
-	$build['front-anim'] = array (
-		'#markup' => '<div id="front-overlay">
-						<div id="front-left">&nbsp;</div>
-						<div id="front-right">&nbsp;</div>						
-						<div id="menu-pic-wrapper">
-					  		<div id="menu-pic" class="menu-hover loading">&nbsp;</div>
-					  	</div>
-					  	<a href="#" id="enterFurnitalia">ENTER FURNITALIA</a>
- 				  	 </div>',
-	);
+	$query_params = drupal_get_query_parameters();
+	if(!isset($query_params['noanim'])) {
+		$build['front-anim'] = array (
+			'#markup' => '<div id="front-overlay">
+							<div id="front-left">&nbsp;</div>
+							<div id="front-right">&nbsp;</div>						
+							<div id="menu-pic-wrapper">
+						  		<div id="menu-pic" class="menu-hover loading">&nbsp;</div>
+						  	</div>
+						  	<a href="#" id="enterFurnitalia">ENTER FURNITALIA</a>
+	 				  	 </div>',
+		);
+	}
 	
 	drupal_set_title("Modern Furniture Store Sacramento/Roseville");
 	
@@ -1165,6 +1167,22 @@ function furnitalia_tweaks_show_sale_price($node) {
 
 	return variable_get('show_sale_prices', FALSE);
 
+}
+
+/**
+ * Implements hook_drupal_goto_alter
+ */
+function furnitalia_tweaks_drupal_goto_alter(&$path, &$options, &$http_response_code) {
+	
+	if (drupal_match_path($path, implode("\n", array("<front>", "", "/")))) {
+	
+		if (isset($options['query'])) {
+	      $options['query'] += array('noanim' => '1');
+	    }
+	    else {
+	      $options['query'] = array('noanim' => '1');
+	    }
+    }
 }
 
 

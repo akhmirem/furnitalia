@@ -75,7 +75,7 @@ a.appointment {
 a.appointment:hover {
 	background:#f3d8f1;
 }
-#header-phone a.main-phone {
+#header-phone a.main-phone, #content a.main-phone {
 	color:#981b1e;
 	font-size: 1.2em;
 }
@@ -219,7 +219,7 @@ body.front #block-search-form, body.keyhole #block-search-form {
 	z-index: 10;
 	font-size: 0.95em;
 }
-#header-phone a {
+#header-phone a, #content a.main-phone {
 	text-decoration: none;
 }
 body.front #header-phone, body.keyhole #header-phone {
@@ -713,6 +713,10 @@ aside.contact-page {
 aside.contact-page a {
 	clear:none;
 	float:left;
+}
+aside.contact-page #craftysyntax_4 {
+	float:left;
+	margin-left:50px;
 }
 #craftysyntax_4 table {
 	margin:0;
@@ -1225,6 +1229,10 @@ section.store-info {
     font-size: 0.9em;
     padding-left: 2em;
     width: 340px;
+}
+.store-descr a.phone {
+	color: #981b1e;
+	text-decoration: none;
 }
 
 h2.field-label {

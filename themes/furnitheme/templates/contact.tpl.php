@@ -1,4 +1,4 @@
-<span class="field-label phone">1-800-FUR-ITAL</span>
+<span class="field-label phone"><a href="tel:+18003874825" class="main-phone">1-800-387-4825</a></span>
 <hr class="grey" />
 
 <section class="store-info clearfix">
@@ -15,7 +15,7 @@
 		</p>
 		
 		<p class="info">
-		Phone: (916) 484–0333 <br/>
+		Phone: <a href="tel:+19164840333" class="phone">(916) 484–0333</a> <br/>
 		Hours: Monday – Sunday <br/>
 		<span class="hours-indent">10:00 am – 6:00 pm</span>
 		</p>
@@ -39,7 +39,7 @@
 		</p>
 		
 		<p class="info">
-		Phone: (916) 742-7900 <br/>
+		Phone: <a href="tel:+19167427900" class="phone">(916) 742-7900</a> <br/>
 		Hours: Monday – Saturday <br/>
 		<span class="hours-indent">10:00 am – 6:00 pm</span> <br/>
 		<span class="hours-indent">Sunday</span> <br/>
