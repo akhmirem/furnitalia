@@ -627,8 +627,8 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#006d6e71', e
 	cursor:pointer;
 	display: none;
 	width: 220px;
-	height: 115px;
-	padding-top:50px; 
+	height: 95px;
+	padding-top:70px; 
 	position: absolute;
 	top: 0;
 	text-align: center;
@@ -640,7 +640,6 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#006d6e71', e
     position: relative; 
     bottom: 2em; 
     text-align: right; 
-    padding-right: .3em; 
     z-index:10; 
 } 
 .furn-gallery h2 { 
@@ -650,14 +649,18 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#006d6e71', e
 } 
 .furn-gallery a.title { 
     text-decoration: none; 
-    color: #981b1e; 
+    color: #981b1e;
+    background-color:white;
+    display: block;
+	padding-right: 3px; 
 } 
 .furn-gallery article:hover a.title { 
 	color:white;
+	background:transparent;
 }
 
 .furn-gallery .item-details .product-info {
-	font-size:.85em;
+	font-size:1.1em;
 	font-weight: 600;
 }
 div.item-details .field-name-field-availability {
@@ -665,7 +668,7 @@ div.item-details .field-name-field-availability {
 }
 .furn-gallery .item-details .sell-price {
 	color:#981b1e;
-	font-size:1.35em;
+	font-size:1.45em;
 	font-weight:bold;
 }
 .furn-gallery .item-details .sell-price .uc-price-label, .furn-gallery .item-details .field-name-field-availability {
@@ -1101,7 +1104,7 @@ article .form-item label  {
 	color:white;
 }
 #block-webform-client-block-33 .webform-component-markup p {
-	font-size: .95em;
+	font-size: .9em;
 }
 #block-webform-client-block-33 .webform-component-markup p, #catalogs, span.menu-label {
 	margin:0;
@@ -1115,8 +1118,8 @@ article .form-item label  {
 	float: left;
 }
 #block-webform-client-block-33 .webform-component-email {
-	clear:both;
-	float:left;
+	/*clear:both;
+	float:left;*/
 }
 #block-webform-client-block-33 .webform-component-email label {
 	display:none;
@@ -1132,6 +1135,7 @@ article .form-item label  {
 	font-weight: bold;
 	padding: .2em 0;
 	border: 1px solid #6d6e71;
+	width:10.5em;
 }
 
 hr {

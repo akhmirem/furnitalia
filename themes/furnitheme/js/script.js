@@ -13,6 +13,7 @@ backgroundXShift = 0;
 var timer;
 var timer2;
 var skipAnimation = false;
+var isHandHeldDevice = false;
 
  (function($) {
 	Drupal.behaviors.furnitalia = {
@@ -23,13 +24,15 @@ var skipAnimation = false;
 				params = $.deparam.querystring( true );
 				//console.log(JSON.stringify( params, null, 2 ));
 			}
+			
+			if( /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ) {
+			 	isHandHeldDevice = true;
+			}
 
-			if ("noanim" in params) {
-				if (params["noanim"]) {
-					//skip animation
-					skipAnimation = true;
-					console.log("animation on front page is skipped");
-				}
+			if ("noanim" in params || isHandHeldDevice) {
+				//skip animation
+				skipAnimation = true;
+				console.log("animation on front page is skipped");
 			}
 		  
 			if (!skipAnimation && $("#front-overlay").length) {
