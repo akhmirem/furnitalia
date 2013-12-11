@@ -29,7 +29,6 @@ function furnitalia_tweaks_menu() {
 	    'access callback' => TRUE,
 	    'type' => MENU_NORMAL_ITEM,
     );
-
 	$items['my-favorites'] = array(
 		'title' => 'My Favorites',
 	    'page callback' => 'furnitalia_tweaks_favorites_list',
@@ -156,13 +155,12 @@ function furnitalia_tweaks_brand_cat_page($brand, $cat = NULL, $subcat = NULL) {
 			);
 		}
 		
-		drupal_add_js(drupal_get_path('theme', 'furnitheme') . "/js/jquery.bgpos.js");
 		drupal_add_library('system', 'drupal.ajax');
 		
 		$build['add'] = array(
 			'#markup' => '<div id="menu-pic-wrapper">
 					  		<div id="menu-pic" class="menu-hover loading">&nbsp;</div>
-					  	</div>',
+					  	  </div>',
 		);
 		
 		return $build;
@@ -197,8 +195,6 @@ function furnitalia_tweaks_brand_cat_page($brand, $cat = NULL, $subcat = NULL) {
 		$view->post_execute();
 		
 		return $output;
-
-
 		
 	} else {	
 		//just return default natuzzi italia brand page
@@ -216,7 +212,7 @@ function furnitalia_tweaks_collections_page($term=NULL) {
 		$build = array();
 		
 		$build['desc'] = array(
-			'#markup' => theme('all-cats'), #"All Collections -- Description Page to Go Here",
+			'#markup' => theme('all-cats'),
 		);
 		
 		drupal_add_js(drupal_get_path('theme', 'furnitheme') . "/js/jquery.bgpos.js");
@@ -317,8 +313,6 @@ function furnitalia_tweaks_menu_alter(&$items) {
  * Implements hook_theme().
  */
 function furnitalia_tweaks_theme($existing, $type, $theme, $path) {
-	
-	$path = drupal_get_path('theme', 'furnitheme');
 	
 	$themes = array (
 		'contact' => array(
@@ -948,7 +942,6 @@ function furnitalia_tweaks_favorites_list() {
     
     unset($build['options']);
 
-	
 	//print flag_create_link('favorites', $node->nid); 
 	
 	return $build;
@@ -1174,6 +1167,7 @@ function furnitalia_tweaks_show_sale_price($node) {
  */
 function furnitalia_tweaks_drupal_goto_alter(&$path, &$options, &$http_response_code) {
 	
+	//ensure that redirects to home page don't cause front page animation to start again
 	if (drupal_match_path($path, implode("\n", array("<front>", "", "/")))) {
 	
 		if (isset($options['query'])) {
@@ -1184,14 +1178,3 @@ function furnitalia_tweaks_drupal_goto_alter(&$path, &$options, &$http_response_
 	    }
     }
 }
-
-
-/**
- * Implementation of hook_views_query_alter
- * @param type $view
- * @param type $query 
- */
-/*function mymodule_views_query_alter(&$view, &$query) {
-	if ($view->name == 'VIEWNAME') {
-	}
-}*/

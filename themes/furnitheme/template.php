@@ -144,7 +144,6 @@ function preprocess_node_common_fields(&$content, $hook) {
 	//}
 	
 	//for collection items, disable list price, sale price, change label for price
-	//dsm($content);
 	if (isset($content['field_starting_from_price']) && $content['field_starting_from_price']['#items'][0]['value']) {
 		unset($content['list_price']);
 		$content['sell_price']['#title'] = "FROM:";
@@ -153,18 +152,10 @@ function preprocess_node_common_fields(&$content, $hook) {
 		return;
 	}
 
-	
-	//$content['list_price']['#title'] = "MSRP:";
 	unset($content['sell_price']['#title']);
 	
 	$epsilon = 0.01;
-	//$list_price = isset($content['list_price']['#value']) ? $content['list_price']['#value'] : $content['list_price'];
 	$sell_price = isset($content['sell_price']['#value']) ? $content['sell_price']['#value'] : $content['sell_price'];
-	//$diff = abs(floatval($list_price) - floatval($sell_price));
-	//if ($diff <= $epsilon) {
-	//    // The prices are equal
-	//    unset($content['list_price']);
-	//}
 	
 	unset($content['list_price']);
 
@@ -187,16 +178,15 @@ function preprocess_node_common_fields(&$content, $hook) {
 		//don't display MSRP:
 		unset($content['list_price']);
 		
-		$new_sale_price = array();
-		
-		$new_sale_price['#title'] = "SPECIAL:";
-		$new_sale_price['#theme'] = "uc_product_price";
-		$new_sale_price['#value'] = $special_price;
-		$new_sale_price['#attributes'] = array('class' => array('sell-price'));
+		$new_sale_price = array(		
+			'#title' => "SPECIAL:",
+			'#theme' => "uc_product_price",
+			'#value' => $special_price,
+			'#attributes' => array('class' => array('sell-price')),		
+		);
 		
 		$content['sale_price'] = $new_sale_price;
 		$content['sell_price']['#attributes']['class'] = array('old-price');
-		//$content['sell_price']['#title'] = "REGULAR:";
 	  	
 	}
 	
@@ -318,10 +308,9 @@ function furnitheme_preprocess_search_result(&$vars) {
  */
 function furnitheme_form_search_block_form_alter(&$form, &$form_state, $form_id) {
 	
-	global $base_path;
-	global $theme_path;
+	global $base_path, $theme_path;
 	
-	$path = $base_path . $theme_path;//drupal_get_path('theme', 'furnitheme');
+	$path = $base_path . $theme_path;
 	
 	$form['actions']['submit']['#theme_wrappers'] = array("image_button");
 	$form['actions']['submit']['#button_type'] = "image";
@@ -336,10 +325,9 @@ function furnitheme_form_search_block_form_alter(&$form, &$form_state, $form_id)
  */
 function furnitheme_form_webform_client_form_33_alter(&$form, &$form_state, $form_id) {
 	
-	global $base_path;
-	global $theme_path;
+	global $base_path, $theme_path;
 	
-	$path = $base_path . $theme_path;//drupal_get_path('theme', 'furnitheme');
+	$path = $base_path . $theme_path;
 	
 	$form['actions']['submit']['#theme_wrappers'] = array("image_button");
 	$form['actions']['submit']['#button_type'] = "image";
@@ -354,10 +342,9 @@ function furnitheme_form_webform_client_form_33_alter(&$form, &$form_state, $for
  */
 function furnitheme_form_search_form_alter(&$form, &$form_state, $form_id) {
 
-	global $base_path;
-	global $theme_path;
+	global $base_path, $theme_path;
 	
-	$path = $base_path . $theme_path;//drupal_get_path('theme', 'furnitheme');
+	$path = $base_path . $theme_path;
 	
 	unset($form['advanced']);
 	

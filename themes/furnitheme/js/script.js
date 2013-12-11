@@ -331,20 +331,19 @@ var isHandHeldDevice = false;
 	
 	function InitFeaturedSlideShow() {
 		//Featured Slide Show images list		
-		var imgPathPrefix = Drupal.settings.basePath + "sites/default/files/promo/black-friday/";
+		var imgPathPrefix = Drupal.settings.basePath + "sites/default/files/promo/christmas/";
 		var featuredImgs = [
-				//{'image':imgPathPrefix + "Friday_Web1.jpg"},
-				{'image':imgPathPrefix + "Natuzzi_Editions-B645-Stefano-Sectional.png"},
-				{'image':imgPathPrefix + "Exstra_TulipTable.png"},
-				{'image':imgPathPrefix + "Natuzzi_Italia-Soud_Chair.png"},				
-				//{'image':imgPathPrefix + "Friday_Web2.jpg"},								
-				{'image':imgPathPrefix + "Natuzzi-Italia_Bateau.png"},				
-				{'image':imgPathPrefix + "Natuzzi_Editions-B815_Pascal_Chair.png"},			
-				{'image':imgPathPrefix + "Natuzzi_Italia-Surround.png"},						
-				//{'image':imgPathPrefix + "Friday_Web3.jpg"},									
-				{'image':imgPathPrefix + "Natuzzi_Editions-B520-Valeria-Sofa.png"},
-				{'image':imgPathPrefix + "Italsofa_Twister.png"},
-				{'image':imgPathPrefix + "Natuzzi_Editions-B725_Enzo_Sofa.png"}
+			{'image':imgPathPrefix + "christmas_sale_500x350.jpg"}
+			/*{'image':imgPathPrefix + "Natuzzi_Editions-B645-Stefano-Sectional.png"},
+			{'image':imgPathPrefix + "Exstra_TulipTable.png"},
+			{'image':imgPathPrefix + "Natuzzi_Italia-Soud_Chair.png"},				
+			{'image':imgPathPrefix + "Natuzzi-Italia_Bateau.png"},				
+			{'image':imgPathPrefix + "Natuzzi_Editions-B815_Pascal_Chair.png"},			
+			{'image':imgPathPrefix + "Natuzzi_Italia-Surround.png"},								
+			{'image':imgPathPrefix + "Natuzzi_Editions-B520-Valeria-Sofa.png"},
+			{'image':imgPathPrefix + "Italsofa_Twister.png"},
+			{'image':imgPathPrefix + "Natuzzi_Editions-B725_Enzo_Sofa.png"}*/
+			
 		]
 		
 		//!Promo
@@ -352,20 +351,20 @@ var isHandHeldDevice = false;
 			showCaption:false, 
 			showTooltips:false, 
 			data:featuredImgs, 
-			autoPlay:true, 
+			autoPlay:false, 
 			speed:3000, 
 			buildFinished: function() {
 
-				/*$('#category-image-pane div.pika-stage').click(function(){					
+				$('#category-image-pane div.pika-stage').click(function(){					
 					openPromoImg();
 					return false;
-				});*/
+				});
 			}
 		});
 	}
 	
 	function openPromoImg() {
-		var promoImgPath = Drupal.settings.basePath + "sites/default/files/promo/black-friday/Black-Friday-Eblast600x745.jpg";
+		var promoImgPath = Drupal.settings.basePath + "sites/default/files/promo/christmas/christmas_sale_600x745.jpg";
 		var img = new Image();
 
 		$.fancybox.showLoading();
@@ -376,7 +375,7 @@ var isHandHeldDevice = false;
 			.load(function () {
 			
 				$.fancybox.hideLoading();
-				$.fancybox.open('<img src="'+ promoImgPath +'" alt="Black Friday sale"/>',
+				$.fancybox.open('<img src="'+ promoImgPath +'" alt="Holiday sale"/>',
 				{
 					closeBtn:true,
 					closeClick:false,
