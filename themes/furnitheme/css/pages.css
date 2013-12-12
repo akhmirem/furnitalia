@@ -745,6 +745,7 @@ aside.contact-page #craftysyntax_4 {
 	border-bottom: 1px solid #6d6e71;
 	padding-right: 13em;
 	color: #981b1e;
+	margin-left:10px;
 }
 #cat-preview .pika-stage {
 	width:500px;
@@ -1164,6 +1165,7 @@ hr.article-sep {
 #promo {
 	clear: both;
 	padding: 20px 0 5px 15px;
+	float:left;
 }
 #promo h3 {
 	font-size: .9em;
@@ -1186,9 +1188,10 @@ hr.article-sep {
 	height: 1px;
 	width: 84.7%;
 	text-align: left;
+	padding-right:10px;
 }
 body.not-front #promo hr {
-	width: 100%;
+	/*width: 100%;*/
 }
 #promo p {
 	font-size: 1em;

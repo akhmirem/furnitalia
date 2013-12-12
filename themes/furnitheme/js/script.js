@@ -333,7 +333,10 @@ var isHandHeldDevice = false;
 		//Featured Slide Show images list		
 		var imgPathPrefix = Drupal.settings.basePath + "sites/default/files/promo/christmas/";
 		var featuredImgs = [
-			{'image':imgPathPrefix + "christmas_sale_500x350.jpg"}
+			{'image':imgPathPrefix + "HolidayWeb1-1-500x350.jpg"},
+			{'image':imgPathPrefix + "HolidayWeb1-2-500x350.jpg"},
+			{'image':imgPathPrefix + "HolidayWeb1-3-500x350.jpg"},
+			{'image':imgPathPrefix + "HolidayWeb1-4-500x350.jpg"}								
 			/*{'image':imgPathPrefix + "Natuzzi_Editions-B645-Stefano-Sectional.png"},
 			{'image':imgPathPrefix + "Exstra_TulipTable.png"},
 			{'image':imgPathPrefix + "Natuzzi_Italia-Soud_Chair.png"},				
@@ -351,7 +354,7 @@ var isHandHeldDevice = false;
 			showCaption:false, 
 			showTooltips:false, 
 			data:featuredImgs, 
-			autoPlay:false, 
+			autoPlay:true, 
 			speed:3000, 
 			buildFinished: function() {
 
