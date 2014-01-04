@@ -1,4 +1,4 @@
-<h3>Black Friday Sale</h3>
+<h3>Holiday Sale</h3>
 <hr/>
 <img src="<?php print base_path(); ?>sites/default/files/promo/christmas/Holiday-Banner.jpg" alt="Holiday Sale"/>
 <!-- <h4></h4> -->

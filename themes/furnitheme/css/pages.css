@@ -1163,7 +1163,7 @@ hr.article-sep {
  * PROMO
  */
 #promo {
-	clear: both;
+	/*clear: both;*/
 	padding: 20px 0 5px 15px;
 	float:left;
 }
@@ -1192,6 +1192,9 @@ hr.article-sep {
 }
 body.not-front #promo hr {
 	/*width: 100%;*/
+}
+body.keyhole #promo, body.front #promo, body.page-taxonomy-term #promo  {
+	clear:both;
 }
 #promo p {
 	font-size: 1em;
