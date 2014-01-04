@@ -1,0 +1,138 @@
+#image-gallery {
+	height: 500px;
+	overflow: hidden;
+	margin-top: 10px;
+}
+#image-gallery .mSButtons {
+	height: 80%;
+}
+#image-gallery .frame {
+	width: 100%;
+	height: 100%;
+}
+#image-gallery .frame .slide_element {
+	height: 100%;
+}
+#image-gallery .frame .slide_element > div {
+	float: left;
+	height: 100%;
+	overflow: hidden;
+}
+#image-gallery .frame .mSCover img {
+	max-width: none;
+}
+#image-gallery .credit {
+	position: absolute;
+	bottom: 10px;
+	left: 10px;
+	font-size: 11px;
+	line-height: normal;
+	font-weight: 300;
+	text-shadow: rgba(0,0,0,0.7) 0 1px 0px;
+	color: #CCC;
+	background: #000;
+	background: rgba(0,0,0,0.6);
+	padding: 0 4px;
+	white-space: nowrap;
+	z-index: 1002;
+	text-transform: uppercase;
+}
+#image-gallery .credit a {
+	color: #FFF;
+	font-weight: 400;
+}
+.infoBlock {
+	position: absolute;
+	top: 30px;
+	right: 30px;
+	left: auto;
+	max-width: 30%;
+	padding-bottom: 0;
+	background: #FFF;
+	background: rgba(255, 255, 255, 0.6);
+	overflow: hidden;
+	padding: 20px;
+	z-index: 1002;
+}
+.infoBlockLeftBlack {
+	color: #FFF;
+	background: #000;
+	background: rgba(0,0,0,0.55);
+	left: 90px;
+	right: auto;
+	opacity: 0;
+}
+.infoBlock2 {
+	top: 90px;
+	left: 100px;
+}
+.infoBlock h4 {
+	font-size: 20px;
+	font-weight: 600;
+	line-height: 1.2;
+	margin: 0;
+	padding-bottom: 3px;
+}
+.infoBlock p {
+	font-size: 16px;
+	font-weight: 300;
+	margin: 4px 0 0;
+}
+.infoBlock a {
+	color: #FFF;
+	text-decoration: underline;
+}
+
+@media (max-width: 979px) {
+	#image-gallery {
+		height: 400px;
+		margin-top: 0;
+	}
+	.infoBlock {
+		min-width: 40%;
+	}
+}
+
+@media (max-width: 768px) {
+	#image-gallery {
+		margin: 0 -20px;
+		height: 300px;
+	}
+	.infoBlock {
+		padding: 10px;
+		height: auto;
+		max-height: 100%;
+	}
+	.infoBlock h4 {
+		font-size: 14px;
+		line-height: 17px;
+	}
+	.infoBlock p {
+		font-size: 12px;
+	}
+}
+
+#thumbs-wrapper {
+	width:100%;
+	text-align: center;
+	margin:.4em 0 2em 0;
+}
+#thumbs {
+	margin:0 auto;
+}
+#thumbs li {
+	width:100px;
+	margin: 0 .2em;
+	display: inline;
+}
+#thumbs {
+	float: none;
+	width: 100%;
+}
+
+.mightyslider_modern_skin .mSPages {
+	background: grey;
+	height: 2.5em;
+	width: 15em;
+	padding-top:13px;
+}

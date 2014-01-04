@@ -1,0 +1,30 @@
+name = "Mobile Base HTML5"
+description = "Minimalist base theme for mobile devices."
+core = 7.x
+version = 3.x
+engine = phptemplate
+
+; Page layout regions
+regions[page_top] = Page top
+regions[highlighted] = Highlighted
+regions[help] = Help
+regions[content] = Content
+regions[supplementary] = Supplementary content
+regions[navigation] = Navigation
+regions[footer] = Footer
+regions[page_bottom] = Page bottom
+
+; Stylesheets
+stylesheets[all][] = styles/normalize.css
+stylesheets[screen][] = styles/mobile.css 
+stylesheets[print][] = styles/print.css
+
+; Default values for theme settings
+settings[mobilewebapp]      = 1
+
+; Information added by  packaging script on 2013-11-02
+version = "7.x-3.x-dev"
+core = "7.x"
+project = "mobile"
+datestamp = "1383350688"
+

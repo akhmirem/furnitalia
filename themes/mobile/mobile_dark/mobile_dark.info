@@ -1,0 +1,16 @@
+name = "Mobile Dark"
+description = "A minimalist, clean, attractive theme for Mobile"
+core = 7.x
+version = 3.x
+engine = phptemplate
+base theme = mobile
+
+; Stylesheets
+stylesheets[screen][] = styles/mobile-dark.css 
+
+; Information added by  packaging script on 2013-11-02
+version = "7.x-3.x-dev"
+core = "7.x"
+project = "mobile"
+datestamp = "1383350688"
+

@@ -1,0 +1,105 @@
+body {
+  font-size: 83%;
+  font-family: Verdana, Tahoma, Trebuchet, sans-serif;
+  line-height:1.5em;
+  padding: 10px;
+  background: #eee;
+}
+a {
+  text-decoration: none;
+}
+img {
+  max-width: 100%;
+  height: auto;
+}
+h1 {
+  font-size: 1.6em;
+}
+h2 {
+  font-size: 1.4em;
+}
+h3 {
+  font-size: 1.3em;
+}
+h4 {
+  font-size: 1.2em;
+}
+h5 {
+  font-size: 1.1em;
+}
+body > header {
+  line-height: 1.1em;
+}
+a#logo img {
+  float: left;
+  margin-right: 1em;
+}
+h1#site-name {
+  margin: 0;
+  padding-top: 1em;
+}
+h2#site-slogan {
+  margin-top: .5em;
+  font-size: 1em;
+}
+section[role=main] {
+  margin-top: 2em;
+}
+section[role=main] article.node {
+  background: #fff;
+  border: 1px solid #999;
+  border-radius: .5em;
+  margin-bottom: 2em;
+  padding: 1em;
+}
+article > header > h1 {
+  margin-top: 0;
+}
+section#comments {
+  background: #ddd;
+  border: 1px solid #999;
+  border-radius: .5em;
+  margin-bottom: 2em;
+  padding: 1em;
+}
+section#comments article.comment {
+  background: #eee;
+  border: 1px solid #999;
+  border-radius: .5em;
+  margin-bottom: 2em;
+  padding: 1em;
+}
+#supplementary .block {
+  background: #ddd;
+  border: 1px solid #999;
+  border-radius: .5em;
+  margin-bottom: 2em;
+  padding: 1em;
+}
+nav ul.menu {
+  padding: 0;
+}
+nav ul.menu li {
+  list-style: none;
+  margin: 0;
+}
+nav ul.menu li a,
+nav ul#main-menu li a,
+nav ul#secondary-menu li a {
+  background: #555;
+  border: 1px solid #999;
+  border-radius: .5em;
+  color: #fff;
+  margin-bottom: 2em;
+  padding: 1em;
+  text-align: center;
+  -webkit-transition: all 200ms ease-out;
+  -moz-transition: all 200ms ease-out;
+  -ms-transition: all 200ms ease-out;
+  -o-transition: all 200ms ease-out;
+  transition: all 200ms ease-out;
+}
+nav li a.active {
+  background: #eee;
+  border-color: #000;
+}
