@@ -154,11 +154,13 @@ hr.furn-red {
 	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#981b1e', endColorstr='#721418',GradientType=0 ); /* IE6-8 */
 }
 #container {
-	margin-left:0;
+	left:0;
 	position: absolute;
 	background: #e6e7e8;
-	width:480px;
-	border:1px dashed green;
+	width:100%;
+	max-width:485px;
+	/*width:320px;*/
+	overflow:hidden;
 }
 
 header, #footer, #highlighted, #product-info {

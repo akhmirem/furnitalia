@@ -7,6 +7,7 @@
 	Drupal.behaviors.furnitalia = {
 		attach: function(context, settings) {
 		
+			$('body').append($("<div></div>").html($('#container').outerWidth()));
 			$("header div.region-page-top ul.menu").once(function() {
 				$menuElem = $("<li><a href=\"#\" title=\"menu\" id=\"menu-toggle\" class=\"furn-grey\"><img src=\"" + Drupal.settings.basePath + "sites/all/themes/furnimobile/images/buttons/menu.png" + "\"/></a></li>");
 				$(this).find('li:first').removeClass("first");
@@ -23,36 +24,42 @@
 				if(menuStatus != true) {
 					$mainNav.css("visibility", "visible");					
 					$container.animate({
-						marginLeft: $mainNav.outerWidth(),
+						left: $mainNav.outerWidth(),
 					}, 300, function(){menuStatus = true});
 					console.log("menu expand"); 
 					return false;
 					
 				} else {
 					$container.animate({
-						marginLeft: "0px",
+						left: "0px",
 					}, 300, function(){menuStatus = false; $mainNav.css("visibility", "hidden");});
 					console.log("menu closed"); 
 					return false;
 				}
 			});
 		
-			$('body').live("swipeleft", function(){
+			/*$('body').live("swipeleft", function(e){
+				console.log($(e.target).parents("#image-gallery").length);
+				if ($(e.target).parents("#image-gallery").length == 0) {
 				if (menuStatus){	
 					$container.animate({
 						marginLeft: "0px",
 					}, 300, function(){menuStatus = false; $mainNav.css("visibility", "hidden");});
 				}
+				}
 			});
 			
-			$('body').live("swiperight", function(){
+			$('body').live("swiperight", function(e){
+				console.log($(e.target).parents("#image-gallery").length);
+				if ($(e.target).parents("#image-gallery").length == 0) {
 				if (!menuStatus){	
 					$mainNav.css("visibility", "visible");
 					$container.animate({
 						marginLeft: $mainNav.outerWidth(),
 					}, 300, function(){menuStatus = true});
 				}
-			});
+				}
+			}); */
 			
 			InitAccordonMenu();
 			

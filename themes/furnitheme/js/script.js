@@ -257,10 +257,10 @@ var isHandHeldDevice = false;
 				});
 			});
 			
-			$("#promo img").click(function() {
+			/*$("#promo img").click(function() {
 				openPromoImg();
 				return false;
-			});
+			});*/
 			
 			/*$("#chat-online").click(function() {
 				$.fancybox.open('<p style="">LiveHelp is unavailable at this moment. Please call us at 1-800-387-4825 or 916-484-0333 (Sacramento, CA); 916-742-7900 (Roseville, CA)</p>',
@@ -331,13 +331,9 @@ var isHandHeldDevice = false;
 	
 	function InitFeaturedSlideShow() {
 		//Featured Slide Show images list		
-		var imgPathPrefix = Drupal.settings.basePath + "sites/default/files/promo/christmas/";
+		var imgPathPrefix = Drupal.settings.basePath + "sites/default/files/promo/black-friday/";
 		var featuredImgs = [
-			{'image':imgPathPrefix + "HolidayWeb1-1-500x350.jpg"},
-			{'image':imgPathPrefix + "HolidayWeb1-2-500x350.jpg"},
-			{'image':imgPathPrefix + "HolidayWeb1-3-500x350.jpg"},
-			{'image':imgPathPrefix + "HolidayWeb1-4-500x350.jpg"}								
-			/*{'image':imgPathPrefix + "Natuzzi_Editions-B645-Stefano-Sectional.png"},
+			{'image':imgPathPrefix + "Natuzzi_Editions-B645-Stefano-Sectional.png"},
 			{'image':imgPathPrefix + "Exstra_TulipTable.png"},
 			{'image':imgPathPrefix + "Natuzzi_Italia-Soud_Chair.png"},				
 			{'image':imgPathPrefix + "Natuzzi-Italia_Bateau.png"},				
@@ -345,8 +341,7 @@ var isHandHeldDevice = false;
 			{'image':imgPathPrefix + "Natuzzi_Italia-Surround.png"},								
 			{'image':imgPathPrefix + "Natuzzi_Editions-B520-Valeria-Sofa.png"},
 			{'image':imgPathPrefix + "Italsofa_Twister.png"},
-			{'image':imgPathPrefix + "Natuzzi_Editions-B725_Enzo_Sofa.png"}*/
-			
+			{'image':imgPathPrefix + "Natuzzi_Editions-B725_Enzo_Sofa.png"}
 		]
 		
 		//!Promo
@@ -356,13 +351,13 @@ var isHandHeldDevice = false;
 			data:featuredImgs, 
 			autoPlay:true, 
 			speed:3000, 
-			buildFinished: function() {
+			/*buildFinished: function() {
 
 				$('#category-image-pane div.pika-stage').click(function(){					
 					openPromoImg();
 					return false;
 				});
-			}
+			}*/
 		});
 	}
 	

@@ -1059,69 +1059,28 @@ function mobile_tweaks_front_page() {
 	$build = array();
 	
 	drupal_set_title("Modern Furniture Store Sacramento/Roseville");
+
+	$front_slides = "";
+	$img_path = base_path() . "sites/default/files/promo/black-friday/";
+	$imgs = array('Natuzzi_Editions-B645-Stefano-Sectional.png', 'Exstra_TulipTable.png', 'Natuzzi_Italia-Soud_Chair.png');	
+	foreach($imgs as $img) {
+		$front_slides .= "<div class=\"slide\" data-mightyslider=\"cover: '" . $img_path . $img . "' \"></div>";
+	}
+
 	
 	$front_gallery = <<<EOT
 <div id="image-gallery" class="mightyslider_modern_skin horizontal">
 	<div class="frame" style="overflow: hidden;">
-		<div class="slide_element" style="-webkit-transform: translateZ(0px) translateX(-1434px); width: 1912px;">
-			
-		  				  		
-		  		<!--<li><a href="http://m.furnitalia.local:8888/sites/default/files/items/Brio-12.jpg"><img ref="http://m.furnitalia.local:8888/sites/default/files/styles/large/public/items/Brio-12.jpg" typeof="foaf:Image" src="http://m.furnitalia.local:8888/sites/default/files/styles/thumbnail/public/items/Brio-12.jpg" alt="" /></a></li>-->
-		  	
-				<div class="slide" data-mightyslider="cover: 'http://m.furnitalia.local:8888/sites/default/files/styles/large/public/items/Brio-12.jpg', link: { url: '', thumbnail: 'http://m.furnitalia.local:8888/sites/default/files/styles/thumbnail/public/items/Brio-12.jpg', target: '_blank' }, thumbnail: 'http://m.furnitalia.local:8888/sites/default/files/styles/thumbnail/public/items/Brio-12.jpg' " style="width: 478px; position: relative;"><div class="mSCover" style="width: 100%; height: 100%; overflow: hidden;"><img src="http://m.furnitalia.local:8888/sites/default/files/styles/large/public/items/Brio-12.jpg" ondragstart="return false" style="width: 666.6666666666666px; height: 500px; margin-top: 0px; margin-left: -94.33333333333331px;"></div>
-					<div class="mSCaption infoBlock infoBlockLeftBlack" data-msanimation="{ speed: 700, easing: 'easeOutQuint', style: { left: 30, opacity: 1 } }" style="display: none;">
-						<h4>This is an animated block, add any number of them to any type of slide</h4>
-						<p>Put completely anything inside - text, images, inputs, links, buttons.</p>
-					</div>
-				<a class="mSIcon mSLink" href="http://m.furnitalia.local:8888/content/brio-recliner-sofa-15cz" target="_blank" url="" thumbnail="http://m.furnitalia.local:8888/sites/default/files/styles/thumbnail/public/items/Brio-12.jpg"></a></div>
-				
-			
-		  				  		
-		  		<!--<li><a href="http://m.furnitalia.local:8888/sites/default/files/items/Brio-13.jpg"><img ref="http://m.furnitalia.local:8888/sites/default/files/styles/large/public/items/Brio-13.jpg" typeof="foaf:Image" src="http://m.furnitalia.local:8888/sites/default/files/styles/thumbnail/public/items/Brio-13.jpg" alt="" /></a></li>-->
-		  	
-				<div class="slide" data-mightyslider="cover: 'http://m.furnitalia.local:8888/sites/default/files/styles/large/public/items/Brio-13.jpg', link: { url: '', thumbnail: 'http://m.furnitalia.local:8888/sites/default/files/styles/thumbnail/public/items/Brio-13.jpg', target: '_blank' }, thumbnail: 'http://m.furnitalia.local:8888/sites/default/files/styles/thumbnail/public/items/Brio-13.jpg' " style="width: 478px; position: relative;"><div class="mSCover" style="width: 100%; height: 100%; overflow: hidden;"><img src="http://m.furnitalia.local:8888/sites/default/files/styles/large/public/items/Brio-13.jpg" ondragstart="return false" style="width: 666.6666666666666px; height: 500px; margin-top: 0px; margin-left: -94.33333333333331px;"></div>
-					<div class="mSCaption infoBlock infoBlockLeftBlack" data-msanimation="{ speed: 700, easing: 'easeOutQuint', style: { left: 30, opacity: 1 } }" style="display: none;">
-						<h4>This is an animated block, add any number of them to any type of slide</h4>
-						<p>Put completely anything inside - text, images, inputs, links, buttons.</p>
-					</div>
-				<a class="mSIcon mSLink" href="http://m.furnitalia.local:8888/content/brio-recliner-sofa-15cz" target="_blank" url="" thumbnail="http://m.furnitalia.local:8888/sites/default/files/styles/thumbnail/public/items/Brio-13.jpg"></a></div>
-				
-			
-		  				  		
-		  		<!--<li><a href="http://m.furnitalia.local:8888/sites/default/files/items/Brio-14.jpg"><img ref="http://m.furnitalia.local:8888/sites/default/files/styles/large/public/items/Brio-14.jpg" typeof="foaf:Image" src="http://m.furnitalia.local:8888/sites/default/files/styles/thumbnail/public/items/Brio-14.jpg" alt="" /></a></li>-->
-		  	
-				<div class="slide" data-mightyslider="cover: 'http://m.furnitalia.local:8888/sites/default/files/styles/large/public/items/Brio-14.jpg', link: { url: '', thumbnail: 'http://m.furnitalia.local:8888/sites/default/files/styles/thumbnail/public/items/Brio-14.jpg', target: '_blank' }, thumbnail: 'http://m.furnitalia.local:8888/sites/default/files/styles/thumbnail/public/items/Brio-14.jpg' " style="width: 478px; position: relative;"><div class="mSCover" style="width: 100%; height: 100%; overflow: hidden;"><img src="http://m.furnitalia.local:8888/sites/default/files/styles/large/public/items/Brio-14.jpg" ondragstart="return false" style="width: 666.6666666666666px; height: 500px; margin-top: 0px; margin-left: -94.33333333333331px;"></div>
-					<div class="mSCaption infoBlock infoBlockLeftBlack" data-msanimation="{ speed: 700, easing: 'easeOutQuint', style: { left: 30, opacity: 1 } }" style="display: none;">
-						<h4>This is an animated block, add any number of them to any type of slide</h4>
-						<p>Put completely anything inside - text, images, inputs, links, buttons.</p>
-					</div>
-				<a class="mSIcon mSLink" href="http://m.furnitalia.local:8888/content/brio-recliner-sofa-15cz" target="_blank" url="" thumbnail="http://m.furnitalia.local:8888/sites/default/files/styles/thumbnail/public/items/Brio-14.jpg"></a></div>
-				
-			
-		  				  		
-		  		<!--<li><a href="http://m.furnitalia.local:8888/sites/default/files/items/Brio-15.jpg"><img ref="http://m.furnitalia.local:8888/sites/default/files/styles/large/public/items/Brio-15.jpg" typeof="foaf:Image" src="http://m.furnitalia.local:8888/sites/default/files/styles/thumbnail/public/items/Brio-15.jpg" alt="" /></a></li>-->
-		  	
-				<div class="slide active" data-mightyslider="cover: 'http://m.furnitalia.local:8888/sites/default/files/styles/large/public/items/Brio-15.jpg', link: { url: '', thumbnail: 'http://m.furnitalia.local:8888/sites/default/files/styles/thumbnail/public/items/Brio-15.jpg', target: '_blank' }, thumbnail: 'http://m.furnitalia.local:8888/sites/default/files/styles/thumbnail/public/items/Brio-15.jpg' " style="width: 478px; position: relative;"><div class="mSCover" style="width: 100%; height: 100%; overflow: hidden;"><img src="http://m.furnitalia.local:8888/sites/default/files/styles/large/public/items/Brio-15.jpg" ondragstart="return false" style="width: 666.6666666666666px; height: 500px; margin-top: 0px; margin-left: -94.33333333333331px;"></div>
-					<div class="mSCaption infoBlock infoBlockLeftBlack showed" data-msanimation="{ speed: 700, easing: 'easeOutQuint', style: { left: 30, opacity: 1 } }" style="display: block; position: absolute; left: 30px; opacity: 1;">
-						<h4>This is an animated block, add any number of them to any type of slide</h4>
-						<p>Put completely anything inside - text, images, inputs, links, buttons.</p>
-					</div>
-				<a class="mSIcon mSLink" href="http://m.furnitalia.local:8888/content/brio-recliner-sofa-15cz" target="_blank" url="" thumbnail="http://m.furnitalia.local:8888/sites/default/files/styles/thumbnail/public/items/Brio-15.jpg"></a></div>
-				
-						</div>
+		<div class="slide_element"> 
+			$front_slides
+		</div>		  				  		
 	</div>
-	<ul class="gal-pager mSPages"><li>1</li><li>2</li><li>3</li><li class="active">4</li></ul>
-  </div>
+	<ul class="gal-pager mSPages"></ul>
+</div>
 EOT;
 	
 	$build['category-preview'] = array(
-		'#markup' => $front_gallery, /*'<div id="cat-preview">
-						<div id="category-image-pane">
-							<ul>
-								<li><a href="#"><img src="sites/all/themes/furnimobile/images/front-slide.jpg"/></a></li>
-							</ul>
-					  	</div>
- 				  	 </div>',*/
+		'#markup' => $front_gallery, 
 	);
 
 	
