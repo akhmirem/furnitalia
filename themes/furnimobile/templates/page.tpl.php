@@ -34,7 +34,7 @@
 	
 	
 	<nav id="main-nav" class="accordion clearfix" role="navigation">
-		<img src="<?php print $base_path . $theme_path ?>/images/icons_logos/furnitalia_logo_white_154x33.png" alt="Furnitalia"/>
+		<img src="<?php print $base_path . $theme_path ?>/images/icons_logos/furnitalia_logo_white.png" alt="Furnitalia"/>
 		<?php print render($page['nav']); ?>
 		
 		<nav id="footer-info-menu"><?php print render($footer_info_menu); ?></nav>

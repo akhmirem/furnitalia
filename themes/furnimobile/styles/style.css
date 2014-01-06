@@ -111,7 +111,7 @@ nav li a.active {
 .furn-red {
 	color:#981b1e;
 }
-body, .furn-grey {
+body, .furn-grey, a.furn-grey:link, a.furn-grey:visited {
 	color:#6d6e71;
 }
 hr.furn-red {
@@ -125,13 +125,12 @@ hr.furn-red {
 }
 .furn-ucase, #webform-component-label {
 	text-transform: uppercase;
-	font-size:1.2em;
+	font-size:1em;
 	font-weight: 300;
 }
 .furn-e2-a {
-	font-size:1.35em; /*1.615em;*/
+	font-size: 1.1em;
 	text-transform: uppercase;
-	letter-spacing: 1px;
 }
 .furn-button-text {
 	/*background: #981b1e;*/
@@ -159,12 +158,12 @@ hr.furn-red {
 	background: #e6e7e8;
 	width:100%;
 	max-width:485px;
-	/*width:320px;*/
+	width:320px;
 	overflow:hidden;
 }
 
 header, #footer, #highlighted, #product-info {
-	padding:0 20px;
+	padding:0 15px;
 }
 article.node-teaser header {
 	padding: 0;
@@ -173,9 +172,9 @@ article.node-teaser header {
 /* PAGE TOP */
 a.main-phone {
 	position: relative;
-	top: 1.3em;
-	left: 2.55em;
-	font-size: 1.5em;
+	top: 1em;
+	left: .5em;
+	font-size: 1.1em;
 }
 div.region-page-top {
 	clear:both;
@@ -191,8 +190,8 @@ div.region-page-top ul.menu {
 div.region-page-top ul.menu li {
 	display:inline;
 	border-right: 1px solid #981b1e;
-	padding-right: 1.4em;
-	margin-left: 1.75em;
+	padding-right: .7em;
+	margin-left: .5em;
 }
 div.region-page-top ul.menu li.first {
 	margin:0;
@@ -209,30 +208,30 @@ div.region-page-top ul.menu li a {}
 	margin-left: 20px;
 }
 #breadcrumb span.active-breadcrumb {
-	font-size: 1.35em;
+	font-size: 1.1em;
 }
 #breadcrumb span.separator {
 	padding: 0 .3em;
 }
 
 #edit-search-block-form--2, #edit-submitted-email, #edit-keys {
-	font-size: 1.3em;
 	position: relative;
-	bottom: .85em;
-	width: 21em;
+	bottom: .7em;
+	width: 16em;
 	border: 1px solid grey;
-	padding: .5em 0 .55em 0em;
+	padding: .4em 0 .4em 0em;
 	text-align: center;
-	color:#6d6e71;
+	color: #6d6e71;
 }
 #edit-basic label {
 	display: none;
 }
 #edit-search-block-form--2 {
-	background:white url(../images/icons_logos/search_icon_25x28.png) 2% 50% no-repeat;
+	background:white url(../images/icons_logos/search_icon_20x20.png) 2% 50% no-repeat;
 }
 #edit-submitted-email  {
-	bottom: 0.75em;
+	bottom: 1em;
+	padding-bottom: .5em;
 }
 #webform-component-email {
 	float: left;
@@ -251,7 +250,7 @@ div.region-page-top ul.menu li a {}
 
 /* LEFT MENU BLOCK */
 #main-nav {
-	width: 300px;
+	width: 270px;
 	height:auto;
 	display: block !important;
 	float: left;
@@ -294,6 +293,9 @@ div.region-page-top ul.menu li a {}
 	display: inline;
 	margin: 0;
 	padding: 0;
+}
+#main-nav ul.links li a {
+	font-size:1.1em;
 }
 /* \LEFT MENU BLOCK */
 
@@ -346,7 +348,7 @@ main ul.furn-gallery li h2 a.title {
 	font-weight: 300;
 }
 .search-results .title, main ul.furn-gallery li h2 a.title {
-	font-size: 1em;
+	font-size: .62em;
 }
 article header h2 {
 	margin:0;
@@ -363,14 +365,14 @@ body.gallery-list main ul.furn-gallery li article img {
 	float:left;
 }
 body.gallery-list main ul.furn-gallery li h2 {
-	left: 2em;
-	top: 3em;
+	left: 1em;
+	top: 2em;
 	position: relative;
 }
 body.gallery-list main ul.furn-gallery .item-details {
 	position: relative;
-	top: 4em;
-	left: 2.5em;
+	top: 3em;
+	left: 1.2em;
 }
 .views-exposed-form label {
 	font-weight: 300;
@@ -400,7 +402,7 @@ article .field-name-field-alu .field-label {
 }
 #pricing {
 	float: left;
-	width: 17em;
+	width: 12em;
 	text-align: center;
 	padding-right: 1em;
 }
@@ -410,7 +412,6 @@ article .field-name-field-alu .field-label {
 	border-left: 1px solid grey;
 	height: 8em;
 	padding-left: 1em;
-	width: 15em;
 }
 #item-brand div.field-name-field-availability {
 	position:relative;
@@ -425,7 +426,7 @@ article .field-name-field-alu .field-label {
 }
 #pricing label, #pricing div.sell-price {
 	display: inline;
-	font-size: 1.5em;
+	font-size: 1.2em;
 }
 #product-additional {
 	clear:both;
@@ -438,17 +439,14 @@ article .field-name-field-alu .field-label {
 	padding: 0;
 }
 article span.favorites {
-	float:left;
 }
-article .flag-link-toggle {
-	font-size: 1.3em;
+article a.flag-link-toggle, article a.flag-link-toggle:visited {
+	font-size: 1.1em;
 	color: #6d6e71;
 	text-transform: uppercase;
 }
 article .sharethis-buttons {
-	float: right;
-	position: relative;
-	bottom: 2.5em;
+	margin-top:.7em
 }
 article #scroll-top {
 	float: left;
@@ -495,21 +493,17 @@ ul.pager a li, ul.pager li a {
 }
 #email-us {
 	float: left;
-	width: 13em;
+	width: 11em;
 	height: 3.5em;
 }
 #email-us span {
 	display: block;
 	position: relative;
-	bottom: 2.5em;
-	left: 2.3em;
+	bottom: 2.8em;
+	left: 2.7em;
 }
 #social-icons {
-	position: relative;
-	border: 1px dashed red;
-	display: block;
-	float: right;
-	width: 15em;
-	height: 3em;
+	clear: both;
+	padding-top: 1em;
 }
 /* \FOOTER */

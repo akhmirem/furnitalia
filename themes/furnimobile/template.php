@@ -230,7 +230,7 @@ function furnimobile_form_webform_client_form_33_alter(&$form, &$form_state, $fo
 	
 	$form['actions']['submit']['#theme_wrappers'] = array("image_button");
 	$form['actions']['submit']['#button_type'] = "image";
-	$form['actions']['submit']['#src'] = $path . "/images/buttons/JOIN_Button_70x40.png";
+	$form['actions']['submit']['#src'] = $path . "/images/buttons/JOIN_Button_50x29.png";
 }
 
 
@@ -250,7 +250,7 @@ function furnimobile_form_search_form_alter(&$form, &$form_state, $form_id) {
 	
 	$form['basic']['submit']['#theme_wrappers'] = array("image_button");
 	$form['basic']['submit']['#button_type'] = "image";
-	$form['basic']['submit']['#src'] = $path . "/images/buttons/GO_Button_70x40.png";
+	$form['basic']['submit']['#src'] = $path . "/images/buttons/GO_Button_50x29.png";
 
 }
 
@@ -269,7 +269,7 @@ function furnimobile_form_search_block_form_alter(&$form, &$form_state, $form_id
 	
 	$form['actions']['submit']['#theme_wrappers'] = array("image_button");
 	$form['actions']['submit']['#button_type'] = "image";
-	$form['actions']['submit']['#src'] = $path . "/images/buttons/GO_Button_70x40.png";
+	$form['actions']['submit']['#src'] = $path . "/images/buttons/GO_Button_50x29.png";
 
 }
 

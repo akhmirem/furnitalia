@@ -7,7 +7,6 @@
 	Drupal.behaviors.furnitalia = {
 		attach: function(context, settings) {
 		
-			$('body').append($("<div></div>").html($('#container').outerWidth()));
 			$("header div.region-page-top ul.menu").once(function() {
 				$menuElem = $("<li><a href=\"#\" title=\"menu\" id=\"menu-toggle\" class=\"furn-grey\"><img src=\"" + Drupal.settings.basePath + "sites/all/themes/furnimobile/images/buttons/menu.png" + "\"/></a></li>");
 				$(this).find('li:first').removeClass("first");

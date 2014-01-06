@@ -76,7 +76,7 @@
   
   <hr class="furn-red"/>
   
-  <div id="scroll-top"><img src="<?php print $base_path . $theme_path?>/images/icons_logos/link_arrow_previous_6x9.png"/>&nbsp;<a href="#">BACK TO TOP</a></div>
+  <div id="scroll-top"><img src="<?php print $base_path . $theme_path?>/images/icons_logos/link_arrow_previous_6x9.png"/>&nbsp;<a href="#" class="furn-grey">BACK TO TOP</a></div>
   
   <?php if ($pager): ?>
     <?php print $pager; ?>

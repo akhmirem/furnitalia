@@ -84,41 +84,6 @@ if ($teaser) { //item teaser view
   
   
   <div id="item-images">
-
-	  <!--<ul id="pikame" >
-	  	<?php foreach($content['field_image']['#items'] as $i => $image) :?>
-
-	  		<?php 
-	  			$style = "large";
-	  			$derivative_uri = image_style_path($style, $image['uri']);
-	  			if (!file_exists($derivative_uri)) {
-	  				$display_style = image_style_load($style);
-	  				image_style_create_derivative($display_style, $image['uri'], $derivative_uri);
-	  			}
-	  			$img_url  = file_create_url($derivative_uri);
-	  			
-	  			$style = "thumbnail";
-	  			$derivative_uri = image_style_path($style, $image['uri']);
-	  			if (!file_exists($derivative_uri)) {
-	  				$display_style = image_style_load($style);
-	  				image_style_create_derivative($display_style, $image['uri'], $derivative_uri);
-	  			}
-	  			$thumb_url  = file_create_url($derivative_uri);
-	  			
-	  			$full_img_url = file_create_url($image['uri']);
-
-	  		?>
-	  		
-		  	<li><a href="<?php print $full_img_url; ?>"><?php print theme("image", array("path" => $thumb_url, "attributes" => array("ref" => $img_url))); ?></a></li>
-		  	
-		  		
-	  	<?php endforeach;?>
-	  	
-	  	<?php if ($has_video): ?>
-	  		<li><img src="<?php print base_path() . path_to_theme(); ?>/images/play-button.gif" id="item-video-img" /></li>
-	  	<?php endif; ?>
-
-	  </ul> -->
 	  
 	 <header id="product-header">
 		 <h1 class="title furn-ucase furn-red furn-e2-a" id="page-title"><?php print $node->title; ?></h1>
@@ -133,7 +98,7 @@ if ($teaser) { //item teaser view
 				<?php foreach($content['field_image']['#items'] as $i => $image) :?>
 
 			  		<?php 
-			  			$style = "large";
+			  			$style = "mobile_large";
 			  			$derivative_uri = image_style_path($style, $image['uri']);
 			  			if (!file_exists($derivative_uri)) {
 			  				$display_style = image_style_load($style);
@@ -141,7 +106,7 @@ if ($teaser) { //item teaser view
 			  			}
 			  			$img_url  = file_create_url($derivative_uri);
 			  			
-			  			$style = "thumbnail";
+			  			$style = "mobile_thumb";
 			  			$derivative_uri = image_style_path($style, $image['uri']);
 			  			if (!file_exists($derivative_uri)) {
 			  				$display_style = image_style_load($style);
@@ -152,8 +117,6 @@ if ($teaser) { //item teaser view
 			  			$full_img_url = file_create_url($image['uri']);
 		
 			  		?>
-		  		
-			  		<!--<li><a href="<?php print $full_img_url; ?>"><?php print theme("image", array("path" => $thumb_url, "attributes" => array("ref" => $img_url))); ?></a></li>-->
 			  	
 					<div class="slide" data-mightyslider="cover: '<?php print $img_url; ?>', link: { url: '', thumbnail: '<?php print $thumb_url; ?>', target: '_blank' }, thumbnail: '<?php print $thumb_url; ?>' ">
 						<!--<div class="mSCaption infoBlock infoBlockLeftBlack" data-msanimation="{ speed: 700, easing: 'easeOutQuint', style: { left: 30, opacity: 1 } }">
@@ -248,9 +211,10 @@ if ($teaser) { //item teaser view
 		  ?>	  
 	  </span>
 	
-	  <div id="scroll-top"><img src="<?php print $base_path . $theme_path?>/images/icons_logos/link_arrow_previous_6x9.png"/>&nbsp;<a href="#">BACK TO TOP</a></div>
-		
 	  <?php print render($content['sharethis']); ?>  
+	  	  
+	  <div id="scroll-top"><img src="<?php print $base_path . $theme_path?>/images/icons_logos/link_arrow_previous_6x9.png"/>&nbsp;<a href="#" class="furn-grey">BACK TO TOP</a></div>		
+
   </section>
 
   
