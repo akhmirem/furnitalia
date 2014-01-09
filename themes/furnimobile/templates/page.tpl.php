@@ -66,7 +66,7 @@
 	      <article role="article">
 	    <?php endif; ?>
 	  <?php print render($title_prefix); ?>
-	    <h1 class="title" id="page-title"><?php print $title; ?></h1>
+	    <h1 class="title furn-red furn-ucase furn-e2-a" id="page-title"><?php print $title; ?></h1>
 	  <?php endif; ?>
 	  <?php print render($title_suffix); ?>
 	
@@ -89,7 +89,7 @@
 	      	<?php print render($page['footer']); ?>
 	      	
 	      	<section id="email-us">
-	      		<a href="mailto:admin@furnitalia.com?Subject=Inquiry%20from%20Furnitalia%20website" target="_top"" title="E-mail us for further assistance"><img src="<?php print $base_path . $theme_path; ?>/images/icons_logos/email_icon_31x34.png" alt="E-Mail Us"/><span class="furn-grey furn-ucase">E-mail us for further assistance</span></a>
+	      		<a href="mailto:admin@furnitalia.com?Subject=Inquiry%20from%20Furnitalia%20website" target="_top" title="E-mail us for further assistance"><img src="<?php print $base_path . $theme_path; ?>/images/icons_logos/email_icon_31x34.png" alt="E-Mail Us"/><span class="furn-grey furn-ucase">E-mail us for further assistance</span></a>
 	      	</section>
 	      	
 		  	<!-- AddThis Follow BEGIN -->

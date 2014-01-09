@@ -304,57 +304,57 @@ function mobile_tweaks_theme($existing, $type, $theme, $path) {
 		'contact' => array(
             'arguments' => array(),
             'template' => 'contact',
-            'path' => drupal_get_path('theme', 'furnitheme') . '/templates',
+            'path' => drupal_get_path('theme', 'furnimobile') . '/templates',
         ),
         'furnitalia_about' => array(
             'arguments' => array(),
             'template' => 'about',
-            'path' => drupal_get_path('theme', 'furnitheme') . '/templates',
+            'path' => drupal_get_path('theme', 'furnimobile') . '/templates',
         ),
         'shipping-deliveries' => array(
             'arguments' => array(),
             'template' => 'shipping-deliveries',
-            'path' => drupal_get_path('theme', 'furnitheme') . '/templates',
+            'path' => drupal_get_path('theme', 'furnimobile') . '/templates',
         ),
         'service-terms' => array(
             'arguments' => array(),
             'template' => 'service-terms',
-            'path' => drupal_get_path('theme', 'furnitheme') . '/templates',
+            'path' => drupal_get_path('theme', 'furnimobile') . '/templates',
         ),
 		'privacy-policy' => array(
             'arguments' => array(),
             'template' => 'privacy-policy',
-            'path' => drupal_get_path('theme', 'furnitheme') . '/templates',
+            'path' => drupal_get_path('theme', 'furnimobile') . '/templates',
         ),
         'faq' => array(
             'arguments' => array(),
             'template' => 'faq',
-            'path' => drupal_get_path('theme', 'furnitheme') . '/templates',
+            'path' => drupal_get_path('theme', 'furnimobile') . '/templates',
         ),
 		'catalogs' => array(
             'arguments' => array(),
             'template' => 'catalogs',
-            'path' => drupal_get_path('theme', 'furnitheme') . '/templates',
+            'path' => drupal_get_path('theme', 'furnimobile') . '/templates',
         ),
 		'interior-design' => array(
             'arguments' => array(),
             'template' => 'interior-design',
-            'path' => drupal_get_path('theme', 'furnitheme') . '/templates',
+            'path' => drupal_get_path('theme', 'furnimobile') . '/templates',
         ),
 		'all-cats' => array(
             'arguments' => array(),
             'template' => 'all-cats',
-            'path' => drupal_get_path('theme', 'furnitheme') . '/templates',
+            'path' => drupal_get_path('theme', 'furnimobile') . '/templates',
         ),
 		'natuzzi-cat' => array(
             'arguments' => array(),
             'template' => 'natuzzi-cat',
-            'path' => drupal_get_path('theme', 'furnitheme') . '/templates',
+            'path' => drupal_get_path('theme', 'furnimobile') . '/templates',
 		),
 		'editions-cat' => array(
             'arguments' => array(),
             'template' => 'editions-cat',
-            'path' => drupal_get_path('theme', 'furnitheme') . '/templates',
+            'path' => drupal_get_path('theme', 'furnimobile') . '/templates',
 		),
 		
         

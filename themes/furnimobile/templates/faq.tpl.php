@@ -1,35 +1,35 @@
-<ul>
-<li><p><a a href="#1" >What are your delivery rates?</a></p>
+<ul id="faq-questions">
+<li><p><a a href="#1" class="furn-grey">What are your delivery rates?</a></p>
 
 </li>
-<li><p><a a href="#2" >Do you offer nationwide and international delivery service?</a></p>
+<li><p><a a href="#2" class="furn-grey">Do you offer nationwide and international delivery service?</a></p>
 
 </li>
-<li><p><a a href="#3" >Do you ship by UPS or FedEx?</a></p>
+<li><p><a a href="#3" class="furn-grey">Do you ship by UPS or FedEx?</a></p>
 
 </li>
-<li><p><a href="#4" >Where are you located?</a></p>
+<li><p><a href="#4" class="furn-grey">Where are you located?</a></p>
 
 </li>
-<li><p><a href="#5" >What kind of guarantees do you make regarding your furniture?</a></p>
+<li><p><a href="#5" class="furn-grey">What kind of guarantees do you make regarding your furniture?</a></p>
 
 </li>
-<li><p><a href="#6" >How can I receive leather or fabric sample?</a></p>
+<li><p><a href="#6" class="furn-grey">How can I receive leather or fabric sample?</a></p>
 
 </li>
-<li><p><a href="#7" >When do I pay for my furniture and how much do I pay?</a></p>
+<li><p><a href="#7" class="furn-grey">When do I pay for my furniture and how much do I pay?</a></p>
 
 </li>
-<li><p><a href="#8" >What if my furniture arrives damaged?</a></p>
+<li><p><a href="#8" class="furn-grey">What if my furniture arrives damaged?</a></p>
 
 </li>
-<li><p><a href="#9" >Do you sell furniture directly off the showroom floor?</a></p>
+<li><p><a href="#9" class="furn-grey">Do you sell furniture directly off the showroom floor?</a></p>
 
 </li>
-<li><p><a href="#10" >Can I take my furniture home instead of having it delivered?</a></p>
+<li><p><a href="#10" class="furn-grey">Can I take my furniture home instead of having it delivered?</a></p>
 </li>
 
-<li><p><a href="#11" >What is your return policy?</a></p>
+<li><p><a href="#11" class="furn-grey">What is your return policy?</a></p>
 </li>
 
 </ul>

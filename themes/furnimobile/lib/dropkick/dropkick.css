@@ -13,7 +13,7 @@
 .dk_container {
 	line-height: 100%;
 	margin-bottom: .5em;
-	width:10.5em;
+	width:9em;
 	
 	background: #981b1e; /* Old browsers */
 	/* IE9 SVG, needs conditional override of 'filter' to 'none' */
@@ -44,7 +44,7 @@
 	background-position: 90% center;
 	color: #FFF;
 	padding: .5em 2.5em .5em .7em;
-	width:12em !important;
+	width:9em !important;
 }
 .dk_toggle:hover {
 	border-color: #8c8c8c;

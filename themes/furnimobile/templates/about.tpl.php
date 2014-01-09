@@ -1,5 +1,5 @@
 <?php
-	$theme_path = base_path() . drupal_get_path('theme', 'furnitheme');
+	$theme_path = base_path() . drupal_get_path('theme', 'furnimobile');
 ?>
 <article class="about-us">
 <img src="<?php print $theme_path; ?>/images/new_about_us_top.jpg"/>

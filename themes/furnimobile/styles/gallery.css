@@ -133,8 +133,14 @@
 
 .mightyslider_modern_skin .mSPages {
 	background: grey;
-	height: 2.5em;
 	width: 15em;
-	padding-top:13px;
-	margin-bottom:1em;
+	margin-bottom: 1em;
+	border-radius: 10px;
+	-webkit-border-radius: 10px;
+}
+.mightyslider_modern_skin .mSPages li {
+	margin-top:-3px;
+}
+.mightyslider_modern_skin .mSPages li.active {
+	margin-top:-5px;
 }
