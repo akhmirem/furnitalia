@@ -2,7 +2,7 @@ body {
   font-size: 83%;
   line-height:1.5em;
   padding: 10px;
-  background: #e6e7e8;
+  background:  #e6e7e8;
 }
 html, body, button, input, select, textarea, .ui-widget {
     font-family: "HelveticaNeue-Light","Helvetica Neue Light","Helvetica Neue",Helvetica,Arial,"Lucida Grande",sans-serif;
@@ -44,6 +44,9 @@ h1#site-name {
 h2#site-slogan {
   margin-top: .5em;
   font-size: 1em;
+}
+h2.field-label {
+	margin-bottom:.3em;
 }
 section[role=main] {
   margin-top: 2em;
@@ -107,7 +110,7 @@ nav ul#secondary-menu li a {
 .furn-red, .furn-e3  {
 	color:#981b1e;
 }
-body, .furn-grey, a.furn-grey:link, a.furn-grey:visited {
+body, .furn-grey, a.furn-grey, a.furn-grey:visited, .furn-grey a {
 	color:#6d6e71;
 }
 hr.furn-red {
@@ -119,7 +122,7 @@ hr.furn-red {
 .furn-bg-grey {
 	color:#e6e7e8;
 }
-.furn-ucase, #webform-component-label {
+.furn-ucase, .furn-ucase a, #webform-component-label {
 	text-transform: uppercase;
 	font-size:1em;
 	font-weight: 300;
@@ -136,7 +139,6 @@ hr.furn-red {
 	clear:both;
 }
 .furn-button-text {
-	/*background: #981b1e;*/
 	padding: .7em .3em;
 	font-size: 1.2em;
 	text-transform: uppercase;
@@ -321,6 +323,7 @@ div.region-page-top ul.menu li a {}
 
 /* CONTENT-BOTTOM MENU */
 #supplementary {
+	margin-top:2em;
 }
 h3.ui-accordion-header {
 	border-radius: 0;
@@ -330,7 +333,7 @@ h3.ui-accordion-header {
 	padding:0 0 .2em 0;
 }
 #supplementary div.ui-accordion-content a,  #supplementary div.ui-accordion-content a:visited {
-	text-transform: lowercase;
+	text-transform: uppercase;
 	color: #6d6e71;
 	font-size:1.2em;
 }
@@ -347,7 +350,7 @@ h3.ui-accordion-header a, h3.ui-accordion-header a:link, h3.ui-accordion-header 
 }
 #supplementary .item-list ul li {
 	list-style:none;
-	margin:0 1.5em 0.25em 0.5em;
+	margin:.5em 1.5em 0.25em 0.5em;
 }
 .ui-accordion .ui-accordion-header {
 	padding: .7em 0 0em 0;
@@ -586,3 +589,12 @@ section.store-info span.store-subtext {
 	padding-top: 1em;
 }
 /* \FOOTER */
+
+div.webform-confirmation {
+	background: #d3ffb4;
+	border: 2px solid green;
+	padding: 0 .5em;
+	margin: 1em 0;
+	color: #981b1e;
+	font-size: 1.2em;
+}

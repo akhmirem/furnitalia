@@ -1012,6 +1012,10 @@ function furnitalia_tweaks_prepare_node_attributes($nodes) {
 }
 
 function furnitalia_tweaks_webform_submission_presave($node, &$submission) {	
+
+	if ($node->nid != 32 || $node->nid != 34) {
+		return;
+	}
 	
 	$time_format = 'm-d-Y H:i';
 	$lead_info = array();

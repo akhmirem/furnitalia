@@ -105,7 +105,8 @@
 				
 			});
 			
-
+			
+			ProcessTxtToTruncate();
 			
 	
 		}
@@ -279,6 +280,37 @@
 				$('body').removeClass("gallery-grid").addClass("gallery-list");
 			}
 			e.preventDefault();
+		});
+	}
+	
+	function ProcessTxtToTruncate() {
+		var maxheight=218;
+		var showText = "Expand";
+		var hideText = "Show Less";
+		
+		$('.furn-truncate').each(function () {
+			var text = $(this);
+			maxheight = (!isNaN($(this).data('maxheight')) ? $(this).data('maxheight') : maxheight);
+			
+			if (text.height() > maxheight){
+		    	text.css({ 'overflow': 'hidden','height': maxheight + 'px' });
+		
+				var link = $('<a href="#" style="color:#981b1e;border-bottom:1px dashed #981b1e;float:right">' + showText + '</a>');
+				var linkDiv = $('<div class="furn-ucase"></div>');
+				linkDiv.append(link);
+				$(this).after(linkDiv);
+		
+				link.click(function (event) {
+					event.preventDefault();
+					if (text.height() > maxheight) {
+						$(this).html(showText);
+						text.css('height', maxheight + 'px');
+					} else {
+						$(this).html(hideText);
+						text.css('height', 'auto');
+					}
+				});
+			}       
 		});
 	}
 	

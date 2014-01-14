@@ -41,15 +41,14 @@
 		<nav id="footer-user-menu"><?php print render($footer_user_menu); ?></nav>
 		<nav id="footer-policy-menu"><?php print render($footer_policy_menu); ?></nav>	
 		<?php print  l("Catalogs", "catalogs", array('attributes' => array('id' => 'catalogs'))); ?>  
-		<?php print  l("Full Site", "http://www.furnitalia.com/?nomobile=true", array('attributes' => array('id' => 'full-site'))); ?>  		
+		<?php print  l("Full Site", "http://www.furnitalia.local:8888/?desktop=1", array('attributes' => array('id' => 'full-site'))); ?>  		
 	</nav>
-
-	<?php print $messages; ?>
-
 	
 	<main role="main" id="main-content">
 	
 	  <?php if ($page['highlighted']): ?><div id="highlighted"><?php print render($page['highlighted']); ?></div><?php endif; ?>
+	  
+	  <?php print $messages; ?>
 	  
 	  <?php if ($breadcrumb): ?>
 		<nav id="breadcrumb"><?php print $breadcrumb; ?></nav>

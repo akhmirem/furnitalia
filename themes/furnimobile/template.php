@@ -54,6 +54,11 @@ function furnimobile_preprocess_page(&$vars) {
 		$vars['page']['highlighted']['#access'] = FALSE;
 	}
 	
+	if (arg(0) == 'node' && arg(1) == '33') {
+		//if we are on newsletter subscription page, don't display subscription block
+		$vars['page']['footer']['webform_client-block-33'] = "";
+	}
+	
 	_page_set_breadcrumbs($vars);
 	
 
