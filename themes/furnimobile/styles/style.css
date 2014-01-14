@@ -477,15 +477,13 @@ article .field-name-field-alu .field-label {
 #product-additional.ui-accordion .ui-accordion-content {
 	padding: 0;
 }
-article span.favorites {
-}
-article a.flag-link-toggle, article a.flag-link-toggle:visited {
+article span.flag-favorites a, article span.flag-favorites a:visited {
 	font-size: 1.1em;
 	color: #6d6e71;
 	text-transform: uppercase;
 }
 article .sharethis-buttons {
-	margin-top:.7em
+	margin-top:.7em;
 }
 article #scroll-top {
 	float: left;
