@@ -54,13 +54,13 @@
     </div>
   <?php endif; ?>
 
+  <div class="gallery-prefs">
+	   <span class="gallery-instructions">VIEW AS: &nbsp;</span><a href="#" target="_top" id="view-grid" title="View items in grid"><img src="<?php print $base_path . $theme_path; ?>/images/icons_logos/gallery_gridview_icon_41x41.png" alt="View items in grid"/></a>&nbsp;<a href="#" target="_top" id="view-list" title="View items as list"><img src="<?php print $base_path . $theme_path; ?>/images/icons_logos/gallery_listview_icon_41x41.png" alt="View items as list"/></a>
+   </div>
+   
   <?php if ($pager): ?>
     <?php print $pager; ?>
   <?php endif; ?>
-  
-   <div class="gallery-prefs">
-	   <span class="gallery-instructions">VIEW AS: &nbsp;</span><a href="#" target="_top" id="view-grid" title="View items in grid"><img src="<?php print $base_path . $theme_path; ?>/images/icons_logos/gallery_gridview_icon_41x41.png" alt="View items in grid"/></a>&nbsp;<a href="#" target="_top" id="view-list" title="View items as list"><img src="<?php print $base_path . $theme_path; ?>/images/icons_logos/gallery_listview_icon_41x41.png" alt="View items as list"/></a>
-   </div>
    
    <hr class="furn-red"/>
 

@@ -145,6 +145,7 @@ hr.furn-red {
 	color: white;
 	margin-top: 1em;
 	display: block;
+	text-align: center;
 	
 	background: #981b1e; /* Old browsers */
 	/* IE9 SVG, needs conditional override of 'filter' to 'none' */
@@ -161,10 +162,9 @@ hr.furn-red {
 	left:0;
 	position: absolute;
 	background: #e6e7e8;
-	width:100%;
-	max-width:485px;
-	width:320px;
+	max-width:640px; /* galaxy s4 - 640px - landscape */
 	overflow:hidden;
+	width: 100%;
 }
 
 /*header, #footer, #highlighted, #product-info {*/
@@ -186,15 +186,16 @@ h1.title {
 
 /* PAGE TOP */
 a.main-phone {
-	position: relative;
+	position: absolute;
 	top: 1em;
-	left: .5em;
+	/* left: 35%; */
 	font-size: 1.1em;
 }
 div.store-phone a.main-phone {
 	left: 0;
 	top:.5em;
 	font-size:1.05em;
+	position: relative;
 }
 div.region-page-top {
 	clear:both;
@@ -210,8 +211,8 @@ div.region-page-top ul.menu {
 div.region-page-top ul.menu li {
 	display:inline;
 	border-right: 1px solid #981b1e;
-	padding-right: .7em;
-	margin-left: .5em;
+	padding-right: 7%;
+	margin-left: 5%;
 }
 div.region-page-top ul.menu li.first {
 	margin:0;
@@ -236,7 +237,7 @@ div.region-page-top ul.menu li a {}
 #edit-search-block-form--2, #edit-submitted-email, #edit-keys {
 	position: relative;
 	bottom: .7em;
-	width: 16em;
+	width: 85%;
 	border: 1px solid grey;
 	padding: .4em 0 .4em 0em;
 	text-align: center;
@@ -251,16 +252,21 @@ div.region-page-top ul.menu li a {}
 #edit-submitted-email  {
 	bottom: 1em;
 	padding-bottom: .5em;
+	/* float: left; */
+	width: 100%;
 }
 #webform-component-email {
 	float: left;
 	margin-right: .3em;
+	width: 85%;
+	position: relative;
 }
 #webform-component-email label {
 	display: none;
 }
 #webform-component-label, #webform-client-form-33 div.form-actions {
 	margin:0;
+	/* float: left; */
 }
 #webform-component-label p {
 	margin:.4em 0;
@@ -413,12 +419,16 @@ body.gallery-list main ul.furn-gallery .item-details {
 	top: 3em;
 	left: 1.2em;
 }
+div.view-filters {
+	float: left;
+}
 .views-exposed-form label {
 	font-weight: 300;
 	text-transform: uppercase;
 }
 div.gallery-prefs, #scroll-top {
-	text-align: center;
+	float: left;
+	margin-top: .7em;
 }
 /* \GALLERY */
 
@@ -441,7 +451,7 @@ article .field-name-field-alu .field-label {
 }
 #pricing {
 	float: left;
-	width: 12em;
+	width: 50%;
 	text-align: center;
 	padding-right: 1em;
 }
@@ -477,7 +487,7 @@ article .field-name-field-alu .field-label {
 #product-additional.ui-accordion .ui-accordion-content {
 	padding: 0;
 }
-article span.flag-favorites a, article span.flag-favorites a:visited {
+article span.favorites a, article span.favorites a:visited {
 	font-size: 1.1em;
 	color: #6d6e71;
 	text-transform: uppercase;
@@ -494,9 +504,8 @@ article #scroll-top {
 
 /* PAGER */
 .item-list .pager { /* A list of page numbers when more than 1 page of content is available */
-	padding: 0;
-	margin: 1em auto;
-	text-align: left;
+	padding: 1em 0 0 0;
+	text-align: center;
 }
 .item-list .pager li { /* Each page number in the pager list */
 	padding: 0 0.7em;
@@ -531,13 +540,13 @@ section.store-info div.map {
 }
 section.store-info p.info-left {
 	float: left;
-	width: 13.3em;
+	width: 55%;
 }
 section.store-info p.info-right {
 	border-left: 1px solid grey;
 	padding-left: .5em;
 	float: right;
-	width: 10.7em;
+	width: 45%;
 }
 section.store-info span.location-label {
 	top: 1em;
@@ -583,8 +592,10 @@ section.store-info span.store-subtext {
 	left: 2.7em;
 }
 #social-icons {
-	clear: both;
-	padding-top: 1em;
+	/* clear: both; */
+	/* padding-top: 1em; */
+	float: right;
+	width: 40%;
 }
 /* \FOOTER */
 
@@ -595,4 +606,31 @@ div.webform-confirmation {
 	margin: 1em 0;
 	color: #981b1e;
 	font-size: 1.2em;
+}
+
+@media only screen 
+and (min-device-width : 320px) 
+and (max-device-width : 568px) 
+and (orientation : portrait) {
+ /* iPhone 5 portrait mode */ 
+ div.region-page-top ul.menu li {
+	 padding-right: 3%;
+	 margin-left: 4%;
+ }
+ #edit-search-block-form--2, #edit-submitted-email, #edit-keys, #webform-component-email {
+	 width:81%;
+ }
+ #social-icons {
+ 	clear: both;
+ 	padding-top: 1em;
+ 	float:none;
+ 	width:100%;
+ }
+ div.gallery-prefs, #scroll-top {
+	 float:none;
+	 text-align: center;
+ }
+ div.view-filters {
+	 float: none;
+ }
 }
