@@ -1,11 +1,12 @@
 <span class="field-label phone"><a href="tel:+18883874825" class="main-phone">1-888-387-4825</a></span>
 <hr class="grey" />
-<section class="hours-update" style="padding:10px 5px;font-size:1em;color:#981b1e;">
+
+<!--<section class="hours-update" style="padding:10px 5px;font-size:1em;color:#981b1e;">
 Our stores are closed on the following days:
 <ul style="margin:0"><li>Dec. 24, 2013 and Dec. 25, 2013</li>
 <li>Dec. 30-31, 2013 and Jan. 1, 2014.</li>
 </ul>
-</section>
+</section>-->
 
 
 <section class="store-info clearfix">

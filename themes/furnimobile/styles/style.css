@@ -614,10 +614,10 @@ and (max-device-width : 568px)
 and (orientation : portrait) {
  /* iPhone 5 portrait mode */ 
  div.region-page-top ul.menu li {
-	 padding-right: 3%;
-	 margin-left: 4%;
+	 padding-right: 3.5%;
+	 margin-left: 3%;
  }
- #edit-search-block-form--2, #edit-submitted-email, #edit-keys, #webform-component-email {
+ #edit-search-block-form--2, #edit-keys, #webform-component-email {
 	 width:81%;
  }
  #social-icons {

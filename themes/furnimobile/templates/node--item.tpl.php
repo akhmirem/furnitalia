@@ -118,7 +118,7 @@ if ($teaser) { //item teaser view
 		
 			  		?>
 			  	
-					<div class="slide" data-mightyslider="cover: '<?php print $img_url; ?>', link: { url: '', thumbnail: '<?php print $thumb_url; ?>', target: '_blank' }, thumbnail: '<?php print $thumb_url; ?>' ">
+					<div class="slide" data-mightyslider="cover: '<?php print $img_url; ?>', link: { url: '<?php print $full_img_url; ?>', thumbnail: '<?php print $thumb_url; ?>', target: '_blank' }, thumbnail: '<?php print $thumb_url; ?>' ">
 						<!--<div class="mSCaption infoBlock infoBlockLeftBlack" data-msanimation="{ speed: 700, easing: 'easeOutQuint', style: { left: 30, opacity: 1 } }">
 							<h4>This is an animated block, add any number of them to any type of slide</h4>
 							<p>Put completely anything inside - text, images, inputs, links, buttons.</p>
@@ -217,12 +217,12 @@ if ($teaser) { //item teaser view
 
   </section>
 
-  
+
   <?php if ($has_video): ?>
-	  <div id="hidden-video">
+<!-- 	  <div id="hidden-video"> -->
 	  	  <!-- This is a hidden container for item video, its contents will appear in popup box -->
-		  <?php print render($content['field_video']); ?>
-	  </div>
+<!-- 		  <?php print render($content['field_video']); ?>--> -->
+<!-- 	  </div> -->
   <?php endif; ?>
  
  <?php //print render($content); ?>
