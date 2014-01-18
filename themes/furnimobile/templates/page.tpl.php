@@ -65,7 +65,7 @@
 	      <article role="article">
 	    <?php endif; ?>
 	  <?php print render($title_prefix); ?>
-	    <h1 class="title furn-red furn-ucase furn-e2-a" id="page-title"><?php print $title; ?></h1>
+	    <h1 class="title furn-red furn-ucase furn-e3" id="page-title"><?php print $title; ?></h1>
 	  <?php endif; ?>
 	  <?php print render($title_suffix); ?>
 	

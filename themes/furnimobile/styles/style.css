@@ -1,3 +1,6 @@
+/*@import url(http://fonts.googleapis.com/css?family=Roboto:400,300);*/
+@import url(http://fonts.googleapis.com/css?family=Lato:300,400);
+
 body {
   font-size: 83%;
   line-height:1.5em;
@@ -5,7 +8,9 @@ body {
   background:  #e6e7e8;
 }
 html, body, button, input, select, textarea, .ui-widget {
-    font-family: "HelveticaNeue-Light","Helvetica Neue Light","Helvetica Neue",Helvetica,Arial,"Lucida Grande",sans-serif;
+    /*font-family: "HelveticaNeue-Light","Helvetica Neue Light","Helvetica Neue",Helvetica,Arial,"Lucida Grande",sans-serif;*/
+    font-family: 'Lato', sans-serif;
+    font-weight: 300;
 }
 
 a {
@@ -132,8 +137,8 @@ hr.furn-red {
 	text-transform: uppercase;
 }
 .furn-e3 {
-	font-size: 1.2em;
-	font-weight: 300;
+	font-size: 1.5em;
+	font-weight: 400;
 	text-transform: uppercase;
 	border-bottom: 1px solid grey;
 	clear:both;
@@ -146,6 +151,7 @@ hr.furn-red {
 	margin-top: 1em;
 	display: block;
 	text-align: center;
+	font-weight: 400;
 	
 	background: #981b1e; /* Old browsers */
 	/* IE9 SVG, needs conditional override of 'filter' to 'none' */
@@ -221,7 +227,9 @@ div.region-page-top ul.menu li.last {
 	border-right: none;
 	padding-right: 0;
 }
-div.region-page-top ul.menu li a {}
+div.region-page-top ul.menu li a {
+	font-weight: 400;
+}
 
 #breadcrumb {
 	margin-top: .7em;
@@ -372,6 +380,9 @@ h3.ui-accordion-header a, h3.ui-accordion-header a:link, h3.ui-accordion-header 
 .ui-accordion .ui-accordion-header-active {
 	background: transparent url(../images/icons_logos/arrow_up_10x6.png) 98% 60% no-repeat;
 }
+#supplementary .ui-state-default a {
+	font-weight: 300;
+}
 /* \CONTENT-BOTTOM MENU */
 
 /* GALLERY */
@@ -390,7 +401,7 @@ main ul.furn-gallery li h2 {
 	text-transform: uppercase;
 }
 main ul.furn-gallery li h2 a.title {
-	font-weight: 300;
+	font-weight:400;
 }
 .search-results .title, main ul.furn-gallery li h2 a.title {
 	font-size: .62em;
@@ -398,6 +409,9 @@ main ul.furn-gallery li h2 a.title {
 article header h2 {
 	margin:0;
 	padding:0;
+}
+.uc-price {
+	font-weight: 400;
 }
 body.gallery-list main ul.furn-gallery li {
 	clear: both;
@@ -435,6 +449,7 @@ div.gallery-prefs, #scroll-top {
 /* PRODUCT PAGE */
 article h1.title {
 	font-size: 1.5em;
+	font-weight: 400;
 	letter-spacing: 0;
 	margin: 1em 0 .2em 0;
 }
@@ -476,6 +491,7 @@ article .field-name-field-alu .field-label {
 #pricing label, #pricing div.sell-price {
 	display: inline;
 	font-size: 1.2em;
+	font-weight: 400;
 }
 #product-additional {
 	clear:both;
@@ -541,6 +557,9 @@ section.store-info div.map {
 section.store-info p.info-left {
 	float: left;
 	width: 55%;
+}
+section.store-info .phone, section.store-info span.store-address,  section.store-info span.working-hours {
+	font-weight: 400;
 }
 section.store-info p.info-right {
 	border-left: 1px solid grey;
