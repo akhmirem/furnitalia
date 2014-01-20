@@ -628,8 +628,7 @@ div.webform-confirmation {
 }
 
 @media only screen 
-and (min-device-width : 320px) 
-and (max-device-width : 568px) 
+and (max-device-width : 360px) 
 and (orientation : portrait) {
  /* iPhone 5 portrait mode */ 
  div.region-page-top ul.menu li {

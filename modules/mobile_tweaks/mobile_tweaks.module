@@ -1066,16 +1066,15 @@ function mobile_tweaks_front_page() {
 	drupal_set_title("Modern Furniture Store Sacramento/Roseville");
 
 	$front_slides = "";
-	$img_path = base_path() . "sites/default/files/promo/black-friday/";
-	$imgs = array('Natuzzi_Editions-B645-Stefano-Sectional.png', 'Exstra_TulipTable.png', 'Natuzzi_Italia-Soud_Chair.png');	
+	$img_path = base_path() . "sites/default/files/promo/moving_sale/";
+	$imgs = array('320x420_MobileMain.jpg');
 	foreach($imgs as $img) {
 		$front_slides .= "<div class=\"slide\" data-mightyslider=\"cover: '" . $img_path . $img . "' \"></div>";
 	}
 
-	
 	$front_gallery = <<<EOT
-<div id="image-gallery" class="mightyslider_modern_skin horizontal">
-	<div class="frame" style="overflow: hidden;">
+<div id="image-gallery" class="mightyslider_modern_skin horizontal no-pager">
+	<div class="frame" style="overflow: hidden;" data-mightyslider="width:320,height:420">
 		<div class="slide_element"> 
 			$front_slides
 		</div>		  				  		
@@ -1088,7 +1087,6 @@ EOT;
 		'#markup' => $front_gallery, 
 	);
 
-	
 	return $build;
 }
 

@@ -84,7 +84,7 @@
 	color: #FFF;
 	text-decoration: underline;
 }
-
+/*
 @media (max-width: 979px) {
 	#image-gallery {
 		height: 400px;
@@ -112,7 +112,7 @@
 	.infoBlock p {
 		font-size: 12px;
 	}
-}
+}*/
 
 #thumbs-wrapper {
 	width:100%;

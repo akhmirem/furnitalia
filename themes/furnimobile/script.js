@@ -105,9 +105,7 @@
 				
 			});
 			
-			
 			ProcessTxtToTruncate();
-			
 	
 		}
 	}
@@ -156,11 +154,15 @@
 			var $example = $('#image-gallery');
 			$frame = $('.frame', $example);
 			
-			
 			var $holder = $example;
 	
 			$tabsbar = $('#thumbs');
 			$pagesbar = $('ul.gal-pager');
+
+			var pagesOn = 1;
+			if ($example.hasClass('no-pager')) {
+				pagesOn = 0;
+			}
 	
 			function calculator(width){
 				var percent = '25%';
@@ -186,11 +188,14 @@
 			};
 	
 			var thumbnailSize = calculator($(window).width());		
-			
+		
+			//$frame.data("mightyslider", "width:" + $(window).width());
 			$frame.mightySlider({
 				speed: 1000,
 				easing: 'easeOutExpo',
-				viewport: 'fill',
+				autoScale: 1,
+				//autoResize: 1,
+				viewport: 'stretch', //'fill',
 				
 				// Navigation options
 				navigation: {
@@ -210,9 +215,9 @@
 	
 				// Commands
 				commands: {
-					pages: 1,
-					buttons: 1,
-					thumbnails: 1
+					pages: pagesOn,
+					buttons: pagesOn,
+					thumbnails: pagesOn 
 				},
 				
 				thumbnails: {
@@ -227,7 +232,11 @@
 			}, 
 			{
 				load: function() {
-					$pagesbar.addClass('mSPages')
+					if (pagesOn) {
+						$pagesbar.addClass('mSPages').css('visibility', 'visible');
+					} else {
+						$pagesbar.css('visibility','hidden');
+					}
 				}
 			});
 		}

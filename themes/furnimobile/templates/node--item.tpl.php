@@ -93,7 +93,7 @@ if ($teaser) { //item teaser view
 	 </header>
 	  
 	  <div id="image-gallery" class="mightyslider_modern_skin horizontal">
-		<div class="frame">
+		<div class="frame" data-mightyslider="width:320,height:240">
 			<div class="slide_element">
 				<?php foreach($content['field_image']['#items'] as $i => $image) :?>
 
