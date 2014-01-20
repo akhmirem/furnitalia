@@ -5,12 +5,17 @@
 */
 function furnitalia_batch_menu(){
   $items['furnitalia-batch']=array(
-      'title'=> t('Run Batch job for items'),
+      'title'=> t('Run Batch resave job for all items'),
       'page callback'=>'drupal_get_form',
       'page arguments' => array('furnitalia_batch_form'),
       'access callback' => 'user_access',
 	  'access arguments' => array('run batch'),
-      'type'=>MENU_CALLBACK,
+  );
+  
+  $items['furnitalia-batch/resave']=array(
+      'title'=> t('Run Batch resave for items'),
+	  'type' => MENU_DEFAULT_LOCAL_TASK,
+	  'weight' => -1,
   );
   
   $items['furnitalia-batch/import']=array(
@@ -19,7 +24,7 @@ function furnitalia_batch_menu(){
       'page arguments' => array('furnitalia_batch_import_form'),
       'access callback' => 'user_access',
 	  'access arguments' => array('run batch'),
-      'type'=>MENU_CALLBACK,
+      'type'=>MENU_LOCAL_TASK,
   );
   
   $items['furnitalia-batch/export']=array(
@@ -28,7 +33,7 @@ function furnitalia_batch_menu(){
       'page arguments' => array('furnitalia_batch_export_form'),
       'access callback' => 'user_access',
 	  'access arguments' => array('run batch'),
-      'type'=>MENU_CALLBACK,
+      'type'=>MENU_LOCAL_TASK,
   );
 
   return $items;
@@ -321,7 +326,7 @@ function __build_node_import_array() {
 	$files_dir = variable_get('file_public_path', conf_path() . '/files'); 
 	
 	$output = array();
-	$csv = new parseCSV($files_dir . '/batch/items_export.csv');
+	$csv = new parseCSV($files_dir . '/batch/items_to_import.csv');
 	$output = $csv->data;
 	
 	return $output;
@@ -360,7 +365,7 @@ function furnitalia_batch_export(&$context) {
 	    $node->brand = taxonomy_term_load($node->field_brand['und'][0]['tid']);
 	    $node->brand = $node->brand->name;
 
-		$context['results'][] = array($node->nid, check_plain($node->title), $node->main_cat, $node->brand, $node->list_price, $node->sell_price, $node->field_special_price['und'][0]['value'], "http://www.furnitalia.com/node/$node->nid");
+		$context['results'][] = array($node->nid, check_plain($node->title), $node->main_cat, $node->brand, $node->sell_price, $node->field_special_price['und'][0]['value'], "http://www.furnitalia.com/node/$node->nid");
 		
 		// Update our progress information.
 		$context['sandbox']['progress']++;
@@ -381,14 +386,19 @@ function furnitalia_batch_export(&$context) {
 function furnitalia_batch_export_finished($success, $results, $operations) {
 	if ($success) {
 		
-		$message = 'Batch complete. ' . count($results) . ' items exported.';	
-		
-		require_once dirname(__FILE__) . "/parsecsv/parsecsv.lib.php";
-	
-		$files_dir = variable_get('file_public_path', conf_path() . '/files'); 
 		dsm($results);
-		$csv = new parseCSV();	
-		$csv->save($files_dir . '/batch/items_export.csv', $results, FALSE, array('nid', 'title', 'category', 'brand', 'msrp', 'sell_price', 'special_price', 'link'));
+				
+		$message = 'Batch complete. ' . count($results) . ' items exported.';	
+		$time_format = 'm_d_y';
+		$export_file_name = 'furn_exported_' . format_date(REQUEST_TIME, 'custom', $time_format) . '.csv'; 
+		$files_dir = variable_get('file_public_path', conf_path() . '/files'); 		
+				
+		require_once dirname(__FILE__) . "/parsecsv/parsecsv.lib.php";
+
+		$csv = new parseCSV();
+		$csv->save($files_dir . '/batch/' . $export_file_name, $results, FALSE, array('nid', 'title', 'category', 'brand', 'sell_price', 'special_price', 'link'));
+		
+		dsm('Exported nodes saved in '  . $export_file_name);
 		
 	}
 	else {
