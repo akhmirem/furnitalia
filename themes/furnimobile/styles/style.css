@@ -217,11 +217,13 @@ div.region-page-top ul.menu {
 div.region-page-top ul.menu li {
 	display:inline;
 	border-right: 1px solid #981b1e;
-	padding-right: 7%;
-	margin-left: 5%;
+	padding-right: 5%;
+	margin-left: 4%;
 }
 div.region-page-top ul.menu li.first {
 	margin:0;
+	padding: 0;
+	border: none;
 }
 div.region-page-top ul.menu li.last {
 	border-right: none;
@@ -245,7 +247,7 @@ div.region-page-top ul.menu li a {
 #edit-search-block-form--2, #edit-submitted-email, #edit-keys {
 	position: relative;
 	bottom: .7em;
-	width: 85%;
+	width: 81%;
 	border: 1px solid grey;
 	padding: .4em 0 .4em 0em;
 	text-align: center;
@@ -266,7 +268,7 @@ div.region-page-top ul.menu li a {
 #webform-component-email {
 	float: left;
 	margin-right: .3em;
-	width: 85%;
+	width: 81%;
 	position: relative;
 }
 #webform-component-email label {
@@ -611,10 +613,8 @@ section.store-info span.store-subtext {
 	left: 2.7em;
 }
 #social-icons {
-	/* clear: both; */
-	/* padding-top: 1em; */
-	float: right;
-	width: 40%;
+	clear: both; 
+	padding-top: 1em; 
 }
 /* \FOOTER */
 
@@ -625,30 +625,4 @@ div.webform-confirmation {
 	margin: 1em 0;
 	color: #981b1e;
 	font-size: 1.2em;
-}
-
-@media only screen 
-and (max-device-width : 360px) 
-and (orientation : portrait) {
- /* iPhone 5 portrait mode */ 
- div.region-page-top ul.menu li {
-	 padding-right: 3.5%;
-	 margin-left: 3%;
- }
- #edit-search-block-form--2, #edit-keys, #webform-component-email {
-	 width:81%;
- }
- #social-icons {
- 	clear: both;
- 	padding-top: 1em;
- 	float:none;
- 	width:100%;
- }
- div.gallery-prefs, #scroll-top {
-	 float:none;
-	 text-align: center;
- }
- div.view-filters {
-	 float: none;
- }
 }

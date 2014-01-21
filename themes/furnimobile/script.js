@@ -204,7 +204,8 @@
 	
 				// Dragging
 				dragging: {
-					swingSpeed:    0.1
+					swingSpeed:    0.1,
+					touchDragging: 0
 				},
 	
 				// Pages
