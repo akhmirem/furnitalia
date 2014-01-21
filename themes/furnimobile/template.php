@@ -17,6 +17,8 @@ function furnimobile_preprocess_page(&$vars) {
 
 	drupal_add_library('system', 'drupal.ajax');	    
    	drupal_add_js(drupal_get_path('module', 'webform_ajax') . '/js/webform_ajax.js', 'file');
+   	drupal_add_css(drupal_get_path("theme", "furnimobile"). "/lib/fancybox/jquery.fancybox.css");
+   	drupal_add_js(drupal_get_path("theme", "furnimobile"). "/lib/fancybox/jquery.fancybox.pack.js");
 	
 	//set up top menu
 	furnimobile_set_up_top_menu($vars);	
@@ -198,7 +200,9 @@ function preprocess_node_common_fields(&$content, $hook) {
 			'#attributes' => array('class' => array('sell-price')),		
 		);
 		
-		$content['sale_price'] = $new_sale_price;
+		$content['sale_price'] =  array( //$new_sale_price;
+			'#markup' => '<span><a href="#" class="furn-red promo-link" style="font-weight:400; font-size:1.2em; text-decoration:underline;">PROMO!</a></span>',
+		);
 		$content['sell_price']['#attributes']['class'] = array('old-price');
 	  	
 	} else {

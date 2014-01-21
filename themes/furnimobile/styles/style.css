@@ -415,6 +415,13 @@ article header h2 {
 .uc-price {
 	font-weight: 400;
 }
+div.sell-price .uc-price, div.sell-price .uc-price-label {
+	color: #981b1e;
+	font-weight: 400;
+}
+div.old-price .uc-price {
+	text-decoration: line-through;
+}
 body.gallery-list main ul.furn-gallery li {
 	clear: both;
 	border-bottom: 1px solid grey;

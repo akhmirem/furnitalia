@@ -62,7 +62,7 @@ if ($teaser) { //item teaser view
 	</header>
 	
 	<?php if(isset($content['sale_price']) && !empty($content['sale_price'])) : ?>
-		<span class="item-clearance"><img src="<?php print base_path() . path_to_theme(); ?>/images/Sale_Icon_Red_40x24.png" alt="Item on clearance"/></span>	
+		<!--<span class="item-clearance"><img src="<?php print base_path() . path_to_theme(); ?>/images/Sale_Icon_Red_40x24.png" alt="Item on clearance"/></span>	-->
 	<?php endif; ?>
 	
 	<div class="item-details">

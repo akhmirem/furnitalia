@@ -106,6 +106,26 @@
 			});
 			
 			ProcessTxtToTruncate();
+			
+			$("article a.promo-link").on("click", function(e) {
+				/*$.fancybox.open($('div.embedded-video'), {
+					width:800,
+					height:600,
+					closeBtn:true,
+					closeClick:false,
+					mouseWheel:true,
+				});*/
+				$.fancybox.open('<p style="">We move, you save!<br/>Furnitalia is going through exciting renovations and we are launching MOVING SALE starting January 28, 2014. Now is the time to shop and save! 20% - 70% off. Click <a href="#" style="text-decoration:underline">here</a> for more info</p>',
+				{
+					closeBtn:true,
+					closeClick:false,
+					width:200,
+					height:100
+				});
+				
+				e.preventDefault();
+
+			});
 	
 		}
 	}
