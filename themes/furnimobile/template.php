@@ -598,7 +598,9 @@ function _page_include_mightyslider_resources() {
 	drupal_add_css(drupal_get_path('theme', 'furnimobile') . "/styles/gallery.css");			
 	drupal_add_js(drupal_get_path('theme', 'furnimobile') . "/lib/mightyslider/src/js/mightyslider.min.js");
 	drupal_add_js(drupal_get_path('theme', 'furnimobile') . "/lib/mightyslider/js/jquery.easing.1.3.js");
-	drupal_add_js(drupal_get_path('theme', 'furnimobile') . "/lib/mightyslider/js/jquery.mobile.just-touch.js");
+
+	// !!! Disable touch/swipe events for now
+	//drupal_add_js(drupal_get_path('theme', 'furnimobile') . "/lib/mightyslider/js/jquery.mobile.just-touch.js");
 }
 
 function _page_set_breadcrumbs(&$vars) {
