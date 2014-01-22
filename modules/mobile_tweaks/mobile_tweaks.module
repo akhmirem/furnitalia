@@ -120,6 +120,13 @@ function mobile_tweaks_menu() {
 		'access callback' => TRUE, 
 		'type' => MENU_CALLBACK,
 	);
+	$items['moving-sale'] = array(
+		'title' => 'Moving SALE',
+	    'page callback' => 'theme',
+	    'page arguments' => array('moving-sale'),
+	    'access callback' => TRUE,
+	    'type' => MENU_NORMAL_ITEM,
+    );
 	return $items;
 }
 
@@ -354,6 +361,11 @@ function mobile_tweaks_theme($existing, $type, $theme, $path) {
 		'editions-cat' => array(
             'arguments' => array(),
             'template' => 'editions-cat',
+            'path' => drupal_get_path('theme', 'furnimobile') . '/templates',
+		),
+		'moving-sale' => array(
+            'arguments' => array(),
+            'template' => 'moving-sale',
             'path' => drupal_get_path('theme', 'furnimobile') . '/templates',
 		),
 		
@@ -1009,10 +1021,10 @@ function mobile_tweaks_prepare_node_attributes($nodes) {
 
 function mobile_tweaks_webform_submission_presave($node, &$submission) {	
 
-	if ($node->nid != 32 || $node->nid != 34) {
+	if ($node->nid != 32 && $node->nid != 34) {
 		return;
 	}
-	dsm("some messages");
+
 	
 	$time_format = 'm-d-Y H:i';
 	$lead_info = array();
@@ -1068,8 +1080,9 @@ function mobile_tweaks_front_page() {
 	$front_slides = "";
 	$img_path = base_path() . "sites/default/files/promo/moving_sale/";
 	$imgs = array('320x420_MobileMain.jpg');
+	$link = url("moving-sale", array('query' => array('utm_source' => 'mobile', 'utm_medium' => 'front', 'utm_campaign' => 'moving_sale')));
 	foreach($imgs as $img) {
-		$front_slides .= "<div class=\"slide\" data-mightyslider=\"cover: '" . $img_path . $img . "' \"></div>";
+		$front_slides .= "<div class=\"slide\" data-mightyslider=\"cover: '" . $img_path . $img . "', link: {url:'" . $link . "'} \"></div>";
 	}
 
 	$front_gallery = <<<EOT

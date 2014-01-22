@@ -237,16 +237,6 @@ var isHandHeldDevice = false;
 
 			});
 			
-			// ------------ SCROLLBARS FOR PRODUCT DESCRIPTION TEXT ----------
-			/*if (jQuery().jScrollPane) {
-				$("article.node-item .field-name-body .field-item").jScrollPane({
-					verticalDragMinHeight: 25,
-					verticalDragMaxHeight: 25,
-					horizontalDragMinWidth: 25,
-					horizontalDragMaxWidth: 25
-				});
-			}*/
-			
 			$("#item-video-img").unbind('click').click(function() {
 				$.fancybox.open($('div.embedded-video'), {
 					width:800,
@@ -255,6 +245,23 @@ var isHandHeldDevice = false;
 					closeClick:false,
 					mouseWheel:true,
 				});
+			});
+			
+			$("article a.promo-link").on("click", function(e) {
+				var msg = '<div style="width:400px; height:300px"><p style="font-size:1.3em;line-height:135%" class="furn-ucase furn-red">We move, you save!</p><p>Furnitalia is going through exciting renovations and we are launching MOVING SALE starting <span class="furn-red">January 28, 2014</span>. Now is the time to shop and save!</p> <p style="font-size:1.2em" class="furn-ucase furn-red">SALE 20% - 70% OFF IN STORE ONLY.</p> <p>Click <a href="/moving-sale" style="text-decoration:underline;color:blue;">here</a> for more info</p></div>'
+
+				$.fancybox.open(msg,
+				{
+					closeBtn:true,
+					closeClick:false,
+					autoDimensions:false,
+					width:300,
+					height:200
+				});
+				
+				e.stopPropagation();
+				e.preventDefault();
+
 			});
 			
 			/*$("#promo img").click(function() {
@@ -331,9 +338,11 @@ var isHandHeldDevice = false;
 	
 	function InitFeaturedSlideShow() {
 		//Featured Slide Show images list		
-		var imgPathPrefix = Drupal.settings.basePath + "sites/default/files/promo/black-friday/";
+		//var imgPathPrefix = Drupal.settings.basePath + "sites/default/files/promo/black-friday/";
+		var imgPathPrefix = Drupal.settings.basePath + "sites/default/files/promo/moving_sale/";
+		var link = Drupal.settings.basePath + "moving-sale?utm_source=main&utm_medium=featured&utm_campaign=moving_sale";
 		var featuredImgs = [
-			{'image':imgPathPrefix + "Natuzzi_Editions-B645-Stefano-Sectional.png"},
+			/*{'image':imgPathPrefix + "Natuzzi_Editions-B645-Stefano-Sectional.png"},
 			{'image':imgPathPrefix + "Exstra_TulipTable.png"},
 			{'image':imgPathPrefix + "Natuzzi_Italia-Soud_Chair.png"},				
 			{'image':imgPathPrefix + "Natuzzi-Italia_Bateau.png"},				
@@ -341,17 +350,21 @@ var isHandHeldDevice = false;
 			{'image':imgPathPrefix + "Natuzzi_Italia-Surround.png"},								
 			{'image':imgPathPrefix + "Natuzzi_Editions-B520-Valeria-Sofa.png"},
 			{'image':imgPathPrefix + "Italsofa_Twister.png"},
-			{'image':imgPathPrefix + "Natuzzi_Editions-B725_Enzo_Sofa.png"}
+			{'image':imgPathPrefix + "Natuzzi_Editions-B725_Enzo_Sofa.png"}*/
+			{'image':imgPathPrefix + "500x350_Slidewhow_Slide01.jpg", link:link},
+			{'image':imgPathPrefix + "500x350_Slidewhow_Slide02.jpg", link:link},
+			{'image':imgPathPrefix + "500x350_Slidewhow_Slide03.jpg", link:link}
 		]
 		
 		//!Promo
 		$('#category-image-pane').html('').PikaChoose({
+			transition:[5],
 			showCaption:false, 
 			showTooltips:false, 
 			data:featuredImgs, 
 			autoPlay:true, 
-			speed:3000, 
-			/*buildFinished: function() {
+			speed:3000 /*, 
+			buildFinished: function() {
 
 				$('#category-image-pane div.pika-stage').click(function(){					
 					openPromoImg();
@@ -362,7 +375,7 @@ var isHandHeldDevice = false;
 	}
 	
 	function openPromoImg() {
-		var promoImgPath = Drupal.settings.basePath + "sites/default/files/promo/christmas/christmas_sale_600x745.jpg";
+		var promoImgPath = Drupal.settings.basePath + "sites/default/files/promo/moving_sale/";
 		var img = new Image();
 
 		$.fancybox.showLoading();

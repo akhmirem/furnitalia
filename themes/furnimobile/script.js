@@ -108,20 +108,12 @@
 			ProcessTxtToTruncate();
 			
 			$("article a.promo-link").on("click", function(e) {
-				/*$.fancybox.open($('div.embedded-video'), {
-					width:800,
-					height:600,
-					closeBtn:true,
-					closeClick:false,
-					mouseWheel:true,
-				});*/
-				$.fancybox.open('<p style="">We move, you save!<br/>Furnitalia is going through exciting renovations and we are launching MOVING SALE starting January 28, 2014. Now is the time to shop and save! 20% - 70% off. Click <a href="#" style="text-decoration:underline">here</a> for more info</p>',
+				var msg = '<div style="width:400px; height:300px"><p style="font-size:1.3em;line-height:135%" class="furn-ucase furn-red">We move, you save!</p><p>Furnitalia is going through exciting renovations and we are launching MOVING SALE starting <span class="furn-red">January 28, 2014</span>. Now is the time to shop and save!</p> <p style="font-size:1.2em" class="furn-ucase furn-red">SALE 20% - 70% OFF IN STORE ONLY.</p> <p>Click <a href="/moving-sale" style="text-decoration:underline;color:blue;">here</a> for more info</p></div>'
+				$.fancybox.open(msg,
 				{
 					closeBtn:true,
 					closeClick:false,
-					width:200,
-					height:100
-				});
+				}).center();
 				
 				e.preventDefault();
 

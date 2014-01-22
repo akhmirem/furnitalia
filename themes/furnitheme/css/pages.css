@@ -87,7 +87,26 @@ p {
 p.disclaimer {
 	font-size:.8em;
 }
-
+.furn-red, .furn-e3, a.furn-red  {
+	color:#981b1e;
+}
+.furn-grey, a.furn-grey, a.furn-grey:visited, .furn-grey a {
+	color:#6d6e71;
+}
+hr.furn-red {
+	padding: 0;
+	margin: 1.5em 20px;
+	border: none;
+	background-color: #981b1e;
+}
+.furn-bg-grey {
+	color:#e6e7e8;
+}
+.furn-ucase, .furn-ucase a {
+	text-transform: uppercase;
+	font-size:1em;
+	font-weight: 300;
+}
 
 /*
  * The skip-link link will be completely hidden until a user tabs to the link.
@@ -745,7 +764,7 @@ aside.contact-page #craftysyntax_4 {
 	border-bottom: 1px solid #6d6e71;
 	padding-right: 13em;
 	color: #981b1e;
-	margin-left:10px;
+	/*margin-left:10px;*/
 }
 #cat-preview .pika-stage {
 	width:500px;
@@ -795,6 +814,13 @@ article .sell-price {
 }
 article .old-price .uc-price, article .list-price .uc-price {
 	text-decoration:line-through;
+}
+article a.promo-link {
+	position:relative;
+	top:.5em;
+	font-weight: bold;
+	font-size:1.2em; 
+	text-decoration:underline
 }
 #item-info .field-name-field-availability div.field-item {
 	text-transform: uppercase;

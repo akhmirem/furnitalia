@@ -87,12 +87,12 @@ function furnitheme_preprocess_page(&$vars) {
 	
 	$italia_editions_gallery_paths = array("natuzzi-italia", "natuzzi-italia/*", "natuzzi-italia/*/*", "natuzzi-editions", "natuzzi-editions/*", "natuzzi-editions/*/*");
 	$paths_with_keyholes = array('<front>', 'collections', 'natuzzi-italia', 'natuzzi-editions');
-	$paths_no_title = array_merge(array("node/*", "sale", "collections", "taxonomy/term/*"), $italia_editions_gallery_paths);
+	$paths_no_title = array_merge(array("node/*", "sale", "collections", "taxonomy/term/*", "moving-sale"), $italia_editions_gallery_paths);
 	$paths_no_tabs = array_merge(array("taxonomy/term/*", "natuzzi-italia", "natuzzi-editions"), $italia_editions_gallery_paths);	
 	
 	//determine whether to show/hide titles and promo area depending on path
 	$vars['show_keyhole'] = drupal_match_path(current_path(), implode("\n", $paths_with_keyholes));
-	$vars['show_promo'] = TRUE; // drupal_match_path(current_path(), implode("\n", $paths_with_promos));
+	$vars['show_promo'] =  arg(0) != "moving-sale";
 	$vars['show_title'] = !drupal_match_path(current_path(), implode("\n", $paths_no_title));
 	
 	if (drupal_match_path(current_path(), "node/*")) {
@@ -185,7 +185,9 @@ function preprocess_node_common_fields(&$content, $hook) {
 			'#attributes' => array('class' => array('sell-price')),		
 		);
 		
-		$content['sale_price'] = $new_sale_price;
+		$content['sale_price'] = array( //$new_sale_price;
+			'#markup' => '<span><a href="#" class="furn-red promo-link">PROMO!</a></span>',
+		);
 		$content['sell_price']['#attributes']['class'] = array('old-price');
 	  	
 	}

@@ -27,7 +27,7 @@ function furnimobile_preprocess_page(&$vars) {
 	furnimobile_set_up_footer_menu($vars);
 	
 	$italia_editions_gallery_paths = array("natuzzi-italia", "natuzzi-italia/*", "natuzzi-italia/*/*", "natuzzi-editions", "natuzzi-editions/*", "natuzzi-editions/*/*");
-	$paths_no_title = array_merge(array("<front>", "node/*", "sale", "collections", "taxonomy/term/*"), $italia_editions_gallery_paths);
+	$paths_no_title = array_merge(array("<front>", "node/*", "sale", "collections", "taxonomy/term/*", "moving-sale"), $italia_editions_gallery_paths);
 	$vars['show_title'] = !drupal_match_path(current_path(), implode("\n", $paths_no_title));
 	
 	if(drupal_match_path(current_path(), implode("\n", array("<front>", "front")))) {
@@ -201,7 +201,7 @@ function preprocess_node_common_fields(&$content, $hook) {
 		);
 		
 		$content['sale_price'] =  array( //$new_sale_price;
-			'#markup' => '<span><a href="#" class="furn-red promo-link" style="font-weight:400; font-size:1.2em; text-decoration:underline;">PROMO!</a></span>',
+			'#markup' => '<span class="promo-price"><a href="#" class="furn-red promo-link" style="font-weight:400; font-size:1.2em; text-decoration:underline;">PROMO!</a></span>',
 		);
 		$content['sell_price']['#attributes']['class'] = array('old-price');
 	  	

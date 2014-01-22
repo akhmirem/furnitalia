@@ -119,6 +119,13 @@ function furnitalia_tweaks_menu() {
 		'access callback' => TRUE, 
 		'type' => MENU_CALLBACK,
 	);
+	$items['moving-sale'] = array(
+		'title' => 'Moving SALE',
+	    'page callback' => 'theme',
+	    'page arguments' => array('moving-sale'),
+	    'access callback' => TRUE,
+	    'type' => MENU_NORMAL_ITEM,
+    );
 	return $items;
 }
 
@@ -370,7 +377,12 @@ function furnitalia_tweaks_theme($existing, $type, $theme, $path) {
             'template' => 'editions-cat',
             'path' => drupal_get_path('theme', 'furnitheme') . '/templates',
 		),
-		
+		'moving-sale' => array(
+            'arguments' => array(),
+            'template' => 'moving-sale',
+            'path' => drupal_get_path('theme', 'furnitheme') . '/templates',
+		),
+
         
     );
     return $themes;
