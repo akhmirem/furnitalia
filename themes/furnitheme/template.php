@@ -163,7 +163,8 @@ function preprocess_node_common_fields(&$content, $hook) {
 	$sale_price_set = FALSE;
 	$special_price = NULL;
 	
-	if(furnitalia_tweaks_show_sale_price($content)) {
+	$sale_price_set = TRUE; //<--moving sale
+	/*if(furnitalia_tweaks_show_sale_price($content)) {
 		 if(!empty($content['field_special_price']) && isset($content['field_special_price']['#items']) && $content['field_special_price']['#items'][0]['value']) {
 		 	$special_price = $content['field_special_price']['#items'][0]['value'];
 		 	$diff = abs(floatval($special_price) - floatval($sell_price));
@@ -171,19 +172,19 @@ function preprocess_node_common_fields(&$content, $hook) {
 			 	$sale_price_set = TRUE; //sell price and special price are not same
 			}
 		 }
-	}
+	}*/
 		
 	if($sale_price_set) {
 	
 		//don't display MSRP:
 		unset($content['list_price']);
 		
-		$new_sale_price = array(		
+		/*$new_sale_price = array(		
 			'#title' => "SPECIAL:",
 			'#theme' => "uc_product_price",
 			'#value' => $special_price,
 			'#attributes' => array('class' => array('sell-price')),		
-		);
+		);*/
 		
 		$content['sale_price'] = array( //$new_sale_price;
 			'#markup' => '<span><a href="#" class="furn-red promo-link">PROMO!</a></span>',

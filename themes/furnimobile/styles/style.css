@@ -148,7 +148,7 @@ hr.furn-red {
 	font-size: 1.2em;
 	text-transform: uppercase;
 	color: white;
-	margin-top: 1em;
+	margin-top: 2.5em;
 	display: block;
 	text-align: center;
 	font-weight: 400;
@@ -510,6 +510,9 @@ article .field-name-field-alu .field-label {
 	display: inline;
 	font-size: 1.2em;
 	font-weight: 400;
+}
+#pricing label {
+	display:none; /*temp*/
 }
 #product-additional {
 	clear:both;

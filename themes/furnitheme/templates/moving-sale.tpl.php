@@ -16,7 +16,7 @@
 	Italy, Norway, and Denmark there is a great deal for every
 	room in your house!</p>
 	
-	<p class="furn-ucase furn-red" style="text-align:center;font-size:1.8em;font-weight:700">SALE STARTS<br/> <span style="top: .3em;position: relative;">JANUARY 28, 2014!</span></p>
+	<p class="furn-ucase furn-red" style="text-align:center;font-size:1.8em;font-weight:700">SALE STARTS<br/> <span style="top: .3em;position: relative;">JANUARY 23, 2014!</span></p>
 	
 	<p style="text-align:center;"><span class="furn-red" style="font-size:1.5em;">You don't want to miss this <br/>once-in-a-lifetime sale!</span><br/><span style="font-size:1.2em">Hurry for the biggest selection of the <br/> lowest prices we have ever offered!</span> </p>
 	

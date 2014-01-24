@@ -30,7 +30,7 @@ function furnimobile_preprocess_page(&$vars) {
 	$paths_no_title = array_merge(array("<front>", "node/*", "sale", "collections", "taxonomy/term/*", "moving-sale"), $italia_editions_gallery_paths);
 	$vars['show_title'] = !drupal_match_path(current_path(), implode("\n", $paths_no_title));
 	
-	if(drupal_match_path(current_path(), implode("\n", array("<front>", "front")))) {
+	if(drupal_match_path(current_path(), implode("\n", array("<front>", "front", "node/*")))) {
 		_page_include_mightyslider_resources();
 	}
 	
@@ -179,13 +179,15 @@ function preprocess_node_common_fields(&$content, $hook) {
 	$special_price = NULL;
 	
 	if(mobile_tweaks_show_sale_price($content)) {
-		 if(!empty($content['field_special_price']) && isset($content['field_special_price']['#items']) && $content['field_special_price']['#items'][0]['value']) {
+		 $sale_price_set = TRUE; //<-- moving sale;
+
+		 /*if(!empty($content['field_special_price']) && isset($content['field_special_price']['#items']) && $content['field_special_price']['#items'][0]['value']) {
 		 	$special_price = $content['field_special_price']['#items'][0]['value'];
 		 	$diff = abs(floatval($special_price) - floatval($sell_price));
 		 	if ($diff > $epsilon) {
 			 	$sale_price_set = TRUE; //sell price and special price are not same
 			}
-		 }
+		 }*/
 	}
 		
 	if($sale_price_set) {
@@ -193,12 +195,12 @@ function preprocess_node_common_fields(&$content, $hook) {
 		//don't display MSRP:
 		unset($content['list_price']);
 		
-		$new_sale_price = array(		
+		/*$new_sale_price = array(		
 			'#title' => "SPECIAL:",
 			'#theme' => "uc_product_price",
 			'#value' => $special_price,
 			'#attributes' => array('class' => array('sell-price')),		
-		);
+		);*/
 		
 		$content['sale_price'] =  array( //$new_sale_price;
 			'#markup' => '<span class="promo-price"><a href="#" class="furn-red promo-link" style="font-weight:400; font-size:1.2em; text-decoration:underline;">PROMO!</a></span>',
