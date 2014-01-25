@@ -19,6 +19,7 @@ regions[page_bottom] = Page bottom
 stylesheets[screen][] = styles/style.css
 stylesheets[screen][] = styles/gallery.css
 
+
 ; Optionally add some JavaScripts to your theme
 scripts[] = script.js
 

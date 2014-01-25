@@ -1155,6 +1155,19 @@ function furnitalia_tweaks_show_sale_price($node) {
 		$node = (array) $node;
 		$rendered = FALSE;
 	}
+	
+	//brand overrides
+	/*$excelsior = 27;
+	$bdi = 29;
+	if ($rendered) {
+		$brand = $node['field_brand']['#items'][0]['tid'];
+	} else {
+		$brand = $node['field_brand']['und'][0]['tid'];
+	}
+	
+	if ($brand == $excelsior || $brand == $bdi){
+		return FALSE; //no sale price
+	}*/
 
 	if (!empty($node['field_display_sale_price'])) {
 		if ($rendered) {

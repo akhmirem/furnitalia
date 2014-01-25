@@ -162,8 +162,19 @@ function preprocess_node_common_fields(&$content, $hook) {
 	
 	$sale_price_set = FALSE;
 	$special_price = NULL;
-	
+	$excelsior = 27;
+	$bdi = 29;
+
 	$sale_price_set = TRUE; //<--moving sale
+	if (isset($content['field_brand']['#items'])) {
+		$brand = (int) $content['field_brand']['#items'][0]['tid'];
+	} else {
+		$brand = (int) $content['field_brand']['und'][0]['tid'];
+	}
+	if ($brand == $excelsior || $brand == $bdi){
+		$sale_price_set = FALSE; //no sale price
+	}
+
 	/*if(furnitalia_tweaks_show_sale_price($content)) {
 		 if(!empty($content['field_special_price']) && isset($content['field_special_price']['#items']) && $content['field_special_price']['#items'][0]['value']) {
 		 	$special_price = $content['field_special_price']['#items'][0]['value'];
