@@ -164,6 +164,7 @@ function preprocess_node_common_fields(&$content, $hook) {
 	$special_price = NULL;
 	$excelsior = 27;
 	$bdi = 29;
+	$nicolle_miller = 28;
 
 	$sale_price_set = TRUE; //<--moving sale
 	if (isset($content['field_brand']['#items'])) {
@@ -171,7 +172,7 @@ function preprocess_node_common_fields(&$content, $hook) {
 	} else {
 		$brand = (int) $content['field_brand']['und'][0]['tid'];
 	}
-	if ($brand == $excelsior || $brand == $bdi){
+	if ($brand == $excelsior || $brand == $bdi || $brand == $nicolle_miller){
 		$sale_price_set = FALSE; //no sale price
 	}
 
