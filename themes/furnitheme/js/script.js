@@ -54,6 +54,9 @@ var isHandHeldDevice = false;
 						$("#stitch").hide();
 						$("div.keyhole").hide();
 						timer = window.setTimeout(AnimateFrontPageBackground, 500);
+						if ( $.browser.msie ) {
+							$("#promo").css("padding-top", "15px");
+						}
 
 					})				
 				// if there was an error loading the image, react accordingly
