@@ -234,6 +234,7 @@ function furnitheme_preprocess_html(&$variables, $hook) {
 	if (in_array(arg(0), array('collections', 'natuzzi-italia', 'natuzzi-editions')) && arg(1) == '') {
 		 $variables['classes_array'][] = 'keyhole';
 	}
+	drupal_add_css(path_to_theme() . '/css/ie.css', array('group' => CSS_THEME, 'weight' => 115, 'browsers' => array('IE' => 'gte IE 6', '!IE' => FALSE), 'preprocess' => FALSE));
 }
 
 /**

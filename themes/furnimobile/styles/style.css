@@ -123,6 +123,7 @@ hr.furn-red {
 	margin: 1.5em 20px;
 	border: none;
 	background-color: #981b1e;
+	clear:both;
 }
 .furn-bg-grey {
 	color:#e6e7e8;
@@ -265,13 +266,13 @@ div.region-page-top ul.menu li a {
 	/* float: left; */
 	width: 100%;
 }
-#webform-component-email {
+#webform-client-form-33 #webform-component-email {
 	float: left;
 	margin-right: .3em;
 	width: 81%;
 	position: relative;
 }
-#webform-component-email label {
+#webform-client-form-33 #webform-component-email label {
 	display: none;
 }
 #webform-component-label, #webform-client-form-33 div.form-actions {
@@ -461,6 +462,11 @@ div.view-filters {
 div.gallery-prefs, #scroll-top {
 	float: left;
 	margin-top: .7em;
+}
+ul.brands-list li {
+	list-style-type: none;
+	float: left;
+	padding: 1em;
 }
 /* \GALLERY */
 
