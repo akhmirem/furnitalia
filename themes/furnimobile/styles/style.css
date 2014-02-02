@@ -651,3 +651,8 @@ div.webform-confirmation {
 	color: #981b1e;
 	font-size: 1.2em;
 }
+
+#banner {
+	text-align:center;
+	margin-top:1em;
+}

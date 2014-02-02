@@ -16,7 +16,9 @@
 	Italy, Norway, and Denmark there is a great deal for every
 	room in your house!</p>
 	
-	<p class="furn-ucase furn-red" style="text-align:center;font-size:1.8em;font-weight:700">SALE STARTS<br/> <span style="top: .3em;position: relative;">JANUARY 23, 2014!</span></p>
+	<p class="furn-ucase furn-red" style="text-align:center;font-size:1.8em;font-weight:700;line-height:1em">SALE STARTS<br/> <span style="top: .3em;position: relative;">JANUARY 28, 2014!</span></p>
+
+	<p style="background:black;color:#b8ad99;text-transform:uppercase;font-size:1.1em;padding: 1em 2em;text-align: center;margin: auto 4em;font-weight:bold">Print this promo page and get additional 10% off* on already marked down prices.</p>
 	
 	<p style="text-align:center;"><span class="furn-red" style="font-size:1.5em;">You don't want to miss this <br/>once-in-a-lifetime sale!</span><br/><span style="font-size:1.2em">Hurry for the biggest selection of the <br/> lowest prices we have ever offered!</span> </p>
 	
@@ -48,4 +50,8 @@
 			<small>(Provided by Google Maps)</small>
 		</div>
 	</section>
+
+	<p style="font-size:.5em;">
+		*Cannot be combined with any other offers or coupons. Limit one coupon per household. Valid till March 31,2014 in Sacramento lication only. While supplies last.
+	</p>
 </article>

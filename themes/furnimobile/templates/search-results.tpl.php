@@ -25,7 +25,7 @@
 ?>
 <?php if ($search_results): ?>
   <h2><?php print t('Search results');?></h2>
-  <ul class="furn-gallery search-results <?php print $module; ?>-results">
+  <ul class="furn-gallery search-results clearfix <?php print $module; ?>-results">
     <?php print $search_results; ?>
   </ul>
   <?php print $pager; ?>

@@ -64,6 +64,7 @@
  * @ingroup themeable
  */
 ?>
+<?php if ($result['node']->type == 'item') : ?>
 <li class="<?php print $classes; ?>"<?php print $attributes; ?>>
 
   <div class="search-snippet-info">
@@ -75,3 +76,4 @@
   </div>
   
 </li>
+<?php endif; ?>

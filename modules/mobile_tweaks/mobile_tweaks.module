@@ -807,7 +807,7 @@ function mobile_tweaks_node_presave($node) {
 
 	if ($node->type == 'item') {	
 				
-		if (count($node->field_special_price['und']) > 0) {
+		if (isset($node->field_special_price['und']) && count($node->field_special_price['und']) > 0) {
 			$special_price = $node->field_special_price['und'][0]['value'];
 			if (intval($special_price) == 0) {
 				$node->field_special_price['und'][0]['value'] = $node->sell_price; //set default

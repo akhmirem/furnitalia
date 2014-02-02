@@ -119,6 +119,8 @@
 				e.preventDefault();
 
 			});
+			
+			InitSrchInputEvents();
 	
 		}
 	}
@@ -334,6 +336,27 @@
 					}
 				});
 			}       
+		});
+	}
+	
+	function InitSrchInputEvents() {
+		$("#search-form #edit-keys").focus(function() {
+				if ($(this).val().toLowerCase() == "search") {
+				$(this).val("");
+			}
+		}).blur(function() {
+			if ($(this).val().trim() == "") {
+				$(this).val("Search");
+			}				
+		});
+		$("#search-block-form input.form-text").focus(function() {
+			if ($(this).val().toLowerCase() == "search") {
+				$(this).val("");
+			}
+		}).blur(function() {
+			if ($(this).val().trim() == "") {
+				$(this).val("SEARCH");
+			}				
 		});
 	}
 	

@@ -43,17 +43,18 @@ if ($teaser) { //item teaser view
 	unset($content['field_availability']['#title']);
 
 	$image = $node->field_image['und'][0];
-
-	$image_html = theme('image_style', array(
-		'style_name' => 'mobile_gallery_thumb',
-		'path' => $image['uri'],
-		'alt' => $image['alt'],
-	));
-	$image_html_rendered = render($image_html);
+	if(isset($image['uri']) && !empty($image['uri'])) {
+		$image_html = theme('image_style', array(
+			'style_name' => 'mobile_gallery_thumb',
+			'path' => $image['uri'],
+			'alt' => $image['alt'],
+		));
+		$image_html_rendered = render($image_html);
+		
+		$image_linked = l($image_html_rendered, "node/" . $node->nid, array('html' => true));
 	
-	$image_linked = l($image_html_rendered, "node/" . $node->nid, array('html' => true));
-	
-	print $image_linked;
+		print $image_linked;
+	}
 
 	?>
 

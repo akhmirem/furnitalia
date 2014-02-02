@@ -82,6 +82,11 @@
 	  <?php print render($page['supplementary']); ?>
 	  </aside>
 	<?php endif; ?>
+	<?php if (isset($page['banner']) && !empty($page['banner'])) :?>
+	  <section id="banner">
+	  	<?php print render($page['banner']); ?>
+	  </section>
+	<?php endif; ?>
 	
 	  <?php if ($page['footer']): ?>
 	    <footer role="contentinfo" id="footer">
