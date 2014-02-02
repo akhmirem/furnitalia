@@ -343,7 +343,7 @@ var isHandHeldDevice = false;
 		//Featured Slide Show images list		
 		//var imgPathPrefix = Drupal.settings.basePath + "sites/default/files/promo/black-friday/";
 		var imgPathPrefix = Drupal.settings.basePath + "sites/default/files/promo/moving_sale/";
-		var link = Drupal.settings.basePath + "moving-sale?utm_source=main&utm_medium=featured&utm_campaign=moving_sale";
+		var link = Drupal.settings.basePath + "moving-sale?utm_source=main&utm_medium=featured&utm_campaign=moving-sale";
 		var featuredImgs = [
 			/*{'image':imgPathPrefix + "Natuzzi_Editions-B645-Stefano-Sectional.png"},
 			{'image':imgPathPrefix + "Exstra_TulipTable.png"},
@@ -378,7 +378,7 @@ var isHandHeldDevice = false;
 	}
 	
 	function openPromoImg() {
-		var promoImgPath = Drupal.settings.basePath + "sites/default/files/promo/moving_sale/";
+		var promoImgPath = Drupal.settings.basePath + "sites/default/files/promo/moving-sale/";
 		var img = new Image();
 
 		$.fancybox.showLoading();
