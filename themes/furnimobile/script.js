@@ -8,7 +8,7 @@
 		attach: function(context, settings) {
 		
 			$("header div.region-page-top ul.menu").once(function() {
-				$menuElem = $("<li><a href=\"#\" title=\"menu\" id=\"menu-toggle\" class=\"furn-grey\"><img src=\"" + Drupal.settings.basePath + "sites/all/themes/furnimobile/images/buttons/menu.png" + "\"/></a></li>");
+				$menuElem = $("<li><a href=\"#\" title=\"menu\" id=\"menu-toggle\" class=\"furn-grey\"><img src=\"" + Drupal.settings.basePath + "sites/all/themes/furnimobile/images/buttons/menu_50x30.jpg" + "\"/></a></li>");
 				$(this).find('li:first').removeClass("first");
 				$(this).prepend($menuElem.addClass("first"));
 			});
@@ -107,7 +107,7 @@
 			ProcessTxtToTruncate();
 			
 			$("article a.promo-link").on("click", function(e) {
-				var msg = '<div style="width:240px; height:300px"><p style="font-size:1.3em;line-height:135%" class="furn-ucase furn-red">We move, you save!</p><p>Furnitalia is going through exciting renovations and we are launching MOVING SALE starting <span class="furn-red">January 28, 2014</span>. Now is the time to shop and save!</p> <p style="font-size:1.2em" class="furn-ucase furn-red">SALE 20% - 70% OFF IN STORE ONLY.</p> <p>Click <a href="/moving-sale" style="text-decoration:underline;color:blue;">here</a> for more info</p></div>'
+				var msg = '<div style="width:240px; height:300px"><p style="font-size:1.3em;line-height:135%" class="furn-ucase furn-red">We move, you save!</p><p>Furnitalia is going through exciting renovations and we are launching MOVING SALE starting <span class="furn-red">January 28, 2014</span>. Now is the time to shop and save!</p> <p style="font-size:1.2em" class="furn-ucase furn-red">SALE 20% - 70% OFF IN STORE ONLY.</p> <p>Click <a href="/moving-sale" style="text-decoration:underline;color:blue;">here</a> for more info</p></div>';
 				$.fancybox.open(msg,
 				{
 					closeBtn:true,
@@ -340,18 +340,14 @@
 	
 	function InitSrchInputEvents() {
 		$("#search-form #edit-keys").focus(function() {
-				if ($(this).val().toLowerCase() == "search") {
-				$(this).val("");
-			}
+			$(this).val("");
 		}).blur(function() {
 			if ($(this).val().trim() == "") {
 				$(this).val("Search");
 			}				
 		});
 		$("#search-block-form input.form-text").focus(function() {
-			if ($(this).val().toLowerCase() == "search") {
-				$(this).val("");
-			}
+			$(this).val("");
 		}).blur(function() {
 			if ($(this).val().trim() == "") {
 				$(this).val("SEARCH");
