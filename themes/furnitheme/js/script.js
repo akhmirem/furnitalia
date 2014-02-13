@@ -354,9 +354,7 @@ var isHandHeldDevice = false;
 			{'image':imgPathPrefix + "Natuzzi_Editions-B520-Valeria-Sofa.png"},
 			{'image':imgPathPrefix + "Italsofa_Twister.png"},
 			{'image':imgPathPrefix + "Natuzzi_Editions-B725_Enzo_Sofa.png"}*/
-			{'image':imgPathPrefix + "500x350_Slidewhow_Slide01.jpg", link:link},
-			{'image':imgPathPrefix + "500x350_Slidewhow_Slide02.jpg", link:link},
-			{'image':imgPathPrefix + "500x350_Slidewhow_Slide03.jpg", link:link}
+			{'image':imgPathPrefix + "moving-sale-500x235.gif", link:link}
 		]
 		
 		//!Promo
