@@ -282,6 +282,14 @@ var isHandHeldDevice = false;
 				return false;
 			});*/
 			
+			$("#block-webform-client-block-33 input.email").focus(function() {
+				$(this).val("");
+			}).blur(function() {
+				if ($(this).val().trim() == "") {
+					$(this).val("EMAIL");
+				}				
+			});
+			
         }
 	}
 	
