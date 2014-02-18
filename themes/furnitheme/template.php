@@ -72,7 +72,7 @@ function furnitheme_preprocess_page(&$vars) {
 	drupal_add_js('misc/jquery.form.js');
 	drupal_add_library('system', 'drupal.ajax');	
 	drupal_add_library('system', 'ui.accordion');	
-	drupal_add_library('system', 'jquery.bbq'); //for processing url in javacsript
+	drupal_add_library('system', 'jquery.bbq'); 		//for processing url in javacsript
 
 	//jquery ui
 	drupal_add_js(drupal_get_path('module', 'webform_ajax') . '/js/webform_ajax.js', 'file');
@@ -172,7 +172,7 @@ function preprocess_node_common_fields(&$content, $hook) {
 	} else {
 		$brand = (int) $content['field_brand']['und'][0]['tid'];
 	}
-	if ($brand == $excelsior || $brand == $bdi || $brand == $nicolle_miller){
+	if ($brand == $excelsior || $brand == $bdi || $brand == $nicolle_miller) {
 		$sale_price_set = FALSE; //no sale price
 	}
 

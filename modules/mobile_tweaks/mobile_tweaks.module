@@ -665,39 +665,41 @@ function mobile_tweaks_page_alter(&$page) {
 	
 	//brands nav link
 	$cat_parent_class = "";
+	$accordion_header_class = 'ui-accordion-header ui-helper-reset ui-state-default ui-corner-all';
+	$accordion_content_class = 'ui-accordion-content ui-helper-reset ui-widget-content ui-corner-bottom';
+	
 	$page['nav']['furn_menu']['brands'] = array(		
-		'#prefix' => '<h3 class="ui-accordion-header ui-helper-reset ui-state-default ui-corner-all"> ' . l("Brands", 'brands', array('attributes' => array('id' => 'bg0', 'class' => array((drupal_match_path(request_path(), "brand/*\nbrands")) ? " active" : "")))) . '</h3><div class="ui-accordion-content ui-helper-reset ui-widget-content ui-corner-bottom">',
+		'#prefix' => '<h3 class="' . $accordion_header_class . '"> ' . l("Brands", 'brands', array('attributes' => array('id' => 'bg0', 'class' => array((drupal_match_path(request_path(), "brand/*\nbrands")) ? " active" : "")))) . '</h3><div class="' . $accordion_content_class . '">',
 		'#suffix' => '</div>',		
 	);	
 	
 	//all collections nav link
 	$page['nav']['furn_menu']['all'] = array(
-		'#prefix' => '<h3 class="ui-accordion-header ui-helper-reset ui-state-default ui-corner-all">' . l("All Collections", 'collections', array('attributes' => array('id' => 'bg1', 'class' => array($all_coll_active ? " active" : "")))) . '</h3><div class="ui-accordion-content ui-helper-reset ui-widget-content ui-corner-bottom">',
+		'#prefix' => '<h3 class="' . $accordion_header_class . '">' . l("All Collections", 'collections', array('attributes' => array('id' => 'bg1', 'class' => array($all_coll_active ? " active" : "")))) . '</h3><div class="' . $accordion_content_class . '">',
 		'#suffix' => '</div>',
 	);
 	
 	//natuzzi italia items nav link
 	$page['nav']['furn_menu']['italia'] = array(
-		'#prefix' => '<h3 class="ui-accordion-header ui-helper-reset ui-state-default ui-corner-all">' . l("Natuzzi Italia", 'natuzzi-italia', array('attributes' => array('id' => 'bg2', 'class' => array(($active_brand == $italia) ? " active" : "")))) . '</h3><div class="ui-accordion-content ui-helper-reset ui-widget-content ui-corner-bottom">',
-		'#suffix' => '</div>',
-	);
-	
-	//natuzzi editions items nav link
-	$page['nav']['furn_menu']['editions'] = array(
-		'#prefix' => '<h3 class="ui-accordion-header ui-helper-reset ui-state-default ui-corner-all">' . l("Natuzzi Editions", 'natuzzi-editions', array('attributes' => array('id' => 'bg3', 'class' => array(($active_brand == $editions) ? " active" : "")))) . '</h3><div class="ui-accordion-content ui-helper-reset ui-widget-content ui-corner-bottom">',
+		'#prefix' => '<h3 class="' . $accordion_header_class . '">' . l("Natuzzi Italia", 'natuzzi-italia', array('attributes' => array('id' => 'bg2', 'class' => array(($active_brand == $italia) ? " active" : "")))) . '</h3><div class="' . $accordion_content_class . '">',
 		'#suffix' => '</div>',
 	);
 
+	//natuzzi editions items nav link
+	$page['nav']['furn_menu']['editions'] = array(
+		'#prefix' => '<h3 class="' . $accordion_header_class . '">' . l("Natuzzi Editions", 'natuzzi-editions', array('attributes' => array('id' => 'bg3', 'class' => array(($active_brand == $editions) ? " active" : "")))) . '</h3><div class="' . $accordion_content_class . '">',
+		'#suffix' => '</div>',
+	);
 	
 	//In Store items nav link
 	$page['nav']['furn_menu']['in-store'] = array(
-		'#prefix' => '<h3 class="ui-accordion-header ui-helper-reset ui-state-default ui-corner-all"> ' . l( "In Store", 'in-store', array('attributes' => array('id' => 'bg5', 'class' => array((arg(0) == 'in-store') ? " active" : "")))) . '</h3><div class="ui-accordion-content ui-helper-reset ui-widget-content ui-corner-bottom">',
+		'#prefix' => '<h3 class="' . $accordion_header_class . '"> ' . l( "In Store", 'in-store', array('attributes' => array('id' => 'bg5', 'class' => array((arg(0) == 'in-store') ? " active" : "")))) . '</h3><div class="' . $accordion_content_class . '">',
 		'#suffix' => '</div>',		
 	);
 	
 	//interior design nav link
 	$page['nav']['furn_menu']['interior_design'] = array(
-		'#prefix' => '<h3 class="ui-accordion-header ui-helper-reset ui-state-default ui-corner-all"> ' . l( "Interior Design Services", 'interior-design', array('attributes' => array('id' => 'bg4', 'class' => array((arg(0) == 'interior-design') ? " active" : "")))) . '</h3><div class="ui-accordion-content ui-helper-reset ui-widget-content ui-corner-bottom">',
+		'#prefix' => '<h3 class="' . $accordion_header_class . '"> ' . l( "Interior Design Services", 'interior-design', array('attributes' => array('id' => 'bg4', 'class' => array((arg(0) == 'interior-design') ? " active" : "")))) . '</h3><div class="' . $accordion_content_class . '">',
 		'#suffix' => '</div>',		
 	);
 	
@@ -713,7 +715,7 @@ function mobile_tweaks_page_alter(&$page) {
 		
 		//markup structure for all collections
 		$page['supplementary']['furn_menu']['all'] = array(
-			'#prefix' => '<h3 class="ui-accordion-header ui-helper-reset ui-state-default ui-corner-all">' . l("All Collections", 'collections', array('attributes' => array('id' => 'bg1', 'class' => array($all_coll_active ? " active" : "")))) . '</h3><div class="ui-accordion-content ui-helper-reset ui-widget-content ui-corner-bottom">',
+			'#prefix' => '<h3 class="' . $accordion_header_class . '">' . l("All Collections", 'collections', array('attributes' => array('id' => 'bg1', 'class' => array($all_coll_active ? " active" : "")))) . '</h3><div class="' . $accordion_content_class . '">',
 			'#suffix' => '</div>',
 			'#theme' => 'item_list',
 			'#items' => array_values($output_all_brands_menu_items),
@@ -729,7 +731,7 @@ function mobile_tweaks_page_alter(&$page) {
 		
 		//mark up structure for natuzzi italia items
 		$page['supplementary']['furn_menu']['italia'] = array(
-			'#prefix' => '<h3 class="ui-accordion-header ui-helper-reset ui-state-default ui-corner-all">' . l("Natuzzi Italia", 'natuzzi-italia', array('attributes' => array('id' => 'bg2', 'class' => array(($active_brand == $italia) ? " active" : "")))) . '</h3><div class="ui-accordion-content ui-helper-reset ui-widget-content ui-corner-bottom">',
+			'#prefix' => '<h3 class="' . $accordion_header_class . '">' . l("Natuzzi Italia", 'natuzzi-italia', array('attributes' => array('id' => 'bg2', 'class' => array(($active_brand == $italia) ? " active" : "")))) . '</h3><div class="' . $accordion_content_class . '">',
 			'#suffix' => '</div>',
 			'#theme' => 'item_list',
 			'#items' => array_values($output_italia_menu_items),
@@ -744,7 +746,7 @@ function mobile_tweaks_page_alter(&$page) {
 		
 		//mark up structure for natuzzi editions items
 		$page['supplementary']['furn_menu']['editions'] = array(
-			'#prefix' => '<h3 class="ui-accordion-header ui-helper-reset ui-state-default ui-corner-all">' . l("Natuzzi Editions", 'natuzzi-editions', array('attributes' => array('id' => 'bg3', 'class' => array(($active_brand == $editions) ? " active" : "")))) . '</h3><div class="ui-accordion-content ui-helper-reset ui-widget-content ui-corner-bottom">',
+			'#prefix' => '<h3 class="' . $accordion_header_class . '">' . l("Natuzzi Editions", 'natuzzi-editions', array('attributes' => array('id' => 'bg3', 'class' => array(($active_brand == $editions) ? " active" : "")))) . '</h3><div class="' . $accordion_content_class . '">',
 			'#suffix' => '</div>',
 			'#theme' => 'item_list',
 			'#items' => array_values($output_editions_menu_items),
@@ -946,9 +948,6 @@ function mobile_tweaks_favorites_list() {
     $build = mobile_tweaks_prepare_node_attributes($nodes);
     
     unset($build['options']);
-
-	
-	//print flag_create_link('favorites', $node->nid); 
 	
 	return $build;
 }
@@ -1062,9 +1061,9 @@ function mobile_tweaks_webform_submission_presave($node, &$submission) {
 	$lid = furnileads_insert_lead($lead_info);
 	
 	if (is_numeric($lid)) {
-		watchdog('furnitalia', 'Lead record created for %first %last, with ID:%id', array('%first' => $lead_info['first_name'], '%last' => $lead_info['last_name'], '%id' => $lid), WATCHDOG_INFO, $link = NULL);	
+		watchdog('mobile_furnitalia', 'Lead record created for %first %last, with ID:%id', array('%first' => $lead_info['first_name'], '%last' => $lead_info['last_name'], '%id' => $lid), WATCHDOG_INFO, $link = NULL);	
 	} else {
-		watchdog('furnitalia', 'Failed to create lead record created for %first %last', array('%first' => $lead_info['first_name'], '%last' => $lead_info['last_name']), WATCHDOG_ERROR, $link = NULL);	
+		watchdog('mobile_furnitalia', 'Failed to create lead record created for %first %last', array('%first' => $lead_info['first_name'], '%last' => $lead_info['last_name']), WATCHDOG_ERROR, $link = NULL);	
 	}
 }
 
@@ -1166,23 +1165,6 @@ function mobile_tweaks_show_sale_price($node) {
 	return TRUE; //<--moving sale -- variable_get('show_sale_prices', FALSE);
 
 }
-
-/**
- * Implements hook_drupal_goto_alter
- */
-function mobile_tweaks_drupal_goto_alter(&$path, &$options, &$http_response_code) {
-	
-	if (drupal_match_path($path, implode("\n", array("<front>", "", "/")))) {
-	
-		if (isset($options['query'])) {
-	      $options['query'] += array('noanim' => '1');
-	    }
-	    else {
-	      $options['query'] = array('noanim' => '1');
-	    }
-    }
-}
-
 
 /**
  * Implementation of hook_views_query_alter
