@@ -16,6 +16,9 @@ var skipAnimation = false;
 var isHandHeldDevice = false;
 
  (function($) {
+ 	
+ 	var frontBgImg = 'sites/all/themes/furnitheme/images/front-keyhole-bg.jpg';
+ 	
 	Drupal.behaviors.furnitalia = {
 		attach: function(context, settings) {
           	
@@ -49,7 +52,7 @@ var isHandHeldDevice = false;
 						$('#menu-pic')
 							// remove the loading class (so no background spinner), 
 							.removeClass('loading')
-							.css("background-image", "url(" +  Drupal.settings.basePath + "sites/all/themes/furnitheme/images/front-keyhole-bg.png)");
+							.css("background-image", "url(" +  Drupal.settings.basePath + frontBgImg + ")");
 
 						$("#stitch").hide();
 						$("div.keyhole").hide();
@@ -65,7 +68,7 @@ var isHandHeldDevice = false;
 				})
 				
 				// *finally*, set the src attribute of the new image to our image
-				.attr('src', Drupal.settings.basePath + 'sites/all/themes/furnitheme/images/front-keyhole-bg.png');
+				.attr('src', Drupal.settings.basePath + frontBgImg);
 				
 				
 				$("#warning").css('display', 'none');  

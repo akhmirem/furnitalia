@@ -1,5 +1,13 @@
 <?php
 
+/**
+*  * Override or insert variables into the page templates.
+*   *
+*    * @param $variables
+*     *   An array of variables to pass to the theme template.
+*      * @param $hook
+*       *   The name of the template being rendered ("page" in this case.)
+*        */
 //!PreprocessPage
 function furnimobile_preprocess_page(&$vars) {
 
@@ -321,16 +329,16 @@ function furnimobile_form_views_exposed_form_alter(&$form, &$form_state, $form_i
 	    if ($called === $form['#id']) {
 	      return;
 	    }
-	    $called = $form['#id']; 						// flag as called
+	    $called = $form['#id']; // flag as called
 	    
 	    // get view results
-	    $view = $form_state['view']; 					// views_get_current_view();
+	    $view = $form_state['view']; //views_get_current_view();
 	    
-		$temp_view = $view->clone_view(); 				// create a temp view
+		$temp_view = $view->clone_view(); // create a temp view
 	    $temp_view->init_display();
 	    $temp_view->pre_execute();
-	    $temp_view->set_items_per_page(0); 				// we want results from all pages
-	    $temp_view->display_handler->has_exposed = 0; 	// prevent recursion
+	    $temp_view->set_items_per_page(0); // we want results from all pages
+	    $temp_view->display_handler->has_exposed = 0; // prevent recursion
 	    $temp_view->execute();
 	    $results = $temp_view->result;
 	    
@@ -351,7 +359,7 @@ function furnimobile_form_views_exposed_form_alter(&$form, &$form_state, $form_i
 	    if ($used_tids) {
 	    	$used_tids = explode(',', $used_tids);
 	    } else {
-	    	$used_tids = array(); 						// this shoudln't happen, but just in case...
+	    	$used_tids = array(); // this shoudln't happen, but just in case...
 	    }	   
 	    
 		foreach($form['brand']['#options'] as $key => $option) {
@@ -369,7 +377,7 @@ function furnimobile_form_views_exposed_form_alter(&$form, &$form_state, $form_i
 		    if ($used_tids) {
 		      $used_tids = explode(',', $used_tids);
 		    } else {
-		      $used_tids = array(); 					// this shoudln't happen, but just in case...
+		      $used_tids = array(); // this shoudln't happen, but just in case...
 		    }
 		    
 			foreach($form['availability']['#options'] as $key => $option) {
@@ -436,6 +444,7 @@ function furnimobile_form_views_exposed_form_alter(&$form, &$form_state, $form_i
 					unset($form['category']['#options'][$key]);
 				}
 			}
+			
 		}
 		
 		if (isset($form['availability'])) {
@@ -454,8 +463,10 @@ function furnimobile_form_views_exposed_form_alter(&$form, &$form_state, $form_i
 				if ($key !== 'All' && !in_array($key, $used_tids)) {
 					unset($form['availability']['#options'][$key]);
 				}
-			}	
+			}
+			
 		}
+
 	}
 	
 	if (strstr($form['#id'], 'views-exposed-form-taxonomy-term-page')) {
@@ -464,8 +475,10 @@ function furnimobile_form_views_exposed_form_alter(&$form, &$form_state, $form_i
 			if (!variable_get('show_sale_prices', FALSE)) {
 				unset($form['sort_by']['#options']['field_special_price_value']);
 			}
+
 		}
 	}
+  
 }
 
 
@@ -683,8 +696,8 @@ function _page_set_breadcrumbs(&$vars) {
 				if (arg(2) != "") {
 					$alias .= "/" . arg(2);
 				}
-				$normal_path = explode('/', drupal_get_normal_path($alias)); 	 //TO-DO check for validity
-				if (is_array($normal_path) && count($normal_path) == 3) {		 //taxonomy/term/xxx
+				$normal_path = explode('/', drupal_get_normal_path($alias)); //TO-DO check for validity
+				if (is_array($normal_path) && count($normal_path) == 3) { //taxonomy/term/xxx
 					$active_cat_tid = $normal_path[2];
 					$active_parent_tid = mobile_tweaks_get_parent_category($active_cat_tid);
 				}
@@ -728,7 +741,7 @@ function _page_set_breadcrumbs(&$vars) {
 		}
 	}
 	
-	if (count($links) > 1) {
+	if (count($links) > 1){
 		drupal_set_breadcrumb($links);
 		$vars['breadcrumb'] = theme('breadcrumb', $links);
 	} else {

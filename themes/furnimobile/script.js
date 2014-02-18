@@ -62,7 +62,9 @@
 			
 			InitAccordonMenu();
 			
-			InitItemPageGallery();	
+			//$(this).once(function() {
+				InitItemPageGallery();	
+			//});
 			
 			InitDropDownMenu();
 			
@@ -237,8 +239,13 @@
 				thumbnails: {
 					thumbnailsBar: $tabsbar,
 					thumbnailNav:'centered'
-				}
-			},
+				}/*,
+	
+				// Cycling
+				cycling: {
+					cycleBy: 'pages'
+				}*/
+			}, 
 			{
 				load: function() {
 					if (pagesOn) {
@@ -256,6 +263,7 @@
 		if(jQuery().dropkick) {
 		
 			$('main select').each(function( index ) {
+				//var id = $(this).attr('id');
 				var sel = $(this);
 				$(this).attr('tabindex', index).dropkick({
 					change: function (value, label) {
@@ -283,6 +291,7 @@
 	function InitGalleryControls() {
 		$("#view-grid").click(function(e) {
 			if (galleryView != "grid") {
+				console.log("Switched to grid view");
 				galleryView = "grid";
 				$('body').removeClass("gallery-list").addClass("gallery-grid");
 			}
@@ -291,6 +300,7 @@
 		
 		$("#view-list").click(function(e) {
 			if (galleryView != "list") {
+				console.log("Switched to list view");
 				galleryView = "list";
 				$('body').removeClass("gallery-grid").addClass("gallery-list");
 			}
