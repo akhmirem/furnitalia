@@ -3,12 +3,14 @@
  	
  	var menuStatus;
  	var galleryView = "grid";
+ 	var menuImgSrc = "data:image/jpeg;base64,/9j/4QAYRXhpZgAASUkqAAgAAAAAAAAAAAAAAP/sABFEdWNreQABAAQAAAA8AAD/4QNxaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wLwA8P3hwYWNrZXQgYmVnaW49Iu+7vyIgaWQ9Ilc1TTBNcENlaGlIenJlU3pOVGN6a2M5ZCI/PiA8eDp4bXBtZXRhIHhtbG5zOng9ImFkb2JlOm5zOm1ldGEvIiB4OnhtcHRrPSJBZG9iZSBYTVAgQ29yZSA1LjMtYzAxMSA2Ni4xNDU2NjEsIDIwMTIvMDIvMDYtMTQ6NTY6MjcgICAgICAgICI+IDxyZGY6UkRGIHhtbG5zOnJkZj0iaHR0cDovL3d3dy53My5vcmcvMTk5OS8wMi8yMi1yZGYtc3ludGF4LW5zIyI+IDxyZGY6RGVzY3JpcHRpb24gcmRmOmFib3V0PSIiIHhtbG5zOnhtcE1NPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvbW0vIiB4bWxuczpzdFJlZj0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL3NUeXBlL1Jlc291cmNlUmVmIyIgeG1sbnM6eG1wPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvIiB4bXBNTTpPcmlnaW5hbERvY3VtZW50SUQ9InhtcC5kaWQ6MDI4MDExNzQwNzIwNjgxMTg3QzdFNTQ0QTAzNzQ2NEEiIHhtcE1NOkRvY3VtZW50SUQ9InhtcC5kaWQ6NEM2RUQ0N0U4NjM0MTFFMzk2M0ZCRjhEMjA3MUNBNEEiIHhtcE1NOkluc3RhbmNlSUQ9InhtcC5paWQ6NEM2RUQ0N0Q4NjM0MTFFMzk2M0ZCRjhEMjA3MUNBNEEiIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIENTNiAoTWFjaW50b3NoKSI+IDx4bXBNTTpEZXJpdmVkRnJvbSBzdFJlZjppbnN0YW5jZUlEPSJ4bXAuaWlkOjA1ODAxMTc0MDcyMDY4MTE4N0M3RTU0NEEwMzc0NjRBIiBzdFJlZjpkb2N1bWVudElEPSJ4bXAuZGlkOjAyODAxMTc0MDcyMDY4MTE4N0M3RTU0NEEwMzc0NjRBIi8+IDwvcmRmOkRlc2NyaXB0aW9uPiA8L3JkZjpSREY+IDwveDp4bXBtZXRhPiA8P3hwYWNrZXQgZW5kPSJyIj8+/+4ADkFkb2JlAGTAAAAAAf/bAIQABgQEBAUEBgUFBgkGBQYJCwgGBggLDAoKCwoKDBAMDAwMDAwQDA4PEA8ODBMTFBQTExwbGxscHx8fHx8fHx8fHwEHBwcNDA0YEBAYGhURFRofHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8f/8AAEQgAHgAyAwERAAIRAQMRAf/EAIsAAQADAQEAAAAAAAAAAAAAAAADBgcFBAEBAAMBAQEAAAAAAAAAAAAAAAECAwQFBxAAAAMEBggFBQAAAAAAAAAAAAISAQMTBCEiBRUGB/ARMTIUNDUWUdKlVyhhoSMzCBEAAQIDAwsFAAAAAAAAAAAAAAERAhID8CExUaEycqITI1MEFCVBgcEiYv/aAAwDAQACEQMRAD8AylQ8k+jOFAQ4UAcKAOFAHCgJcKAORKFjNzUcrm54tw/MdhdI4s8fp/Mw3aubr7iNlH3G1OdvqeV1y9LOm90m/WHsXH5a6XMNOLZji8facfLXS5g4tmJ8fac5+Im/092/ad89H4R/eXSeWhmjfr/Jua92nwERbxr/AINKPYzpLpOjaWPoYaocx7rhQByCILMYzFqwtYOBbSs54/t/F1wThXzSO5O7picU6YUrWPYjozCs1maYqdtH1F4YUXFTlr16sKtDBMmsiHY7Nyi9yfRJ3zi0kOXMZd1X5W0g7Nyi9yfRJ3ziJIcuYd1X5W0h57Rwplc4s+afyWYHGzjpy8PLSd0TbqM9KVrSOohjJIs2oqm0MBYIcpaDqayqiLTZNZCixBmx2zCIDCYhrCxleKwC8VgArABWACsAvFYBef/Z"
  				
 	Drupal.behaviors.furnitalia = {
 		attach: function(context, settings) {
 		
 			$("header div.region-page-top ul.menu").once(function() {
-				$menuElem = $("<li><a href=\"#\" title=\"menu\" id=\"menu-toggle\" class=\"furn-grey\"><img src=\"" + Drupal.settings.basePath + "sites/all/themes/furnimobile/images/buttons/menu_50x30.jpg" + "\"/></a></li>");
+				//Drupal.settings.basePath + "sites/all/themes/furnimobile/images/buttons/menu_50x30.jpg"
+				$menuElem = $("<li><a href=\"#\" title=\"menu\" id=\"menu-toggle\" class=\"furn-grey\"><img src=\"" + menuImgSrc + "\"/></a></li>");
 				$(this).find('li:first').removeClass("first");
 				$(this).prepend($menuElem.addClass("first"));
 			});
