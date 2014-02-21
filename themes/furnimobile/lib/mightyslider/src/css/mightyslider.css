@@ -34,8 +34,44 @@
 }
 
 .mSCaption {
+	position: absolute;
 	-webkit-transform: translateZ(0);
 	   -moz-transform: translateZ(0);
 	    -ms-transform: translateZ(0);
 			transform: translateZ(0);
+}
+
+.mSCaption.mSMedia {
+	z-index: 100000;
+}
+
+.mightySlider,
+.mightySlider * {
+	-webkit-box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	box-sizing: border-box;
+}
+
+.mSCoverImage,
+.mSLayerCoverImage {
+	max-width: none;
+}
+
+.mSCover,
+.mSLayerCover {
+	width: 100%;
+	height: 100%;
+	overflow: hidden;
+}
+
+.mSLayerCoverImage {
+	width: 100%;
+	height: 100%;
+}
+
+.mSLayerContainer {
+	position: relative;
+	width: 100%;
+	height: 100%;
+	background: #000;
 }

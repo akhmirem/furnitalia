@@ -43,6 +43,7 @@
 	cursor: pointer;
 	font-weight: 300;
 	color: #FFF;
+	line-height: normal;
 	z-index: 1;
 	background: rgb(41,154,11);
 
@@ -56,10 +57,12 @@
 }
 
 .mightyslider_tabsGreen_skin .horizontal .mSTabs ul li {
+	margin: 0;
 	margin-right: -1px;
 }
 
 .mightyslider_tabsGreen_skin .vertical .mSTabs ul li {
+	margin: 0;
 	margin-bottom: -1px;
 }
 

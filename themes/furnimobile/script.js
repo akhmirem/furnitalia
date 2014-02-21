@@ -215,14 +215,15 @@
 				
 				// Navigation options
 				navigation: {
-					slideSize: '100%'
+					slideSize: '100%',
+					navigationType: 'basic'
 				},
 	
 				// Dragging
 				dragging: {
 					swingSpeed:    0.1,
-					touchDragging: 0,
-					mouseDragging: 0
+					touchDragging: 1,
+					mouseDragging: 1
 				},
 	
 				// Pages
@@ -240,7 +241,8 @@
 				
 				thumbnails: {
 					thumbnailsBar: $tabsbar,
-					thumbnailNav:'centered'
+					thumbnailSize: "100",
+					scrollBy: 0
 				}/*,
 	
 				// Cycling

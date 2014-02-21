@@ -19,6 +19,7 @@
 }
 
 .mightyslider_windows8_skin .frame .slide_element .slide {
+	overflow: hidden;
 	-webkit-transform: translateZ(0);
 	    -ms-transform: translateZ(0);
 	        transform: translateZ(0);

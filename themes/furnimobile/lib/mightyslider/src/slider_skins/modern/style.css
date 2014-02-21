@@ -19,6 +19,7 @@
 }
 
 .mightyslider_modern_skin .frame .slide_element .slide {
+	overflow: hidden;
 	-webkit-transform: translateZ(0);
 	    -ms-transform: translateZ(0);
 	        transform: translateZ(0);
@@ -341,13 +342,13 @@
 
 .mightyslider_modern_skin .mSPages li {
 	display: inline-block;
-	width: 6px;
-	height: 6px;
-	background: #FFF;
+	width: 8px;
+	height: 8px;
+	background: rgba(0,0,0,0);
 	margin: 0 10px;
 	margin-top: 2px;
 	text-indent: -9999px;
-	border: 1px solid transparent;
+	border: 1px solid #FFF;
 	cursor: pointer;
 	vertical-align: top;
 	pointer-events: all;
@@ -357,19 +358,18 @@
 }
 
 .mightyslider_modern_skin .mSPages li.active {
-	background: transparent !important;
-	border-color: #FFF;
-	width: 10px;
-	height: 10px;
+	background: #FFF;
+	width: 12px;
+	height: 12px;
 	margin: 0 10px;
 }
 
 .mightyslider_modern_skin.black .mSPages li {
-	background: #000;
+	border-color: #000;
 }
 
 .mightyslider_modern_skin.black .mSPages li.active {
-	border-color: #000;
+	background: #000;
 }
 
 .mightyslider_modern_skin.isTouch .mSPages {
@@ -378,13 +378,13 @@
 	bottom: 6px;
 }
 .mightyslider_modern_skin.isTouch .mSPages li {
-	width: 12px;
-	height: 12px;
+	width: 14px;
+	height: 14px;
 }
 
 .mightyslider_modern_skin.isTouch .mSPages li.active {
-	width: 16px;
-	height: 16px;
+	width: 18px;
+	height: 18px;
 }
 
 .mightyslider_modern_skin.horizontal .mSThumbnails + .mSPages li {

@@ -44,6 +44,7 @@
 }
 
 .mightyslider_modern_skin .frame .slide_element .slide {
+	overflow: hidden;
 	-webkit-transform: translateZ(0);
 	    -ms-transform: translateZ(0);
 	        transform: translateZ(0);
@@ -56,7 +57,7 @@
 /* Navigation Buttons */
 .mightyslider_modern_skin .mSButtons {
 	position: absolute;
-	background: url('arrows_horizontal.png') no-repeat 50%;
+	background: url('../images/mightyslider/arrows_horizontal.png') no-repeat 50%;
 	width: 100px;
 	height: 100%;
 	margin: auto;
@@ -76,7 +77,7 @@
 }
 
 .mightyslider_modern_skin.black .mSButtons {
-	background-image: url('arrows_horizontal_black.png');
+	background-image: url('../images/mightyslider/arrows_horizontal_black.png');
 }
 
 .mightyslider_modern_skin .mSButtons:hover {
@@ -87,11 +88,11 @@
 .mightyslider_modern_skin.vertical .mSButtons {
 	width: 100%;
 	height: 100px;
-	background-image: url('arrows_vertical.png');
+	background-image: url('../images/mightyslider/arrows_vertical.png');
 }
 
 .mightyslider_modern_skin.vertical.black .mSButtons {
-	background-image: url('arrows_vertical_black.png');
+	background-image: url('../images/mightyslider/arrows_vertical_black.png');
 }
 
 .mightyslider_modern_skin.horizontal .mSNext {
@@ -142,7 +143,7 @@
 .mightyslider_modern_skin .mSLoader {
 	width: 80px;
 	height: 80px;
-	background: #000 url('loader.gif') no-repeat center;
+	background: #000 url('../images/mightyslider/loader.gif') no-repeat center;
 	opacity: 0.65;
 	filter: alpha(opacity=65);
 
@@ -157,7 +158,7 @@
 .mightyslider_modern_skin .mSVideo, .mightyslider_modern_skin .mSFlash, .mightyslider_modern_skin .mSIframe {
 	width: 77px;
 	height: 77px;
-	background: url('icon-play.png') no-repeat center;
+	background: url('../images/mightyslider/icon-play.png') no-repeat center;
 	background-color: #111;
 	background-color: rgba(0,0,0,0.6);
 	cursor: pointer;
@@ -176,7 +177,7 @@
 }
 
 .mightyslider_modern_skin .mSIframe {
-	background-image: url('icon-view.png');
+	background-image: url('../images/mightyslider/icon-view.png');
 }
 
 .mightyslider_modern_skin .mSVideo:hover, .mightyslider_modern_skin .mSFlash:hover, .mightyslider_modern_skin .mSIframe:hover {
@@ -187,7 +188,7 @@
 .mightyslider_modern_skin .mSClose {
 	width: 22px;
 	height: 22px;
-	background: url('icon-close.gif') no-repeat center;
+	background: url('../images/mightyslider/icon-close.gif') no-repeat center;
 	cursor: pointer;
 	top: 20px;
 	right: 20px;
@@ -366,13 +367,13 @@
 
 .mightyslider_modern_skin .mSPages li {
 	display: inline-block;
-	width: 6px;
-	height: 6px;
-	background: #FFF;
+	width: 8px;
+	height: 8px;
+	background: rgba(0,0,0,0);
 	margin: 0 10px;
 	margin-top: 2px;
 	text-indent: -9999px;
-	border: 1px solid transparent;
+	border: 1px solid #FFF;
 	cursor: pointer;
 	vertical-align: top;
 	pointer-events: all;
@@ -382,19 +383,18 @@
 }
 
 .mightyslider_modern_skin .mSPages li.active {
-	background: transparent !important;
-	border-color: #FFF;
-	width: 10px;
-	height: 10px;
+	background: #FFF;
+	width: 12px;
+	height: 12px;
 	margin: 0 10px;
 }
 
 .mightyslider_modern_skin.black .mSPages li {
-	background: #000;
+	border-color: #000;
 }
 
 .mightyslider_modern_skin.black .mSPages li.active {
-	border-color: #000;
+	background: #000;
 }
 
 .mightyslider_modern_skin.isTouch .mSPages {
@@ -403,13 +403,13 @@
 	bottom: 6px;
 }
 .mightyslider_modern_skin.isTouch .mSPages li {
-	width: 12px;
-	height: 12px;
+	width: 14px;
+	height: 14px;
 }
 
 .mightyslider_modern_skin.isTouch .mSPages li.active {
-	width: 16px;
-	height: 16px;
+	width: 18px;
+	height: 18px;
 }
 
 .mightyslider_modern_skin.horizontal .mSThumbnails + .mSPages li {
@@ -566,6 +566,8 @@
 	width:100%;
 	text-align: center;
 	margin:.4em 0 2em 0;
+	
+	position: relative;
 }
 #thumbs {
 	margin:0 auto;

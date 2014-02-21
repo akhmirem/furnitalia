@@ -131,7 +131,7 @@ if ($teaser) { //item teaser view
 		</div>
 		<ul class="gal-pager"><li></li></ul>
 	  </div>
-	  <div id="thumbs-wrapper"><ul id="thumbs"></ul></div>
+	  <div id="thumbs-wrapper" ><ul id="thumbs"></ul></div>
   </div>
 	  
   <section id="product-info">

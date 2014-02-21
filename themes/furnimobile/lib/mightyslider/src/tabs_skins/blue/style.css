@@ -43,6 +43,7 @@
 	cursor: pointer;
 	font-weight: 300;
 	color: #FFF;
+	line-height: normal;
 	z-index: 1;
 	background: rgb(30,87,153); /* Old browsers */
 	background: -moz-linear-gradient(top,  rgba(30,87,153,1) 0%, rgba(41,137,216,1) 50%, rgba(32,124,202,1) 51%, rgba(125,185,232,1) 100%); /* FF3.6+ */
@@ -70,10 +71,12 @@
 }
 
 .mightyslider_tabsBlue_skin .horizontal .mSTabs ul li {
+	margin: 0;
 	margin-right: -1px;
 }
 
 .mightyslider_tabsBlue_skin .vertical .mSTabs ul li {
+	margin: 0;
 	margin-bottom: -1px;
 }
 

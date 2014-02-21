@@ -42,6 +42,7 @@
 	border: #CECECE 1px solid;
 	cursor: pointer;
 	font-weight: 300;
+	line-height: normal;
 	z-index: 1;
 	background-color: #F2F0F0;
 	background-image: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#FDFCFC), to(#F2F0F0), color-stop(0.5, #FBF9F9), color-stop(0.5, #F7F5F6));
@@ -69,10 +70,12 @@
 }
 
 .mightyslider_tabsSilver_skin .horizontal .mSTabs ul li {
+	margin: 0;
 	margin-right: -1px;
 }
 
 .mightyslider_tabsSilver_skin .vertical .mSTabs ul li {
+	margin: 0;
 	margin-bottom: -1px;
 }
 

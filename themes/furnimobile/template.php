@@ -625,7 +625,10 @@ function _page_include_mightyslider_resources() {
 	//add  gallery JS/css files
 	//drupal_add_css(drupal_get_path('theme', 'furnimobile') . "/lib/mightyslider/src/css/mightyslider.css", array('group' => CSS_DEFAULT, 'every_page' => FALSE));
 	//drupal_add_css(drupal_get_path('theme', 'furnimobile') . "/styles/gallery.css", array('group' => CSS_THEME, 'every_page' => FALSE));			
-	drupal_add_js(drupal_get_path('theme', 'furnimobile') . "/lib/mightyslider/src/js/mightyslider.min.js", array('group' => JS_THEME));
+	
+	
+	//drupal_add_js(drupal_get_path('theme', 'furnimobile') . "/lib/mightyslider/src/js/mightyslider.min.js", array('group' => JS_THEME));
+	drupal_add_js(drupal_get_path('theme', 'furnimobile') . "/lib/mightyslider/src/js/mightyslider_new.js", array('group' => JS_THEME));
 	drupal_add_js(drupal_get_path('theme', 'furnimobile') . "/lib/mightyslider/js/jquery.easing.1.3.js", array('group' => JS_THEME));
 
 	// !!! Disable touch/swipe events for now
