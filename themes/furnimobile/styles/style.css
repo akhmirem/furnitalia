@@ -431,6 +431,10 @@ span.promo-price {
 }
 div.old-price .uc-price {
 	text-decoration: line-through;
+	font-size:.9em;
+}
+div.sell-price {
+	clear: both;
 }
 body.gallery-list main ul.furn-gallery li {
 	clear: both;

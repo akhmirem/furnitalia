@@ -188,6 +188,9 @@ function preprocess_node_common_fields(&$content, $hook) {
 	$sale_price_set = FALSE;
 	$special_price = NULL;
 	
+	/*
+	MOVING SALE
+	-----------------------------------
 	$excelsior = 27;
 	$bdi = 29;
 	$nicolle_miller = 28;
@@ -201,8 +204,10 @@ function preprocess_node_common_fields(&$content, $hook) {
 	if ($brand == $excelsior || $brand == $bdi || $brand == $nicolle_miller){
 		$sale_price_set = FALSE; //no sale price
 	}
+	-----------------------------------
+	*/
 	
-	/*if(mobile_tweaks_show_sale_price($content)) {
+	if(mobile_tweaks_show_sale_price($content)) {
 
 		 if(!empty($content['field_special_price']) && isset($content['field_special_price']['#items']) && $content['field_special_price']['#items'][0]['value']) {
 		 	$special_price = $content['field_special_price']['#items'][0]['value'];
@@ -211,23 +216,29 @@ function preprocess_node_common_fields(&$content, $hook) {
 			 	$sale_price_set = TRUE; //sell price and special price are not same
 			}
 		 }
-	}*/
+	}
 		
 	if($sale_price_set) {
 	
 		//don't display MSRP:
 		unset($content['list_price']);
 		
-		/*$new_sale_price = array(		
+		$new_sale_price = array(		
 			'#title' => "SPECIAL:",
 			'#theme' => "uc_product_price",
 			'#value' => $special_price,
 			'#attributes' => array('class' => array('sell-price')),		
-		);*/
+		);
 		
+		/*
+		MOVING SALE PRICE
+		--------------------
 		$content['sale_price'] =  array( //$new_sale_price;
 			'#markup' => '<span class="promo-price"><a href="#" class="furn-red promo-link" style="font-weight:400; font-size:1.2em; text-decoration:underline;">PROMO!</a></span>',
-		);
+		);*/
+		
+		$content['sale_price'] =  $new_sale_price;
+		
 		$content['sell_price']['#attributes']['class'] = array('old-price');
 	  	
 	} else {
@@ -628,7 +639,7 @@ function _page_include_mightyslider_resources() {
 	
 	
 	//drupal_add_js(drupal_get_path('theme', 'furnimobile') . "/lib/mightyslider/src/js/mightyslider.min.js", array('group' => JS_THEME));
-	drupal_add_js(drupal_get_path('theme', 'furnimobile') . "/lib/mightyslider/src/js/mightyslider_new.js", array('group' => JS_THEME));
+	drupal_add_js(drupal_get_path('theme', 'furnimobile') . "/lib/mightyslider/src/js/mightyslider_new.min.js", array('group' => JS_THEME));
 	drupal_add_js(drupal_get_path('theme', 'furnimobile') . "/lib/mightyslider/js/jquery.easing.1.3.js", array('group' => JS_THEME));
 
 	// !!! Disable touch/swipe events for now

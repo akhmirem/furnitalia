@@ -162,6 +162,10 @@ function preprocess_node_common_fields(&$content, $hook) {
 	
 	$sale_price_set = FALSE;
 	$special_price = NULL;
+	
+	/*
+	MOVING SALE
+	------------------------------------------------------------------
 	$excelsior = 27;
 	$bdi = 29;
 	$nicolle_miller = 28;
@@ -175,8 +179,10 @@ function preprocess_node_common_fields(&$content, $hook) {
 	if ($brand == $excelsior || $brand == $bdi || $brand == $nicolle_miller){
 		$sale_price_set = FALSE; //no sale price
 	}
+	------------------------------------------------------------------
+	*/
 
-	/*if(furnitalia_tweaks_show_sale_price($content)) {
+	if(furnitalia_tweaks_show_sale_price($content)) {
 		 if(!empty($content['field_special_price']) && isset($content['field_special_price']['#items']) && $content['field_special_price']['#items'][0]['value']) {
 		 	$special_price = $content['field_special_price']['#items'][0]['value'];
 		 	$diff = abs(floatval($special_price) - floatval($sell_price));
@@ -184,23 +190,28 @@ function preprocess_node_common_fields(&$content, $hook) {
 			 	$sale_price_set = TRUE; //sell price and special price are not same
 			}
 		 }
-	}*/
+	}
 		
 	if($sale_price_set) {
 	
 		//don't display MSRP:
 		unset($content['list_price']);
 		
-		/*$new_sale_price = array(		
+		$new_sale_price = array(		
 			'#title' => "SPECIAL:",
 			'#theme' => "uc_product_price",
 			'#value' => $special_price,
 			'#attributes' => array('class' => array('sell-price')),		
-		);*/
+		);
 		
+		/*
+		MOVING SALE PRICE
+		-------------------
 		$content['sale_price'] = array( //$new_sale_price;
 			'#markup' => '<span><a href="#" class="furn-red promo-link">PROMO!</a></span>',
-		);
+		);*/
+		$content['sale_price'] = $new_sale_price;
+		
 		$content['sell_price']['#attributes']['class'] = array('old-price');
 	  	
 	}

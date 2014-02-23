@@ -1163,7 +1163,7 @@ function mobile_tweaks_show_sale_price($node) {
 
 	} 
 
-	return TRUE; //<--moving sale -- variable_get('show_sale_prices', FALSE);
+	return variable_get('show_sale_prices', FALSE);
 
 }
 
