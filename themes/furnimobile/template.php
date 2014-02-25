@@ -207,7 +207,7 @@ function preprocess_node_common_fields(&$content, $hook) {
 	-----------------------------------
 	*/
 	
-	if(mobile_tweaks_show_sale_price($content)) {
+	if(furn_global_show_sale_price($content)) {
 
 		 if(!empty($content['field_special_price']) && isset($content['field_special_price']['#items']) && $content['field_special_price']['#items'][0]['value']) {
 		 	$special_price = $content['field_special_price']['#items'][0]['value'];
@@ -673,7 +673,7 @@ function _page_set_breadcrumbs(&$vars) {
 		
 		#get item's parent category
 		$parent_term = "";
-		$parent_term_tid = mobile_tweaks_get_parent_category($category->tid);
+		$parent_term_tid = furn_global_get_parent_category($category->tid);
 		if ($parent_term_tid) {
 			$parent_term = taxonomy_term_load($parent_term_tid);
 		}
@@ -713,7 +713,7 @@ function _page_set_breadcrumbs(&$vars) {
 				$normal_path = explode('/', drupal_get_normal_path($alias)); //TO-DO check for validity
 				if (is_array($normal_path) && count($normal_path) == 3) { //taxonomy/term/xxx
 					$active_cat_tid = $normal_path[2];
-					$active_parent_tid = mobile_tweaks_get_parent_category($active_cat_tid);
+					$active_parent_tid = furn_global_get_parent_category($active_cat_tid);
 				}
 				
 				if (arg(0) == 'natuzzi-italia') {
@@ -744,7 +744,7 @@ function _page_set_breadcrumbs(&$vars) {
 				$links[] = "<span class=\"". $active_class . "\">$term->name</span>";
 			} else {	
 				//category page is in focus
-				$active_parent_tid = mobile_tweaks_get_parent_category($active_cat_tid);
+				$active_parent_tid = furn_global_get_parent_category($active_cat_tid);
 				$links[] = l("All Collections", "collections", $attrs);
 				if ($active_cat_tid != $active_parent_tid) {
 					$parent_term = taxonomy_term_load($active_parent_tid);

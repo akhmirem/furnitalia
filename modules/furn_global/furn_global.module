@@ -1,0 +1,1156 @@
+<?php
+// $Id$
+
+/**
+ * @file
+ * A module implementing Furnitalia global tweaks
+ *
+ */
+
+/**
+* Implements hook_menu()
+*/
+function furn_global_menu() {
+	$items['interior-design'] = array(
+		'title' => 'Interior Design Services',
+    'page callback' => 'theme',
+    'page arguments' => array('interior-design'),
+    'access callback' => TRUE,
+    'type' => MENU_NORMAL_ITEM,
+  );
+	$items['my-favorites'] = array(
+		'title' => 'My Favorites',
+    'page callback' => 'furn_global_favorites_list',
+    'access callback' => TRUE,
+    'type' => MENU_NORMAL_ITEM,
+  );
+  $items['my-orders'] = array(
+		'title' => 'My Orders',
+    'page callback' => 'furn_global_orders',
+    'access callback' => TRUE,
+    'type' => MENU_NORMAL_ITEM,
+  );
+	$items['about'] = array(
+    'title' => 'About Furnitalia',
+    'page callback' => 'furn_global_about',
+    'access callback' => TRUE,
+    'type' => MENU_NORMAL_ITEM,
+  );
+  $items['shipping-deliveries'] = array(
+		'title' => 'Shipping and Deliveries',
+    'page callback' => 'theme',
+    'page arguments' => array('shipping-deliveries'),
+    'access callback' => TRUE,
+    'type' => MENU_NORMAL_ITEM,
+  );
+  $items['service-terms'] = array(
+		'title' => 'Terms of Service',
+    'page callback' => 'theme',
+    'page arguments' => array('service-terms'),
+    'access callback' => TRUE,
+    'type' => MENU_NORMAL_ITEM,
+  );
+  $items['privacy-policy'] = array(
+		'title' => 'Privacy Policy',
+    'page callback' => 'theme',
+    'page arguments' => array('privacy-policy'),
+    'access callback' => TRUE,
+    'type' => MENU_NORMAL_ITEM,
+  );
+  $items['faq'] = array(
+		'title' => 'Frequently Asked Questions',
+    'page callback' => 'theme',
+    'page arguments' => array('faq'),
+    'access callback' => TRUE,
+    'type' => MENU_NORMAL_ITEM,
+  );
+	$items['catalogs'] = array(
+		'title' => 'Catalogs',
+    'page callback' => 'theme',
+    'page arguments' => array('catalogs'),
+    'access callback' => TRUE,
+    'type' => MENU_NORMAL_ITEM,
+  );
+  $items['contact'] = array(
+    'title' => 'Contact Us',
+    'page callback' => 'theme',
+    'page arguments' => array('contact'),
+    'access callback' => TRUE,
+    'type' => MENU_NORMAL_ITEM,
+  );
+  $items['collections'] = array(
+    'page callback' => 'furn_global_collections_page',
+    'title' => 'Furniture Collections',
+		'access callback' => TRUE, 
+		'type' => MENU_CALLBACK,
+    );
+  $items['natuzzi-italia'] = array (
+		'page callback' => 'furn_global_brand_cat_page',
+		'page arguments' => array('italia'),
+    'title' => 'Natuzzi Italia Furniture Collections',
+		'access callback' => TRUE, 
+		'type' => MENU_CALLBACK,
+	);
+	$items['natuzzi-editions'] = array (
+		'page callback' => 'furn_global_brand_cat_page',
+		'page arguments' => array('editions'),
+    'title' => 'Natuzzi Editions Furniture Collections',		
+		'access callback' => TRUE, 
+		'type' => MENU_CALLBACK,
+	);
+	$items['moving-sale'] = array(
+		'title' => 'Moving SALE',
+    'page callback' => 'theme',
+    'page arguments' => array('moving-sale'),
+    'access callback' => TRUE,
+    'type' => MENU_NORMAL_ITEM,
+  );
+	return $items;
+}
+
+function furn_global_get_page_title($tid) {
+
+  $term = taxonomy_get_term($tid);
+    
+  return $term->name ? $term->name : "Furnitalia Collections";
+}
+
+function furn_global_brand_cat_page($brand, $cat = NULL, $subcat = NULL) {
+
+  global $conf;
+	
+	if ($brand == 'italia') {
+		$brand_tid = 21;
+		$display_id = "page_italia";
+	} else if ($brand == 'editions') {
+		$brand_tid = 22;
+		$display_id = "page_editions";
+	}
+	
+	//root path -- no category ID given -- show brand description info
+	if (!isset($cat)) {
+		$build = array();
+		
+		if ($brand == 'italia') {			
+
+			$build['desc'] = array(
+				'#markup' => theme('natuzzi-cat'), 
+			);
+			
+		} else if ($brand == 'editions') {
+			$build['desc'] = array(
+				'#markup' => theme('editions-cat'), 
+			);
+		}
+		
+    if (isset($conf['SITE_ID']) && $conf['SITE_ID'] == 'main') {	
+      drupal_add_library('system', 'drupal.ajax');
+      $build['add'] = array(
+        '#markup' => '<div id="menu-pic-wrapper">
+                  <div id="menu-pic" class="menu-hover loading">&nbsp;</div>
+                  </div>',
+      );
+    }
+		
+		return $build;
+	}
+	
+	$alias = $cat;
+	
+	if (isset($subcat)) {
+		$alias .= '/' . $subcat;
+	}
+	
+	$normal_path = explode('/', drupal_get_normal_path($alias)); //TO-DO check for validity
+	if (is_array($normal_path) && count($normal_path) == 3) { //taxonomy/term/xxx
+		$tid = $normal_path[2];
+		
+		$term = taxonomy_term_load($tid);
+
+		$view_name = 'taxonomy_term';
+		$args = array($tid);
+		
+		$title = $brand == 'italia' ? 'Natuzzi Italia' : 'Natuzzi Editions';
+		$title .= " - " . $term->name;		
+		drupal_set_title($title);
+		
+		$view = views_get_view($view_name);		  
+		$view->set_display($display_id);
+		$view->set_arguments($args);
+	    		
+	  //get view output
+	  $view->pre_execute();
+		$output =  $view->preview($display_id);
+		$view->post_execute();
+		
+		return $output;
+		
+	} else {	
+		//just return default natuzzi italia brand page
+		return furn_global_taxonomy_term_page(taxonomy_term_load($brand_tid));
+	}
+}
+
+/**
+ * Collections page handler
+ */
+function furn_global_collections_page($term=NULL) {
+
+  global $conf;
+  
+	if (arg(1) == "") { 	//if it's just /collections/ page
+
+		$build = array();
+		
+		$build['desc'] = array(
+			'#markup' => theme('all-cats'),
+		);
+		
+    
+    if (isset($conf['SITE_ID']) && $conf['SITE_ID'] == 'main') {	
+      drupal_add_js(drupal_get_path('theme', 'furnitheme') . "/js/jquery.bgpos.js");
+      drupal_add_library('system', 'drupal.ajax');
+      
+      $build['add'] = array(
+        '#markup' => '<div id="menu-pic-wrapper">
+                        <div id="menu-pic" class="menu-hover loading">&nbsp;</div>
+                      </div>',
+      );
+    }
+		
+		return $build;
+		
+	} else {				//something else is after "collections/"
+		
+		$path = explode("/", current_path());
+		array_shift($path); 			// remove the 'collections' part
+		$path = implode("/", $path); 	// get normal path without "collections"
+		
+		$new_path = drupal_lookup_path("source", $path); //attempt to find normal path
+		if ($new_path) {
+			drupal_goto($path);
+		} else {
+			drupal_goto('collections');	//redirect to root collections page
+		}
+	}
+}
+
+/**
+ * Taxonomy term handler page
+ */
+function furn_global_taxonomy_term_page($term=NULL) {
+
+  $vocabulary = taxonomy_vocabulary_load($term->vid);
+
+  $view_name = 'taxonomy_term';
+  $display_id='page';
+  $args = array($term->tid);
+
+  $view = views_get_view($view_name);		  
+  $view->set_arguments($args);
+
+  switch($vocabulary->name) {
+    case 'Categories':
+      $display_id='page';
+      break;
+    case 'Brand':
+      $display_id='page_brands';
+      
+      drupal_set_title($term->name);
+      
+      //$view->init_display($display_id);
+      //$view->preview = TRUE;
+
+      break;
+    default: 
+      // Returns the default term page provided by taxonomy module.
+      module_load_include('inc', 'taxonomy', 'taxonomy.pages');
+      return taxonomy_term_page($tid);
+  }
+
+  $view->set_display($display_id);
+  $view->pre_execute();
+  $output =  $view->preview($display_id);
+  $view->post_execute();
+
+  return $output;
+
+}
+
+/**
+ * Implements hook_menu_alter().
+ */
+function furn_global_menu_alter(&$items) {
+	$items['taxonomy/term/%taxonomy_term']['page callback'] = 'furn_global_taxonomy_term_page';
+	unset($items['taxonomy/term/%taxonomy_term']['file']);
+	
+/*
+	if (isset($menu['taxonomy/term/%'])) {
+      $menu['taxonomy/term/%']['page callback'] = 'furnitalia_tweaks_taxonomy_term_page';
+      $menu['taxonomy/term/%']['title'] = t('Furnitalia Collections');
+      $menu['taxonomy/term/%']['title callback'] = 'furn_global_get_page_title'; 
+      $menu['taxonomy/term/%']['title arguments'] = array(2); 
+  }
+*/
+	
+	if(isset($items['user/%user/shortcuts'])) {
+		unset($items['user/%user/shortcuts']);
+	}
+	
+	if(isset($items['user/%user/imce'])) {
+		unset($items['user/%user/imce']);	
+	}
+	
+}
+
+/**
+ * Implements hook_theme().
+ */
+function furn_global_theme($existing, $type, $theme, $path) {
+  global $theme_path;
+
+	$themes = array (
+	  'contact' => array(
+	    'arguments' => array(),
+	    'template' => 'contact',
+	    'path' => $theme_path . '/templates',
+	  ),
+	  'furnitalia_about' => array(
+	    'arguments' => array(),
+	    'template' => 'about',
+	    'path' => $theme_path . '/templates',
+	  ),
+	  'shipping-deliveries' => array(
+	    'arguments' => array(),
+	    'template' => 'shipping-deliveries',
+	    'path' => $theme_path . '/templates',
+	  ),
+	  'service-terms' => array(
+	    'arguments' => array(),
+	    'template' => 'service-terms',
+	    'path' => $theme_path . '/templates',
+	  ),
+	  'privacy-policy' => array(
+	    'arguments' => array(),
+	    'template' => 'privacy-policy',
+	    'path' => $theme_path . '/templates',
+	  ),
+	  'faq' => array(
+	    'arguments' => array(),
+	    'template' => 'faq',
+	    'path' => $theme_path . '/templates',
+	  ),
+	  'catalogs' => array(
+    	  'arguments' => array(),
+	    'template' => 'catalogs',
+	    'path' => $theme_path . '/templates',
+	  ),
+	  'interior-design' => array(
+	    'arguments' => array(),
+	    'template' => 'interior-design',
+	    'path' => $theme_path . '/templates',
+	  ),
+	  'all-cats' => array(
+	    'arguments' => array(),
+	    'template' => 'all-cats',
+	    'path' => $theme_path . '/templates',
+	  ),
+	  'natuzzi-cat' => array(
+	    'arguments' => array(),
+	    'template' => 'natuzzi-cat',
+	    'path' => $theme_path . '/templates',
+	  ),
+	  'editions-cat' => array(
+	    'arguments' => array(),
+	    'template' => 'editions-cat',
+	    'path' => $theme_path . '/templates',
+	  ),
+	  'moving-sale' => array(
+	    'arguments' => array(),
+	    'template' => 'moving-sale',
+	    'path' => $theme_path . '/templates',
+	  ),
+  );
+  return $themes;
+}
+
+/**
+ * Display about us page.
+ */
+function furn_global_about() {
+	
+	$build =  theme('furnitalia_about');
+
+	return $build;
+}
+
+/**
+ * Construct a drupal_render() style array from an array of loaded nodes.
+ *
+ * @param $nodes
+ *   An array of nodes as returned by node_load_multiple().
+ * @param $view_mode
+ *   View mode, e.g. 'full', 'teaser'...
+ * @param $weight
+ *   An integer representing the weight of the first node in the list.
+ * @param $langcode
+ *   (optional) A language code to use for rendering. Defaults to the global
+ *   content language of the current request.
+ *
+ * @return
+ *   An array in the format expected by drupal_render().
+ */
+function furn_global_node_view_multiple($nodes, $view_mode = 'teaser', $weight = 0, $langcode = NULL) {
+  field_attach_prepare_view('node', $nodes, $view_mode, $langcode);
+  entity_prepare_view('node', $nodes, $langcode);
+  $build = array();
+  foreach ($nodes as $node) {
+  	$node->index = $weight + 1;
+    $build['nodes'][$node->nid] = node_view($node, $view_mode, $langcode);
+    $build['nodes'][$node->nid]['#weight'] = $weight;
+    $weight++;
+  }
+  $build['nodes']['#prefix'] = '<div id="gallery-container">';
+  $build['nodes']['#suffix'] = '</div>';
+  $build['nodes']['#sorted'] = TRUE;
+  return $build;
+}
+
+/**
+ * Implements hook_page_alter().
+ */
+function furn_global_page_alter(&$page) {
+	
+  global $conf;
+
+	$editions = 22;
+	$italia = 21;
+
+	//wrapper around main navigation menu
+	$page['left']['furn_menu'] = array(
+		'#prefix' => '<nav id="main-nav" class="accordion">',
+		'#suffix' => '</nav>',
+	);
+	
+  //------------------------------------
+	// gather context information before building the menus
+  //------------------------------------
+	$active_cat_tid = "";
+	$active_parent_tid = "";
+	$active_brand = "";
+	$all_coll_active = FALSE;
+  _retrieve_context_data($active_cat_tid, $active_parent_tid, $active_brand);
+	
+
+  //------------------------------------
+  // generate menu structure based on DB items
+  //------------------------------------
+  $all_items = array();
+	$italia_items = array();
+	$editions_items = array();
+  _generate_menu_items($all_items, $italia_items, $editions_items);
+
+	
+	//-------------------------------------
+	// build the menus
+	//--------------------------------------
+	
+  $context = array (
+    'active_cat' => $active_cat_tid,
+    'active_parent_cat' => $active_parent_tid,
+    'active_brand' => $active_brand
+  );
+  
+	$output_all_brands_menu_items = array();
+  $output_italia_menu_items = array();
+  $output_editions_menu_items = array();
+
+	if (arg(0) == 'collections' || (arg(0) == 'taxonomy' && arg(1) == 'term' && is_numeric(arg(2)))) {
+		//show subcategories if it is /collections or /taxonomy/term/id page
+    $context['menu'] = 'all';
+		_build_subcat_menu_items($all_items, $output_all_brands_menu_items, $context);
+	}
+  else if (arg(0) == 'natuzzi-italia') {
+    $context['menu'] = 'italia';
+    _build_subcat_menu_items($italia_items, $output_italia_menu_items, $context);
+  }
+  else if (arg(0) == 'natuzzi-editions') {
+    $context['menu'] = 'editions';
+    _build_subcat_menu_items($editions_items, $output_editions_menu_items, $context);
+  }
+
+
+	
+	// !Menu declarations
+	//markup structure for all collections
+  $top_menu_title_class = "ui-accordion-header ui-helper-reset ui-state-default ui-corner-all";
+  $submenu_class = "ui-accordion-content ui-helper-reset ui-widget-content ui-corner-bottom";
+
+
+  if (isset($conf['SITE_ID']) && $conf['SITE_ID'] == 'mobile') {
+    
+    //-----------------------------------------------------
+    //Build menu structure for mobile left nav bar
+    //-----------------------------------------------------
+    
+    //brands nav link
+    $cat_parent_class = "";
+    $page['nav']['furn_menu']['brands'] = array(		
+      '#prefix' => '<h3 class="' . $top_menu_title_class . '"> ' . l("Brands", 'brands', array('attributes' => array('id' => 'bg0', 'class' => array((drupal_match_path(request_path(), "brand/*\nbrands")) ? " active" : "")))) . '</h3><div class="' . $submenu_class . '">',
+      '#suffix' => '</div>',		
+    );	
+    
+    //all collections nav link
+    $page['nav']['furn_menu']['all'] = array(
+      '#prefix' => '<h3 class="' . $top_menu_title_class . '">' . l("All Collections", 'collections', array('attributes' => array('id' => 'bg1', 'class' => array($all_coll_active ? " active" : "")))) . '</h3><div class="' . $submenu_class . '">',
+      '#suffix' => '</div>',
+    );
+    
+    //natuzzi italia items nav link
+    $page['nav']['furn_menu']['italia'] = array(
+      '#prefix' => '<h3 class="' . $top_menu_title_class . '">' . l("Natuzzi Italia", 'natuzzi-italia', array('attributes' => array('id' => 'bg2', 'class' => array(($active_brand == $italia) ? " active" : "")))) . '</h3><div class="' . $submenu_class . '">',
+      '#suffix' => '</div>',
+    );
+    
+    //natuzzi editions items nav link
+    $page['nav']['furn_menu']['editions'] = array(
+      '#prefix' => '<h3 class="' . $top_menu_title_class . '">' . l("Natuzzi Editions", 'natuzzi-editions', array('attributes' => array('id' => 'bg3', 'class' => array(($active_brand == $editions) ? " active" : "")))) . '</h3><div class="' . $submenu_class . '">',
+      '#suffix' => '</div>',
+    );
+    
+    //In Store items nav link
+    $page['nav']['furn_menu']['in-store'] = array(
+      '#prefix' => '<h3 class="' . $top_menu_title_class . '"> ' . l( "In Store", 'in-store', array('attributes' => array('id' => 'bg5', 'class' => array((arg(0) == 'in-store') ? " active" : "")))) . '</h3><div class="' . $submenu_class . '">',
+      '#suffix' => '</div>',		
+    );
+    
+    //interior design nav link
+    $page['nav']['furn_menu']['interior_design'] = array(
+      '#prefix' => '<h3 class="' . $top_menu_title_class . '"> ' . l( "Interior Design Services", 'interior-design', array('attributes' => array('id' => 'bg4', 'class' => array((arg(0) == 'interior-design') ? " active" : "")))) . '</h3><div class="' . $submenu_class . '">',
+      '#suffix' => '</div>',		
+    );
+    
+    
+    //----------------------------------------------
+    // Build collapsible submenus under main content
+    //----------------------------------------------
+    
+    if (arg(0) == 'collections' ) { //|| (arg(0) == 'taxonomy' && arg(1) == 'term' && is_numeric(arg(2)))) {
+      $menu = &$output_all_brands_menu_items;
+      $link = l("All Collections", 'collections', array('attributes' => array('id' => 'bg1', 'class' => array($all_coll_active ? " active" : ""))));
+    }	
+    else if (arg(0) == 'natuzzi-italia' && arg(1) == "") {
+      $menu = &$output_italia_menu_items;
+      $link = l("Natuzzi Italia", 'natuzzi-italia', array('attributes' => array('id' => 'bg2', 'class' => array(($active_brand == $italia) ? " active" : ""))));
+    }
+    else if(arg(0) == 'natuzzi-editions' && arg(1) == "") {
+      $menu = &$output_editions_menu_items;
+      $link = l("Natuzzi Editions", 'natuzzi-editions', array('attributes' => array('id' => 'bg3', 'class' => array(($active_brand == $editions) ? " active" : ""))));
+    }
+
+    if (isset($link) && !empty($link)) { 
+      $page['supplementary']['furn_menu']['items'] = array(
+        '#prefix' => '<h3 class="' . $top_menu_title_class . '">' . $link . '</h3><div class="' . $submenu_class . '">',
+        '#suffix' => '</div>',
+        '#theme' => 'item_list',
+        '#items' => array_values($menu),
+        '#type' => 'ul',
+        '#attributes' => array('class' => 'links'),
+      );
+    }
+
+               //--------------------------------
+  }  else {    // DESKTOP SITE MENUS
+               //--------------------------------
+    
+    $page['left']['furn_menu']['brands'] = array(		
+      '#prefix' => '<h3 class=" '. $top_menu_title_class . '"> ' . l("Brands", 'brands', array('attributes' => array('id' => 'bg0', 'class' => array((drupal_match_path(request_path(), "brand/*\nbrands")) ? " active" : "")))) . '</h3><div class="' . $submenu_class . '">',
+      '#suffix' => '</div>',		
+    );	
+    
+    //markup structure for all collections
+    $page['left']['furn_menu']['all'] = array(
+      '#prefix' => '<h3 class="' . $top_menu_title_class . '">' . l("All Collections", 'collections', array('attributes' => array('id' => 'bg1', 'class' => array($all_coll_active ? " active" : "")))) . '</h3><div class="' . $submenu_class . '">',
+      '#suffix' => '</div>',
+      '#theme' => 'item_list',
+      '#items' => array_values($output_all_brands_menu_items),
+      '#type' => 'ul',
+      '#attributes' => array('class' => 'links'),
+    );	
+    
+    //mark up structure for natuzzi italia items
+    $page['left']['furn_menu']['italia'] = array(
+      '#prefix' => '<h3 class="' . $top_menu_title_class . '">' . l("Natuzzi Italia", 'natuzzi-italia', array('attributes' => array('id' => 'bg2', 'class' => array(($active_brand == $italia) ? " active" : "")))) . '</h3><div class="' . $submenu_class . '">',
+      '#suffix' => '</div>',
+      '#theme' => 'item_list',
+      '#items' => array_values($output_italia_menu_items),
+      '#type' => 'ul',
+      '#attributes' => array('class' => 'links'),
+    );
+    
+    //mark up structure for natuzzi editions items
+    $page['left']['furn_menu']['editions'] = array(
+      '#prefix' => '<h3 class="' . $top_menu_title_class . '">' . l("Natuzzi Editions", 'natuzzi-editions', array('attributes' => array('id' => 'bg3', 'class' => array(($active_brand == $editions) ? " active" : "")))) . '</h3><div class="' . $submenu_class . '">',
+      '#suffix' => '</div>',
+      '#theme' => 'item_list',
+      '#items' => array_values($output_editions_menu_items),
+      '#type' => 'ul',
+      '#attributes' => array('class' => 'links'),
+    );
+    
+    //mark up structure for In Store link
+    $page['left']['furn_menu']['in-store'] = array(
+      '#prefix' => '<h3 class="' . $top_menu_title_class . '"> ' . l( "In Store", 'in-store', array('attributes' => array('id' => 'bg5', 'class' => array((arg(0) == 'in-store') ? " active" : "")))) . '</h3><div class="' . $submenu_class . '">',
+      '#suffix' => '</div>',		
+    );
+    
+    //mark up structure for interior design link
+    $page['left']['furn_menu']['interior_design'] = array(
+      '#prefix' => '<h3 class="' . $top_menu_title_class . '"> ' . l( "Interior Design Services", 'interior-design', array('attributes' => array('id' => 'bg4', 'class' => array((arg(0) == 'interior-design') ? " active" : "")))) . '</h3><div class="' . $submenu_class . '">',
+      '#suffix' => '</div>',		
+    );
+  }
+
+}
+
+/**
+ * Generate menu items data structure
+ */
+function _generate_menu_items(&$all_items=array(), &$italia_items=array(), &$editions_items=array()) {
+
+	$editions = 22;
+	$italia = 21;
+
+  // attempt to retrieve menu data from cache
+  $all_menus = &drupal_static(__FUNCTION__);
+  if (!isset($all_menus)) {
+    if ($cache = cache_get('furn_menu_data', 'cache_block')) {
+      $all_menus = $cache->data;
+      $all_items = $all_menus['all'];
+      $italia_items = $all_menus['italia'];
+      $editions_items = $all_menus['editions'];
+      
+      //dsm("serving from cache");
+      //dsm($all_menus);
+      
+      return TRUE;
+    }
+    else {
+      //dsm("Cache miss. Regenerating menus");
+      $all_menus = array(); //initialize and proceed to generate menus
+    }
+  }
+
+	//-------------------------------------	
+	// all collections query
+	//-------------------------------------	
+	$result = db_query("
+    SELECT DISTINCT td.tid, td.name, h.parent as parent_term, td.weight as delta
+		FROM {taxonomy_term_data} td
+		INNER JOIN {field_data_field_category} cat on cat.field_category_tid = td.tid
+		INNER JOIN {node} n on n.nid=cat.entity_id and n.status=1
+		INNER JOIN {taxonomy_term_hierarchy} h on td.tid=h.tid
+		WHERE td.vid = :vid 
+		ORDER BY td.weight", array(":vid" => 2));
+
+	foreach($result as $term) {
+		
+		if ($term->parent_term != 0 ) {
+			// if an item has parent term 
+
+      // create parent term's list
+			if (!isset($all_items[$term->parent_term])) {
+				$parent_term = taxonomy_term_load($term->parent_term);
+				
+				//generate parent term link
+        $link = l($parent_term->name, 'taxonomy/term/' . $term->parent_term);		
+				
+				$all_items[$term->parent_term] = array(
+					'tid' => $term->parent_term,
+					'link' => $link,
+					'delta' => $parent_term->weight,
+					'sub' => array(), //sub-array for term's children items
+					'name' => $parent_term->name,
+				);
+			}
+			
+			//generate link for the term
+      $link = l($term->name, 'taxonomy/term/' . $term->tid);
+
+			//insert term into parent's list
+			$all_items[$term->parent_term]['sub'][$term->tid] = array(
+				'tid' => $term->tid,
+				'link' => $link,
+				'delta' => $term->delta,
+				'name' => $term->name,
+			);
+			
+		} else {
+
+      // if it is the parent term,
+      // create this parent's term list 
+			if (!isset($all_items[$term->tid])) {			
+			
+				//generate parent term link 
+        $link = l($term->name, 'taxonomy/term/' . $term->tid);		
+				
+				$all_items[$term->tid] = array(
+					'tid' => $term->tid,
+					'link' => $link,
+					'delta' => $term->weight,
+					'name' => $term->name,
+					'sub' => array(),
+				);
+			}
+		}		
+	}
+	
+	//-------------------------------------
+	// italia/editions collections query  
+	//--------------------------------------
+	
+	$result = db_query("
+	  SELECT DISTINCT td.tid, td.name, b.field_brand_tid as brand, h.parent as parent_term, td.weight as delta
+	  FROM {taxonomy_term_data} td
+	  INNER JOIN {field_data_field_category} cat on cat.field_category_tid = td.tid
+	  INNER JOIN {node} n on n.nid=cat.entity_id and n.status=1
+	  LEFT JOIN {taxonomy_term_hierarchy} h on td.tid=h.tid
+	  INNER JOIN {field_data_field_brand} b on b.entity_id=n.nid and b.field_brand_tid IN(:brand1, :brand2)
+	  WHERE td.vid = :vid 
+	  ORDER BY td.weight", array(":brand1" => $italia, ":brand2" => $editions,":vid" => 2));
+
+  $temp_items = array();
+	foreach($result as $term) {
+		
+		if	($term->brand == $italia) {
+			//if natuzzi italia brand			
+			$temp_items = &$italia_items;
+			$path_prefix = "natuzzi-italia/";
+		} else {
+			//natuzzi editions brand term
+			$temp_items = &$editions_items;		
+			$path_prefix = "natuzzi-editions/";
+		}
+		
+		if ($term->parent_term != 0 ) {
+			// if an item has a parent term
+
+      // create a list for parent term 
+			if (!isset($temp_items[$term->parent_term])) {
+				$parent_term = taxonomy_term_load($term->parent_term);
+				
+				//generate parent term link
+				$path = $path_prefix . drupal_get_path_alias('taxonomy/term/' . $term->parent_term);
+        $link = l($parent_term->name, $path);		
+				
+				$temp_items[$term->parent_term] = array(
+					'tid' => $term->parent_term,
+					'link' => $link,
+					'delta' => $parent_term->weight,
+					'name' => $parent_term->name,
+					'sub' => array(), //sub-array for term's children items
+				);
+			}
+			
+			//insert term into parent's list
+			//generate link
+			$path = $path_prefix . drupal_get_path_alias('taxonomy/term/' . $term->tid);
+      $link = l($term->name, $path);
+			$temp_items[$term->parent_term]['sub'][$term->tid] = array(
+				'tid' => $term->tid,
+				'link' => $link,
+				'delta' => $term->delta,
+				'name' => $term->name,
+			);
+			
+		} else {
+
+			// create a list for this(parent) term
+			if (!isset($temp_items[$term->tid])) {
+				//generate link
+				$path = $path_prefix . drupal_get_path_alias('taxonomy/term/' . $term->tid);
+        $link = l($term->name, $path);
+				$temp_items[$term->tid] = array(
+					'tid' => $term->tid,
+					'link' => l($term->name, $path),
+					'delta' => $term->weight,
+					'name' => $parent_term->name,
+					'sub' => array(),
+				);
+			}
+		}
+	}
+
+  //cache menu data after generating
+  $all_menus['all'] = $all_items;
+  $all_menus['italia'] = $italia_items;
+  $all_menus['editions'] = $editions_items;
+  cache_set('furn_menu_data', $all_menus, 'cache_block');
+  return TRUE;
+
+}
+
+/**
+* Implements custom array sort comparer
+*/
+function category_cmp($a, $b) {
+	if ($a['delta'] == $b['delta']) {
+		return 0;
+	} else {
+		return $a['delta'] - $b['delta'];
+	}
+}
+
+/**
+ * Builds submenu items for each category menu item
+ */
+function _build_subcat_menu_items($categories_structure = array(), &$output_menu_items=array(), $context = array()) {
+	
+	uasort($categories_structure, 'category_cmp');		//sort categories array by weight
+	
+	//sort the subcategories, build menu array
+	foreach($categories_structure as $item) {
+		$subcat = $item['sub'];
+		uasort($subcat, 'category_cmp');
+		$item['sub'] = $subcat;
+
+    _mark_menu_item_active_status($item, $context);
+
+		//build array of subcategories links
+		$subcat = array();
+		foreach($item['sub'] as $cat) {
+      _mark_menu_item_active_status($cat, $context);
+			$subcat [] = $cat['link'];
+		}
+		
+		//array structure for category with subcategories
+		$temp_submenu_items = array(
+			'#prefix' => '<div class="accordion-inner"><h4>' . $item['link'] . '</h4><div>',
+			'#theme' => 'item_list',
+			'#items' => array_values($subcat),
+			'#suffix' => '</div></div>',
+			'#type' => 'ul',
+			'#attributes' => array('class' => 'links'),
+		);
+		$output_menu_items []= drupal_render($temp_submenu_items);
+	}
+}
+
+/**
+ * Gather context data pertaining to current page, active brand and category
+ */ 
+function _retrieve_context_data(&$active_cat_tid, &$active_parent_tid, &$active_brand) {
+
+	$editions = 22;
+	$italia = 21;
+	
+	$active_parent_tid = $active_cat_tid = $active_brand = 0;
+
+	if (arg(0) == 'natuzzi-italia') {
+		$active_brand = $italia;
+	} else if (arg(0) == 'natuzzi-editions') {
+		$active_brand = $editions;
+	}
+	
+	if (arg(0) == 'taxonomy' && arg(1) == 'term' && is_numeric(arg(2)) && arg(3) == "") { 
+		//1. if we are in taxonomy term page, i.e. taxonomy/term/2
+		
+		$active_cat_tid = arg(2);
+		$active_parent_tid = furn_global_get_parent_category($active_cat_tid);
+	
+	} else if (arg(0) == 'natuzzi-italia' || arg(0) == 'natuzzi-editions') {
+		//2. natuzzi-italia/living/sofas, etc..
+		//   natuzzi-editions/accessories
+		
+		$alias = arg(1);
+		if (arg(2) != "") {
+			$alias .= "/" . arg(2);
+		}
+		$normal_path = explode('/', drupal_get_normal_path($alias)); //TO-DO check for validity
+		if (is_array($normal_path) && count($normal_path) == 3) { //taxonomy/term/xxx
+			$active_cat_tid = $normal_path[2];
+			$active_parent_tid = furn_global_get_parent_category($active_cat_tid);
+		}
+
+	} else if (arg(0) == 'node' && is_numeric(arg(1)) && arg(2) != "") {
+		//3. if we are in node page, i.e. node/22
+		if (isset($vars['content']['system_main']['nodes'])) {	//user this var in order to to load node again
+      $node = array_values($vars['content']['system_main']['nodes']);
+      $node = $node[0];
+      
+      if ($node['#bundle'] == 'item') {
+        foreach($node['field_category']['#items'] as $term) {
+          //get top top and it's parent category
+          $active_cat_tid = $term->tid;
+          $active_parent_tid = furn_global_get_parent_category($active_cat_tid);
+          break;
+        }  
+      }
+    }		
+	}
+}
+
+/**
+ * Determine if passed menu item should be marked active, if so, modifies the link with class attrib.
+ */
+function _mark_menu_item_active_status(&$item, $context) {
+  
+  $active_attribute = array('active-menu');
+	$editions = 22;
+	$italia = 21;
+
+  switch($context['menu']) {
+    case 'all':
+      if (empty($context['active_brand']) && ($item['tid'] == $context['active_parent_cat'] || $item['tid'] == $context['active_cat'] )) {
+        $item['link'] = l($item['name'], 'taxonomy/term/' . $item['tid'], array('attributes' => array('class' => $active_attribute)));
+      }
+      break;
+    case 'italia':
+    case 'editions':
+      if (($context['active_brand'] == $italia && $context['menu'] == 'italia' || $context['active_brand'] == $editions && $context['menu'] == 'editions') &&  ($item['tid'] == $context['active_parent_cat'] || $item['tid'] == $context['active_cat'])) {
+        if ($context['menu'] == 'italia') {
+          $path_prefix = "natuzzi-italia/";
+        } else if ($context['menu'] == 'editions') {
+          $path_prefix = "natuzzi-editions/";
+        }
+        $path = $path_prefix . drupal_get_path_alias('taxonomy/term/' . $item['tid']);
+        $item['link'] = l($item['name'], $path);
+      }
+      break;
+  }
+}
+
+/**
+  * Implements hook_node_presave()
+  *
+  */
+//!NodePresave
+function furn_global_node_presave($node) {
+
+	if ($node->type == 'item') {	
+				
+		if (count($node->field_special_price['und']) > 0) {
+			$special_price = $node->field_special_price['und'][0]['value'];
+			if (intval($special_price) == 0) {
+				$node->field_special_price['und'][0]['value'] = $node->sell_price; //set default
+			}
+		} else {
+			$node->field_special_price['und'][] = array('value' => $node->sell_price); //set default
+		}
+
+    // clear the menu cache so it regenerates during the new request
+    cache_clear_all('furn_menu_data', 'cache_block');
+
+				
+		/*//on each item save, go through selected categories
+		//and automatically assign parent categories to item
+		
+		$parent_cats = array();
+		$cats_to_add = array();
+		$field_category = $node->field_category;
+		
+		foreach($node->field_category['und'] as $cat) {
+			$parents = taxonomy_get_parents($cat['tid']);
+			
+			foreach($parents as $parent_term) {				
+				$parent_cats []= $parent_term->tid;
+			}
+		}
+		
+		$parent_cats = array_unique($parent_cats);
+		
+		foreach($parent_cats as $cat) {
+			$cats_to_add []= array('tid' => $cat);
+		}
+		
+		$field_category['und'] = array_merge($field_category['und'], $cats_to_add);
+		$node->field_category = $field_category;*/
+		
+	}
+	return $node;
+}
+
+function furn_global_get_parent_category($tid="") {
+	
+	$parents = taxonomy_get_parents($tid);
+	$parents = array_values($parents);
+	
+	if (empty($parents)) {
+		return $tid;
+	} else {
+		return $parents[0]->tid;
+	}	
+}
+
+/**
+ * Display the list of items that are in current user's favorites list
+ */
+function furn_global_favorites_list() {
+	global $user;
+	
+	if ($user->uid == 0) {
+		//not authenticated user
+		drupal_set_message('Please log in to access your favorites list');
+		drupal_goto('user/login');
+		return;
+	}
+	
+	$favorites = flag_get_user_flags('node', NULL, $user->uid);
+	
+	if(!isset($favorites['favorites']) || empty($favorites['favorites'])) {
+		return "Your don't have any favorites yet. <br/> You can add items to favorites by clicking on 'Add to favorites' button when viewing product descriptions.";
+	}
+	
+	$nids = array();
+	
+	foreach($favorites['favorites'] as $nid => $flag_obj) {
+		$nids []= $nid;
+	}
+	
+	$nodes = node_load_multiple($nids);    
+	$build = furn_global_prepare_node_attributes($nodes);
+    
+    unset($build['options']);
+
+	//print flag_create_link('favorites', $node->nid); 
+	
+	return $build;
+}
+
+function furn_global_prepare_node_attributes($nodes) {
+	
+	if (!is_array($nodes)) {
+		return array();
+	}
+	
+	$build = array();
+
+    $build += furn_global_node_view_multiple($nodes);
+
+	return $build;
+	
+}
+
+/**
+ * Display current user's orders
+ */
+function furn_global_orders() {
+	global $user;
+	$dest = drupal_get_destination();
+	
+	if ($user->uid == 0) {
+		//not authenticated user
+		drupal_set_message('Please log in to view your orders');
+		drupal_goto('user/login', $dest);
+	} else {
+		drupal_goto('user/' . $user->uid . '/orders', $dest);
+	}
+}
+
+
+function furn_global_webform_submission_presave($node, &$submission) {	
+
+	if ($node->nid != 32 && $node->nid != 34) {
+		return;
+	}
+	
+	$time_format = 'm-d-Y H:i';
+	$lead_info = array();
+	if ($node->nid == 32) {
+		
+		$lead_info['first_name'] = $submission->data[1]['value'][0];
+		$lead_info['last_name'] = $submission->data[2]['value'][0];		
+		$lead_info['email'] = $submission->data[3]['value'][0];
+		$lead_info['zip'] = $submission->data[5]['value'][0];
+		$lead_info['body'] = $submission->data[4]['value'][0];
+		$lead_info['phone'] = "";
+		
+	} else if ($node->nid == 34) {
+		$lead_info['first_name'] = $submission->data[1]['value'][0];
+		$lead_info['last_name'] = $submission->data[2]['value'][0];		
+		$lead_info['email'] = $submission->data[3]['value'][0];
+		$lead_info['phone'] = $submission->data[4]['value'][0];
+		$lead_info['body'] = $submission->data[5]['value'][0] . "\n";		
+		$lead_info['body'] .= $submission->data[6]['value'][0] . "\n";
+		$lead_info['body'] .= url('node/'.$submission->data[7]['value'][0], array('absolute' => true));
+		$lead_info['zip'] = $submission->data[8]['value'][0];
+	}
+	
+	//defaults
+	$lead_info['created'] = REQUEST_TIME;
+	$lead_info['updated'] = 0;
+	$lead_info['updated_by'] = 0;
+	$lead_info['status'] = 'N';
+	$lead_info['status_comments'] = "";
+	$lead_info['address'] = "";
+	$lead_info['type'] = "";
+	$lead_info['uid'] = 0;
+	$lead_info['log'] = 'Created: ' . format_date(REQUEST_TIME, 'custom', $time_format);
+	
+	$lid = furnileads_insert_lead($lead_info);
+	
+	if (is_numeric($lid)) {
+		watchdog('furnitalia', 'Lead record created for %first %last, with ID:%id', array('%first' => $lead_info['first_name'], '%last' => $lead_info['last_name'], '%id' => $lid), WATCHDOG_INFO, $link = NULL);	
+	} else {
+		watchdog('furnitalia', 'Failed to create lead record created for %first %last', array('%first' => $lead_info['first_name'], '%last' => $lead_info['last_name']), WATCHDOG_ERROR, $link = NULL);	
+	}
+}
+
+/**
+ * Determine if item needs to show special prices or regular price
+ */
+function furn_global_show_sale_price($node) {
+
+	$rendered  = TRUE;
+	if (is_object($node)) {
+		$node = (array) $node;
+		$rendered = FALSE;
+	}
+	
+	//brand overrides
+	/*$excelsior = 27;
+	$bdi = 29;
+	if ($rendered) {
+		$brand = $node['field_brand']['#items'][0]['tid'];
+	} else {
+		$brand = $node['field_brand']['und'][0]['tid'];
+	}
+	
+	if ($brand == $excelsior || $brand == $bdi){
+		return FALSE; //no sale price
+	}*/
+
+	if (!empty($node['field_display_sale_price'])) {
+		if ($rendered) {
+		
+			if ($node['field_display_sale_price']['#items'][0]['value'] == '1') {
+				return true;
+			} 
+		} else {
+		
+			if ($node['field_display_sale_price']['und'][0]['value'] == '1') {
+				return true;
+			}
+		}
+
+	} 
+
+	return variable_get('show_sale_prices', FALSE);
+}
+
+/**
+ * Alters the price with temporary sale price
+ */
+function furn_global_uc_product_alter(&$node) {
+	if (furn_global_show_sale_price($node)) {
+		if (isset($node->field_special_price['und'][0]['value'])) {
+			$special_price = $node->field_special_price['und'][0]['value'];
+			
+			$diff = abs(floatval($special_price) - floatval($node->price));
+		 	if ($diff > 0.01) {
+			 	//sell price and special price are not same
+			 	$node->price = $special_price;
+			}
+		}
+	}
+}

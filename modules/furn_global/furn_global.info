@@ -1,0 +1,4 @@
+name = Furnitalia Global Tweaks
+description = Furnitalia Global (shared - mobile/desktop) Tweaks Module
+core = 7.x
+package = Furnitalia
