@@ -131,22 +131,23 @@ function furnitalia_tweaks_node_load($nodes, $types) {
 /**
   * Display contact form in pop-up dialog box.
  */
-function furnitalia_tweaks_contact_js($item, $nid=NULL){
+function furnitalia_tweaks_contact_js($item=NULL, $nid=NULL){
 
 	if (!is_numeric($nid)) {
 		$nid = 32; //contact us node id
 	}
 
-	$output = "";
 	$node = node_load($nid);
 
-	if ($nid == 34) { //request form
-	
-		#for request form, prepopulate item's name
-		$node->webform['components'][5]['value'] = $item->title;
-		$node->webform['components'][7]['value'] = $item->nid;
+	if ($nid == 34) { //request form	
+	  if ($item) {
+  		#for request form, prepopulate item's name
+  		$node->webform['components'][5]['value'] = $item->title;
+  		$node->webform['components'][7]['value'] = $item->nid;
+		}
 	}
 
+	$output = "";
 	$output .= theme('node', node_view($node));
 	
 	ajax_deliver(array('#type' => 'ajax', '#commands' => array (
