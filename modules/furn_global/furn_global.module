@@ -143,7 +143,7 @@ function furn_global_brand_cat_page($brand, $cat = NULL, $subcat = NULL) {
 			);
 		}
 		
-    if (isset($conf['SITE_ID']) && $conf['SITE_ID'] == 'main') {	
+    if (isset($conf['SITE_ID']) && $conf['SITE_ID'] == 'desktop') {	
       drupal_add_library('system', 'drupal.ajax');
       $build['add'] = array(
         '#markup' => '<div id="menu-pic-wrapper">
@@ -207,7 +207,7 @@ function furn_global_collections_page($term=NULL) {
 		);
 		
     
-    if (isset($conf['SITE_ID']) && $conf['SITE_ID'] == 'main') {	
+    if (isset($conf['SITE_ID']) && $conf['SITE_ID'] == 'desktop') {	
       drupal_add_js(drupal_get_path('theme', 'furnitheme') . "/js/jquery.bgpos.js");
       drupal_add_library('system', 'drupal.ajax');
       
@@ -307,7 +307,14 @@ function furn_global_menu_alter(&$items) {
  * Implements hook_theme().
  */
 function furn_global_theme($existing, $type, $theme, $path) {
-  global $theme_path;
+  global $conf;
+
+  if (isset($conf['SITE_ID']) && $conf['SITE_ID'] == 'mobile') {
+    $theme = "furnimobile";
+  } else {
+    $theme = "furnitheme";
+  }
+  $theme_path = drupal_get_path('theme', $theme);
 
 	$themes = array (
 	  'contact' => array(
