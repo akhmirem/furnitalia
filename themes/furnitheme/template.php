@@ -65,9 +65,9 @@ function furnitheme_css_alter(&$css) {
  //!PreprocessPage
 function furnitheme_preprocess_page(&$vars) {
 
-	global $user;
+	global $user, $theme_path;
 
-	drupal_add_css(drupal_get_path('theme', 'furnitheme') . '/css/ui/base/jquery.ui.all.css', array('group' => -100, 'every_page' => TRUE));
+	drupal_add_css($theme_path . '/css/ui/base/jquery.ui.all.css', array('group' => -100, 'every_page' => TRUE));
 	
 	drupal_add_js('misc/jquery.form.js');
 	drupal_add_library('system', 'drupal.ajax');	
@@ -78,12 +78,12 @@ function furnitheme_preprocess_page(&$vars) {
 	drupal_add_js(drupal_get_path('module', 'webform_ajax') . '/js/webform_ajax.js', 'file');
 	
 	//item description page thumbnail gallery
-	drupal_add_js(drupal_get_path('theme', 'furnitheme') . '/js/jquery.pikachoose.min.js');
-	drupal_add_css(drupal_get_path('theme', 'furnitheme') . '/css/pikachoose.css');
+	drupal_add_js($theme_path . '/js/jquery.pikachoose.min.js');
+	drupal_add_css($theme_path . '/css/pikachoose.css');
 	
 	//dropdown custom controls		
-	drupal_add_js(drupal_get_path('theme', 'furnitheme') . '/js/jquery.dropkick-1.0.0.js');
-	drupal_add_css(drupal_get_path('theme', 'furnitheme') . '/css/dropkick.css');
+	drupal_add_js($theme_path . '/js/jquery.dropkick-1.0.0.js');
+	drupal_add_css($theme_path . '/css/dropkick.css');
 	
 	$italia_editions_gallery_paths = array("natuzzi-italia", "natuzzi-italia/*", "natuzzi-italia/*/*", "natuzzi-editions", "natuzzi-editions/*", "natuzzi-editions/*/*");
 	$paths_with_keyholes = array('<front>', 'collections', 'natuzzi-italia', 'natuzzi-editions');
@@ -96,9 +96,9 @@ function furnitheme_preprocess_page(&$vars) {
 	$vars['show_title'] = !drupal_match_path(current_path(), implode("\n", $paths_no_title));
 	
 	if (drupal_match_path(current_path(), "node/*")) {
-		drupal_add_js(drupal_get_path('theme', 'furnitheme') . '/lib/jscrollpane/jquery.jscrollpane.min.js');
-		drupal_add_js(drupal_get_path('theme', 'furnitheme') . '/lib/jscrollpane/mwheelIntent.js');
-		drupal_add_css(drupal_get_path('theme', 'furnitheme') . '/lib/jscrollpane/jquery.jscrollpane.css');
+		drupal_add_js($theme_path . '/lib/jscrollpane/jquery.jscrollpane.min.js');
+		drupal_add_js($theme_path . '/lib/jscrollpane/mwheelIntent.js');
+		drupal_add_css($theme_path. '/lib/jscrollpane/jquery.jscrollpane.css');
 	}
 	
 	//disable taxonomy tabs
@@ -132,6 +132,23 @@ function furnitheme_preprocess_page(&$vars) {
 		//contact us page
 		$vars['contact_page'] = TRUE;
 	}
+	
+	//moving sale extra
+	if (arg(0) == 'moving-sale') {
+	  $left_section_extra = <<<EOT
+  	  <img src="$theme_path/images/landing/start_shopping_block.jpg" border="0" usemap="#map1" alt="Start Shopping" />
+      <map name="map1" id="map1">
+        <area  shape="rect" coords="0,60,245,246" alt="Shop for Metropol Sectional" title="Metropol Sectional" target="_self" href="http://www.furnitalia.com/item/metropol-sectional-30gd"     />
+        <area  shape="rect" coords="0,247,244,421" alt="Shop for Italsofa Josa Chair" title="Josa Chair by Italsofa" target="_self" href="http://http://www.furnitalia.com/item/josa-i341-armchair"     />
+        <area  shape="rect" coords="0,420,245,592" alt="Shop for Cammeo Chair by Natuzzi" title="Cammeo Chair" target="_self" href="http://www.furnitalia.com/item/cammeo-qt-30ib"     />
+      </map>
+EOT;
+
+	  
+  	$vars['page']['left_section_extra'] = array(
+  	  "#markup" => $left_section_extra,
+    );
+  }
 	
 }
 
@@ -594,7 +611,24 @@ function furnitheme_pager($variables) {
   }
 }
 
-function furnitheme_webform_mail_headers($variables) {
+function furnitheme_webform_mail_headers($vars) {
+  
+  /*
+  For MIME-attachment emails use these headers:
+  ---------------------------------
+  global $drupal_hash_salt;
+  
+  if (513 == $vars['node']->nid) {
+      $hash = md5($drupal_hash_salt);
+      $mime_boundary = "==Multipart_Boundary_x{$hash}x";
+      $headers = array(
+        "Content-Type" => "multipart/mixed; boundary=\"".$mime_boundary."\"",
+        "MIME-Version"  => "1.0",
+        "X-Mailer" => 'Drupal Webform (PHP/'.phpversion().')',
+      );
+      return $headers;
+  }*/
+  
   $headers = array(
     'Content-Type'  => 'text/html; charset=UTF-8; format=flowed; delsp=yes',
     'X-Mailer'      => 'Drupal Webform (PHP/'. phpversion() .')',

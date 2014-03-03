@@ -101,11 +101,27 @@ function furn_global_menu() {
 	$items['moving-sale'] = array(
 		'title' => 'Moving SALE',
     'page callback' => 'theme',
-    'page arguments' => array('moving-sale'),
+    'page arguments' => array('moving_sale'),
     'access callback' => TRUE,
     'type' => MENU_NORMAL_ITEM,
   );
 	return $items;
+}
+
+function furn_global_init() {
+  if (isset($_GET['brand'])) {
+    $wrong_tids = array('47', '48', '49', '50', '52', '54', '328'); 
+    $brand_params = $_GET['brand'];
+    if(!is_array($brand_params)) {
+      $brand_params = (array) $brand_params; 
+    }
+    if (count(array_intersect($wrong_tids, $brand_params))) {
+      unset($_GET['brand']);
+    }
+  }
+  if (isset($_GET['availability']) && $_GET['availability'] == '2 weeks') {
+    unset ($_GET['availability']);
+  }
 }
 
 function furn_global_get_page_title($tid) {
@@ -372,9 +388,9 @@ function furn_global_theme($existing, $type, $theme, $path) {
 	    'template' => 'editions-cat',
 	    'path' => $theme_path . '/templates',
 	  ),
-	  'moving-sale' => array(
-	    'arguments' => array(),
+	  'moving_sale' => array(
 	    'template' => 'moving-sale',
+	    'render element' => 'form',
 	    'path' => $theme_path . '/templates',
 	  ),
   );
@@ -1160,4 +1176,17 @@ function furn_global_uc_product_alter(&$node) {
 			}
 		}
 	}
+}
+
+/**
+ * Preprocess function for moving sale page
+ */
+function template_preprocess_moving_sale(&$vars) {
+  $webform_nid = 513;
+  $node = node_load($webform_nid);
+  $submission = (object) array();
+  $enabled = TRUE;
+  $preview = FALSE;
+  $form = drupal_get_form('webform_client_form_' . $webform_nid, $node, $submission, $enabled, $preview);
+  $vars['webform'] = drupal_render($form);
 }

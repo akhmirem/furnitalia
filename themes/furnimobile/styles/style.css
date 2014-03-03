@@ -245,7 +245,7 @@ div.region-page-top ul.menu li a {
 	padding: 0 .3em;
 }
 
-#edit-search-block-form--2, #edit-submitted-email, #edit-keys {
+#edit-search-block-form--2, #webform-client-form-33 input.form-email, #edit-keys {
 	position: relative;
 	bottom: .7em;
 	width: 81%;
@@ -260,7 +260,7 @@ div.region-page-top ul.menu li a {
 #edit-search-block-form--2 {
 	background:white url(../images/icons_logos/search_icon_20x20.png) 2% 50% no-repeat;
 }
-#edit-submitted-email  {
+#webform-client-form-33 input.form-email  {
 	bottom: 1em;
 	padding-bottom: .5em;
 	/* float: left; */

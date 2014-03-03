@@ -358,6 +358,14 @@
 				$(this).val("SEARCH");
 			}				
 		});
+		
+		$("#webform-client-form-33 input.form-email").focus(function() {
+			$(this).val("");
+		}).blur(function() {
+			if ($(this).val().trim() == "") {
+				$(this).val("EMAIL");
+			}				
+		});
 	}
 	
 	//-------------------------------------------------------------------------------------------
