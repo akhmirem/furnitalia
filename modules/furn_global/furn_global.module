@@ -1070,8 +1070,16 @@ function furn_global_orders() {
 	}
 }
 
-
+/**
+ * Implement hook_webform_submission_presave()
+ */
 function furn_global_webform_submission_presave($node, &$submission) {	
+
+  //moving sale coupon submissions
+  if ($node->nid == 513) {
+    $submission->data[4]['value'][0] = hash('crc32', REQUEST_TIME, false);  //optimistic 'pseudo-unique' submission code
+    return;
+  }
 
 	if ($node->nid != 32 && $node->nid != 34) {
 		return;

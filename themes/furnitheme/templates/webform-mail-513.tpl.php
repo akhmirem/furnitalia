@@ -90,7 +90,10 @@
       									<td width="370" height="135" align="left" valign="top" style="font-family:Helvetica Neue, Helvetica, Arial, sans-serif;font-size:14px;line-height:130%;font-weight:normal;text-decoration:none;color:#555555;">
       										<span style="font-family:Helvetica Neue, Helvetica, Arial,sans-serif;font-size:19px;font-weight:bold;text-decoration:none;color:#E12800;">
       										We Move, You SAVE!</span>
-      										<br/>                 
+      										<br/>        
+      										<p>
+      										%email[submission_code]
+      										</p>         
       										
                           <img src="<?php print $coupon_path;?>" alt="10% OFF Coupon during Furnitalia Moving Sale"/>
       										

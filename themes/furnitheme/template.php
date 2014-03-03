@@ -139,7 +139,7 @@ function furnitheme_preprocess_page(&$vars) {
   	  <img src="$theme_path/images/landing/start_shopping_block.jpg" border="0" usemap="#map1" alt="Start Shopping" />
       <map name="map1" id="map1">
         <area  shape="rect" coords="0,60,245,246" alt="Shop for Metropol Sectional" title="Metropol Sectional" target="_self" href="http://www.furnitalia.com/item/metropol-sectional-30gd"     />
-        <area  shape="rect" coords="0,247,244,421" alt="Shop for Italsofa Josa Chair" title="Josa Chair by Italsofa" target="_self" href="http://http://www.furnitalia.com/item/josa-i341-armchair"     />
+        <area  shape="rect" coords="0,247,244,421" alt="Shop for Italsofa Josa Chair" title="Josa Chair by Italsofa" target="_self" href="http://www.furnitalia.com/item/josa-i341-armchair"     />
         <area  shape="rect" coords="0,420,245,592" alt="Shop for Cammeo Chair by Natuzzi" title="Cammeo Chair" target="_self" href="http://www.furnitalia.com/item/cammeo-qt-30ib"     />
       </map>
 EOT;

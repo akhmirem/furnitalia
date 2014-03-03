@@ -89,12 +89,11 @@
       								<tr>                              
       									<td width="370" height="135" align="left" valign="top" style="font-family:Helvetica Neue, Helvetica, Arial, sans-serif;font-size:14px;line-height:130%;font-weight:normal;text-decoration:none;color:#555555;">
       										<span style="font-family:Helvetica Neue, Helvetica, Arial,sans-serif;font-size:19px;font-weight:bold;text-decoration:none;color:#E12800;">
-      										Thanks for your interest...</span>
-      										<br/>                 
-      										<p>Hello <span style="font-style:italic;">%value[first_name]</span>, it is our
-      										 pleasure to offer you a <span style="font-weight:bold; font-style:italic;">10% OFF</span> coupon. 
-      										</p>
-      										<br/>
+      										We Move, You SAVE!</span>
+      										<br/>        
+      										<p>
+      										%email[submission_code]
+      										</p>         
       										
                           <img src="<?php print $coupon_path;?>" alt="10% OFF Coupon during Furnitalia Moving Sale"/>
       										
@@ -178,7 +177,7 @@
 						<td width="600" align="left" valign="top" style="font-family:Verdana, Arial, Helvetica, sans-serif;font-size:10px;font-weight:normal;color:#999999;">
 							<br/>              
 							<strong>Note</strong>:
-							Thanks for your interest in our Contemporary Italian furniture. By requesting information, you will be automatically included in our email communications. Its the best way to stay informed about upcoming events, 
+							Thanks for your interest in our Contemporary Italian furniture. By requesting information, you will be automatically included in our email communications. It's the best way to stay informed about upcoming events, 
 	new products, and special announcements and offers. Each email includes links to help you send feedback or unsubscribe.<br/>
 	The e-mail address you provided will be used only to send you emails from Furnitalia; we wont share it with anyone. Your privacy is important to us. Read our full <a href=http://www.furnitalia.com/policies>Privacy Policy</a> for details.
 							<br/>              
