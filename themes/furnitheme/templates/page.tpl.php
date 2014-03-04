@@ -94,9 +94,11 @@
 
     <?php print render($page['header']); ?>
     <section id="header-phone">
-        <a href="tel:+18883874825" class="main-phone">1-888-387-4825</a> &nbsp; | &nbsp; 
+        <a href="tel:+19162388722" class="main-phone">916-238-8722</a> (Sacramento, CA) &nbsp; | &nbsp; 
+        <a href="tel:+19165270036" class="main-phone">916-527-0036</a> (Roseville, CA) &nbsp; 
+        <!--<a href="tel:+18883874825" class="main-phone">1-888-387-4825</a> &nbsp; | &nbsp; 
 		<a href="tel:+19164840333">916-484-0333</a> <a href="<?php print url('stores') ?>"> (Sacramento, CA)</a> &nbsp; | &nbsp;
-		<a href="tel:+19167427900">916-742-7900</a> <a href="<?php print url('stores') ?>"> (Roseville, CA)</a>		
+		<a href="tel:+19167427900">916-742-7900</a> <a href="<?php print url('stores') ?>"> (Roseville, CA)</a>	-->	
     </section>
 
   </header>

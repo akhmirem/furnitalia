@@ -22,7 +22,7 @@
   }
   #reg-form {
     background-color:#981b1e;
-    padding:2em 1em 0 1em;
+    padding:2em .5em 0 1em;
     float:right;
     height: 510px;
   }
