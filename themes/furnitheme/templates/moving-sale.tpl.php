@@ -74,7 +74,9 @@
 
 <article id="moving-sale" style="font-size:1.2em; line-height:1.5em">
   <div id="article-top">
-    <img src="<?php print $theme_dir;?>/images/landing/header_info.jpg" alt="Save 20-70% OFF on everything in showroom"/>
+    <a href="http://www.youtube.com/watch?v=TLER-_7ITig&showinfo=0" id="video-link" target="_blank">
+      <img src="<?php print $theme_dir;?>/images/landing/header_info.jpg" alt="Save 20-70% OFF on everything in showroom"/>
+    </a>
   </div>
   <div id="article-main" class="clearfix">
     <div id="info">
@@ -100,3 +102,20 @@
     </section>
   </div>
 </article>
+
+<script>
+ (function($) {
+    $(document).ready(function() {    
+      $("#video-link").on('click', function(event) {
+        event.preventDefault();
+        $.fancybox({          'titleShow'     : false,
+          'transitionIn'  : 'elastic',
+          'transitionOut' : 'elastic',
+          'href'          : this.href.replace(new RegExp("watch\\?v=", "i"), 'v/'),
+          'type'          : 'swf',
+          'swf'           : {'wmode':'transparent','allowfullscreen':'true'}
+        });
+      });
+    });
+ })(jQuery);
+</script>

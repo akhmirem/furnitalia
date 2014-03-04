@@ -442,13 +442,13 @@
 	    
    		//$("#product-additional").append('<h3 class="furn-ucase furn-red">REQUEST QUOTE</h3><div id="request-data">' + response.data + '</div>').accordion('destroy').accordion();
    		$("#product-additional").accordion('destroy').accordion({
-			icons:false,
-			collapsible: true,
-			active: false,
-			heightStyle:'content',
-			animate:300,
-			active:2
-		});
+  			icons:false,
+  			collapsible: true,
+  			active: false,
+  			heightStyle:'content',
+  			animate:300,
+  			active:2
+  		});
 	
 	    // Attach all JavaScript behaviors to the new content, if it was successfully
 	    // added to the page, this if statement allows #ajax['wrapper'] to be
