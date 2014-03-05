@@ -317,6 +317,9 @@ function furn_global_menu_alter(&$items) {
 		unset($items['user/%user/imce']);	
 	}
 	
+	//disable default node page
+	$items['node']['page callback'] = 'drupal_not_found';
+	
 }
 
 /**
@@ -808,7 +811,7 @@ function _generate_menu_items(&$all_items=array(), &$italia_items=array(), &$edi
   $all_menus['all'] = $all_items;
   $all_menus['italia'] = $italia_items;
   $all_menus['editions'] = $editions_items;
-  cache_set('furn_menu_data', $all_menus, 'cache_block');
+  cache_set('furn_menu_data', $all_menus, 'cache_block', REQUEST_TIME + 60 * 10); //store cache for 10 mins
   return TRUE;
 
 }
@@ -961,9 +964,11 @@ function furn_global_node_presave($node) {
 			$node->field_special_price['und'][] = array('value' => $node->sell_price); //set default
 		}
 
+    // DISABLE CACHE CLEAR B/C IT'S CAUSING DB PDO EXCEPTION, MOVE IT TO HOOK_CRON
+    // ---------------------------------------------------------------------
     // clear the menu cache so it regenerates during the new request
-    cache_clear_all('furn_menu_data', 'cache_block');
-
+    // cache_clear_all('furn_menu_data', 'cache_block');
+    // ---------------------------------------------------------------------
 				
 		/*//on each item save, go through selected categories
 		//and automatically assign parent categories to item
@@ -1197,4 +1202,12 @@ function template_preprocess_moving_sale(&$vars) {
   $preview = FALSE;
   $form = drupal_get_form('webform_client_form_' . $webform_nid, $node, $submission, $enabled, $preview);
   $vars['webform'] = drupal_render($form);
+}
+
+/**
+ * implementing hook_cron()
+ */
+function furn_global_cron() {
+  //clear the menu cache so it regenerates during the new request
+  cache_clear_all('furn_menu_data', 'cache_block');
 }
