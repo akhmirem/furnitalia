@@ -16,51 +16,98 @@
 			});
 			
 			$mainNav = $('#main-nav');
-			$container = $("#container");
-			$mainNav.addClass("menu-left").insertBefore("#container");
-			$mainNav.height(Math.max($("#container").height(), $mainNav.height()));
+			$container = $("#container-inner");
+			$menuBg = $(".mobile-menu-background");
+			
+			$(".mobile-menu-background").css("left", "-270px");
+			$mainNav.css("left", "-270px");
 	
-			$("#menu-toggle").click(function(){
-				
-				if(menuStatus != true) {
-					$mainNav.css("visibility", "visible");					
-					$container.animate({
-						left: $mainNav.outerWidth(),
-					}, 300, function(){menuStatus = true});
-					console.log("menu expand"); 
-					return false;
-					
-				} else {
-					$container.animate({
-						left: "0px",
-					}, 300, function(){menuStatus = false; $mainNav.css("visibility", "hidden");});
-					console.log("menu closed"); 
-					return false;
-				}
+			$("#menu-toggle").click(function() {
+			  $container.toggleClass("active");
+        $mainNav.toggleClass("active");
+        $menuBg.addClass("active");
 			});
+			
+			$("#close-toggle").on('click', function(){
+  			$("#menu-toggle").trigger('click');
+			});
+			
+			$("#menu-toggle").toggle(function() {
+        $mainNav.animate({
+            left : "0"
+        }, {
+            duration : 200,
+            queue : false
+        });
+  
+        $menuBg.animate({
+            left : "0"
+        }, {
+            duration : 200,
+            queue : false
+        });
+  
+        $container.animate({
+            "margin-left" : "255px"
+        }, {
+            duration : 200,
+            queue : false
+        });
+  
+        $container.animate({
+            "margin-right" : "-255px"
+        }, {
+            duration : 200,
+            queue : false
+        });
+
+      }, function() {
+
+        $menuBg.animate({
+            left : "-255"
+        }, {
+            duration : 200,
+            queue : false
+        });
+
+        $mainNav.animate({
+            left : "-255"
+        }, {
+            duration : 200,
+            queue : false
+        });
+
+        $container.animate({
+            "margin-left" : "0"
+        }, {
+            duration : 200,
+            queue : false
+        });
+
+        $container.animate({
+            "margin-right" : "0"
+        }, {
+            duration : 200,
+            queue : false
+        });
+      });
+			
 		
-			/*$('body').live("swipeleft", function(e){
-				console.log($(e.target).parents("#image-gallery").length);
+			$('body').live("swipeleft", function(e){
 				if ($(e.target).parents("#image-gallery").length == 0) {
-				if (menuStatus){	
-					$container.animate({
-						marginLeft: "0px",
-					}, 300, function(){menuStatus = false; $mainNav.css("visibility", "hidden");});
-				}
+  				if ($mainNav.hasClass('active')){	
+              $("#menu-toggle").trigger('click');
+  				}
 				}
 			});
 			
 			$('body').live("swiperight", function(e){
-				console.log($(e.target).parents("#image-gallery").length);
 				if ($(e.target).parents("#image-gallery").length == 0) {
-				if (!menuStatus){	
-					$mainNav.css("visibility", "visible");
-					$container.animate({
-						marginLeft: $mainNav.outerWidth(),
-					}, 300, function(){menuStatus = true});
+  				if (!$mainNav.hasClass('active')){	
+  					$("#menu-toggle").trigger('click');
+  				}
 				}
-				}
-			}); */
+			});
 			
 			InitAccordonMenu();
 			

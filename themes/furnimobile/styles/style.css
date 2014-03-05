@@ -178,6 +178,11 @@ hr.furn-red {
 #container {
 	padding:0 15px;
 }
+#container-inner, #container {
+    width: 100%;
+    overflow: hidden;
+    display: block;
+}
 /*article.node-teaser header {
 	padding: 0;
 }*/
@@ -193,7 +198,7 @@ h1.title {
 
 /* PAGE TOP */
 a.main-phone {
-	position: absolute;
+	position: relative;
 	top: 1em;
 	font-size: 1.23em;
 	font-weight: 400;
@@ -210,6 +215,16 @@ div.region-page-top {
 #menu-toggle {
 	position: relative;
 	top: .5em;
+}
+#close-toggle {
+  position: absolute;
+  top: 15px;
+  right: 40px;
+  color: white;
+}
+#close-toggle img {
+  vertical-align: top;
+  padding-left: 5px;
 }
 div.region-page-top ul.menu {
 	height: 3em;
@@ -286,13 +301,36 @@ div.region-page-top ul.menu li a {
 
 /* LEFT MENU BLOCK */
 #main-nav {
-	width: 270px;
-	height:auto;
-	display: block !important;
-	float: left;
+	width: 255px;
+	height:100%;
+	display: block;
 	background:black;
 	padding: 0 0 0 20px;
-	visibility: hidden;
+  position: absolute;
+  bottom: 0;
+  left: -270px;
+  z-index: 9998;
+  height: 100%;
+  top: 0;
+}
+#main-nav.active {
+    height: auto;
+    overflow: visible;
+}
+.mobile-menu-background {
+    background: black;
+    margin: 0;
+    position: absolute;
+    width: 255px;
+    top: 0;
+    bottom: 0;
+    left: -255px;
+    z-index: 9997;
+    display: block;
+    height: 100% !important;
+}
+#main-nav.active, .mobile-menu-background.active {
+    display: block;
 }
 #main-nav-links {
 	margin-top: 20px;

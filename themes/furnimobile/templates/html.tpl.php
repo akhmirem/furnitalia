@@ -29,6 +29,7 @@
   <?php print $page_bottom; ?>
 
   <?php
+    global $conf;
     if (isset($conf['production']) && $conf['production']) : ?>
       <!-- load marketing scripts -->
       <script language='JavaScript1.1' src='http://pixel.mathtag.com/event/js?mt_id=411755&mt_adid=119881&v1=&v2=&v3=&s1=&s2=&s3='></script>
