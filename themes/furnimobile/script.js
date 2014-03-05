@@ -93,21 +93,21 @@
       });
 			
 		
-			$('body').live("swipeleft", function(e){
-				if ($(e.target).parents("#image-gallery").length == 0) {
-  				if ($mainNav.hasClass('active')){	
-              $("#menu-toggle").trigger('click');
-  				}
-				}
+			$('body').touchwipe({
+        wipeLeft: function() { 
+          if ($mainNav.hasClass('active')) {
+            $("#menu-toggle").trigger('click');
+          }
+        },
+        wipeRight: function() {
+          if (!$mainNav.hasClass('active')) {
+            $("#menu-toggle").trigger('click');
+          }
+        },
+        min_move_x: 150,
+        preventDefaultEvents:false
 			});
 			
-			$('body').live("swiperight", function(e){
-				if ($(e.target).parents("#image-gallery").length == 0) {
-  				if (!$mainNav.hasClass('active')){	
-  					$("#menu-toggle").trigger('click');
-  				}
-				}
-			});
 			
 			InitAccordonMenu();
 			
