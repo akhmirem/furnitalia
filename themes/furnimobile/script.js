@@ -94,17 +94,19 @@
 			
 		
 			$('body').touchwipe({
-        wipeLeft: function() { 
-          if ($mainNav.hasClass('active')) {
+        wipeLeft: function(e) { 
+          var slideshowSwipe = $(e.target).parents("#item-images").length > 0;
+          if ($mainNav.hasClass('active') && !slideshowSwipe) {
             $("#menu-toggle").trigger('click');
           }
         },
-        wipeRight: function() {
-          if (!$mainNav.hasClass('active')) {
+        wipeRight: function(e) {
+          var slideshowSwipe = $(e.target).parents("#item-images").length > 0;
+          if (!$mainNav.hasClass('active') && !slideshowSwipe) {
             $("#menu-toggle").trigger('click');
           }
         },
-        min_move_x: 150,
+        min_move_x: 20,
         preventDefaultEvents:false
 			});
 			
