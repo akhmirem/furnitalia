@@ -7,9 +7,9 @@
  */
  
 ANIM_FRAME_WIDTH = 540;
-ANIM_BG_TOTAL_WIDTH = ANIM_FRAME_WIDTH * 3;
+ANIM_BG_TOTAL_WIDTH = ANIM_FRAME_WIDTH * 1.5;
 FRONTPAGE_TRANSITION_DURATION = 500;
-backgroundXShift = 0;
+backgroundXShift = -100;
 var timer;
 var timer2;
 var skipAnimation = false;
@@ -52,11 +52,14 @@ var isHandHeldDevice = false;
 						$('#menu-pic')
 							// remove the loading class (so no background spinner), 
 							.removeClass('loading')
-							.css("background-image", "url(" +  Drupal.settings.basePath + frontBgImg + ")");
+							.css({
+							  "background-image":"url(" +  Drupal.settings.basePath + frontBgImg + ")",
+							  "background-position":"0px 0px"
+                });
 
 						$("#stitch").hide();
 						$("div.keyhole").hide();
-						timer = window.setTimeout(AnimateFrontPageBackground, 500);
+						timer = window.setTimeout(AnimateFrontPageBackground, 100);
 						if ( $.browser.msie ) {
 							$("#promo").css("padding-top", "15px");
 						}
@@ -357,7 +360,7 @@ var isHandHeldDevice = false;
 	function InitFeaturedSlideShow() {
 		//Featured Slide Show images list		
 		//var imgPathPrefix = Drupal.settings.basePath + "sites/default/files/promo/black-friday/";
-		var imgPathPrefix = Drupal.settings.basePath + "sites/default/files/promo/moving_sale/";
+		var imgPathPrefix = Drupal.settings.basePath + "sites/default/files/promo/moving_sale_march/";
 		var link = Drupal.settings.basePath + "moving-sale?utm_source=main&utm_medium=featured&utm_campaign=moving-sale";
 		var featuredImgs = [
 			/*{'image':imgPathPrefix + "Natuzzi_Editions-B645-Stefano-Sectional.png"},
@@ -369,7 +372,7 @@ var isHandHeldDevice = false;
 			{'image':imgPathPrefix + "Natuzzi_Editions-B520-Valeria-Sofa.png"},
 			{'image':imgPathPrefix + "Italsofa_Twister.png"},
 			{'image':imgPathPrefix + "Natuzzi_Editions-B725_Enzo_Sofa.png"}*/
-			{'image':imgPathPrefix + "moving-sale-500x235.gif", link:link}
+			{'image':imgPathPrefix + "500x350_Animation.gif", link:link}
 		]
 		
 		//!Promo
@@ -443,7 +446,7 @@ var isHandHeldDevice = false;
 			}
 		});
 		backgroundXShift -= 100;
-		if (backgroundXShift < -ANIM_BG_TOTAL_WIDTH) {
+		if (backgroundXShift + ANIM_FRAME_WIDTH <= 0) { //-ANIM_BG_TOTAL_WIDTH) {
 			backgroundXShift = ANIM_FRAME_WIDTH;
 			$('#menu-pic').stop().css({"background-position": backgroundXShift + "px 0"});
 			timer = setTimeout(AnimateFrontPageBackground, 50);

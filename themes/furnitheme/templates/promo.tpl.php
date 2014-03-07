@@ -1,11 +1,7 @@
 <h3>Moving SALE</h3>
 <hr/>
 <a href="/moving-sale?utm_source=main&utm_medium=banner&utm_campaign=moving-sale">
-	<?php if (drupal_match_path(current_path(), '<front>')) : ?>
-		<img src="<?php print base_path(); ?>sites/default/files/promo/moving_sale/755x100_MainImageGraphic_01.jpg" alt="Moving Sale"/>
-	<?php else: ?>
-		<img src="<?php print base_path(); ?>sites/default/files/promo/moving_sale/moving-sale-755x100.gif" alt="Moving Sale"/>
-	<?php endif; ?>
+		<img src="<?php print base_path(); ?>sites/default/files/promo/moving_sale_march/755x100_MainImageGraphic.jpg" alt="Moving Sale"/>
 </a>
 <!-- <h4></h4> -->
 <!--<p>
