@@ -110,7 +110,7 @@ function furn_global_menu() {
 
 function furn_global_init() {
   if (arg(0) == 'cat' || arg(0) == 'tid') { //addresses like /cat/<tid> or /tid/<tid>
-    drupal_goto("collections", NULL, 301);
+    drupal_goto("collections", array(), 301);
     return;
   }
   if (isset($_GET['brand'])) {
