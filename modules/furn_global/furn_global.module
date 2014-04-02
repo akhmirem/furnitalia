@@ -114,7 +114,7 @@ function furn_global_init() {
     return;
   }
   if (isset($_GET['brand'])) {
-    $wrong_tids = array('47', '48', '49', '50', '52', '54', '328'); 
+    $wrong_tids = array('23', '24', '47', '48', '49', '50', '52', '54', '328'); 
     $brand_params = $_GET['brand'];
     if(!is_array($brand_params)) {
       $brand_params = (array) $brand_params; 

@@ -360,8 +360,8 @@ var isHandHeldDevice = false;
 	function InitFeaturedSlideShow() {
 		//Featured Slide Show images list		
 		//var imgPathPrefix = Drupal.settings.basePath + "sites/default/files/promo/black-friday/";
-		var imgPathPrefix = Drupal.settings.basePath + "sites/default/files/promo/moving_sale_march/";
-		var link = Drupal.settings.basePath + "moving-sale?utm_source=main&utm_medium=featured&utm_campaign=moving-sale";
+		var imgPathPrefix = Drupal.settings.basePath + "sites/default/files/promo/moving_sale_apr/";
+		var link = Drupal.settings.basePath + "moving-sale"; //?utm_source=main&utm_medium=featured&utm_campaign=moving-sale
 		var featuredImgs = [
 			/*{'image':imgPathPrefix + "Natuzzi_Editions-B645-Stefano-Sectional.png"},
 			{'image':imgPathPrefix + "Exstra_TulipTable.png"},
