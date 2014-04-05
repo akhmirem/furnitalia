@@ -74,7 +74,7 @@
 
 <article id="moving-sale" style="font-size:1.2em; line-height:1.5em">
   <div id="article-top">
-    <a href="http://www.youtube.com/watch?v=TLER-_7ITig&showinfo=0" id="video-link" target="_blank">
+    <a href="https://www.youtube.com/watch?v=B0qfWKLgXWA&showinfo=0" id="video-link" target="_blank">
       <img src="<?php print $theme_dir;?>/images/landing/header_info_apr.jpg" alt="Save 20-70% OFF on everything in showroom"/>
     </a>
   </div>
