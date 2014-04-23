@@ -1104,8 +1104,8 @@ function furn_global_webform_submission_presave($node, &$submission) {
     $lead_info['status'] = 'N';
     $lead_info['status_comments'] = "COUPON FORM SUBMISSION";
     $lead_info['address'] = "";
-    $lead_info['type'] = "";
     $lead_info['uid'] = 0;
+    $lead_info['type'] = 'C';
     $lead_info['log'] = 'Created: ' . format_date(REQUEST_TIME, 'custom', $time_format);
     
     $lid = furnileads_insert_lead($lead_info);

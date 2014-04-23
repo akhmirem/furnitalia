@@ -851,6 +851,7 @@ function _get_lead_types() {
 		'P' => 'Request Parts / Support',
 		'S' => 'SPAM',
 		'F' => 'Feedback',
+		'C' => 'Coupon form',
 	);
 	
 	return $lead_types;
