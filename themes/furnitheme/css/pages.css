@@ -596,6 +596,9 @@ ul.furn-gallery, ul.brands-list {
 ul.furn-gallery span.row, ul.brands-list span.row {
 	float: left;
 }
+ul.brands-list span.row {
+  width:100%;
+}
 ul.furn-gallery li {
 	margin-right: 15px;
 	margin-bottom: 15px;
@@ -605,10 +608,13 @@ ul.furn-gallery li {
 	float:left;
 }
 ul.brands-list li {
-	margin-right: 15px;
-	margin-bottom: 15px;
 	list-style-type: none;
 	float:left;
+  width: 49%;
+  border: 1px solid lightgray;
+  text-align: center;
+  height: 80px;
+  line-height: 80px;
 }
 ul.search-results li {
 	float:left;
