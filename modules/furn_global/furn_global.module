@@ -1237,3 +1237,10 @@ function furn_global_cron() {
   //clear the menu cache so it regenerates during the new request
   cache_clear_all('furn_menu_data', 'cache_block');
 }
+
+
+/*
+function furn_global_views_query_alter(&$view, &$query) {
+  if ($view->name == 'taxonomy_term') {
+  }
+}*/

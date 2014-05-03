@@ -614,7 +614,7 @@ ul.brands-list li {
   border: 1px solid lightgray;
   text-align: center;
   height: 80px;
-  line-height: 80px;
+  padding-top:10px;
 }
 ul.search-results li {
 	float:left;
