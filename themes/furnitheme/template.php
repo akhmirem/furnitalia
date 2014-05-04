@@ -786,7 +786,7 @@ function furnitheme_form_views_exposed_form_alter(&$form, &$form_state, $form_id
     //set default sort order
 		if(!isset($_REQUEST['sort_by'])) {
 		  if (isset($form['sort_by'])) {
-  		  $form['sort_by']['#value'] = 'changed';
+  		  $form['sort_by']['#value'] = 'title';
   		}
     }
         
@@ -873,7 +873,7 @@ function furnitheme_form_views_exposed_form_alter(&$form, &$form_state, $form_id
 	//set default sort order
 	if(!isset($_REQUEST['sort_by'])) {
 	  if (isset($form['sort_by'])) {
-		  $form['sort_by']['#value'] = 'changed';
+		  $form['sort_by']['#value'] = 'title';
 		}
   }
 	

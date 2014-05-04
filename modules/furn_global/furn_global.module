@@ -292,6 +292,8 @@ function furn_global_taxonomy_term_page($term=NULL) {
   $view->pre_execute();
   $output =  $view->preview($display_id);
   $view->post_execute();
+  
+  //$output = krumo($view) . $output;
 
   return $output;
 
