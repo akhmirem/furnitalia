@@ -323,55 +323,50 @@ function furnimobile_form_search_block_form_alter(&$form, &$form_state, $form_id
  *
  * Alter exposed filter form in views
  */
-function furnimobile_form_views_exposed_form_alter(&$form, &$form_state, $form_id) {  
-  
-
-	//dsm($form['#id']);
+function furnimobile_form_views_exposed_form_alter(&$form, &$form_state, $form_id) {
+  drupal_add_css(drupal_get_path('theme', 'furnimobile') . "/lib/dropkick/dropkick.css");
+  drupal_add_js (drupal_get_path('theme', 'furnimobile')  . "/lib/dropkick/jquery.dropkick-1.0.0.js");
 	
-	//drupal_add_css($base_path . $theme_path . "/lib/dropkick/dropkick.css");
-	drupal_add_css(drupal_get_path('theme', 'furnimobile') . "/lib/dropkick/dropkick.css");
-	drupal_add_js (drupal_get_path('theme', 'furnimobile')  . "/lib/dropkick/jquery.dropkick-1.0.0.js");
-	
-	if ($form['#id'] == 'views-exposed-form-taxonomy-term-page') { 
+  if ($form['#id'] == 'views-exposed-form-taxonomy-term-page') { 
 		
 		 
-		 // prevent recursion - only execute once
-	    static $called = 0;
-	    if ($called === $form['#id']) {
-	      return;
-	    }
-	    $called = $form['#id']; // flag as called
-	    
-	    // get view results
-	    $view = $form_state['view']; //views_get_current_view();
-	    
-		$temp_view = $view->clone_view(); // create a temp view
-	    $temp_view->init_display();
-	    $temp_view->pre_execute();
-	    $temp_view->set_items_per_page(0); // we want results from all pages
-	    $temp_view->display_handler->has_exposed = 0; // prevent recursion
-	    $temp_view->execute();
-	    $results = $temp_view->result;
-	    
-	    // return if no results
-	    if (!$results) {
-	      return;
-	    }
-	    
-	    // assemble results into a comma-separated nid list
-	    foreach($results as $row) {
-	      $nids[] = $row->nid;
-	    }
-	   
-	    // get the list of used terms
-	    $used_tids = db_query("SELECT GROUP_CONCAT(DISTINCT CAST (br.field_brand_tid AS CHAR) SEPARATOR ',') FROM {field_data_field_brand} br WHERE br.entity_id IN (:nids)", array(":nids" => $nids))->fetchField();
-	    
-	    
-	    if ($used_tids) {
-	    	$used_tids = explode(',', $used_tids);
-	    } else {
-	    	$used_tids = array(); // this shoudln't happen, but just in case...
-	    }	   
+    // prevent recursion - only execute once
+    static $called = 0;
+    if ($called === $form['#id']) {
+      return;
+    }
+    $called = $form['#id']; // flag as called
+    
+    // get view results
+    $view = $form_state['view']; //views_get_current_view();
+    
+    $temp_view = $view->clone_view(); // create a temp view
+    $temp_view->init_display();
+    $temp_view->pre_execute();
+    $temp_view->set_items_per_page(0); // we want results from all pages
+    $temp_view->display_handler->has_exposed = 0; // prevent recursion
+    $temp_view->execute();
+    $results = $temp_view->result;
+    
+    // return if no results
+    if (!$results) {
+      return;
+    }
+    
+    // assemble results into a comma-separated nid list
+    foreach($results as $row) {
+      $nids[] = $row->nid;
+    }
+   
+    // get the list of used terms
+    $used_tids = db_query("SELECT GROUP_CONCAT(DISTINCT CAST (br.field_brand_tid AS CHAR) SEPARATOR ',') FROM {field_data_field_brand} br WHERE br.entity_id IN (:nids)", array(":nids" => $nids))->fetchField();
+    
+    
+    if ($used_tids) {
+    	$used_tids = explode(',', $used_tids);
+    } else {
+    	$used_tids = array(); // this shoudln't happen, but just in case...
+    }	   
 	    
 		foreach($form['brand']['#options'] as $key => $option) {
 			// unset the unused term options
@@ -382,72 +377,78 @@ function furnimobile_form_views_exposed_form_alter(&$form, &$form_state, $form_i
 		
 		if (isset($form['availability'])) {
 					   
-		    // get the list of used terms
-		    $used_tids = db_query("SELECT GROUP_CONCAT(DISTINCT CAST (br.field_availability_value AS CHAR) SEPARATOR ',') FROM {field_data_field_availability} br WHERE br.entity_id IN (:nids)", array(":nids" => $nids))->fetchField();
-		    
-		    if ($used_tids) {
-		      $used_tids = explode(',', $used_tids);
-		    } else {
-		      $used_tids = array(); // this shoudln't happen, but just in case...
-		    }
-		    
+		  // get the list of used terms
+	    $used_tids = db_query("SELECT GROUP_CONCAT(DISTINCT CAST (br.field_availability_value AS CHAR) SEPARATOR ',') FROM {field_data_field_availability} br WHERE br.entity_id IN (:nids)", array(":nids" => $nids))->fetchField();
+	    
+	    if ($used_tids) {
+	      $used_tids = explode(',', $used_tids);
+	    } else {
+	      $used_tids = array(); // this shoudln't happen, but just in case...
+	    }
+	    
 			foreach($form['availability']['#options'] as $key => $option) {
 				// unset the unused term options
 				if ($key !== 'All' && !in_array($key, $used_tids)) {
 					unset($form['availability']['#options'][$key]);
 				}
-			}
-			
+			}			
 		}
+		
+		//set default sort order
+		if(!isset($_REQUEST['sort_by'])) {
+		  if (isset($form['sort_by'])) {
+  		  $form['sort_by']['#value'] = 'title';
+  		}
+    }
         
-	} else if (in_array($form['#id'], array('views-exposed-form-taxonomy-term-page-brands', 'views-exposed-form-taxonomy-term-page-in-store', 'views-exposed-form-taxonomy-term-page-italia', 'views-exposed-form-taxonomy-term-page-editions'))) {
+  } else if (in_array($form['#id'], array('views-exposed-form-taxonomy-term-page-brands', 'views-exposed-form-taxonomy-term-page-in-store', 'views-exposed-form-taxonomy-term-page-italia', 'views-exposed-form-taxonomy-term-page-editions'))) {
 	
-		// prevent recursion - only execute once
-	    static $called_brand = 0;
-	    if ($called_brand === $form['#id']) {
-	      return;
-	    }		    
-	    $called_brand = $form['#id']; 				  // flag as called
-	
-		// get view results
-	    $view = $form_state['view']; 				  // views_get_current_view();
-	    
-		$temp_view = $view->clone_view(); 			  // create a temp view
-	    $temp_view->init_display();
-	    
-	    if ($form['#id'] == 'views-exposed-form-taxonomy-term-page-in-store') {
-	    	$temp_view->set_display('page_in_store');
-	    } else {
-		    $temp_view->set_display('page_brands');
-	    }
-	    
-	    $temp_view->pre_execute();
-	    $temp_view->set_items_per_page(0); 			  // we want results from all pages
-	    $temp_view->display_handler->has_exposed = 0; // prevent recursion
-	    $temp_view->execute();
-	    $results = $temp_view->result;
-	    
-	    // return if no results
-	    if (!$results) {
-	    	return;
-	    }
-	    	    		    
-	    // assemble results into a comma-separated nid list
-	    foreach($results as $row) {
-	    	$nids[] = $row->nid;
-	    }
+    // prevent recursion - only execute once
+    static $called_brand = 0;
+    if ($called_brand === $form['#id']) {
+      return;
+    }		    
+    $called_brand = $form['#id']; 				  // flag as called
+
+	// get view results
+    $view = $form_state['view']; 				  // views_get_current_view();
+    
+	$temp_view = $view->clone_view(); 			  // create a temp view
+    $temp_view->init_display();
+    
+    if ($form['#id'] == 'views-exposed-form-taxonomy-term-page-in-store') {
+    	$temp_view->set_display('page_in_store');
+    } else {
+	    $temp_view->set_display('page_brands');
+    }
+    
+    $temp_view->pre_execute();
+    $temp_view->set_items_per_page(0); 			  // we want results from all pages
+    $temp_view->display_handler->has_exposed = 0; // prevent recursion
+    $temp_view->execute();
+    $results = $temp_view->result;
+    
+    // return if no results
+    if (!$results) {
+    	return;
+    }
+    	    		    
+    // assemble results into a comma-separated nid list
+    foreach($results as $row) {
+    	$nids[] = $row->nid;
+    }
 		
 		if (isset($form['category'])) {			
 		   
-		    // get the list of used terms
-		    $used_tids = db_query("SELECT GROUP_CONCAT(DISTINCT CAST (CASE WHEN h.parent=0 THEN br.field_category_tid ELSE h.parent END AS CHAR) SEPARATOR ',') FROM {field_data_field_category} br INNER JOIN {taxonomy_term_hierarchy} h on h.tid=br.field_category_tid WHERE br.entity_id IN (:nids)", array(":nids" => $nids))->fetchField();
-		    
-		    		    
-		    if ($used_tids) {
-		      $used_tids = explode(',', $used_tids);
-		    } else {
-		      $used_tids = array(); // this shoudln't happen, but just in case...
-		    }
+	    // get the list of used terms
+	    $used_tids = db_query("SELECT GROUP_CONCAT(DISTINCT CAST (CASE WHEN h.parent=0 THEN br.field_category_tid ELSE h.parent END AS CHAR) SEPARATOR ',') FROM {field_data_field_category} br INNER JOIN {taxonomy_term_hierarchy} h on h.tid=br.field_category_tid WHERE br.entity_id IN (:nids)", array(":nids" => $nids))->fetchField();
+	    
+	    		    
+	    if ($used_tids) {
+	      $used_tids = explode(',', $used_tids);
+	    } else {
+	      $used_tids = array(); // this shoudln't happen, but just in case...
+	    }
 		    
 			foreach($form['category']['#options'] as $key => $option) {
 				// unset the unused term options
@@ -460,14 +461,14 @@ function furnimobile_form_views_exposed_form_alter(&$form, &$form_state, $form_i
 		
 		if (isset($form['availability'])) {
 					   
-		    // get the list of used terms
-		    $used_tids = db_query("SELECT GROUP_CONCAT(DISTINCT CAST (br.field_availability_value AS CHAR) SEPARATOR ',') FROM {field_data_field_availability} br WHERE br.entity_id IN (:nids)", array(":nids" => $nids))->fetchField();
-		    
-		    if ($used_tids) {
-		      $used_tids = explode(',', $used_tids);
-		    } else {
-		      $used_tids = array(); // this shoudln't happen, but just in case...
-		    }
+	    // get the list of used terms
+	    $used_tids = db_query("SELECT GROUP_CONCAT(DISTINCT CAST (br.field_availability_value AS CHAR) SEPARATOR ',') FROM {field_data_field_availability} br WHERE br.entity_id IN (:nids)", array(":nids" => $nids))->fetchField();
+	    
+	    if ($used_tids) {
+	      $used_tids = explode(',', $used_tids);
+	    } else {
+	      $used_tids = array(); // this shoudln't happen, but just in case...
+	    }
 		    
 			foreach($form['availability']['#options'] as $key => $option) {
 				// unset the unused term options
@@ -475,8 +476,14 @@ function furnimobile_form_views_exposed_form_alter(&$form, &$form_state, $form_i
 					unset($form['availability']['#options'][$key]);
 				}
 			}
-			
 		}
+		
+		//set default sort order
+		if(!isset($_REQUEST['sort_by'])) {
+		  if (isset($form['sort_by'])) {
+  		  $form['sort_by']['#value'] = 'title';
+  		}
+    }
 
 	}
 	
