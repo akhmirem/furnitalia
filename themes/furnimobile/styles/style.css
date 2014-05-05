@@ -486,13 +486,14 @@ body.gallery-list main ul.furn-gallery li article img {
 }
 body.gallery-list main ul.furn-gallery li h2 {
 	left: 1em;
-	top: 2em;
+	top: .7em;
 	position: relative;
 }
 body.gallery-list main ul.furn-gallery .item-details {
 	position: relative;
-	top: 3em;
+	top: 1em;
 	left: 1.2em;
+	float:left;
 }
 div.view-filters {
 	float: left;
