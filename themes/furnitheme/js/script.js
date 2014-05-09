@@ -358,20 +358,10 @@ var isHandHeldDevice = false;
 	}
 	
 	function InitFeaturedSlideShow() {
-		//Featured Slide Show images list		
-		//var imgPathPrefix = Drupal.settings.basePath + "sites/default/files/promo/black-friday/";
-		var imgPathPrefix = Drupal.settings.basePath + "sites/default/files/promo/moving_sale_apr/";
-		var link = Drupal.settings.basePath + "moving-sale"; //?utm_source=main&utm_medium=featured&utm_campaign=moving-sale
+		//Featured Slide Show images list
+		var imgPathPrefix = Drupal.settings.basePath + "sites/default/files/promo/pre_memorial_sale/";
+		var link = Drupal.settings.basePath + "living"; //?utm_source=main&utm_medium=featured&utm_campaign=moving-sale
 		var featuredImgs = [
-			/*{'image':imgPathPrefix + "Natuzzi_Editions-B645-Stefano-Sectional.png"},
-			{'image':imgPathPrefix + "Exstra_TulipTable.png"},
-			{'image':imgPathPrefix + "Natuzzi_Italia-Soud_Chair.png"},				
-			{'image':imgPathPrefix + "Natuzzi-Italia_Bateau.png"},				
-			{'image':imgPathPrefix + "Natuzzi_Editions-B815_Pascal_Chair.png"},			
-			{'image':imgPathPrefix + "Natuzzi_Italia-Surround.png"},								
-			{'image':imgPathPrefix + "Natuzzi_Editions-B520-Valeria-Sofa.png"},
-			{'image':imgPathPrefix + "Italsofa_Twister.png"},
-			{'image':imgPathPrefix + "Natuzzi_Editions-B725_Enzo_Sofa.png"}*/
 			{'image':imgPathPrefix + "500x350_Animation.gif", link:link}
 		]
 		

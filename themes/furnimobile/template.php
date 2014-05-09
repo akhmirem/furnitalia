@@ -15,7 +15,7 @@ function furnimobile_preprocess_page(&$vars) {
     
     drupal_add_library('system', 'ui.accordion');
 
-	drupal_add_library('system', 'drupal.ajax');	    
+    drupal_add_library('system', 'drupal.ajax');	    
    	drupal_add_js(drupal_get_path('module', 'webform_ajax') . '/js/webform_ajax.js', 'file');
    	drupal_add_css(drupal_get_path("theme", "furnimobile"). "/lib/fancybox/jquery.fancybox.css");
    	drupal_add_js(drupal_get_path("theme", "furnimobile"). "/lib/fancybox/jquery.fancybox.pack.js");
@@ -37,8 +37,8 @@ function furnimobile_preprocess_page(&$vars) {
 	if (variable_get('show_banner', FALSE)) {
 		if (drupal_match_path(current_path(), implode("\n", array_merge(array('node/*', 'collections', 'taxonomy/term/*'), $italia_editions_gallery_paths)))) {
 			$files_dir = base_path() . variable_get('file_public_path', conf_path() . '/files'); 
-			$banner_img_path = $files_dir . "/promo/moving_sale_apr/320x140_MobileSecondary.jpg";
-			$banner_html = l('<img src="' . $banner_img_path . '"/>', "moving-sale", array('html' => TRUE, 'attributes' => array('class' => array('banner-link')))); //'query' => array('utm_source' => 'mobile', 'utm_medium' => 'banner', 'utm_campaign' => 'moving-sale'
+			$banner_img_path = $files_dir . "/promo/pre_memorial_sale/320x140_MobileSecondary.jpg";
+			$banner_html = l('<img src="' . $banner_img_path . '"/>', "living", array('html' => TRUE, 'attributes' => array('class' => array('banner-link')))); //'query' => array('utm_source' => 'mobile', 'utm_medium' => 'banner', 'utm_campaign' => 'moving-sale'
 			$vars['page']['banner'] = array(
 				'#markup' => $banner_html,
 			);
