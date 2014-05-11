@@ -362,7 +362,7 @@ var isHandHeldDevice = false;
 		var imgPathPrefix = Drupal.settings.basePath + "sites/default/files/promo/pre_memorial_sale/";
 		var link = Drupal.settings.basePath + "living"; //?utm_source=main&utm_medium=featured&utm_campaign=moving-sale
 		var featuredImgs = [
-			{'image':imgPathPrefix + "500x350_Animation.gif", link:link}
+			{'image':imgPathPrefix + "500x350_Animation2.gif", link:link}
 		]
 		
 		//!Promo
@@ -371,7 +371,7 @@ var isHandHeldDevice = false;
 			showCaption:false, 
 			showTooltips:false, 
 			data:featuredImgs, 
-			autoPlay:true, 
+			autoPlay:false, 
 			speed:3000 /*, 
 			buildFinished: function() {
 
