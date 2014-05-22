@@ -359,10 +359,10 @@ var isHandHeldDevice = false;
 	
 	function InitFeaturedSlideShow() {
 		//Featured Slide Show images list
-		var imgPathPrefix = Drupal.settings.basePath + "sites/default/files/promo/pre_memorial_sale/";
+		var imgPathPrefix = Drupal.settings.basePath + "sites/default/files/promo/memorial_day/";
 		var link = Drupal.settings.basePath + "living?availability=In+stock";
 		var featuredImgs = [
-			{'image':imgPathPrefix + "500x350_Animation2.gif", link:link}
+			{'image':imgPathPrefix + "500x350_Animation.gif", link:link}
 		]
 		
 		//!Promo
