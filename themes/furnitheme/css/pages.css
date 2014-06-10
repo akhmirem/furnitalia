@@ -603,9 +603,16 @@ ul.furn-gallery li {
 	margin-right: 15px;
 	margin-bottom: 15px;
 	list-style-type: none;
+	float:left;
+}
+ul.furn-gallery li, ul.furn-gallery li article {
 	width:220px;
 	height:165px;
-	float:left;
+}
+ul.furn-gallery li article.node-sticky {
+  border: 2px solid rgb(214, 115, 115);
+  margin-right: 11px;
+  margin-bottom: 11px;
 }
 ul.brands-list li {
 	list-style-type: none;
