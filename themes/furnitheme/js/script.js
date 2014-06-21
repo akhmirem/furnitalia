@@ -359,10 +359,10 @@ var isHandHeldDevice = false;
 	
 	function InitFeaturedSlideShow() {
 		//Featured Slide Show images list
-		var imgPathPrefix = Drupal.settings.basePath + "sites/default/files/promo/fathers_day/";
+		var imgPathPrefix = Drupal.settings.basePath + "sites/default/files/promo/june/";
 		var link = Drupal.settings.basePath + "living?availability=In+stock";
 		var featuredImgs = [
-			{'image':imgPathPrefix + "500x350_Static.jpg", link:link}
+			{'image':imgPathPrefix + "500x350_Animation_low.gif", link:link}
 		]
 		
 		//!Promo
