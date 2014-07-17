@@ -34,10 +34,11 @@ function furnimobile_preprocess_page(&$vars) {
 		_page_include_mightyslider_resources();
 	}
 	
+	//!BANNER
 	if (variable_get('show_banner', FALSE)) {
 		if (drupal_match_path(current_path(), implode("\n", array_merge(array('node/*', 'collections', 'taxonomy/term/*'), $italia_editions_gallery_paths)))) {
 			$files_dir = base_path() . variable_get('file_public_path', conf_path() . '/files'); 
-			$banner_img_path = $files_dir . "/promo/june/320x140_MobileSecondary.jpg";
+			$banner_img_path = $files_dir . "/promo/construction/320x140_MobileSecondary.jpg";
 			$banner_html = l('<img src="' . $banner_img_path . '"/>', "living", array('html' => TRUE, 'attributes' => array('class' => array('banner-link')), 'query' => array('availability' => 'In stock'))); //'query' => array('utm_source' => 'mobile', 'utm_medium' => 'banner', 'utm_campaign' => 'moving-sale'
 			$vars['page']['banner'] = array(
 				'#markup' => $banner_html,

@@ -359,10 +359,10 @@ var isHandHeldDevice = false;
 	
 	function InitFeaturedSlideShow() {
 		//Featured Slide Show images list
-		var imgPathPrefix = Drupal.settings.basePath + "sites/default/files/promo/june/";
+		var imgPathPrefix = Drupal.settings.basePath + "sites/default/files/promo/construction/";
 		var link = Drupal.settings.basePath + "living?availability=In+stock";
 		var featuredImgs = [
-			{'image':imgPathPrefix + "500x350_Animation_low.gif", link:link}
+			{'image':imgPathPrefix + "500x350_HomePageStatic.jpg", link:link}
 		]
 		
 		//!Promo
