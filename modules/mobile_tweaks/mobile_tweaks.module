@@ -144,7 +144,7 @@ function mobile_tweaks_front_page() {
 	$front_slides = "";
 	$img_path = base_path() . "sites/default/files/promo/construction/";
 	$imgs = array('320x420_MobileMain.jpg');
-	$link = url("living", array('query' => array('availability' =>  'In stock')));//array('utm_source' => 'mobile', 'utm_medium' => 'front', 'utm_campaign' => 'moving-sale')));
+	$link = url("living", array('query' => array('availability' =>  'in_stock')));//array('utm_source' => 'mobile', 'utm_medium' => 'front', 'utm_campaign' => 'moving-sale')));
 	foreach($imgs as $img) {
 		$front_slides .= "<div class=\"slide\" data-mightyslider=\"cover: '" . $img_path . $img . "', link: {url:'" . $link . "'} \"></div>";
 	}

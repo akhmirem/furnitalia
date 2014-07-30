@@ -1,6 +1,6 @@
 <h3>Construction of our new showroom is under way...</h3>
 <hr/>
-<a href="/living?availability=In+stock">
+<a href="/living?availability=in_stock">
 		<img src="<?php print base_path(); ?>sites/default/files/promo/construction/755x100_MainImageGraphic.jpg" alt="See how much you can save during July and August!"/>
 </a>
 <!--<p>

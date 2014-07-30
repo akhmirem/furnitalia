@@ -123,8 +123,11 @@ function furn_global_init() {
       unset($_GET['brand']);
     }
   }
-  if (isset($_GET['availability']) && $_GET['availability'] == '2 weeks') {
-    unset ($_GET['availability']);
+  if (isset($_GET['availability'])) {
+    if ($_GET['availability'] == '2 weeks') 
+      unset ($_GET['availability']);
+    else if ($_GET['availability'] == 'In stock' || $_GET['availability'] == 'In+stock' || $_GET['availability'] == 'In%20stock')
+      $_GET['availability'] = 'in_stock';
   }
 }
 

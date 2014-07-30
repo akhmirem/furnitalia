@@ -360,7 +360,7 @@ var isHandHeldDevice = false;
 	function InitFeaturedSlideShow() {
 		//Featured Slide Show images list
 		var imgPathPrefix = Drupal.settings.basePath + "sites/default/files/promo/construction/";
-		var link = Drupal.settings.basePath + "living?availability=In+stock";
+		var link = Drupal.settings.basePath + "living?availability=in_stock";
 		var featuredImgs = [
 			{'image':imgPathPrefix + "500x350_HomePageStatic.jpg", link:link}
 		]
