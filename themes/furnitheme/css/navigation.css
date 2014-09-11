@@ -102,11 +102,3 @@ li a.active {
 .block-menu-block {
 }
 
-/*
- * Admin Menu settigns (only for logged-in users)
- */
-.menu-859 a, #toolbar-link-admin-leads {
-  font-weight: bold;
-  color: lightGreen !important;
-  font-size: 1.05em !important;
-} 

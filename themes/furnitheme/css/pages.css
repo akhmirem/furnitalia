@@ -1364,3 +1364,12 @@ article.catalogs li {
 	list-style-type:none;
 	clear:both;
 }
+
+/*
+ * Admin Menu settigns (only for logged-in users)
+ */
+.menu-859 a, #toolbar-link-admin-leads {
+  font-weight: bold;
+  color: lightGreen !important;
+  font-size: 1.05em !important;
+} 
