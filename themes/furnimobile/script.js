@@ -19,7 +19,7 @@
 			$container = $("#container-inner");
 			$menuBg = $(".mobile-menu-background");
 			
-			$(".mobile-menu-background").css("left", "-270px");
+			$menuBg.css("left", "-270px");
 			$mainNav.css("left", "-270px");
 	
 			$("#menu-toggle").click(function() {
@@ -93,7 +93,7 @@
       });
 			
 		
-			$('body').touchwipe({
+			/*$('body').touchwipe({
         wipeLeft: function(e) { 
           var slideshowSwipe = $(e.target).parents("#item-images").length > 0;
           if ($mainNav.hasClass('active') && !slideshowSwipe) {
@@ -108,7 +108,7 @@
         },
         min_move_x: 20,
         preventDefaultEvents:false
-			});
+			});*/
 			
 			
 			InitAccordonMenu();

@@ -21,6 +21,6 @@ stylesheets[screen][] = styles/gallery.css
 
 
 ; Optionally add some JavaScripts to your theme
-scripts[] = lib/jquery.touchwipe.min.js
+;scripts[] = lib/jquery.touchwipe.min.js
 scripts[] = script.js
 
