@@ -142,7 +142,7 @@ function mobile_tweaks_front_page() {
 	drupal_set_title("Modern Furniture Store Sacramento/Roseville");
 
 	$front_slides = "";
-	$img_path = base_path() . "sites/default/files/promo/fall2014/";
+	$img_path = base_path() . "sites/default/files/promo/oct2014/";
 	$imgs = array('320x420_MobileMain.jpg');
   $link = url(
     "living", 

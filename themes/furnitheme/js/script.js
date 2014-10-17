@@ -359,10 +359,10 @@ var isHandHeldDevice = false;
 	
 	function InitFeaturedSlideShow() {
 		//Featured Slide Show images list
-		var imgPathPrefix = Drupal.settings.basePath + "sites/default/files/promo/fall2014/";
+		var imgPathPrefix = Drupal.settings.basePath + "sites/default/files/promo/oct2014/";
 		var link = Drupal.settings.basePath + "living?availability=in_stock";
 		var featuredImgs = [
-			{'image':imgPathPrefix + "500x350_dining.jpg", link:link}
+			{'image':imgPathPrefix + "500x350_Animation-oct2014.jpg", link:link}
 		]
 		
 		//!Promo

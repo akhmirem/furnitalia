@@ -620,9 +620,14 @@ ul.brands-list li {
   width: 49%;
   border: 1px solid lightgray;
   text-align: center;
-  height: 80px;
-  padding-top:10px;
+  height: 120px;
+  line-height:120px;
 }
+ul.brands-list li > div.brand-name {
+  position:relative;
+  top: -90px; 
+}
+
 ul.search-results li {
 	float:left;
 }
