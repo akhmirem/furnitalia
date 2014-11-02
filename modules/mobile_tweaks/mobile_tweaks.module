@@ -47,23 +47,23 @@ function mobile_tweaks_form_alter(&$form, &$form_state, $form_id){
 		drupal_add_css(drupal_get_path('theme', 'furnitheme') . '/css/leads.css');
 
 		//place video field in tabs
-	    $form['item_video_container'] = array(
-	        '#type' => 'fieldset',
-	        '#title' => t('Item Video'),
-	        '#collapsible' => TRUE,
-	        '#collapsed' => FALSE,
-	        '#group' => 'additional_settings',
-	        '#weight' => -2, //Tab location
-	    );
+    $form['item_video_container'] = array(
+        '#type' => 'fieldset',
+        '#title' => t('Item Video'),
+        '#collapsible' => TRUE,
+        '#collapsed' => FALSE,
+        '#group' => 'additional_settings',
+        '#weight' => -2, //Tab location
+    );
 
-	    $form['field_video']['#container'] = array('field_video');	//make sure parent item doesn't change after moving form element
-	    $form['item_video_container']['field_video'] = $form['field_video'];
-	    unset($form['field_video']);	    
-	    
-	    $form['buttons']['#weight'] = 100;
-	    
-	    //put field ALU in product info
-	    $form['base']['field_alu'] = $form['field_alu'];
+    $form['field_video']['#container'] = array('field_video');	//make sure parent item doesn't change after moving form element
+    $form['item_video_container']['field_video'] = $form['field_video'];
+    unset($form['field_video']);	    
+    
+    $form['buttons']['#weight'] = 100;
+    
+    //put field ALU in product info
+    $form['base']['field_alu'] = $form['field_alu'];
 		$form['base']['field_alu']['#weight'] = 1;
 		
 		//put 'display sale price' in product info
