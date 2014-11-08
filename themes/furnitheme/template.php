@@ -118,7 +118,7 @@ function furnitheme_preprocess_page(&$vars) {
 		if ($node->type == 'item') {
 			$content = $vars['page']['content']['system_main']['nodes'][$node->nid];
 
-			preprocess_node_common_fields($content, 'page');
+			preprocess_node_common_fields($content, 'page', $node);
 						
 			$vars['page']['content']['system_main']['nodes'][$node->nid] = $content;			
 				
@@ -152,7 +152,7 @@ EOT;
 	
 }
 
-function preprocess_node_common_fields(&$content, $hook) {
+function preprocess_node_common_fields(&$content, $hook, $node) {
 	
 
 	//!TEMPORARILY FORCE REMOVE ADD TO CART BUTTON
@@ -199,13 +199,18 @@ function preprocess_node_common_fields(&$content, $hook) {
 	------------------------------------------------------------------
 	*/
 
-	if(furn_global_show_sale_price($content)) {
-		 if(!empty($content['field_special_price']) && isset($content['field_special_price']['#items']) && $content['field_special_price']['#items'][0]['value']) {
-		 	$special_price = $content['field_special_price']['#items'][0]['value'];
-		 	$diff = abs(floatval($special_price) - floatval($sell_price));
-		 	if ($diff > $epsilon) {
-			 	$sale_price_set = TRUE; //sell price and special price are not same
-			}
+  $item_on_clearance = field_get_items('node', $node, 'field_clearance'); 
+  if ($item_on_clearance)
+    $item_on_clearance = (bool)$item_on_clearance['0']['value'];
+
+	if(furn_global_show_sale_price($content) || $item_on_clearance) {
+     $special_price = field_get_items('node', $node, 'field_special_price');
+     if ($special_price) {
+       $special_price = $special_price['0']['value']; 
+       $diff = abs(floatval($special_price) - floatval($sell_price));
+		 	 if ($diff > $epsilon) {
+			  	$sale_price_set = TRUE; //sell price and special price are not same
+			 }
 		 }
 	}
 		
@@ -213,9 +218,13 @@ function preprocess_node_common_fields(&$content, $hook) {
 	
 		//don't display MSRP:
 		unset($content['list_price']);
-		
+
+    $price_lbl = "SPECIAL:";
+    if ($item_on_clearance) {
+      $price_lbl = "CLEARANCE:";
+    }
 		$new_sale_price = array(		
-			'#title' => "SPECIAL:",
+			'#title' => $price_lbl,
 			'#theme' => "uc_product_price",
 			'#value' => $special_price,
 			'#attributes' => array('class' => array('sell-price')),		
@@ -246,7 +255,12 @@ function preprocess_node_common_fields(&$content, $hook) {
  */
 function furnitheme_preprocess_node(&$vars, $hook) {
 	if ($vars['type'] == 'item') {
-		preprocess_node_common_fields($vars['content'], 'page');	
+    static $i = true;
+    if ($i) {
+      $i = false;
+      //dsm($vars);
+    }
+		preprocess_node_common_fields($vars['content'], 'page', $vars['node']);	
 	}
 }
 

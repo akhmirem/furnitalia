@@ -50,32 +50,38 @@ function furnitalia_tweaks_get_page_title($tid) {
 function furnitalia_tweaks_form_alter(&$form, &$form_state, $form_id){
 	if ($form['#id'] == 'item-node-form') {
 		
-		//dsm($form);
 		drupal_add_css(drupal_get_path('theme', 'furnitheme') . '/css/leads.css');
 
 		//place video field in tabs
-	    $form['item_video_container'] = array(
-	        '#type' => 'fieldset',
-	        '#title' => t('Item Video'),
-	        '#collapsible' => TRUE,
-	        '#collapsed' => FALSE,
-	        '#group' => 'additional_settings',
-	        '#weight' => -2, //Tab location
-	    );
+    $form['item_video_container'] = array(
+        '#type' => 'fieldset',
+        '#title' => t('Item Video'),
+        '#collapsible' => TRUE,
+        '#collapsed' => FALSE,
+        '#group' => 'additional_settings',
+        '#weight' => -2, //Tab location
+    );
 
-	    $form['field_video']['#container'] = array('field_video');	//make sure parent item doesn't change after moving form element
-	    $form['item_video_container']['field_video'] = $form['field_video'];
-	    unset($form['field_video']);	    
-	    
-	    $form['buttons']['#weight'] = 100;
-	    
-	    //put field ALU in product info
-	    $form['base']['field_alu'] = $form['field_alu'];
+    $form['field_video']['#container'] = array('field_video');	//make sure parent item doesn't change after moving form element
+    $form['item_video_container']['field_video'] = $form['field_video'];
+    unset($form['field_video']);	    
+    
+    $form['buttons']['#weight'] = 100;
+    
+    //put field ALU in product info
+    $form['base']['field_alu'] = $form['field_alu'];
 		$form['base']['field_alu']['#weight'] = 1;
 		
 		//put 'display sale price' in product info
 		$form['base']['prices']['field_display_sale_price'] = $form['field_display_sale_price'];
 		unset($form['field_display_sale_price']);
+
+    //place 'On Clearance' flag in pricing info
+    $form['base']['field_clearance'] = $form['field_clearance'];
+    $form['base']['field_clearance']['#weight'] = 11; 
+    unset($form['field_clearance']);
+
+    $form['base']['shippable']['#weight'] = 100;
 		
 		//put checkbox 'show add-to-cart button
 		//$form['base']['show_add_to_cart'] = $form['field_show_add_to_cart'];
@@ -101,7 +107,7 @@ function furnitalia_tweaks_form_alter(&$form, &$form_state, $form_id){
 		//restrict title to be less than or equal to 20 characters
 		$form['title']['#maxlength'] = '25';
 		
-    }
+  }
 }
 
 /**

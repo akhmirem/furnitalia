@@ -290,12 +290,20 @@ function furnitalia_batch_process_node_import($obj=array()){
 	
 	if ($node) {	
 		//do things with node
-		$node->sell_price = $obj['sell_price'];
-		$node->field_special_price['und'][0]['value'] = $obj['special_price'];
+    $wrapper = entity_metadata_wrapper('node', $node);
+
+    $clearance = strtoupper($obj['clearance']) == 'Y' ? 1 : 0;
+    $wrapper->field_clearance->set($clearance);
+
+		$wrapper->sell_price->set($obj['sell_price']);
+		$wrapper->field_special_price->set($obj['special_price']);
 		
-		$node->log = "Edited by batch operation on " . format_date(REQUEST_TIME, 'custom', 'm-d-Y H:i');
+		$log = "Edited by batch operation on " . format_date(REQUEST_TIME, 'custom', 'm-d-Y H:i');
+    $wrapper->log->set($log);
 		
-		node_save($node);
+    //..and save node
+    $wrapper->save();
+
 	}
 	
 	return $node;
@@ -357,15 +365,25 @@ function furnitalia_batch_export(&$context) {
 
 	while($row = $result->fetchAssoc()) {
 
-	    $node = node_load($row['nid']);
-	    
-	    $node->main_cat = taxonomy_term_load($node->field_category['und'][0]['tid']);
-	    $node->main_cat = $node->main_cat->name;
-	    
-	    $node->brand = taxonomy_term_load($node->field_brand['und'][0]['tid']);
-	    $node->brand = $node->brand->name;
+    $node = node_load($row['nid']);
+    
+    $node->main_cat = taxonomy_term_load($node->field_category['und'][0]['tid']);
+    $node->main_cat = $node->main_cat->name;
+    
+    $node->brand = taxonomy_term_load($node->field_brand['und'][0]['tid']);
+    $node->brand = $node->brand->name;
+    $node->clearance = $node->field_clearance['und'][0]['value'] == 1 ? 'Y' : 'N';
 
-		$context['results'][] = array($node->nid, check_plain($node->title), $node->main_cat, $node->brand, $node->sell_price, $node->field_special_price['und'][0]['value'], "http://www.furnitalia.com/node/$node->nid");
+    $context['results'][] = array(
+      $node->nid, 
+      check_plain($node->title), 
+      $node->main_cat, 
+      $node->brand, 
+      $node->sell_price, 
+      $node->field_special_price['und'][0]['value'], 
+      $node->clearance,
+      "http://www.furnitalia.com/node/$node->nid",
+    );
 		
 		// Update our progress information.
 		$context['sandbox']['progress']++;
@@ -385,7 +403,8 @@ function furnitalia_batch_export(&$context) {
  */
 function furnitalia_batch_export_finished($success, $results, $operations) {
 	if ($success) {
-		
+
+    dsm("Exported data: ");
 		dsm($results);
 				
 		$message = 'Batch complete. ' . count($results) . ' items exported.';	
@@ -396,7 +415,8 @@ function furnitalia_batch_export_finished($success, $results, $operations) {
 		require_once dirname(__FILE__) . "/parsecsv/parsecsv.lib.php";
 
 		$csv = new parseCSV();
-		$csv->save($files_dir . '/batch/' . $export_file_name, $results, FALSE, array('nid', 'title', 'category', 'brand', 'sell_price', 'special_price', 'link'));
+    $cols = array('nid', 'title', 'category', 'brand', 'sell_price', 'special_price', 'clearance', 'link');
+		$csv->save($files_dir . '/batch/' . $export_file_name, $results, FALSE, $cols );
 		
 		dsm('Exported nodes saved in '  . $export_file_name);
 		
@@ -410,9 +430,4 @@ function furnitalia_batch_export_finished($success, $results, $operations) {
 	drupal_set_message($message);
 	
 }
-
-
-
-
-
 

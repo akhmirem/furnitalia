@@ -40,10 +40,13 @@ ul.tips, div.description, .form-item div.description {
 #edit-field-category-und {
 	height:20em;
 }
-.field-name-field-show-add-to-cart, .field-name-field-starting-from-price {
+.field-name-field-show-add-to-cart, .field-name-field-starting-from-price, .field-name-field-clearance {
 	background-color: yellow;
 	padding: 1em;
 	border-left: 5px solid red;
 	border-right: 5px solid red;
+}
+#edit-field-clearance {
+  display:inline-block;
 }
 /* \ITEM FORM TWEAKS */
