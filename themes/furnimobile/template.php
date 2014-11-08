@@ -351,6 +351,9 @@ function furnimobile_form_views_exposed_form_alter(&$form, &$form_state, $form_i
   if ($form['#id'] == 'views-exposed-form-taxonomy-term-page') { 
 		
 		 
+    //reset action attribute so form resubmits to same page
+    $form['#action'] = "";
+
     // prevent recursion - only execute once
     static $called = 0;
     if ($called === $form['#id']) {
@@ -424,6 +427,9 @@ function furnimobile_form_views_exposed_form_alter(&$form, &$form_state, $form_i
         
   } else if (in_array($form['#id'], array('views-exposed-form-taxonomy-term-page-brands', 'views-exposed-form-taxonomy-term-page-in-store', 'views-exposed-form-taxonomy-term-page-italia', 'views-exposed-form-taxonomy-term-page-editions'))) {
 	
+    //reset action attribute so form resubmits to same page
+    $form['#action'] = "";
+
     // prevent recursion - only execute once
     static $called_brand = 0;
     if ($called_brand === $form['#id']) {

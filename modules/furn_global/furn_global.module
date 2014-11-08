@@ -559,6 +559,12 @@ function furn_global_page_alter(&$page) {
       '#suffix' => '</div>',		
     );
     
+    //Clearance items link
+    #$page['nav']['furn_menu']['clearance'] = array(
+    #  '#prefix' => '<h3 class="' . $top_menu_title_class . '"> ' . l( "Clearance", 'clearance', array('attributes' => array('id' => 'bg5', 'class' => array((arg(0) == 'clearance') ? " active" : "")))) . '</h3><div class="' . $submenu_class . '">',
+    #  '#suffix' => '</div>',		
+    #);
+    
     //interior design nav link
     $page['nav']['furn_menu']['interior_design'] = array(
       '#prefix' => '<h3 class="' . $top_menu_title_class . '"> ' . l( "Interior Design Services", 'interior-design', array('attributes' => array('id' => 'bg4', 'class' => array((arg(0) == 'interior-design') ? " active" : "")))) . '</h3><div class="' . $submenu_class . '">',
@@ -638,6 +644,12 @@ function furn_global_page_alter(&$page) {
       '#prefix' => '<h3 class="' . $top_menu_title_class . '"> ' . l( "In Store", 'in-store', array('attributes' => array('id' => 'bg5', 'class' => array((arg(0) == 'in-store') ? " active" : "")))) . '</h3><div class="' . $submenu_class . '">',
       '#suffix' => '</div>',		
     );
+    
+    //Clearance items link
+    #$page['left']['furn_menu']['clearance'] = array(
+    #  '#prefix' => '<h3 class="' . $top_menu_title_class . '"> ' . l( "Clearance", 'clearance', array('attributes' => array('id' => 'bg5', 'class' => array((arg(0) == 'clearance') ? " active" : "")))) . '</h3><div class="' . $submenu_class . '">',
+    #  '#suffix' => '</div>',		
+    #);
     
     //mark up structure for interior design link
     $page['left']['furn_menu']['interior_design'] = array(
