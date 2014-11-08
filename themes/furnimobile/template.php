@@ -1,24 +1,24 @@
 <?php
 
 /**
-*  * Override or insert variables into the page templates.
-*   *
-*    * @param $variables
-*     *   An array of variables to pass to the theme template.
-*      * @param $hook
-*       *   The name of the template being rendered ("page" in this case.)
-*        */
+** Override or insert variables into the page templates.
+**
+** @param $variables
+**   An array of variables to pass to the theme template.
+** @param $hook
+**   The name of the template being rendered ("page" in this case.)
+**/
 //!PreprocessPage
 function furnimobile_preprocess_page(&$vars) {
 
-    global $user;
+  global $user;
     
-    drupal_add_library('system', 'ui.accordion');
+  drupal_add_library('system', 'ui.accordion');
 
-    drupal_add_library('system', 'drupal.ajax');	    
-   	drupal_add_js(drupal_get_path('module', 'webform_ajax') . '/js/webform_ajax.js', 'file');
-   	drupal_add_css(drupal_get_path("theme", "furnimobile"). "/lib/fancybox/jquery.fancybox.css");
-   	drupal_add_js(drupal_get_path("theme", "furnimobile"). "/lib/fancybox/jquery.fancybox.pack.js");
+  drupal_add_library('system', 'drupal.ajax');	    
+  drupal_add_js(drupal_get_path('module', 'webform_ajax') . '/js/webform_ajax.js', 'file');
+  drupal_add_css(drupal_get_path("theme", "furnimobile"). "/lib/fancybox/jquery.fancybox.css");
+  drupal_add_js(drupal_get_path("theme", "furnimobile"). "/lib/fancybox/jquery.fancybox.pack.js");
 	
 	//set up top menu
 	furnimobile_set_up_top_menu($vars);	
@@ -65,7 +65,7 @@ function furnimobile_preprocess_page(&$vars) {
 		
 			$content = $vars['page']['content']['system_main']['nodes'][$node->nid];
 
-			preprocess_node_common_fields($content, 'page');
+			preprocess_node_common_fields($content, 'page', $node);
 						
 			$vars['page']['content']['system_main']['nodes'][$node->nid] = $content;			
 				
@@ -172,7 +172,7 @@ function furnimobile_set_up_top_menu (&$vars) {
 	);
 }
 
-function preprocess_node_common_fields(&$content, $hook) {
+function preprocess_node_common_fields(&$content, $hook, $node) {
 	
 
 	//!TEMPORARILY FORCE REMOVE ADD TO CART BUTTON
@@ -219,10 +219,15 @@ function preprocess_node_common_fields(&$content, $hook) {
 	-----------------------------------
 	*/
 	
-	if(furn_global_show_sale_price($content)) {
+  $item_on_clearance = field_get_items('node', $node, 'field_clearance');
+  if ($item_on_clearance)
+    $item_on_clearance = (bool)$item_on_clearance['0']['value'];
 
-		 if(!empty($content['field_special_price']) && isset($content['field_special_price']['#items']) && $content['field_special_price']['#items'][0]['value']) {
-		 	$special_price = $content['field_special_price']['#items'][0]['value'];
+	if(furn_global_show_sale_price($content) || $item_on_clearance) {
+
+    $special_price = field_get_items('node', $node, 'field_special_price');
+    if ($special_price) {
+      $special_price = $special_price['0']['value']; 
 		 	$diff = abs(floatval($special_price) - floatval($sell_price));
 		 	if ($diff > $epsilon) {
 			 	$sale_price_set = TRUE; //sell price and special price are not same
@@ -235,8 +240,12 @@ function preprocess_node_common_fields(&$content, $hook) {
 		//don't display MSRP:
 		unset($content['list_price']);
 		
+    $price_lbl = "SPECIAL:";
+    if ($item_on_clearance) {
+      $price_lbl = "CLEARANCE:";
+    }
 		$new_sale_price = array(		
-			'#title' => "SPECIAL:",
+			'#title' => $price_lbl,
 			'#theme' => "uc_product_price",
 			'#value' => $special_price,
 			'#attributes' => array('class' => array('sell-price')),		
@@ -270,7 +279,7 @@ function preprocess_node_common_fields(&$content, $hook) {
  */
 function furnimobile_preprocess_node(&$vars, $hook) {
 	if ($vars['type'] == 'item') {
-		preprocess_node_common_fields($vars['content'], 'page');	
+		preprocess_node_common_fields($vars['content'], 'page', $vars['node']);	
 	}
 }
 

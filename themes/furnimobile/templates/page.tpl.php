@@ -101,6 +101,7 @@
   			<div class="addthis_toolbox addthis_32x32_style addthis_default_style" id="social-icons">
     			<a class="addthis_button_facebook_follow" addthis:userid="pages/Furnitalia/65283884934"></a>
     			<a class="addthis_button_twitter_follow" addthis:userid="furnitalia"></a>
+    			<a class="addthis_button_pinterest_follow" addthis:userid="furnitalia"></a>
     			<a class="addthis_button_youtube_follow" addthis:userid="Furnitalia"></a>
     			<a class="addthis_button_flickr_follow" addthis:userid="furnitalia/"></a>
   			</div>
