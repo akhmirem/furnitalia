@@ -1273,7 +1273,7 @@ function furn_global_preprocess_node(&$vars, $hook) {
 		preprocess_node_common_fields($vars['content'], 'page', $vars['node']);	
 	}
 
-  if (in_array($vars['node']->nid, array(514))) {
+  if (in_array($vars['node']->nid, array(514, 834))) {
     $vars['theme_hook_suggestions'][] = 'page-' . $vars['node']->type . '-coupon';
   }
 
@@ -1286,7 +1286,7 @@ function furn_global_preprocess_webform_mail_message(&$vars) {
   $node = $vars['node'];
 
   //coupon webform
-  if (in_array($vars['node']->nid, array(514))) {
+  if (in_array($vars['node']->nid, array(514, 834))) {
     $vars['theme_hook_suggestion'] = 'webform_mail_coupon';
   }
 }
