@@ -277,11 +277,11 @@ function preprocess_node_common_fields(&$content, $hook, $node) {
  * @param $hook
  *   The name of the template being rendered ("node" in this case.)
  */
-function furnimobile_preprocess_node(&$vars, $hook) {
+/*function furnimobile_preprocess_node(&$vars, $hook) {
 	if ($vars['type'] == 'item') {
 		preprocess_node_common_fields($vars['content'], 'page', $vars['node']);	
 	}
-}
+}*/
 
 /**
  * Implements hook_form_alter().

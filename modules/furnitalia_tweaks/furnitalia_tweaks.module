@@ -32,6 +32,12 @@ function furnitalia_tweaks_menu() {
 		'access callback' => TRUE, 
 		'type' => MENU_CALLBACK,
 	);
+	$items['coupon/ajax'] = array (
+		'page callback' => 'furnitalia_tweaks_coupon_js',
+		'page arguments' => array(''),
+		'access callback' => TRUE, 
+		'type' => MENU_CALLBACK,
+	);
 	
 	return $items;
 }
@@ -168,6 +174,29 @@ function furnitalia_tweaks_contact_js($item=NULL, $nid=NULL){
     
 }
 
+/**
+  * Display coupon registration form in pop-up dialog box.
+ */
+function furnitalia_tweaks_coupon_js($coupon_code = ""){
+
+	$nid = variable_get('coupon_nid', 514); //coupon node id
+
+	$node = node_load($nid);
+
+	$output = "";
+	$output .= theme('node', node_view($node));
+	
+	ajax_deliver(array('#type' => 'ajax', '#commands' => array (
+		array(
+			'command' => 'openPopup', 
+			'data' => $output,
+			'method' => 'html',
+		    'selector' => "#dialog-form",
+		    'settings' => NULL,
+		),
+	)));
+    
+}
 /**
   * Displays front page content for Furntialia website
  */

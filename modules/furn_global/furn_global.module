@@ -105,6 +105,13 @@ function furn_global_menu() {
     'access callback' => TRUE,
     'type' => MENU_NORMAL_ITEM,
   );
+  $items['re-vive'] = array(
+    'title' => 'Natuzzi RE-VIVE',
+    'page callback' => 'theme',
+    'page arguments' => array('revive'),
+    'access callback' => TRUE,
+    'type' => MENU_NORMAL_ITEM,
+  );
 	return $items;
 }
 
@@ -403,6 +410,11 @@ function furn_global_theme($existing, $type, $theme, $path) {
 	  'moving_sale' => array(
 	    'template' => 'moving-sale',
 	    'render element' => 'form',
+	    'path' => $theme_path . '/templates',
+	  ),
+	  'revive' => array(
+	    'arguments' => array(),
+	    'template' => 'revive',
 	    'path' => $theme_path . '/templates',
 	  ),
   );
@@ -1245,6 +1257,38 @@ function template_preprocess_moving_sale(&$vars) {
   $preview = FALSE;
   $form = drupal_get_form('webform_client_form_' . $webform_nid, $node, $submission, $enabled, $preview);
   $vars['webform'] = drupal_render($form);
+}
+
+
+/**
+ * Override or insert variables into the node templates.
+ *
+ * @param $variables
+ *   An array of variables to pass to the theme template.
+ * @param $hook
+ *   The name of the template being rendered ("node" in this case.)
+ */
+function furn_global_preprocess_node(&$vars, $hook) {
+	if ($vars['type'] == 'item') {
+		preprocess_node_common_fields($vars['content'], 'page', $vars['node']);	
+	}
+
+  if (in_array($vars['node']->nid, array(514))) {
+    $vars['theme_hook_suggestions'][] = 'page-' . $vars['node']->type . '-coupon';
+  }
+
+}
+
+/**
+ * Preprocess callback for hook_webform_mail_message
+ */
+function furn_global_preprocess_webform_mail_message(&$vars) {
+  $node = $vars['node'];
+
+  //coupon webform
+  if (in_array($vars['node']->nid, array(514))) {
+    $vars['theme_hook_suggestion'] = 'webform_mail_coupon';
+  }
 }
 
 /**

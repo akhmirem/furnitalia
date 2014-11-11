@@ -124,7 +124,8 @@ function furnitheme_preprocess_page(&$vars) {
 				
 		} else if ($node->type == 'blog') {
 			$vars['show_title'] = TRUE;
-		}
+    }
+
 	}
 	
 	$vars['contact_page'] = FALSE;
@@ -134,7 +135,7 @@ function furnitheme_preprocess_page(&$vars) {
 	}
 	
 	//moving sale extra
-	if (arg(0) == 'moving-sale') {
+	/*if (arg(0) == 'moving-sale') {
 	  $left_section_extra = <<<EOT
   	  <img src="$theme_path/images/landing/start_shopping_block.jpg" border="0" usemap="#map1" alt="Start Shopping" />
       <map name="map1" id="map1">
@@ -143,7 +144,7 @@ function furnitheme_preprocess_page(&$vars) {
         <area  shape="rect" coords="0,420,245,592" alt="Shop for Cammeo Chair by Natuzzi" title="Cammeo Chair" target="_self" href="http://www.furnitalia.com/item/cammeo-1576-black"     />
       </map>
 EOT;
-
+   */
 	  
   	$vars['page']['left_section_extra'] = array(
   	  "#markup" => $left_section_extra,
@@ -242,26 +243,6 @@ function preprocess_node_common_fields(&$content, $hook, $node) {
 	  	
 	}
 	
-}
-
-
-/**
- * Override or insert variables into the node templates.
- *
- * @param $variables
- *   An array of variables to pass to the theme template.
- * @param $hook
- *   The name of the template being rendered ("node" in this case.)
- */
-function furnitheme_preprocess_node(&$vars, $hook) {
-	if ($vars['type'] == 'item') {
-    static $i = true;
-    if ($i) {
-      $i = false;
-      //dsm($vars);
-    }
-		preprocess_node_common_fields($vars['content'], 'page', $vars['node']);	
-	}
 }
 
 /**

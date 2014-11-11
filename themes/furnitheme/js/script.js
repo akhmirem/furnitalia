@@ -211,6 +211,11 @@ var isHandHeldDevice = false;
 				var ajax = new Drupal.ajax("#request-quote", $('#request-quote')[0], element_settings);
 				
 			});
+			$('#coupon').once(function() {
+				element_settings.url = Drupal.settings.basePath + 'coupon/ajax/';
+				
+				var ajax = new Drupal.ajax("#coupon", $('#coupon')[0], element_settings);
+			});
 			
 						
 			//item description page thumbnail gallery			
