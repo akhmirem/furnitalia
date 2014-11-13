@@ -709,7 +709,14 @@ function furnitheme_set_up_top_menu (&$vars) {
  *
  * Alter exposed filter form in views
  */
-function furnitheme_form_views_exposed_form_alter(&$form, &$form_state, $form_id) {  
+/*function furnitheme_form_views_exposed_form_alter(&$form, &$form_state, $form_id) {  
+	
+	global $conf;
+
+	if (isset($conf['SITE_ID']) && $conf['SITE_ID'] != 'desktop') {	
+  	drupal_add_css(drupal_get_path('theme', 'furnimobile') . "/lib/dropkick/dropkick.css");
+    drupal_add_js (drupal_get_path('theme', 'furnimobile')  . "/lib/dropkick/jquery.dropkick-1.0.0.js");
+  }
 	
   if ($form['#id'] == 'views-exposed-form-taxonomy-term-page') { 		 
 	 
@@ -787,7 +794,7 @@ function furnitheme_form_views_exposed_form_alter(&$form, &$form_state, $form_id
   		}
     }
         
-	} else if (in_array($form['#id'], array('views-exposed-form-taxonomy-term-page-brands', 'views-exposed-form-taxonomy-term-page-in-store', 'views-exposed-form-taxonomy-term-page-italia', 'views-exposed-form-taxonomy-term-page-editions'))) {
+	} else if (in_array($form['#id'], array('views-exposed-form-taxonomy-term-page-brands', 'views-exposed-form-taxonomy-term-page-in-store', 'views-exposed-form-taxonomy-term-page-italia', 'views-exposed-form-taxonomy-term-page-editions', 'views-exposed-form-taxonomy-term-page-clearance'))) {
 	
     //reset action attribute so form resubmits to same page
     $form['#action'] = "";
@@ -807,6 +814,8 @@ function furnitheme_form_views_exposed_form_alter(&$form, &$form_state, $form_id
     
     if ($form['#id'] == 'views-exposed-form-taxonomy-term-page-in-store') {
     	$temp_view->set_display('page_in_store');
+    } elseif ($form['#id'] == 'views-exposed-form-taxonomy-term-page-clearance') {
+    	$temp_view->set_display('page_clearance');
     } else {
 	    $temp_view->set_display('page_brands');
     }
@@ -887,7 +896,7 @@ function furnitheme_form_views_exposed_form_alter(&$form, &$form_state, $form_id
 		}
 	}
   
-}
+}*/
 
 /**
  * Default preprocess function for all filter forms.

@@ -344,7 +344,7 @@ function furnimobile_form_search_block_form_alter(&$form, &$form_state, $form_id
  *
  * Alter exposed filter form in views
  */
-function furnimobile_form_views_exposed_form_alter(&$form, &$form_state, $form_id) {
+/*function furnimobile_form_views_exposed_form_alter(&$form, &$form_state, $form_id) {
   drupal_add_css(drupal_get_path('theme', 'furnimobile') . "/lib/dropkick/dropkick.css");
   drupal_add_js (drupal_get_path('theme', 'furnimobile')  . "/lib/dropkick/jquery.dropkick-1.0.0.js");
 	
@@ -524,7 +524,7 @@ function furnimobile_form_views_exposed_form_alter(&$form, &$form_state, $form_i
 		}
 	}
   
-}
+}*/
 
 
 /**
