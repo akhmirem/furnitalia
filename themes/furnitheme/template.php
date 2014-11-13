@@ -144,12 +144,11 @@ function furnitheme_preprocess_page(&$vars) {
         <area  shape="rect" coords="0,420,245,592" alt="Shop for Cammeo Chair by Natuzzi" title="Cammeo Chair" target="_self" href="http://www.furnitalia.com/item/cammeo-1576-black"     />
       </map>
 EOT;
-   */
 	  
   	$vars['page']['left_section_extra'] = array(
   	  "#markup" => $left_section_extra,
     );
-  }
+  }*/
 	
 }
 
