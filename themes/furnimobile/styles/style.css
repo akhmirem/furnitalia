@@ -176,6 +176,9 @@ hr.furn-red {
 body.revive #container {
   max-width: 760px;
 }
+body.revive #container, body.revive #container-inner {
+  overflow:visible;
+}
 
 /*header, #footer, #highlighted, #product-info {*/
 #container {
