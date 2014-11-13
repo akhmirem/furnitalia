@@ -1,0 +1,299 @@
+@charset "UTF-8";
+/* FORMS */
+
+form{
+	margin: 0;
+	padding: 0;
+}
+fieldset{
+	margin: 10px 0 30px 0;
+	padding: 40px;
+	border: 1px solid #666;
+}
+
+/* label */
+
+label,
+p.jplabel{
+	margin: 5px 0;
+	font-size: 17px;
+	line-height: 1.5em;
+	display: block;
+	font-weight: normal !important;
+}
+
+label strong,
+p.jplabel strong{
+}
+
+label em,
+p.jplabel em{
+}
+
+label.disabled,
+p.jplabel.disabled{
+	color: #CCC !important;
+}
+
+label.error{
+	margin: 5px 0 0 0;
+	padding: 5px 10px;
+	color: #FFF;
+	background-color: #64AF21;
+	display: inline-block;
+	font-size: 11px;
+	line-height: 1.1em;
+	margin-bottom: 10px;
+	clear: both;
+}
+
+/* input, textarea */
+
+._input{
+	display: none;
+}
+
+input.jpinput,
+textarea.jpinput{
+	padding: 9px 14px !important;
+	border: 1px solid #666;
+	background-color: #FFF;
+	color: #666;
+	font-size: 20px;
+	font-family: 'AvenirNext Regular', Helvetica, Arial, sans-serif;
+	vertical-align: middle;
+}
+textarea.jpinput{
+	resize: none;
+	height: 140px;
+}
+textarea.jpinput.mini{
+	height: 70px;
+}
+input.jpinput.mini,
+textarea.jpinput.mini{
+	font-size: 11px;
+	font-weight: 300;
+	padding: 2px 9px !important;
+}
+input.jpinput:hover,
+textarea.jpinput:hover{
+	border-color: #AAA;
+	color: #AAA;
+}
+input.jpinput:active,
+input.jpinput:focus,
+textarea.jpinput:active,
+textarea.jpinput:focus{
+	border-color: #EEE;
+	color: #666;
+}
+input.jpinput.placeholder,
+textarea.jpinput.placeholder{
+	color: #AAA;
+}
+input.jpinput.placeholder:hover,
+input.jpinput.placeholder:active,
+input.jpinput.placeholder:focus,
+textarea.jpinput.placeholder:hover,
+textarea.jpinput.placeholder:active,
+textarea.jpinput.placeholder:focus{
+	color: #BBB;
+}
+input.jpinput.disabled,
+textarea.jpinput.disabled{
+	border: 1px solid #DADADA !important;
+	background-color: #FAFAFA !important;
+	color: #AAA !important;
+}
+.jpinput.icon{
+	padding-left: 34px !important;
+	background-position: 11px 8px;
+	background-repeat: no-repeat;
+}
+.jpinput.icon.search{
+}
+
+/**/
+
+.jpinput.error{
+	border-color: #F00 !important;
+	color: #F00 !important;
+}
+
+span.error{
+	margin: 5px 0 0 0;
+	display: block;
+	font-size: 11px;
+	text-transform: uppercase;
+	color: #F00;
+}
+
+/* checkbox */
+
+input[type=checkbox],
+input[type=radio],
+input.checkbox,
+input.radio{
+	margin: 10px 5px 0 0 0 !important;
+	padding: 0 !important;
+	background: none !important;
+	border: none !important;
+}
+
+/* file */
+
+input.file{
+	padding: 0;
+	border: none;	
+}
+
+/* form */
+
+form .form{
+	margin: 0;
+	overflow: hidden;
+	/* width: 635px; */
+}
+
+/**/
+
+.fr{
+	overflow: hidden;
+	clear: both;
+	margin-bottom: 10px;
+}
+
+.fi{
+	overflow: hidden;
+	float: left;
+}
+
+.fi select{
+	margin-top: 7px;
+}
+
+.fis{
+	margin-right: 10px;	
+}
+
+/**/
+
+.fr1 .fi{
+	width: 635px;
+}
+.fr2 .fi{
+	width: 295px;
+}
+
+.jplus.content.promo.full .form .fr1 .fi,
+.jplus.content.promo.full .form .fr1 .fi select,
+.jplus.content.news.full .form .fr1 .fi,
+.jplus.content.news.full .form .fr1 .fi select{
+	width: 250px;
+}
+.jplus.content.promo.full .form .fr3 .fi,
+.jplus.content.promo.full .form .fr3 .fi select,
+.jplus.content.news.full .form .fr3 .fi,
+.jplus.content.news.full .form .fr3 .fi select{
+	width: 76px;
+}
+
+/**/
+
+.fr1 .fi .jpinput{
+	width: 570px;
+}
+.fr2 .fi .jpinput{
+	width: 265px;
+}
+
+.jplus.content.promo.full .form .fr1 .fi .jpinput,
+.jplus.content.news.full .form .fr1 .fi .jpinput{
+	width: 230px;
+}
+.jplus.content.promo.full .form .fr3 .fi .jpinput,
+.jplus.content.news.full .form .fr3 .fi .jpinput{
+	width: 56px;
+}
+
+
+/**/
+
+.fr .fi .left{
+	width: auto;	
+}
+
+/**/
+
+.privacy{
+	margin: 0 0 0 10px;
+	font-size: 11px;
+	line-height: 60px;
+}
+
+/**/
+
+.checkboxs{
+	margin: 20px 0;	
+}
+
+.checkboxs .fr .fi.checkbox{
+	margin-bottom: 0;
+}
+
+.checkboxs .fr .fi.checkbox .checkbox{
+	float: left;
+}
+
+.checkboxs .fr .fi.checkbox label.jplabel{
+	margin: 2px 0 0 0;
+	width: 595px;
+	float: right;
+}
+
+/**/
+
+.radios{
+	margin: 20px 0;	
+}
+
+.radios .fr .fi.radio{
+	margin-bottom: 0;
+}
+
+.radios .fr .fi.radio p.jplabel{
+	margin: 0 10px 0 0;
+	font-weight: bold !important;
+	float: left;
+}
+
+.radios .fr .fi.radio ul{
+	margin: 0;
+	padding: 0;
+	list-style: none;
+	float: left;
+}
+
+.radios .fr .fi.radio ul li{
+	margin: 0 10px 0 0;
+	padding: 0;
+	display: block;
+	float: left;
+}
+
+.radios .fr .fi.radio ul li .radio{
+	float: left;
+}
+
+.radios .fr .fi.radio ul li label.jplabel{
+	margin: 1px 0 0 5px;
+	float: right;
+}
+
+/**/
+
+.chronoform{
+	display: none;
+	visibility: hidden;	
+}

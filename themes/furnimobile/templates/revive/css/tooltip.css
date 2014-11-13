@@ -1,0 +1,78 @@
+@charset "UTF-8";
+/* TOOLTIP */
+
+.tip-wrap{
+	padding: 10px;
+	margin: 15px 0 0 -25px;
+	float: left;
+	background: #FFC;
+	border: 1px solid #D4D5AA;	
+	max-width: 400px;
+	font-size: 11px;
+	z-index: 1000001;
+	/* alpha */
+	filter: alpha(opacity=90);
+	-moz-opacity: 0.9;
+	-khtml-opacity: 0.9;
+	opacity: 0.9;
+} 
+.tip-title{
+	padding: 20px 0 10px 0;
+	margin: -20px 0 0 0;
+	color: #000;
+	font-size: 16px;
+	font-weight: bold;
+	background: url(../images/system/selector-arrow.png) no-repeat;
+} 
+.tip-text{
+	font-size: 100%;
+	margin: 0;
+	color: #000;
+}
+
+/* actions */
+
+ul.actions{
+	margin: 0;
+	padding: 0;
+	list-style: none;
+	background-color: #3D3D3F;
+	position: absolute;
+	/* top: 0; */
+	right: 0;
+	z-index: 1000;
+	text-align: center;
+	border-radius: 0;
+	/* alpha */
+	filter: alpha(opacity=90);
+	-moz-opacity: 0.9;
+	-khtml-opacity: 0.9;
+	opacity: 0.9;
+}
+ul.actions li{
+	margin: 0;
+	padding: 10px;
+	display: block;
+}
+ul.actions li a{
+	display: block;
+	width: 32px;
+	height: 32px;
+	overflow: hidden;
+	background-image: url(../images/system/edit-published.png);
+	background-position: center center;
+	background-repeat: no-repeat;
+}
+.system-unpublished ul.actions li a{
+	background-image: url(../images/system/edit-unpublished.png);
+}
+ul.actions li a:hover{
+	/* alpha */
+	filter: alpha(opacity=50);
+	-moz-opacity: 0.5;
+	-khtml-opacity: 0.5;
+	opacity: 0.5;
+}
+ul.actions li a img{
+	display: none;
+}

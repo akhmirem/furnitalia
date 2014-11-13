@@ -1,0 +1,56 @@
+@charset "UTF-8";
+/* SYSTEM MESSAGES */
+
+#system-message{
+	margin: 0;
+	padding: 0;
+	background-color: transparent !important;
+}
+
+#system-message dt{
+	display: none;
+}
+
+#system-message dd{
+	margin: 0;
+	padding: 0;	
+	font-weight: normal;
+	text-indent: 0;
+	background: none !important;
+	border: none !important;
+}
+
+#system-message dd ul{
+	margin: 0 0 10px 0;
+	padding: 10px 20px;
+	/* width: 960px; */
+	display: block;
+	list-style: none;
+	border: none !important;	
+	background: none !important;
+	background-color: transparent !important;
+	color: #FFF !important;
+}
+
+#system-message dd ul li{
+	margin: 0;
+	padding: 0;
+	background: none;
+}
+
+/**/
+
+#system-message dd.message{
+	background-color: #3C6 !important;
+	border: none !important;	
+}
+
+#system-message dd.error{	
+	background-color: #F00 !important;
+	border: none !important;
+}
+
+#system-message dd.notice{
+	background-color: #CCC !important;
+	border: none !important;
+}

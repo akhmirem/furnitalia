@@ -1,0 +1,145 @@
+@charset "UTF-8";
+/* TAGS */
+
+/**{
+	outline: none;
+}
+html{
+	margin: 0;
+	padding: 0;
+	width: 100%;
+	height: 100%;
+}
+body{
+	margin: 0;
+	padding: 0;
+	font-family: 'AvenirNext Regular', Helvetica, Arial, sans-serif;
+	font-size: 17px;
+    font-weight: 400;
+    line-height: 1.5;
+	color: #666;
+}*/
+
+#Body {
+	margin: 0;
+	padding: 0;
+	font-family: 'AvenirNext Regular', Helvetica, Arial, sans-serif;
+	font-size: 17px;
+    font-weight: 400;
+    line-height: 1.5;
+	color: #666;  
+}
+
+/* selection */
+
+*::-moz-selection{
+	color: #FFF;
+	background: #666;
+}
+*::-webkit-selection{
+	color: #FFF;
+	background: #666;
+}
+*::selection{
+	color: #FFF;
+	background: #666;
+}
+
+/**/
+
+#Main p{
+	font-size: 100%;
+	margin: 0 0 15px 0;
+}
+#Main strong{
+	font-weight: normal;
+}
+#Main h1,
+#Main h2,
+#Main h3,
+#Main h4{
+	margin: 25px 0 10px 0;
+	font-family: 'AvenirNext Regular', Helvetica, Arial, sans-serif;
+	font-weight: normal;
+	line-height: 1.5em;
+	text-transform: uppercase;
+}
+#Main h1 strong,
+#Main h2 strong,
+#Main h3 strong,
+#Main h4 strong{
+	font-weight: normal;
+}
+#Main h1{
+	font-size: 75px;
+    font-weight: 200;
+    line-height: 1.1em;
+	font-family: 'AvenirNext Thin', Helvetica, Arial, sans-serif;
+}
+#Main h1.smaller{
+	font-size: 40px;
+	line-height: 1.0em;
+}
+#Main h2{	
+	font-size: 18px;
+	letter-spacing: 0.1em;
+	line-height: 1.2em;
+}
+#Main h3{
+	font-size: 15px;
+	letter-spacing: 0.1em;
+	line-height: 1.3em;
+}
+#Main h4{
+	font-size: 15px;
+}
+#Main small{
+	font-size: 12px;
+	margin: 0 0 10px 0;
+	line-height: 1.6em;
+}
+#Main a:link,
+#Main a:visited{
+	color: #AAA;
+	text-decoration: none;
+	cursor: pointer;
+	outline: none;
+}
+#Main a:hover,
+#Main a:active,
+#Main a:focus{
+	color: #BBB;
+	text-decoration: none;
+	outline: none;
+}
+#Main img{
+	border: none;
+}
+#Main hr{
+    margin: 15px 0;
+	padding: 0;
+	display: block;
+	clear: both;
+	float: none;
+    border: none;
+	border-bottom: 1px solid #666;
+	background: none;
+    height: 1px;
+}
+.page ul,
+.page ol{
+	margin: 0 0 20px 0;
+	padding-left: 20px;
+	overflow: hidden;
+}
+.page ol{
+	padding-left: 30px;
+}
+.page blockquote{
+	margin: 20px 0;
+	padding: 20px;
+	font-size: 16px;
+	line-height: 1.5em;
+	color: #5B5B5E;
+	border: 1px solid #C7C7C8;
+}

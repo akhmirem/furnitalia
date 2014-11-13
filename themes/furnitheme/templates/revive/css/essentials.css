@@ -1,0 +1,83 @@
+@charset "UTF-8";
+/* ESSENTIALS */
+
+/* head */
+
+.head{
+	margin-top: 0;
+}
+.lead{
+	margin: 25px 0 10px 0;
+	font-family: 'AvenirNext Thin', Helvetica, Arial, sans-serif;
+	font-weight: normal;
+	line-height: 1.4em;
+	font-size: 18px;
+	text-transform: uppercase;
+	color: #AAA;
+}
+.mini{
+	font-size: 14px;
+}
+#Bidy .small{
+	font-size: 11px;
+	line-height: 1.5em;
+	text-transform: uppercase;
+}
+#Bidy .hide{
+	display: none;
+}
+
+/* clear */
+
+#Bidy .clr,
+#Bidy .clear,
+#Bidy .clearfix{
+	clear: both !important;
+	width: auto !important;
+	height: auto !important;
+}
+
+/* center */
+
+#Bidy .center{
+	position: relative;
+	margin: 0 auto;
+	width: 960px;
+	clear: both;
+}
+
+/* float */
+
+#Bidy .left{
+	float: left;
+}
+
+#Bidy .right{
+	float: right;
+}
+
+#Bidy .left.image{
+	margin: 5px 20px 10px 0;
+}
+
+#Bidy .right.image{
+	margin: 5px 0 10px 20px;
+}
+
+/* border */
+
+#Bidy .border{
+	padding: 4px;	
+	border: 1px solid #FFF;
+	background-color: #FFF;
+	overflow: hidden;
+}
+
+#Bidy a:hover .border,
+#Bidy a:active .border,
+#Bidy a:focus .border{	
+	padding: 3px;
+	background-image: none;
+	background-color: #FFF;
+	border: 2px solid #008BC7;
+}

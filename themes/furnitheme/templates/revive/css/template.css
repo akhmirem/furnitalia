@@ -1,0 +1,107 @@
+@charset "UTF-8";
+/* TEMPLATE */
+
+#Body{
+	background-color: #666;
+	min-width: 720px;
+}
+#Body.notdefault{
+	background-color: #FFF;
+	min-width: inherit;
+}
+#BodyClean{
+	background-color: #FFF;
+}
+#News{
+	position: fixed;
+	top: 0;
+	left: 0;
+	bottom: 0;
+	width: 220px;
+	padding: 40px;
+	background-color: #EEE;
+	float: left;
+}
+#Logo{
+	position: absolute;
+	width: 100%;
+	z-index: 110;
+	overflow: hidden;
+}
+#News #Logo{
+	position: relative;
+}
+#Main{	
+	position: relative;	
+	width: 100%;
+	overflow: hidden;
+}
+#Main.right{
+	position: absolute;
+	top: 0;
+	left: 300px;
+	right: 0;
+	overflow: hidden;
+	float: left;
+	width: auto;
+	z-index: 0;
+}
+#Main.right .contentpane{
+	padding: 40px;
+}
+#Infos{
+	background-color: #666;
+}
+#Infos .inner{
+	padding: 20px 0;
+	font-size: 11px;
+	line-height: 1.2em;
+	text-transform: uppercase;
+	color: #FFF;
+}
+#Infos .inner .left{
+	margin-left: 20px;
+}
+#Infos .inner .right{
+	margin-right: 20px;
+}
+
+/* .fixed */
+
+.fixed{
+	position: fixed !important;
+}
+.fixed.top{
+	top: 0;
+	bottom: auto;
+}
+.fixed.bottom{
+	top: auto;
+	bottom: 0;
+}
+
+/* .inner */
+
+.inner{
+	margin: 0 auto;
+    max-width: 1200px;
+    min-width: 960px;
+	overflow: hidden;
+}
+.nav-small .inner{
+	overflow: visible;
+}
+
+/* .padding */
+
+.padding{
+	margin: 40px 20px;
+}
+
+/* .wrapper */
+
+.wrapper{
+	margin: 100px auto;
+    width: 400px;
+	text-align: center;
+}

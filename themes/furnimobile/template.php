@@ -826,4 +826,7 @@ function furnimobile_preprocess_html(&$variables, $hook) {
 	if(drupal_match_path(current_path(), implode("\n", $paths))) {
 		 $variables['classes_array'][] = 'gallery-grid';
 	}
+	if (arg(0) == 're-vive') {
+  	$variables['classes_array'][] = 'revive';
+	}
 }

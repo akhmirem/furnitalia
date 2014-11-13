@@ -1,0 +1,356 @@
+@charset "UTF-8";
+/* TYPO */
+
+/* Logo */
+
+#Logo a{
+	margin: 50px auto 0 auto;
+	padding: 0;
+	width: 120px;
+	height: 120px;
+	display: block;
+	background-image: url(../images/re-vive-by-natuzzi.png);
+	background-position: center center;
+	background-repeat: no-repeat;
+}
+#Logo a span{
+	display: none;
+}
+#News #Logo a{
+	margin: 0 0 40px 0;
+}
+
+/* a.credits */
+
+a.credits{
+	margin: 0;
+	padding: 0;
+	width: 24px;
+	height: 25px;
+	display: block;
+	background-image: url(../images/chimera-web-agency.png);
+	background-position: center center;
+	background-repeat: no-repeat;
+}
+a.credits span{
+	display: none;
+}
+
+/* article_separator */
+
+.article_separator{
+	display: none;
+	visibility: hidden;
+}
+
+/* system-unpublished */
+
+.system-unpublished{
+	/*margin: 0 0 30px 0;*/
+    background-color: #666;	
+}
+.system-unpublished .jplus.content{
+	/* alpha */
+	filter: alpha(opacity=50);
+	-moz-opacity: 0.5;
+	-khtml-opacity: 0.5;
+	opacity: 0.5;
+}
+.system-unpublished .system-unpublished{
+	margin: 0;
+	background-color: transparent;
+	border: none;
+	/* alpha */
+	filter: alpha(opacity=100);
+	-moz-opacity: 1;
+	-khtml-opacity: 1;
+	opacity: 1;
+}
+
+/* article-info */
+
+.article-info{
+	margin: 0;
+	padding: 0;
+}
+
+.article-info .create{
+	margin: 0;
+	padding: 0;
+	color: #C7C7C8;
+	font-style: italic;
+}
+
+.article-info .category-name{
+	margin: 0;
+	padding: 0;
+	color: #C7C7C8;
+	font-style: italic;
+}
+
+/* blog */
+
+#Body._category .blog{
+}
+#Body._category .blog .items-row{
+}
+#Body._category .blog .items-row .item{
+	min-height: 100px;
+}
+
+/* .jpbtn */
+
+.jpbtn{
+	margin: 5px 0;
+	display: inline-block;
+	font-size: 15px;
+	text-transform: uppercase;
+	overflow: hidden;
+	background-color: #FFF;
+	cursor: pointer;
+	padding: 15px 40px;
+	border: 2px solid #666;
+	color: #666 !important;
+}
+.jpbtn.mini{
+	line-height: 1.1em;
+	font-size: 11px;
+	font-weight: 300;
+	padding: 2px 10px;
+	border: 1px solid #666;
+}
+.jpbtn.inline{
+	display: inline;
+}
+
+/**/
+
+.jpbtn.icon{
+	padding-left: 36px;
+	background-position: 12px center;
+	background-repeat: no-repeat;
+}
+.jpbtn.icon.only{
+	padding-left: 28px;
+	padding-right: 4px;
+	background-position: 7px 8px;
+	width: 0;
+	text-indent: 20px;
+}
+
+/**/
+
+.jpbtn.icon.facebook{
+	background-image: url(../images/iconset/facebook.png);
+}
+.jpbtn.icon.twitter{
+	background-image: url(../images/iconset/twitter.png);
+}
+.jpbtn.icon.youtube{
+	background-image: url(../images/iconset/youtube.png);
+}
+.jpbtn.icon.prev{
+	background-image: url(../images/iconset/prev.png);
+}
+.jpbtn.icon.next{
+	background-image: url(../images/iconset/next.png);
+}
+
+/**/
+
+a.jpbtn:hover,
+a.jpbtn:active,
+a.jpbtn:focus,
+a:hover .jpbtn,
+a:active .jpbtn,
+a:focus .jpbtn,
+button.jpbtn:hover,
+button.jpbtn:active,
+button.jpbtn:focus,
+.jpbtn.hover,
+.jpbtn.qq-upload-button-hover{
+	padding: 13px 38px;
+	border-width: 4px;
+}
+a.jpbtn.mini:hover,
+a.jpbtn.mini:active,
+a.jpbtn.mini:focus,
+a:hover .jpbtn.mini,
+a:active .jpbtn.mini,
+a:focus .jpbtn.mini,
+button.jpbtn.mini:hover,
+button.jpbtn.mini:active,
+button.jpbtn.mini:focus,
+.jpbtn.mini.hover,
+.jpbtn.mini.qq-upload-button-hover{
+	padding: 1px 9px;
+	border-width: 2px;
+}
+a.jpbtn.icon.only:link,
+a.jpbtn.icon.only:visited,
+a:link .jpbtn.icon.only,
+a:visited .jpbtn.icon.only,
+button.jpbtn.icon.only{
+}
+a.jpbtn.icon.only:hover,
+a.jpbtn.icon.only:active,
+a.jpbtn.icon.only:focus,
+a:hover .jpbtn.icon.only,
+a:active .jpbtn.icon.only,
+a:focus .jpbtn.icon.only,
+button.jpbtn.icon.only:hover,
+button.jpbtn.icon.only:active,
+button.jpbtn.icon.only:focus{
+}
+.jpbtn.disabled{
+	background-color: #DDD;
+	box-shadow: 0 1px 0 #FFF;
+	color: #AAA;
+}
+
+/* .pager32 */
+
+.pager32{
+	display: inline-block;
+	width: 32px;
+	height: 32px;
+	line-height: 32px;
+	background-image: url(../images/iconset/pager32.png);
+	background-repeat: no-repeat;
+	background-position: 0 center;
+	color: #666 !important;
+	text-align: center;
+	letter-spacing: 0;
+	font-size: 18px;
+}
+.pager32.inverse{
+	background-position: -32px center;
+	color: #FFF !important;
+}
+a:hover .pager32,
+a.active .pager32,
+a.pager32:hover,
+.pager32.active{
+	background-position: -32px center;
+	color: #FFF !important;
+}
+a:hover .pager32.inverse,
+a.active .pager32.inverse,
+a.pager32.inverse:hover,
+.pager32.inverse.active{
+	background-position: 0 center;
+	color: #666 !important;
+}
+
+/* .squared */
+
+.squared{
+	border: 2px solid #FFF;
+    display: block;
+    margin: 0;
+    padding: 28px 18px;
+    text-align: center;
+    width: 220px;
+	color: #FFF;
+}
+.squared.gray{
+	border-color: #666;
+	color: #666;
+}
+.squared span{
+	text-align: center;
+	display: block;
+}
+a:hover .squared,
+a.squared:hover{
+	border-width: 4px;
+	padding: 26px 16px;
+}
+a:hover .squared span,
+a.squared:hover span{
+}
+.jplus.content.text .squared{
+	top: 62% !important;
+}
+
+/* div.table */
+
+div.table .row{
+	clear: both;
+	overflow: hidden;
+	margin: 0 0 40px 0;
+	padding: 0 20px 40px 20px;
+	border-bottom: 1px solid #666;
+}
+div.table .row.no-border{
+	padding-bottom: 0;
+	border-bottom: none;
+}
+div.table .col{
+	margin: 0 1% 0 0;
+	float: left;
+	font-size: 13px;
+	line-height: 1.4em;
+	position: relative;
+}
+div.table .cols2 .col{
+	width: 49%;
+}
+div.table .cols2 .col2{
+	width: 24%
+}
+div.table .cols3 .col{
+	width: 32.3%;
+}
+div.table .cols3 .col2{
+	width: 15.5%
+}
+div.table .cols4 .col{
+	width: 24%;
+}
+div.table .cols4 .col2{
+	width: 11.5%;
+}
+div.table .col h1,
+div.table .col h2,
+div.table .col h3,
+div.table .col h4{
+	margin-top: 0;
+}
+div.table .col ul{
+	list-style: circle;
+}
+div.table .col .squared{
+	margin-left: 0 !important;
+	margin-top: 0 !important;
+	position: static !important;
+	width: auto;
+}
+
+/* table.jptable */
+
+table.jptable{
+	margin: 10px 0 60px 0;
+	width: 100%;	
+}
+table.jptable tr th{
+	padding: 10px 15px;
+	background-color: #666;
+	color: #FFF;
+	font-weight: 300;
+	text-align: left;
+}
+table.jptable tr td{
+	padding: 5px 15px;
+	font-size: 13px;
+	line-height: 1.4em;
+	border-bottom: 1px solid #666;
+}
+table.jptable tr td.last{
+	text-align: right;
+}
+table.jptable tr.odd td{
+}
+table.jptable tr.active td{
+	background-color: #F5F5F5;
+}

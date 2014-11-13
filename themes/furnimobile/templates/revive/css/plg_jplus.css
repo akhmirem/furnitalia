@@ -1,0 +1,96 @@
+@charset "UTF-8";
+/* jPlus */
+
+.jPlusBarBox{
+	height: 34px;
+}
+.jPlusBar{
+	background: #454545;
+	font-size: 12px;
+	padding: 0 0 0 16px;
+	height: 34px;
+	left: 0;
+	width: 100%;
+	z-index: 99999;
+	text-align: left;
+	/* alpha */
+	filter: alpha(opacity=95);
+	-moz-opacity: 0.95;
+	-khtml-opacity: 0.95;
+	opacity: 0.95;
+}
+.jPlusBar.top{
+	position: fixed;
+	top: 0;
+}
+.jPlusBar.bottom{
+	position: fixed;
+	bottom: 0;
+}
+.jPlusBar .separator{
+	color: #666;
+	margin: 0 8px;
+}
+
+/* iWebutton */
+
+.iWebutton{
+    display: inline-block;
+    zoom: 1; /* zoom and *display = ie7 hack for display:inline-block */
+    *display: inline;
+    vertical-align: baseline;
+    margin: 3px;
+    outline: none;          /* remove dotted border in FF */
+    cursor: pointer;
+    text-align: center;
+    text-decoration: none;
+    font: 12px/100% Arial, Helvetica, sans-serif;
+    padding: .5em 1.75em .55em;
+    text-shadow: 0 1px 1px rgba(0,0,0,.3);
+    -webkit-border-radius: .3em;
+    -moz-border-radius: .3em;
+    border-radius: .3em;
+}
+a.iWebutton:hover{
+    text-decoration: none;
+}
+a.iWebutton:active{
+    position: relative;
+    top: 1px;
+}
+.iWebutton.black{
+    color: #e7e7e7;
+    border: solid 1px #222;
+    background: #333;
+    background: -webkit-gradient(linear, left top, left bottom, from(#666), to(#333));
+    background: -moz-linear-gradient(top,  #666,  #333);
+    filter:  progid:DXImageTransform.Microsoft.gradient(startColorstr='#666666', endColorstr='#333333');
+}
+.iWebutton.black:hover{
+	color: #ffffff;
+    background: #000;
+    background: -webkit-gradient(linear, left top, left bottom, from(#629dff), to(#004cc8));
+    background: -moz-linear-gradient(top,  #629dff,  #004cc8);
+    filter:  progid:DXImageTransform.Microsoft.gradient(startColorstr='#629dff', endColorstr='#004cc8');
+}
+.iWebutton.black:active{
+    color: #666;
+    background: -webkit-gradient(linear, left top, left bottom, from(#000), to(#555));
+    background: -moz-linear-gradient(top,  #000,  #555);
+    filter:  progid:DXImageTransform.Microsoft.gradient(startColorstr='#000000', endColorstr='#555555');
+}
+
+.iWebutton.disabled{
+    color: #999;
+    border: solid 1px #333;
+    background: #555;
+}
+
+.iWebutton.on{
+	color: #FFF;
+	border: solid 1px #000;
+	background: #000;
+	background: -webkit-gradient(linear, left top, left bottom, from(#629dff), to(#004cc8));
+	background: -moz-linear-gradient(top,  #629dff,  #004cc8);
+	filter:  progid:DXImageTransform.Microsoft.gradient(startColorstr='#629dff', endColorstr='#004cc8');
+}
