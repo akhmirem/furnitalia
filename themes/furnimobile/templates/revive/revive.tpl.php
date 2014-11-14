@@ -416,3 +416,11 @@ many colors</h1>            <p>Re-vive is available in two sizes and seven uphol
     
   </div>  
   </div>
+  <br/>
+  
+  <?php if ($view):?>
+  <div id="shop-online">
+    <h3 class="title" style="font-family:'AvenirNext Thin', Helvetica, Arial, sans-serif; font-size:28px">Shop Re-Vive by Natuzzi</h3>
+    <?php print $view; ?>
+  </div>
+  <?php endif;?>
