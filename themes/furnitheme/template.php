@@ -118,7 +118,7 @@ function furnitheme_preprocess_page(&$vars) {
 		if ($node->type == 'item') {
 			$content = $vars['page']['content']['system_main']['nodes'][$node->nid];
 
-			preprocess_node_common_fields($content, 'page', $node);
+			furn_global_preprocess_node_common_fields($content, 'page', $node);
 						
 			$vars['page']['content']['system_main']['nodes'][$node->nid] = $content;			
 				
@@ -149,98 +149,6 @@ EOT;
   	  "#markup" => $left_section_extra,
     );
   }*/
-	
-}
-
-function preprocess_node_common_fields(&$content, $hook, $node) {
-	
-
-	//!TEMPORARILY FORCE REMOVE ADD TO CART BUTTON
-	//if (!empty($content['field_show_add_to_cart']) && $content['field_show_add_to_cart']['#items'][0]['value'] == '0') {
-		unset($content['add_to_cart']);
-	//}
-	
-	//for collection items, disable list price, sale price, change label for price
-	if (isset($content['field_starting_from_price']) && $content['field_starting_from_price']['#items'][0]['value']) {
-		unset($content['list_price']);
-		$content['sell_price']['#title'] = "FROM:";
-		unset($content['field_special_price']);
-		
-		return;
-	}
-
-	unset($content['sell_price']['#title']);
-	
-	$epsilon = 0.01;
-	$sell_price = isset($content['sell_price']['#value']) ? $content['sell_price']['#value'] : $content['sell_price'];
-	
-	unset($content['list_price']);
-
-	
-	$sale_price_set = FALSE;
-	$special_price = NULL;
-	
-	/*
-	MOVING SALE
-	------------------------------------------------------------------
-	$excelsior = 27;
-	$bdi = 29;
-	$nicolle_miller = 28;
-
-	$sale_price_set = TRUE; //<--moving sale
-	if (isset($content['field_brand']['#items'])) {
-		$brand = (int) $content['field_brand']['#items'][0]['tid'];
-	} else {
-		$brand = (int) $content['field_brand']['und'][0]['tid'];
-	}
-	if ($brand == $excelsior || $brand == $bdi || $brand == $nicolle_miller){
-		$sale_price_set = FALSE; //no sale price
-	}
-	------------------------------------------------------------------
-	*/
-
-  $item_on_clearance = field_get_items('node', $node, 'field_clearance'); 
-  if ($item_on_clearance)
-    $item_on_clearance = (bool)$item_on_clearance['0']['value'];
-
-	if(furn_global_show_sale_price($content) || $item_on_clearance) {
-     $special_price = field_get_items('node', $node, 'field_special_price');
-     if ($special_price) {
-       $special_price = $special_price['0']['value']; 
-       $diff = abs(floatval($special_price) - floatval($sell_price));
-		 	 if ($diff > $epsilon) {
-			  	$sale_price_set = TRUE; //sell price and special price are not same
-			 }
-		 }
-	}
-		
-	if($sale_price_set) {
-	
-		//don't display MSRP:
-		unset($content['list_price']);
-
-    $price_lbl = "SPECIAL:";
-    if ($item_on_clearance) {
-      $price_lbl = "CLEARANCE:";
-    }
-		$new_sale_price = array(		
-			'#title' => $price_lbl,
-			'#theme' => "uc_product_price",
-			'#value' => $special_price,
-			'#attributes' => array('class' => array('sell-price')),		
-		);
-		
-		/*
-		MOVING SALE PRICE
-		-------------------
-		$content['sale_price'] = array( //$new_sale_price;
-			'#markup' => '<span><a href="#" class="furn-red promo-link">PROMO!</a></span>',
-		);*/
-		$content['sale_price'] = $new_sale_price;
-		
-		$content['sell_price']['#attributes']['class'] = array('old-price');
-	  	
-	}
 	
 }
 

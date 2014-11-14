@@ -19,11 +19,7 @@ if (isset($content['field_availability']) && is_array($content['field_availabili
 	$content['field_availability'][0]['#markup'] = $availability_icon . $content['field_availability'][0]['#markup'];
 }
 
-//determine if item contains video
-$has_video = FALSE;
-if(isset($content['field_video']) && is_array($content['field_video']) && is_array($content['field_video']['#items']) && count($content['field_video']['#items'] > 0)) {
-	$has_video = TRUE;
-}
+$sale_icon = base_path() . path_to_theme() . '/images/clearance_icon2.png';
 
 	
 if ($teaser) { //item teaser view
@@ -60,7 +56,7 @@ if ($teaser) { //item teaser view
 	</header>
 	
 	<?php if(isset($content['sale_price']) && !empty($content['sale_price'])) : ?>
-		<span class="item-clearance"><img src="<?php print base_path() . path_to_theme(); ?>/images/Sale_Icon_Red_40x24.png" alt="Item on clearance"/></span>	
+		<span class="item-clearance" style="background-image:url(<?php print $sale_icon;?>); width:75px; height:24px; background-position:0 <?php print $content['sale_icon_dy'];?>"></span>	
 	<?php endif; ?>
 	
 	<div class="item-details">
@@ -120,7 +116,7 @@ if ($teaser) { //item teaser view
 		  		
 	  	<?php endforeach;?>
 	  	
-	  	<?php if ($has_video): ?>
+	  	<?php if ($content['has_video']): ?>
 	  		<li><img src="<?php print base_path() . path_to_theme(); ?>/images/play-button.gif" id="item-video-img" /></li>
 	  	<?php endif; ?>
 
@@ -196,7 +192,7 @@ if ($teaser) { //item teaser view
 	  
   </div>
   
-  <?php if ($has_video): ?>
+  <?php if ($content['has_video']): ?>
 	  <div id="hidden-video">
 	  	  <!-- This is a hidden container for item video, its contents will appear in popup box -->
 		  <?php print render($content['field_video']); ?>

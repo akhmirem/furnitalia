@@ -19,12 +19,6 @@ if (isset($content['field_availability']) && is_array($content['field_availabili
 	$content['field_availability'][0]['#markup'] = $availability_icon . $content['field_availability'][0]['#markup'];
 }
 
-//determine if item contains video
-$has_video = FALSE;
-if(isset($content['field_video']) && is_array($content['field_video']) && is_array($content['field_video']['#items']) && count($content['field_video']['#items'] > 0)) {
-	$has_video = TRUE;
-}
-
 $pdf_icon = '<img src="' . $base_path . $theme_path . '/images/icons_logos/pdf-icon.png" />';
 
 	
@@ -152,7 +146,7 @@ if ($teaser) { //item teaser view
 	  </section>
 	  
 	  <div id="item-brand">
-	  	  <?php if (isset($content['field_availability'])) : ?>
+	  	<?php if (isset($content['field_availability'])) : ?>
 				<?php print render($content['field_availability']); ?>
 		  <?php endif; ?>
 			
@@ -161,16 +155,15 @@ if ($teaser) { //item teaser view
 		  	$brand_image = $content['field_brand']['#object']->field_brand['und'][0]['taxonomy_term']->field_brand_image['und'][0];
 	
 		  	$style = "mobile_brand_img";
-			$derivative_uri = image_style_path($style, $brand_image['uri']);
-			if (!file_exists($derivative_uri)) {
-				$display_style = image_style_load($style);
-				image_style_create_derivative($display_style, $brand_image['uri'], $derivative_uri);
-			}
-			$brand_img_url  = file_create_url($derivative_uri);
-	
-		  	print theme("image", array("path" => $derivative_uri, 'attributes' => array("class" => array("brand-img"))));
-		   }
-		   ?>
+        $derivative_uri = image_style_path($style, $brand_image['uri']);
+        if (!file_exists($derivative_uri)) {
+				  $display_style = image_style_load($style);
+          image_style_create_derivative($display_style, $brand_image['uri'], $derivative_uri);
+        }
+        $brand_img_url  = file_create_url($derivative_uri);
+        print theme("image", array("path" => $derivative_uri, 'attributes' => array("class" => array("brand-img"))));
+		  }
+		  ?>
 	  </div>
 	  
 	  <div id="product-additional" class="accordion clearfix">
@@ -204,11 +197,11 @@ if ($teaser) { //item teaser view
 	  <span class="favorites"><img src="<?php print base_path() . path_to_theme(); ?>/images/icons_logos/favorites_star_icon_16x16.png"/>	  
 		  <?php
 		  	global $user;
-			if(!$user->uid) {
-			    print l(t('Add to favorites'), 'user/login' , array('query'=> array('destination' => 'node/' . $node->nid)));
-			} else {
-				print $content['links']['flag']['#links']['flag-favorites']['title']; //render($content['links']['flag']); 
-			}
+  			if(!$user->uid) {
+  			    print l(t('Add to favorites'), 'user/login' , array('query'=> array('destination' => 'node/' . $node->nid)));
+  			} else {
+  				print $content['links']['flag']['#links']['flag-favorites']['title']; //render($content['links']['flag']); 
+  			}
 		  ?>	  
 	  </span>
 	
@@ -219,10 +212,10 @@ if ($teaser) { //item teaser view
   </section>
 
 
-  <?php if ($has_video): ?>
+  <?php if ($content['has_video']): ?>
 <!-- 	  <div id="hidden-video"> -->
 	  	  <!-- This is a hidden container for item video, its contents will appear in popup box -->
-<!-- 		  <?php print render($content['field_video']); ?>--> -->
+<!-- 		  <?php print render($content['field_video']); ?>--> 
 <!-- 	  </div> -->
   <?php endif; ?>
  
