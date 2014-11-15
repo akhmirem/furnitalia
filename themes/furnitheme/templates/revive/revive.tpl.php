@@ -162,41 +162,41 @@ $path = $base_path . $theme_path . '/templates/revive';
   	    <div class="groups" style="height: 1200px;">   
                                                                         
           <ul class="group qu cycle-slide" style="position: absolute; top: 0px; left: 0px; display: block; opacity: 0; z-index: 97; visibility: hidden;">
-            <li style="background-image: url(<?php print $path;?>/images/big-photo/quilted.jpg);">
+            <li style="background-image: url(<?php print $path;?>/images/big-photo/quilted.jpg);background-position:48.5% center">
                 <h2 class="title gray">Quilted</h2>
             </li>
           </ul>
           
           <ul class="group ta cycle-slide" style="position: absolute; top: 0px; left: 0px; display: block; opacity: 0; z-index: 96; visibility: hidden;">
-              <li style="background-image: url(<?php print $path;?>/images/big-photo/tailored.jpg);">
+              <li style="background-image: url(<?php print $path;?>/images/big-photo/tailored.jpg);background-position:48.5% center">
                 <h2 class="title">Tailored</h2>
               </li>
           </ul>
           
           <ul class="group li cycle-slide" style="position: absolute; top: 0px; left: 0px; display: block; opacity: 0; z-index: 95; visibility: hidden;">
-              <li style="background-image: url(<?php print $path;?>/images/big-photo/linear.jpg);">
+              <li style="background-image: url(<?php print $path;?>/images/big-photo/linear.jpg);background-position:48.5% center">
                 <h2 class="title">Linear</h2>
               </li>
           </ul>
           <ul class="group ca cycle-slide" style="position: absolute; top: 0px; left: 0px; display: block; opacity: 0; z-index: 94; visibility: hidden;">
-            <li style="background-image: url(<?php print $path;?>/images/big-photo/casual.jpg);">
+            <li style="background-image: url(<?php print $path;?>/images/big-photo/casual.jpg);background-position:48.5% center">
               <h2 class="title">Casual</h2>
             </li>
           </ul>
           <ul class="group cl cycle-slide" style="position: absolute; top: 0px; left: 0px; display: block; opacity: 0; z-index: 93; visibility: hidden;">
-            <li style="background-image: url(<?php print $path;?>/images/big-photo/club.jpg);">
+            <li style="background-image: url(<?php print $path;?>/images/big-photo/club.jpg);background-position:48.5% center">
               <h2 class="title">Club</h2>
             </li>
           </ul>
           
           <ul class="group lo cycle-slide" style="position: absolute; top: 0px; left: 0px; display: block; z-index: 100; opacity: 0; visibility: hidden;">
-            <li style="background-image: url(<?php print $path;?>/images/big-photo/lounge.jpg);">
+            <li style="background-image: url(<?php print $path;?>/images/big-photo/lounge.jpg);background-position:48.5% center">
               <h2 class="title">Lounge</h2>
             </li>
           </ul>
           
           <ul class="group su cycle-slide active" style="z-index: 99; position: absolute; top: 0px; left: 0px; visibility: hidden; display: block; opacity: 1;">
-            <li style="background-image: url(<?php print $path;?>/images/big-photo/suit.jpg);">
+            <li style="background-image: url(<?php print $path;?>/images/big-photo/suit.jpg);background-position:48.5% center">
               <h2 class="title">Suit</h2>
             </li>
           </ul>

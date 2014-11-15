@@ -453,7 +453,7 @@
 	overflow: visible;
 }
 .page .jplus.content.code .colors{
-	margin-left: -360px;
+	margin-left: -340px; /*-360px;*/
 	position: absolute;
 	top: -630px;
 	left: 50%;
