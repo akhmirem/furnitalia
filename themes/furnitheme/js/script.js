@@ -364,10 +364,10 @@ var isHandHeldDevice = false;
 	
 	function InitFeaturedSlideShow() {
 		//Featured Slide Show images list
-		var imgPathPrefix = Drupal.settings.basePath + "sites/default/files/promo/fall2014/";
-		var link = Drupal.settings.basePath + "living?availability=in_stock";
+		var imgPathPrefix = Drupal.settings.basePath + "sites/default/files/promo/blkfri14/";
+		var link = Drupal.settings.basePath + "clearance";
 		var featuredImgs = [
-			{'image':imgPathPrefix + "500x350_dining.jpg", link:link}
+			{'image':imgPathPrefix + "500X350-Main.jpg", link:link}
 		]
 		
 		//!Promo

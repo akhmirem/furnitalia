@@ -142,16 +142,20 @@ function mobile_tweaks_front_page() {
 	drupal_set_title("Modern Furniture Store Sacramento/Roseville");
 
 	$front_slides = "";
-	$img_path = base_path() . "sites/default/files/promo/fall2014/";
-	$imgs = array('320x420_MobileMain.jpg');
-  $link = url(
-    "living", 
-    array(
+	$img_path = base_path() . "sites/default/files/promo/blkfri14/";
+	$imgs = array('320X420-MobileMain.jpg');
+    
+    /*  array(
       'query' => array(
         'availability' =>  'in_stock'
       )
-    )
-  );//array('utm_source' => 'mobile', 'utm_medium' => 'front', 'utm_campaign' => 'moving-sale')));
+    )*/
+    
+  $link = url(
+    "clearance"
+  );
+  
+  //array('utm_source' => 'mobile', 'utm_medium' => 'front', 'utm_campaign' => 'moving-sale')));
 	foreach($imgs as $img) {
 		$front_slides .= "<div class=\"slide\" data-mightyslider=\"cover: '" . $img_path . $img . "', link: {url:'" . $link . "'} \"></div>";
 	}
