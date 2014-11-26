@@ -112,6 +112,13 @@ function furn_global_menu() {
     'access callback' => TRUE,
     'type' => MENU_NORMAL_ITEM,
   );
+  $items['coupon'] = array(
+    'title' => 'Furnitalia Coupons',
+    'page callback' => 'furn_global_coupon_page',
+    'page arguments' => array(""),
+    'access callback' => TRUE,
+    'type' => MENU_NORMAL_ITEM,
+  );
 	return $items;
 }
 
@@ -1128,30 +1135,8 @@ function furn_global_webform_submission_presave($node, &$submission) {
   $time_format = 'm-d-Y H:i';
 	$lead_info = array();
 
-  //moving sale coupon submissions
-  if ($node->nid == 513) {
-    $submission->data[4]['value'][0] = hash('crc32', REQUEST_TIME, false);  //optimistic 'pseudo-unique' submission code
-    
-    $lead_info['first_name'] = $submission->data[1]['value'][0];
-		$lead_info['last_name'] = $submission->data[2]['value'][0];		
-		$lead_info['email'] = $submission->data[3]['value'][0];
-		$lead_info['zip'] = "";
-		$lead_info['body'] = "Coupon form registration. Please follow up.";		
-		$lead_info['phone'] = "";		
-		
-		$lead_info['created'] = REQUEST_TIME;
-    $lead_info['updated'] = 0;
-    $lead_info['updated_by'] = 0;
-    $lead_info['status'] = 'N';
-    $lead_info['status_comments'] = "COUPON FORM SUBMISSION";
-    $lead_info['address'] = "";
-    $lead_info['uid'] = 0;
-    $lead_info['type'] = 'C';
-    $lead_info['log'] = 'Created: ' . format_date(REQUEST_TIME, 'custom', $time_format);
-    
-    $lid = furnileads_insert_lead($lead_info);
-
-    
+  //coupon submissions
+  if ($node->nid == 834) {    
     return;
   }
 
@@ -1310,22 +1295,6 @@ function furn_global_preprocess_node(&$vars, $hook) {
 		furn_global_preprocess_node_common_fields($vars['content'], 'page', $vars['node']);	
 	}
 
-  if (in_array($vars['node']->nid, array(514, 834))) {
-    $vars['theme_hook_suggestions'][] = 'page-' . $vars['node']->type . '-coupon';
-  }
-
-}
-
-/**
- * Preprocess callback for hook_webform_mail_message
- */
-function furn_global_preprocess_webform_mail_message(&$vars) {
-  $node = $vars['node'];
-
-  //coupon webform
-  if (in_array($vars['node']->nid, array(514, 834))) {
-    $vars['theme_hook_suggestion'] = 'webform_mail_coupon';
-  }
 }
 
 /**
@@ -1511,11 +1480,20 @@ function furn_global_form_views_exposed_form_alter(&$form, &$form_state, $form_i
 
 	}
 	
+	//hide the exposed filter for # of pages
+	hide($form['items_per_page']);
+	
 	//set default sort order
 	if(!isset($_REQUEST['sort_by'])) {
 	  if (isset($form['sort_by'])) {
 		  $form['sort_by']['#value'] = 'title';
 		}
+    if ($form['#id'] == 'views-exposed-form-taxonomy-term-page-clearance') {
+      $form['sort_by']['#value'] = 'sell_price';
+ 			if (variable_get('show_sale_prices', FALSE)) {
+   			$form['sort_by']['#value'] = 'field_special_price_value'; 
+ 			}
+    }
   }
 	
 	if (strstr($form['#id'], 'views-exposed-form-taxonomy-term-page')) {
@@ -1633,10 +1611,40 @@ function furn_global_preprocess_node_common_fields(&$content, $hook, $node) {
 	
 }
 
+/**
+ * Page callback for coupon page
+ */
+function furn_global_coupon_page() {
 
+    $webform_nid = 834;
+    $node = node_load($webform_nid);
+    
+    module_load_include("inc", "furn_global", "furn_global");
+  
+    $coupon_code = "FRN14" . get_random_string("123456789", 4);
+    $node->webform['components'][2]['value'] = $coupon_code;
+    
+    $submission = (object) array();
+    $enabled = TRUE;
+    $preview = FALSE;
+    $form = drupal_get_form('webform_client_form_' . $webform_nid, $node, $submission, $enabled, $preview);
+    
+    unset($form['submitted']['email']['#title']);
+    $form['submitted']['email']['#attributes'] = array('autofocus' => array(''));
+    $form['actions']['submit']['#theme_wrappers'] = array("image_button");
+    $form['actions']['submit']['#button_type'] = "image";
+    $form['actions']['submit']['#src'] = base_path() . 'sites/default/files/promo/coupons/submit_button.png';
+    
+    $build['coupon'] = array(
+      '#markup' => '<img src="' . base_path() . 'sites/default/files/promo/coupons/10percent_coupon.jpg' . '"/>',
+      '#prefix' => '<div id="coupon-form">',
+    );
+    $build ['form'] = array(
+      '#markup' => drupal_render($form),
+      '#suffix' => '</div>',
+    );
+    
+    return $build;
+    
 
-/*
-function furn_global_views_query_alter(&$view, &$query) {
-  if ($view->name == 'taxonomy_term') {
-  }
-}*/
+}

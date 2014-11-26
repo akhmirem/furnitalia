@@ -218,7 +218,7 @@ function furnitalia_tweaks_front_page() {
  				  	 </div>',
 	);
 	
-	$query_params = drupal_get_query_parameters();
+	/*$query_params = drupal_get_query_parameters();
 	if(!isset($query_params['noanim'])) {
 		$build['front-anim'] = array (
 			'#markup' => '<div id="front-overlay">
@@ -230,7 +230,7 @@ function furnitalia_tweaks_front_page() {
 						  	      <a href="#" id="enterFurnitalia">ENTER FURNITALIA</a>
 	 				  	      </div>',
 		);
-	}
+	}*/
 	
 	drupal_set_title("Modern Furniture Store Sacramento/Roseville");
 	

@@ -1375,6 +1375,24 @@ article.catalogs li {
 	clear:both;
 }
 
+/* Coupon page */
+#coupon-form {position: relative;}
+#coupon-form #edit-submitted-email {
+  position: absolute;
+  bottom: 5.3em;
+  font-size: 1.35em;
+  left: 4em;
+  width: 15.5em;
+  border: none;
+}
+#coupon-form #edit-actions #edit-submit {
+  position: absolute;
+  top:-7em;
+  left: 10.5em;
+}
+
+/* \Coupon page */
+
 /*
  * Admin Menu settigns (only for logged-in users)
  */

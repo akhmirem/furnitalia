@@ -17,13 +17,14 @@ var isHandHeldDevice = false;
 
  (function($) {
  	
- 	var frontBgImg = 'sites/all/themes/furnitheme/images/front-keyhole-bg.jpg';
+ 	//var frontBgImg = 'sites/all/themes/furnitheme/images/front-keyhole-bg.jpg';
  	
 	Drupal.behaviors.furnitalia = {
 		attach: function(context, settings) {
-          	
-          	var params = [];
-          	if (!jQuery().deparam) {
+
+      skipAnimation = true;   	
+      /*var params = [];
+      if (!jQuery().deparam) {
 				params = $.deparam.querystring( true );
 				//console.log(JSON.stringify( params, null, 2 ));
 			}
@@ -117,14 +118,14 @@ var isHandHeldDevice = false;
 					
 				return false;
 					
-			});
+			});*/
 			
 			InitCategoryPageAnimation();
 			
-			if (skipAnimation || $("#front-overlay").length == 0) {
+			/*if (skipAnimation || $("#front-overlay").length == 0) {
 				//set up keyhole animation for categories
 				InitRightKeyHole();	
-			}
+			}*/
 						
 			if (skipAnimation) {
 				//hide top overlay
@@ -366,7 +367,9 @@ var isHandHeldDevice = false;
 		//Featured Slide Show images list
 		var imgPathPrefix = Drupal.settings.basePath + "sites/default/files/promo/blkfri14/";
 		var link = Drupal.settings.basePath + "clearance";
+		var couponLink = Drupal.settings.basePath + "coupon";
 		var featuredImgs = [
+			//{'image': Drupal.settings.basePath + "sites/default/files/promo/coupons/10percent_coupon.jpg", link:couponLink},
 			{'image':imgPathPrefix + "500X350-Main.jpg", link:link}
 		]
 		
@@ -376,7 +379,7 @@ var isHandHeldDevice = false;
 			showCaption:false, 
 			showTooltips:false, 
 			data:featuredImgs, 
-			autoPlay:false, 
+			autoPlay:true, 
 			speed:3000 /*, 
 			buildFinished: function() {
 

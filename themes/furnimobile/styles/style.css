@@ -173,10 +173,10 @@ hr.furn-red {
 	overflow:hidden;
 	width: 100%;
 }
-body.revive #container {
+body.full-width #container {
   max-width: 760px;
 }
-body.revive #container, body.revive #container-inner {
+body.full-width #container, body.full-width #container-inner {
   overflow:visible;
 }
 
@@ -717,3 +717,21 @@ div.webform-confirmation {
 	text-align:center;
 	margin-top:1em;
 }
+
+/* Coupon page */
+#coupon-form {position: relative;}
+#coupon-form #edit-submitted-email {
+  position: absolute;
+  bottom: 5em;
+  font-size: 1.8em;
+  left: 3.1em;
+  width: 15em;
+  border: none;
+}
+#coupon-form #edit-actions #edit-submit {
+  position: absolute;
+  left: 12.8em;
+  bottom: 4.8em;
+}
+
+/* \Coupon page */

@@ -729,7 +729,8 @@ function furnimobile_preprocess_html(&$variables, $hook) {
 	if(drupal_match_path(current_path(), implode("\n", $paths))) {
 		 $variables['classes_array'][] = 'gallery-grid';
 	}
-	if (arg(0) == 're-vive') {
+	if (in_array(arg(0), array("coupon", "re-vive"))) {
   	$variables['classes_array'][] = 'revive';
+  	$variables['classes_array'][] = 'full-width';  	
 	}
 }
