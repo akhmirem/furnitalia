@@ -111,7 +111,12 @@ nav ul#secondary-menu li a {
   transition: all 200ms ease-out;
 }
 
-
+.antialias {
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  -moz-font-feature-settings: "liga", "kern";
+}
 .furn-red, .furn-e3  {
 	color:#981b1e;
 }
@@ -719,19 +724,36 @@ div.webform-confirmation {
 }
 
 /* Coupon page */
-#coupon-form {position: relative;}
+#coupon-form {
+  position: relative;
+  width: 500px;
+  height: 370px;
+  background-color: #98201f;
+}
 #coupon-form #edit-submitted-email {
   position: absolute;
-  bottom: 5em;
-  font-size: 1.8em;
-  left: 3.1em;
-  width: 15em;
+  font-size: 2.5em;
+  left: 2.5em;
+  width: 10em;
   border: none;
+  -webkit-border-radius: 10px; 
+  -moz-border-radius: 10px; 
+  border-radius: 10px;
+  padding: 0 .5em;
 }
 #coupon-form #edit-actions #edit-submit {
   position: absolute;
-  left: 12.8em;
-  bottom: 4.8em;
+  left: 12.6em;
+  bottom: 5em;
+}
+#coupon-disclaimer {
+  font-size: .8em;
+  line-height: 1.35em;
+  color: white;
+  text-align: center;
+  position: absolute;
+  bottom: .5em;
+  padding: 0 2em;
 }
 
 /* \Coupon page */

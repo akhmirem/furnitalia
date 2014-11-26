@@ -29,6 +29,12 @@ ul li.leaf {
   list-style-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAcAAAAHBAMAAAA2fErgAAAAD1BMVEX///+/v7+Li4sAAADAwMBFvsw8AAAAAXRSTlMAQObYZgAAAB1JREFUCFtjYAADYwMGBmYVZSDhKAwkFJWhYiAAAB2+Aa/9ugeaAAAAAElFTkSuQmCC');
   list-style-type: square;
 }
+.antialias {
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  -moz-font-feature-settings: "liga", "kern";
+}
 
 /*
  * Body
@@ -1376,19 +1382,35 @@ article.catalogs li {
 }
 
 /* Coupon page */
-#coupon-form {position: relative;}
+#coupon-form {
+  position: relative;
+  width: 500px;
+  height: 370px;
+  background-color: #98201f;
+}
 #coupon-form #edit-submitted-email {
   position: absolute;
-  bottom: 5.3em;
   font-size: 1.35em;
   left: 4em;
   width: 15.5em;
   border: none;
+  -webkit-border-radius: 10px; 
+  -moz-border-radius: 10px; 
+  border-radius: 10px;
 }
 #coupon-form #edit-actions #edit-submit {
   position: absolute;
-  top:-7em;
   left: 10.5em;
+  top: 3em;
+}
+#coupon-disclaimer {
+  font-size: .68em;
+  line-height: 1.35em;
+  color: white;
+  text-align: center;
+  position: absolute;
+  bottom: .5em;
+  padding: 0 2em;
 }
 
 /* \Coupon page */

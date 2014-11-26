@@ -1636,11 +1636,14 @@ function furn_global_coupon_page() {
     $form['actions']['submit']['#src'] = base_path() . 'sites/default/files/promo/coupons/submit_button.png';
     
     $build['coupon'] = array(
-      '#markup' => '<img src="' . base_path() . 'sites/default/files/promo/coupons/10percent_coupon.jpg' . '"/>',
+      '#markup' => '<img src="' . base_path() . 'sites/default/files/promo/coupons/10percent_coupon_top.jpg' . '"/>',
       '#prefix' => '<div id="coupon-form">',
     );
     $build ['form'] = array(
       '#markup' => drupal_render($form),
+    );
+    $build['disclaimer'] = array(
+      '#markup' => '<div id="coupon-disclaimer" class="antialias">* APPLIES TO NEW EMAIL SUBSCRIPTIONS ONLY.  OFFER IS NOT APPLICABLE ON PRIOR PURCHASES AND CLEARANCE ITEMS.  BRAND MRP RESPRICTIONS MAY APLY. DISCOUNT WILL BE DELIVERED TO YOUR EMAIL ADDRESS</div>',
       '#suffix' => '</div>',
     );
     
