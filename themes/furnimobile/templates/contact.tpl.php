@@ -4,6 +4,10 @@
 </section>
 <br/>
 
+<section class="hours-update" style="padding: 50px 5px 10px;font-size: 1.3em;color: #981b1e;text-transform: uppercase;text-align: center;">
+Our stores are closed on <strong>November 27, 2014</strong> for Thanksgiving observance. 
+</section>
+
 <section class="store-info clearfix">
 	<h2 class="field-label furn-e3">Furnitalia Sacramento</h2>
 	<div class="map"><iframe width="99%" height="223" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" src="https://www.google.com/maps/ms?msa=0&amp;msid=211487104845968262296.0004968861c94e20ef05a&amp;hl=en&amp;ie=UTF8&amp;t=m&amp;ll=38.664335,-121.349316&amp;spn=0.014945,0.025234&amp;z=14&amp;output=embed"></iframe></div>

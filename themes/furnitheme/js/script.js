@@ -369,7 +369,7 @@ var isHandHeldDevice = false;
 		var link = Drupal.settings.basePath + "clearance";
 		var couponLink = Drupal.settings.basePath + "coupon";
 		var featuredImgs = [
-			//{'image': Drupal.settings.basePath + "sites/default/files/promo/coupons/10percent_coupon.jpg", link:couponLink},
+			{'image': Drupal.settings.basePath + "sites/default/files/promo/coupons/10percent_coupon.jpg", link:couponLink},
 			{'image':imgPathPrefix + "500X350-Main.jpg", link:link}
 		]
 		

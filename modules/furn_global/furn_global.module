@@ -1481,31 +1481,27 @@ function furn_global_form_views_exposed_form_alter(&$form, &$form_state, $form_i
 	}
 	
 	//hide the exposed filter for # of pages
-	hide($form['items_per_page']);
+  if (isset($form['items_per_page'])) {
+    hide($form['items_per_page']);
+  }
 	
 	//set default sort order
 	if(!isset($_REQUEST['sort_by'])) {
 	  if (isset($form['sort_by'])) {
 		  $form['sort_by']['#value'] = 'title';
 		}
-    if ($form['#id'] == 'views-exposed-form-taxonomy-term-page-clearance') {
-      $form['sort_by']['#value'] = 'sell_price';
- 			if (variable_get('show_sale_prices', FALSE)) {
-   			$form['sort_by']['#value'] = 'field_special_price_value'; 
- 			}
-    }
   }
 	
-	if (strstr($form['#id'], 'views-exposed-form-taxonomy-term-page')) {
-		if (isset($form['sort_by'])) {
-			//alter SORT options -- remove Discounted price sort order if SALE prices are not shown
-			if (!variable_get('show_sale_prices', FALSE)) {
-				unset($form['sort_by']['#options']['field_special_price_value']);
-			}
-
-		}
-	}
-  
+  //alter SORT options -- remove Discounted price sort order if SALE prices are not shown
+  if (variable_get('show_sale_prices', FALSE)) {
+    if (isset($form['sort_by']) && isset($form['sort_by']['#options']['sell_price'])) {
+      unset($form['sort_by']['#options']['sell_price']);
+    }
+  } else {
+    if (isset($form['sort_by']) && isset($form['sort_by']['#options']['field_special_price_value'])) {
+      unset($form['sort_by']['#options']['field_special_price_value']);
+    }
+  }
 }
 
 /**

@@ -610,11 +610,6 @@ function furnitheme_pager($variables) {
       );
     }
     
-    $items[] = array(
-        'class' => array('pager-item'),
-        'data' => l('View All', "", array('query' => array('items_per_page' => 'All'))),
-      );
-    
     if ($li_next) {
       $items[] = array(
         'class' => array('pager-next'),
