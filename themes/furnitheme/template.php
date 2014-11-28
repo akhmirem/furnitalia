@@ -65,7 +65,7 @@ function furnitheme_css_alter(&$css) {
  //!PreprocessPage
 function furnitheme_preprocess_page(&$vars) {
 
-	global $user, $theme_path;
+	global $user, $theme_path, $base_path;
 
 	drupal_add_css($theme_path . '/css/ui/base/jquery.ui.all.css', array('group' => -100, 'every_page' => TRUE));
 	
@@ -133,6 +133,18 @@ function furnitheme_preprocess_page(&$vars) {
 		//contact us page
 		$vars['contact_page'] = TRUE;
 	}
+	
+	if (!$vars['is_front'] && arg(0) != 'coupon') {
+  	$coupon_link = $base_path . "coupon";
+    $left_section_extra = "";
+    $left_section_extra .= '<a href="'.$coupon_link.'" title="Get 10% OFF Coupon!">';
+    $left_section_extra .= theme("image", array("path" => 'public://promo/coupons/10_percent_coupon_button.jpg', "alt" => "Get 10% OFF Coupon!", "attributes" => array('width' => '246', 'height' => '123')));
+    $left_section_extra .= "</a>";
+  	  
+   	$vars['page']['left_section_extra'] = array(
+   	  "#markup" => $left_section_extra,
+    );
+  }
 	
 	//moving sale extra
 	/*if (arg(0) == 'moving-sale') {

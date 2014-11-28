@@ -113,7 +113,7 @@ function furn_global_menu() {
     'type' => MENU_NORMAL_ITEM,
   );
   $items['coupon'] = array(
-    'title' => 'Furnitalia Coupons',
+    'title' => 'Get 10% Discount Coupon',
     'page callback' => 'furn_global_coupon_page',
     'page arguments' => array(""),
     'access callback' => TRUE,
@@ -182,11 +182,11 @@ function furn_global_brand_cat_page($brand, $cat = NULL, $subcat = NULL) {
 		
     if (isset($conf['SITE_ID']) && $conf['SITE_ID'] == 'desktop') {	
       drupal_add_library('system', 'drupal.ajax');
-      $build['add'] = array(
+      /*$build['add'] = array(
         '#markup' => '<div id="menu-pic-wrapper">
                   <div id="menu-pic" class="menu-hover loading">&nbsp;</div>
                   </div>',
-      );
+      );*/
     }
 		
 		return $build;
@@ -248,11 +248,11 @@ function furn_global_collections_page($term=NULL) {
       drupal_add_js(drupal_get_path('theme', 'furnitheme') . "/js/jquery.bgpos.js");
       drupal_add_library('system', 'drupal.ajax');
       
-      $build['add'] = array(
+      /*$build['add'] = array(
         '#markup' => '<div id="menu-pic-wrapper">
                         <div id="menu-pic" class="menu-hover loading">&nbsp;</div>
                       </div>',
-      );
+      );*/
     }
 		
 		return $build;
@@ -1489,6 +1489,10 @@ function furn_global_form_views_exposed_form_alter(&$form, &$form_state, $form_i
 	if(!isset($_REQUEST['sort_by'])) {
 	  if (isset($form['sort_by'])) {
 		  $form['sort_by']['#value'] = 'title';
+		  
+		  if ($form['#id'] == 'views-exposed-form-taxonomy-term-page-clearance') {
+        $form['sort_by']['#value'] = 'field_special_price_value';  
+      }
 		}
   }
 	
@@ -1612,38 +1616,70 @@ function furn_global_preprocess_node_common_fields(&$content, $hook, $node) {
  */
 function furn_global_coupon_page() {
 
-    $webform_nid = 834;
-    $node = node_load($webform_nid);
-    
-    module_load_include("inc", "furn_global", "furn_global");
+  $query_params = drupal_get_query_parameters();
+  if(isset($query_params['success']) && isset($query_params['sid'])) {
+    module_load_include("inc", 'webform', 'includes/webform.submissions');
+    $submissions = webform_get_submissions(array('nid'=>834, 'sid'=>$query_params['sid']));
+
+    if (!empty($submissions)) {
+      $build['message'] = array(
+        '#markup' => "<div class=\"thanks-message furn-red\" style=\"font-size:1.5em\">Thanks!<br/>Check your email for discount</div>",
+      );
+
+      $build['sharetext'] = array(
+        '#markup' => '<h3>Share the offer, <br/>your friends will thank you for it</h3>',
+      );
+
+      
+      // First get all of the options for the sharethis widget from the database:
+      $data_options = sharethis_get_options_array();
+
+      // Get the full path to insert into the Share Buttons.
+      $mPath = url('coupon', array('absolute' => TRUE));
+      $mTitle = "Get 10% Discount Coupon on Contemporary Funiture at Furnitalia!";
+      $build['share'] = array(
+        '#tag' => 'div', // Wrap it in a div.
+        '#type' => 'html_tag',
+        '#attributes' => array('class' => 'sharethis-buttons'),
+        '#value' => theme('sharethis', array('data_options' => $data_options, 'm_path' => $mPath, 'm_title' => $mTitle)),
+        '#weight' => intval(variable_get('sharethis_weight', 10)),
+      );
+      return $build; 
+    }
+  }
+
+  $webform_nid = 834;
+  $node = node_load($webform_nid);
   
-    $coupon_code = "FRN14" . get_random_string("123456789", 4);
-    $node->webform['components'][2]['value'] = $coupon_code;
-    
-    $submission = (object) array();
-    $enabled = TRUE;
-    $preview = FALSE;
-    $form = drupal_get_form('webform_client_form_' . $webform_nid, $node, $submission, $enabled, $preview);
-    
-    unset($form['submitted']['email']['#title']);
-    $form['submitted']['email']['#attributes'] = array('autofocus' => array(''));
-    $form['actions']['submit']['#theme_wrappers'] = array("image_button");
-    $form['actions']['submit']['#button_type'] = "image";
-    $form['actions']['submit']['#src'] = base_path() . 'sites/default/files/promo/coupons/submit_button.png';
-    
-    $build['coupon'] = array(
-      '#markup' => '<img src="' . base_path() . 'sites/default/files/promo/coupons/10percent_coupon_top.jpg' . '"/>',
-      '#prefix' => '<div id="coupon-form">',
-    );
-    $build ['form'] = array(
-      '#markup' => drupal_render($form),
-    );
-    $build['disclaimer'] = array(
-      '#markup' => '<div id="coupon-disclaimer" class="antialias">* APPLIES TO NEW EMAIL SUBSCRIPTIONS ONLY.  OFFER IS NOT APPLICABLE ON PRIOR PURCHASES AND CLEARANCE ITEMS.  BRAND MRP RESPRICTIONS MAY APLY. DISCOUNT WILL BE DELIVERED TO YOUR EMAIL ADDRESS</div>',
-      '#suffix' => '</div>',
-    );
-    
-    return $build;
+  module_load_include("inc", "furn_global", "furn_global");
+
+  $coupon_code = "FRN14" . get_random_string("123456789", 4);
+  $node->webform['components'][2]['value'] = $coupon_code;
+  
+  $submission = (object) array();
+  $enabled = TRUE;
+  $preview = FALSE;
+  $form = drupal_get_form('webform_client_form_' . $webform_nid, $node, $submission, $enabled, $preview);
+  
+  unset($form['submitted']['email']['#title']);
+  $form['submitted']['email']['#attributes'] = array('autofocus' => array(''));
+  $form['actions']['submit']['#theme_wrappers'] = array("image_button");
+  $form['actions']['submit']['#button_type'] = "image";
+  $form['actions']['submit']['#src'] = base_path() . 'sites/default/files/promo/coupons/submit_button.png';
+  
+  $build['coupon'] = array(
+    '#markup' => '<img src="' . base_path() . 'sites/default/files/promo/coupons/10percent_coupon_top.jpg' . '"/>',
+    '#prefix' => '<div id="coupon-form">',
+  );
+  $build ['form'] = array(
+    '#markup' => drupal_render($form),
+  );
+  $build['disclaimer'] = array(
+    '#markup' => '<div id="coupon-disclaimer" class="antialias">* APPLIES TO NEW EMAIL SUBSCRIPTIONS ONLY.  OFFER IS NOT APPLICABLE ON PRIOR PURCHASES AND CLEARANCE ITEMS.  BRAND MRP RESPRICTIONS MAY APLY. DISCOUNT WILL BE DELIVERED TO YOUR EMAIL ADDRESS</div>',
+    '#suffix' => '</div>',
+  );
+  
+  return $build;
     
 
 }

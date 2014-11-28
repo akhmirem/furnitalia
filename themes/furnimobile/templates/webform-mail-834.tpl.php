@@ -77,6 +77,10 @@
                           Enjoy shopping!<br/>
                           
                           Your team at Furnitalia
+                          <br/><br/>
+                          <p>
+                          <span style="font-size:10px;">*** APPLIES TO NEW EMAIL SUBSCRIPTIONS ONLY. OFFER IS NOT APPLICABLE ON PRIOR PURCHASES AND CLEARANCE ITEMS. BRAND MRP RESTRICTIONS MAY APPLY.</span>
+                          </p>
       										
       									</td>
       								</tr>                            

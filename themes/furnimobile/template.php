@@ -51,6 +51,18 @@ function furnimobile_preprocess_page(&$vars) {
           )*/
         )
       ); //'query' => array('utm_source' => 'mobile', 'utm_medium' => 'banner', 'utm_campaign' => 'moving-sale'
+      
+      //add 10% OFF coupon banner
+      $banner_html .= l('<img src="' . $files_dir . '/promo/coupons/10_percent_coupon_mobile.jpg"/>', 
+        "coupon", 
+        array(
+          'html' => TRUE, 
+          'attributes' => array(
+            'class' => array('coupon-link')
+          ), 
+        )
+      );
+      
 			$vars['page']['banner'] = array(
 				'#markup' => $banner_html,
 			);
