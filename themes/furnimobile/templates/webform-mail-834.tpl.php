@@ -65,7 +65,7 @@
       										<br/>        
       										
                             
-                          As promised here's your personal coupon code!<br/>
+                          As promised here's your personal 10% OFF COUPON code!<br/>
                           
                           <strong style="font-size:16px"><?php print $coupon_code; ?></strong>
   

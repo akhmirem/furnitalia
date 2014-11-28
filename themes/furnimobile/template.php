@@ -843,7 +843,7 @@ function furnimobile_preprocess_html(&$variables, $hook) {
 	$italia_editions_gallery_paths = array("natuzzi-italia", "natuzzi-italia/*", "natuzzi-italia/*/*", "natuzzi-editions", "natuzzi-editions/*", "natuzzi-editions/*/*");
 	$paths = array_merge(array("sale", "in-stores", "collections", "taxonomy/term/*"), $italia_editions_gallery_paths);
 	if(drupal_match_path(current_path(), implode("\n", $paths))) {
-		 $variables['classes_array'][] = 'gallery-grid';
+		 $variables['classes_array'][] = 'gallery-list';
 	}
 	if (in_array(arg(0), array("coupon", "re-vive"))) {
   	$variables['classes_array'][] = 'revive';
